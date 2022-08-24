@@ -1,6 +1,6 @@
 {
-  "name": "frontend-starter-app",
-  "version": "1.1.0",
+  "name": "hybrid-committed-spend",
+  "version": "0.0.1",
   "private": false,
   "engines": {
     "node": ">=16.0.0",
@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "fec build",
+    "build:dev": "npm run build",
     "deploy": "npm-run-all build lint test",
     "lint": "npm-run-all lint:*",
     "lint:js": "eslint config src",
@@ -15,15 +16,16 @@
     "lint:sass": "stylelint 'src/**/*.scss' --config .stylelintrc.json",
     "patch:hosts": "fec patch-etc-hosts",
     "start": "fec dev",
+    "start:dev": "npm run start",
     "test": "jest",
     "verify": "npm-run-all build lint test"
   },
   "dependencies": {
-    "@patternfly/react-core": "4.192.7",
-    "@patternfly/react-table": "4.61.7",
-    "@redhat-cloud-services/frontend-components": "^3.9.5",
-    "@redhat-cloud-services/frontend-components-notifications": "^3.2.8",
-    "@redhat-cloud-services/frontend-components-utilities": "^3.2.21",
+    "@patternfly/react-core": "4.231.8",
+    "@patternfly/react-table": "4.100.8",
+    "@redhat-cloud-services/frontend-components": "^3.9.9",
+    "@redhat-cloud-services/frontend-components-notifications": "^3.2.9",
+    "@redhat-cloud-services/frontend-components-utilities": "^3.2.24",
     "classnames": "^2.3.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
