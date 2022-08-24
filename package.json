@@ -15,8 +15,10 @@
     "lint:js:fix": "eslint config src --fix",
     "lint:sass": "stylelint 'src/**/*.scss' --config .stylelintrc.json",
     "patch:hosts": "fec patch-etc-hosts",
-    "start": "fec dev",
-    "start:dev": "npm run start",
+
+    "start": "fec static --config config/dev.webpack.config.js",
+    "start:dev": "CONFIG_PORT=8889 BETA=true PROXY=true npm run start",
+
     "test": "jest",
     "verify": "npm-run-all build lint test"
   },
