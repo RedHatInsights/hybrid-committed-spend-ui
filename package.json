@@ -15,6 +15,7 @@
     "lint:sass": "stylelint 'src/**/*.scss' --config .stylelintrc.json",
     "patch:hosts": "fec patch-etc-hosts",
     "start": "fec dev",
+    "start:csc": "CONFIG_PORT=8889 npm run start",
     "test": "jest",
     "verify": "npm-run-all build lint test"
   },

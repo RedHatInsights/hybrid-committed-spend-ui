@@ -11,4 +11,10 @@ module.exports = {
    * Add additional webpack plugins
    */
   plugins: [],
+  routes: {
+    ...(process.env.CONFIG_PORT && {
+      '/config': { host: `http://localhost:${process.env.CONFIG_PORT}` },
+      '/beta/config': { host: `http://localhost:${process.env.CONFIG_PORT}` },
+    }),
+  },
 };
