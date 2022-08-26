@@ -1,5 +1,6 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import React from 'react';
+
 import SampleComponent from './sample-component';
 
 test('expect sample-component to render children', () => {

@@ -1,44 +1,33 @@
-import React, { Suspense, lazy } from 'react';
+import { Bullseye, Spinner } from '@patternfly/react-core';
+import React, { lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { Bullseye, Spinner } from '@patternfly/react-core';
-
-const SamplePage = lazy(
-  () =>
-    import(
-      /* webpackChunkName: "SamplePage" */ './Routes/SamplePage/SamplePage'
-    )
-);
-const OopsPage = lazy(
-  () => import(/* webpackChunkName: "OopsPage" */ './Routes/OopsPage/OopsPage')
-);
+const SamplePage = lazy(() => import(/* webpackChunkName: "SamplePage" */ './Routes/SamplePage/SamplePage'));
+const OopsPage = lazy(() => import(/* webpackChunkName: "OopsPage" */ './Routes/OopsPage/OopsPage'));
 const NoPermissionsPage = lazy(
-  () =>
-    import(
-      /* webpackChunkName: "NoPermissionsPage" */ './Routes/NoPermissionsPage/NoPermissionsPage'
-    )
+  () => import(/* webpackChunkName: "NoPermissionsPage" */ './Routes/NoPermissionsPage/NoPermissionsPage')
 );
 
 const routes = [
   {
+    component: SamplePage,
+    exact: true,
     path: '/',
-    component: SamplePage,
-    exact: true,
   },
   {
+    component: SamplePage,
+    exact: true,
     path: '/explorer',
-    component: SamplePage,
-    exact: true,
   },
   {
-    path: '/no-permissions',
     component: NoPermissionsPage,
     exact: true,
+    path: '/no-permissions',
   },
   {
-    path: '/oops',
     component: OopsPage,
     exact: true,
+    path: '/oops',
   },
 ];
 
@@ -59,8 +48,8 @@ export const Routes = () => (
     }
   >
     <Switch>
-      {routes.map((route) => (
-        <Route key={route.path as any} {...route} />
+      {routes.map(route => (
+        <Route key={route.path} {...route} />
       ))}
       {/* Finally, catch all unmatched routes */}
       <Route>
