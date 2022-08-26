@@ -49,8 +49,7 @@ const SamplePage = () => {
   return (
     <React.Fragment>
       <PageHeader>
-        <PageHeaderTitle title="Sample Insights App" />
-        <p> This is page header text </p>
+        <PageHeaderTitle title="Hybrid Committed Spend" />
       </PageHeader>
       <Main>
         <Stack hasGutter>

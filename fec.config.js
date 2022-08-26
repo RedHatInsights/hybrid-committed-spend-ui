@@ -1,5 +1,5 @@
 module.exports = {
-  appUrl: '/staging/starter',
+  appUrl: '/business-services/hybrid-committed-spend',
   debug: true,
   useProxy: true,
   proxyVerbose: true,
@@ -11,4 +11,10 @@ module.exports = {
    * Add additional webpack plugins
    */
   plugins: [],
+  routes: {
+    ...(process.env.CONFIG_PORT && {
+      '/config': { host: `http://localhost:${process.env.CONFIG_PORT}` },
+      '/beta/config': { host: `http://localhost:${process.env.CONFIG_PORT}` },
+    }),
+  },
 };
