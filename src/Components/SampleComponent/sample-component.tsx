@@ -1,4 +1,5 @@
 import './sample-component.scss';
+
 import React from 'react';
 
 /**
@@ -7,7 +8,7 @@ import React from 'react';
  *
  * @param props the props given by the smart component.
  */
-const SampleComponent: React.FC = (props) => {
+const SampleComponent: React.FC = props => {
   return <span className="sample-component"> {props.children} </span>;
 };
 
