@@ -1,5 +1,5 @@
 module.exports = {
-  appUrl: '/staging/starter',
+  appUrl: '/business-services/hybrid-committed-spend',
   debug: true,
   useProxy: true,
   proxyVerbose: true,

@@ -19,6 +19,29 @@ const NoPermissionsPage = lazy(
     )
 );
 
+const routes = [
+  {
+    path: '/',
+    component: SamplePage,
+    exact: true,
+  },
+  {
+    path: '/explorer',
+    component: SamplePage,
+    exact: true,
+  },
+  {
+    path: '/no-permissions',
+    component: NoPermissionsPage,
+    exact: true,
+  },
+  {
+    path: '/oops',
+    component: OopsPage,
+    exact: true,
+  },
+];
+
 /**
  * the Switch component changes routes depending on the path.
  *
@@ -36,12 +59,12 @@ export const Routes = () => (
     }
   >
     <Switch>
-      <Route path="/sample" component={SamplePage} />
-      <Route path="/oops" component={OopsPage} />
-      <Route path="/no-permissions" component={NoPermissionsPage} />
+      {routes.map((route) => (
+        <Route key={route.path as any} {...route} />
+      ))}
       {/* Finally, catch all unmatched routes */}
       <Route>
-        <Redirect to="/sample" />
+        <Redirect to="/" />
       </Route>
     </Switch>
   </Suspense>
