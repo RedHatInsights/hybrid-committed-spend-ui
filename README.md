@@ -43,12 +43,7 @@ https://stage.foo.redhat.com:1337/beta/business-services/hybrid-committed-spend
 
 ## Deploying
 
-- The repo uses Travis to deploy the webpack build to another Github repo defined in `.travis.yml`
-  - That Github repo has the following branches:
-    - `stage-beta` (deployed by pushing to `master` or `main` on this repo)
-    - `stage-stable` (deployed by pushing to `stage-stable` on this repo)
-    - `prod-beta` (deployed by pushing to `prod-beta` on this repo)
-    - `prod-stable` (deployed by pushing to `prod-stable` on this repo)
+This [release][release-doc] doc describes how to release the UI to each staging environment.
 
 [build]: https://app.travis-ci.com/github/RedHatInsights/hybrid-committed-spend-ui
 [build-badge]: https://img.shields.io/travis/RedHatInsights/hybrid-committed-spend-ui.svg?style=for-the-badge
@@ -57,3 +52,4 @@ https://stage.foo.redhat.com:1337/beta/business-services/hybrid-committed-spend
 [license]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/LICENSE
 [pf-logo]: https://www.patternfly.org/v4/images/logo.4189e7eb1a0741ea2b3b51b80d33c4cb.svg
 [patternfly]: https://www.patternfly.org/
+[release-doc]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/RELEASE.md
