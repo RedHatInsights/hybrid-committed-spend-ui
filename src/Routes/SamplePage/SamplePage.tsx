@@ -3,21 +3,18 @@ import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import React, { lazy, Suspense, useEffect } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
-const SampleComponent = lazy(() => import('../../Components/SampleComponent/sample-component'));
+import messages from '../../locales/messages';
+const SampleComponent = lazy(() => import('../../components/SampleComponent/sample-component'));
 
 import './sample-page.scss';
 
-/**
- * A smart component that handles all the api calls and data needed by the dumb components.
- * Smart components are usually classes.
- *
- * https://reactjs.org/docs/components-and-props.html
- * https://medium.com/@thejasonfile/dumb-components-and-smart-components-e7b33a698d43
- */
-const SamplePage = () => {
+type SamplePageProps = RouteComponentProps<void> & WrappedComponentProps;
+
+const SamplePage: React.FunctionComponent<SamplePageProps> = ({ intl }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +34,7 @@ const SamplePage = () => {
   return (
     <React.Fragment>
       <PageHeader>
-        <PageHeaderTitle title="Hybrid Committed Spend" />
+        <PageHeaderTitle title={intl.formatMessage(messages.hcs)} />
       </PageHeader>
       <Main>
         <Stack hasGutter>
@@ -78,4 +75,4 @@ const SamplePage = () => {
   );
 };
 
-export default withRouter(SamplePage);
+export default injectIntl(withRouter(SamplePage));
