@@ -52,4 +52,4 @@ This [release][release-doc] doc describes how to release the UI to each staging 
 [license]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/LICENSE
 [pf-logo]: https://www.patternfly.org/v4/images/logo.4189e7eb1a0741ea2b3b51b80d33c4cb.svg
 [patternfly]: https://www.patternfly.org/
-[release-doc]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/release.md
+[release-doc]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/RELEASE.md
