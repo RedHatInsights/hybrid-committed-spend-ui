@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: hybrid-committed-spend-frontend
+objects:
+  - apiVersion: cloud.redhat.com/v1alpha1
+    kind: Frontend
+    metadata:
+      name: hybrid-committed-spend
+    spec:
+      envName: ${ENV_NAME}
+      title: 'Hybrid Committed Spend'
+      deploymentRepo: https://github.com/RedHatInsights/hybrid-committed-spend-ui
+      API:
+        versions:
+          - v1
+      frontend:
+        paths:
+          - /apps/hybrid-committed-spend
+      image: ${IMAGE}:${IMAGE_TAG}
+      navItems:
+        - title: 'Hybrid Committed Spend'
+          expandable: true
+          routes:
+            - appId: 'hybrid-committed-spend'
+              title: 'Overview'
+              href: '/business-services/hybrid-committed-spend'
+            - appId: 'hybrid-committed-spend'
+              title: 'Explorer'
+              href: '/business-services/hybrid-committed-spend/explorer'
+      module:
+        manifestLocation: "/apps/hybrid-committed-spend/fed-mods.json"
+        modules:
+          - id: 'hybrid-committed-spend'
+            module: "./RootApp"
+            routes:
+              - pathname: /business-services/hybrid-committed-spend
+parameters:
+  - name: ENV_NAME
+    required: true
+  - name: IMAGE_TAG
+    required: true
+  - name: IMAGE
+    value: quay.io/cloudservices/hybrid-committed-spend-frontend
