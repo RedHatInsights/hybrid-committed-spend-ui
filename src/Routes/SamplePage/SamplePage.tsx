@@ -2,13 +2,12 @@ import { Button, Spinner, Stack, StackItem, Title } from '@patternfly/react-core
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
+import messages from 'locales/messages';
 import React, { lazy, Suspense, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-
-import messages from '../../locales/messages';
-const SampleComponent = lazy(() => import('../../components/SampleComponent/sample-component'));
+const SampleComponent = lazy(() => import('components/SampleComponent/sample-component'));
 
 import './sample-page.scss';
 
