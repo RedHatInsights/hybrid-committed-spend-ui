@@ -1,4 +1,4 @@
-import { IntlProvider } from '@redhat-cloud-services/frontend-components-translations';
+import IntlProvider from '@redhat-cloud-services/frontend-components-translations/Provider';
 import { getBaseName } from '@redhat-cloud-services/frontend-components-utilities/helpers';
 import React from 'react';
 import { Provider } from 'react-redux';

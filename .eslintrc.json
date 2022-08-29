@@ -15,6 +15,7 @@
         "testing-library"
     ],
     "extends": [
+        "@redhat-cloud-services/eslint-config-redhat-cloud-services",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended"
@@ -31,25 +32,21 @@
         }
     },
     "globals": {
+        "afterEach": "readonly",
+        "beforeEach": "readonly",
         "describe": "readonly",
-        "test": "readonly",
-        "jest": "readonly",
         "expect": "readonly",
-        "require": "readonly",
         "global": "writable",
         "insights": "readonly",
         "it": "readonly",
-        "afterEach": "readonly",
-        "beforeEach": "readonly"
+        "jest": "readonly",
+        "mount": "readonly",
+        "render": "readonly",
+        "require": "readonly",
+        "test": "readonly",
+        "shallow": "readonly"
     },
     "rules": {
-        "testing-library/await-async-query": "error",
-        "testing-library/no-await-sync-query": "error",
-        "testing-library/no-debugging-utils": "warn",
-        "testing-library/no-dom-import": "off",
-        "formatjs/enforce-default-message": "error",
-        "formatjs/enforce-description": "error",
-        "formatjs/enforce-id": "error",
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/ban-types": "error",
@@ -83,6 +80,9 @@
             "error",
             "smart"
         ],
+        "formatjs/enforce-default-message": "error",
+        "formatjs/enforce-description": "error",
+        "formatjs/enforce-id": "error",
         "guard-for-in": "error",
         "max-classes-per-file": [
             "error",
@@ -128,18 +128,26 @@
         "react/prop-types": 0,
         "react/display-name": 0,
         "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}],
-        "spaced-comment": "error",
+
         "use-isnan": "error",
-        "simple-import-sort/imports": "error"
+        "simple-import-sort/imports": "error",
+        "spaced-comment": "error",
+        "testing-library/await-async-query": "error",
+        "testing-library/no-await-sync-query": "error",
+        "testing-library/no-debugging-utils": "warn",
+        "testing-library/no-dom-import": "off"
     },
-    "overrides": [{
-        "files": [ "src/locales/messages.ts" ],
-        "rules": {
-            "sort-keys-fix/sort-keys-fix": "error"
+    "overrides": [
+        {
+            "files": [ "src/locales/messages.ts" ],
+            "rules": {
+                "sort-keys-fix/sort-keys-fix": "error"
+            }
+        },
+        {
+            // Enable eslint-plugin-testing-library rules or preset only for matching files!
+            "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+            "extends": ["plugin:testing-library/react"]
         }
-    }, {
-        // 3) Now we enable eslint-plugin-testing-library rules or preset only for matching files!
-        "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-        "extends": ["plugin:testing-library/react"]
-    }]
+    ]
 }
