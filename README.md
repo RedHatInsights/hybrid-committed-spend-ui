@@ -41,6 +41,12 @@ https://stage.foo.redhat.com:1337/beta/business-services/hybrid-committed-spend
 
 `npm run verify` will run `npm run lint` (eslint) and `npm test` (Jest)
 
+## Testing UI changes locally with Cloud Services Config
+
+See https://github.com/RedHatInsights/cloud-services-config#testing-your-changes-locally
+
+```npm run start:csc```
+
 ## Deploying
 
 This [release][release-doc] doc describes how to release the UI to each staging environment.
