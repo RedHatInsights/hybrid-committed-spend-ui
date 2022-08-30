@@ -2,22 +2,23 @@
 const config = require('@redhat-cloud-services/frontend-components-config');
 const federatedPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
 const fecConfig = require(process.env.FEC_CONFIG_PATH);
-const { GitRevisionPlugin } = require('git-revision-webpack-plugin');
 const { dependencies, insights } = require('../package.json');
+const { GitRevisionPlugin } = require('git-revision-webpack-plugin');
 const path = require('path');
 
-// See index.js from @redhat-cloud-services/frontend-components-config
-const gitRevisionPlugin = new GitRevisionPlugin({
-  branch: true,
-});
-
-const betaBranches = ['main', 'master', 'stage-beta', 'prod-beta'];
-const gitBranch = process.env.TRAVIS_BRANCH || process.env.BRANCH || gitRevisionPlugin.branch();
 const isBeta = process.env.BETA === 'true';
-const isProduction = process.env.NODE_ENV === 'production';
-const moduleName = insights.appname.replace(/-(\w)/g, (_, match) => match.toUpperCase());
 const rootDir = process.env.FEC_ROOT_DIR || process.cwd();
 
+// See index.js from @redhat-cloud-services/frontend-components-config
+// const gitRevisionPlugin = new GitRevisionPlugin({
+//   branch: true,
+// });
+// const betaBranches = ['main', 'master', 'stage-beta', 'prod-beta'];
+// const moduleName = insights.appname.replace(/-(\w)/g, (_, match) => match.toUpperCase());
+//
+// const gitBranch = process.env.TRAVIS_BRANCH || process.env.BRANCH || gitRevisionPlugin.branch();
+// const isProduction = nodeEnv === 'production';
+// console.log(`**** ${isProduction}`);
 function parseRegexpURL(url) {
   return new RegExp(`${isBeta ? '/beta' : ''}${url.toString()}`);
 }
@@ -52,7 +53,8 @@ const { config: webpackConfig, plugins } = config({
   ...externalConfig,
   routes,
   appUrl,
-  deployment: (isProduction && betaBranches.includes(gitBranch)) || isBeta ? 'beta/apps' : 'apps',
+  // deployment: (isProduction && betaBranches.includes(gitBranch)) || isBeta ? 'beta/apps' : 'apps',
+  deployment: isBeta ? 'beta/apps' : 'apps',
   env: `${process.env.CLOUDOT_ENV}-${isBeta === 'true' ? 'beta' : 'stable'}`,
   rootFolder: rootDir,
 });
