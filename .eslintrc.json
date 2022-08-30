@@ -1,15 +1,15 @@
 {
     "env": {
         "browser": true,
-        "node": true,
-        "es6": true
+        "es6": true,
+        "node": true
     },
     "plugins": [
-        "formatjs",
         "@typescript-eslint",
-        "react",
-        "prettier",
+        "formatjs",
         "patternfly-react",
+        "prettier",
+        "react",
         "simple-import-sort",
         "sort-keys-fix",
         "testing-library"
@@ -28,7 +28,7 @@
     },
     "settings": {
         "react": {
-            "version": "17.0.2"
+            "version": "detect"
         }
     },
     "globals": {
@@ -54,6 +54,7 @@
         // "@typescript-eslint/class-name-casing": "error",
         "@typescript-eslint/consistent-type-assertions": "error",
         "@typescript-eslint/consistent-type-definitions": "error",
+        "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/explicit-member-accessibility": "off",
         "@typescript-eslint/indent": "off",
@@ -66,12 +67,11 @@
         "@typescript-eslint/prefer-for-of": "error",
         "@typescript-eslint/prefer-function-type": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
-        "@typescript-eslint/triple-slash-reference": "error",
-        "@typescript-eslint/unified-signatures": "error",
-        "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/triple-slash-reference": "error",
+        "@typescript-eslint/unified-signatures": "error",
         "arrow-parens": [2, "as-needed", { "requireForBlockBody": false }],
         "constructor-super": "error",
         "curly": "error",
@@ -125,29 +125,25 @@
             "error",
             "as-needed"
         ],
-        "react/prop-types": 0,
         "react/display-name": 0,
         "react/no-unescaped-entities": ["error", {"forbid": [">", "}"]}],
-
-        "use-isnan": "error",
+        "react/prop-types": 0,
         "simple-import-sort/imports": "error",
         "spaced-comment": "error",
         "testing-library/await-async-query": "error",
         "testing-library/no-await-sync-query": "error",
         "testing-library/no-debugging-utils": "warn",
-        "testing-library/no-dom-import": "off"
+        "testing-library/no-dom-import": "off",
+        "use-isnan": "error"
     },
-    "overrides": [
-        {
-            "files": [ "src/locales/messages.ts" ],
-            "rules": {
-                "sort-keys-fix/sort-keys-fix": "error"
-            }
-        },
-        {
-            // Enable eslint-plugin-testing-library rules or preset only for matching files!
-            "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-            "extends": ["plugin:testing-library/react"]
+    "overrides": [{
+        "files": [ "src/locales/messages.ts" ],
+        "rules": {
+            "sort-keys-fix/sort-keys-fix": "error"
         }
-    ]
+    }, {
+        // Enable eslint-plugin-testing-library rules or preset only for matching files!
+        "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+        "extends": ["plugin:testing-library/react"]
+    }]
 }
