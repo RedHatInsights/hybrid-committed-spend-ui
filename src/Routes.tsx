@@ -2,10 +2,10 @@ import { Bullseye, Spinner } from '@patternfly/react-core';
 import React, { lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const SamplePage = lazy(() => import(/* webpackChunkName: "SamplePage" */ './Routes/SamplePage/SamplePage'));
-const OopsPage = lazy(() => import(/* webpackChunkName: "OopsPage" */ './Routes/OopsPage/OopsPage'));
+const SamplePage = lazy(() => import(/* webpackChunkName: "SamplePage" */ 'routes/SamplePage/SamplePage'));
+const OopsPage = lazy(() => import(/* webpackChunkName: "OopsPage" */ 'routes/OopsPage/OopsPage'));
 const NoPermissionsPage = lazy(
-  () => import(/* webpackChunkName: "NoPermissionsPage" */ './Routes/NoPermissionsPage/NoPermissionsPage')
+  () => import(/* webpackChunkName: "NoPermissionsPage" */ 'routes/NoPermissionsPage/NoPermissionsPage')
 );
 
 const routes = [
