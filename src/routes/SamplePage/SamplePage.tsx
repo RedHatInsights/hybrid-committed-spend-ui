@@ -7,9 +7,9 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-const SampleComponent = lazy(() => import('components/SampleComponent/sample-component'));
+const SampleComponent = lazy(() => import('components/SampleComponent/SampleComponent'));
 
-import './sample-page.scss';
+import './SamplePage.scss';
 
 type SamplePageProps = RouteComponentProps<void> & WrappedComponentProps;
 
@@ -61,10 +61,10 @@ const SamplePage: React.FunctionComponent<SamplePageProps> = ({ intl }) => {
                 </Title>
               </StackItem>
               <StackItem>
-                <Link to="/oops"> How to handle 500s in app </Link>
+                <Link to="/oops"> How to handle 500s in app. </Link>
               </StackItem>
               <StackItem>
-                <Link to="/no-permissions"> How to handle 403s in app </Link>
+                <Link to="/no-permissions"> How to handle 403s in app. </Link>
               </StackItem>
             </Stack>
           </StackItem>
