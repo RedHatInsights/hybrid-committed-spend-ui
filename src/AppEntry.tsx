@@ -1,15 +1,29 @@
 import IntlProvider from '@redhat-cloud-services/frontend-components-translations/Provider';
 import { getBaseName } from '@redhat-cloud-services/frontend-components-utilities/helpers';
+import { initApi } from 'api/api';
+import { getLocale } from 'components/i18n';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import logger from 'redux-logger';
+
+// Todo: Uncomment for use with non-shared PatternFly packages
+// require.resolve('@patternfly/patternfly/patternfly.css');
+require.resolve('@patternfly/patternfly/patternfly-addons.css');
 
 // eslint-disable-next-line no-restricted-imports
 import messages from '../locales/data.json';
 import App from './App';
-import { getLocale } from './components/i18n';
-import { init } from './store';
+import { configureStore } from './store';
+
+initApi({
+  version: 'v1',
+});
+
+const store = configureStore({
+  // session: {
+  //   token: getToken(),
+  // },
+});
 
 const AppEntry = () => {
   const locale = getLocale();
@@ -17,7 +31,7 @@ const AppEntry = () => {
   /* eslint-disable no-console */
   return (
     <IntlProvider defaultLocale="en" locale={locale} messages={messages[locale]} onError={console.log}>
-      <Provider store={init(...(process.env.NODE_ENV !== 'production' ? [logger] : [])).getStore()}>
+      <Provider store={store as any}>
         <Router basename={getBaseName(window.location.pathname)}>
           <App />
         </Router>

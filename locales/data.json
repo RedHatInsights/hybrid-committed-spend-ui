@@ -1,9 +1,45 @@
 {
   "en": {
+    "errorStateNotAuthorizedDesc": [
+      {
+        "type": 0,
+        "value": "Contact the cost management administrator to provide access to this application"
+      }
+    ],
+    "errorStateNotAuthorizedTitle": [
+      {
+        "type": 0,
+        "value": "You don't have access to the Cost management application"
+      }
+    ],
+    "errorStateUnexpectedDesc": [
+      {
+        "type": 0,
+        "value": "We encountered an unexpected error. Contact your administrator."
+      }
+    ],
+    "errorStateUnexpectedTitle": [
+      {
+        "type": 0,
+        "value": "Oops!"
+      }
+    ],
     "hcs": [
       {
         "type": 0,
         "value": "Hybrid Committed Spend"
+      }
+    ],
+    "loadingStateDesc": [
+      {
+        "type": 0,
+        "value": "Searching for your sources. Do not refresh the browser"
+      }
+    ],
+    "loadingStateTitle": [
+      {
+        "type": 0,
+        "value": "Looking for sources..."
       }
     ]
   }

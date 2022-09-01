@@ -18,7 +18,9 @@
     "patch:hosts": "fec patch-etc-hosts",
     "start": "fec dev --webpack-config config/dev.webpack.config.js",
     "start:csc": "CONFIG_PORT=8889 npm start",
-    "test": "jest",
+    "test": "jest --no-cache",
+    "test:clean": "jest --clearCache",
+    "test:update": "yarn test:clean && jest --updateSnapshot",
     "translations": "npm-run-all translations:extract translations:compile translations:compile:ast translations:datafile",
     "translations:test": "npm-run-all translations:extract translations:compile translations:compile:ast 'translations:syncTranslations --locale fr' 'translations:syncTranslations --locale de' translations:datafile",
     "translations:clean": "rm -f `/bin/ls -1 locales/*.json | /usr/bin/egrep -v 'data|translations'.json`",
@@ -30,20 +32,24 @@
     "verify": "npm-run-all build lint test"
   },
   "dependencies": {
+    "@patternfly/patternfly": "^4.210.2",
     "@patternfly/react-core": "^4.231.8",
     "@redhat-cloud-services/frontend-components": "^3.9.9",
     "@redhat-cloud-services/frontend-components-notifications": "^3.2.9",
     "@redhat-cloud-services/frontend-components-translations": "^3.2.4",
     "@redhat-cloud-services/frontend-components-utilities": "^3.2.24",
+    "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-intl": "^5.24.6",
-    "react-redux": "7.2.4",
+    "react-redux": "^7.2.8",
     "react-router-dom": "5.3.3",
     "redux": "4.1.0",
     "redux-logger": "3.0.6",
-    "redux-promise-middleware": "6.1.2"
+    "redux-promise-middleware": "6.1.2",
+    "redux-thunk": "^2.4.1",
+    "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.14.0",
