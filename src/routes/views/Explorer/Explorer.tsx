@@ -9,11 +9,11 @@ import { useDispatch } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 const SampleComponent = lazy(() => import('components/SampleComponent/SampleComponent'));
 
-import './SamplePage.scss';
+import './Explorer.scss';
 
-type SamplePageProps = RouteComponentProps<void> & WrappedComponentProps;
+type ExplorerProps = RouteComponentProps<void> & WrappedComponentProps;
 
-const SamplePage: React.FunctionComponent<SamplePageProps> = ({ intl }) => {
+const Explorer: React.FunctionComponent<ExplorerProps> = ({ intl }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -74,4 +74,4 @@ const SamplePage: React.FunctionComponent<SamplePageProps> = ({ intl }) => {
   );
 };
 
-export default injectIntl(withRouter(SamplePage));
+export default injectIntl(withRouter(Explorer));
