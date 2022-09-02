@@ -7,7 +7,7 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-const SampleComponent = lazy(() => import('components/SampleComponent/SampleComponent'));
+const SampleComponent = lazy(() => import('routes/views/components/SampleComponent/SampleComponent'));
 
 import './Explorer.scss';
 
