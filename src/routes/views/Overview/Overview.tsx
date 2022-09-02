@@ -15,7 +15,7 @@ import { Loading, NotAvailable } from 'routes/state';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 
-const SampleComponent = lazy(() => import('components/SampleComponent/SampleComponent'));
+const SampleComponent = lazy(() => import('routes/views/components/SampleComponent/SampleComponent'));
 import './Overview.scss';
 
 interface OverviewStateProps {
