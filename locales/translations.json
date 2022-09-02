@@ -5,5 +5,8 @@
   "errorStateUnexpectedTitle": "Oops!",
   "hcs": "Hybrid Committed Spend",
   "loadingStateDesc": "Searching for your sources. Do not refresh the browser",
-  "loadingStateTitle": "Looking for sources..."
+  "loadingStateTitle": "Looking for sources...",
+  "pageTitleDefault": "Hybrid Committed Spend | Red Hat Business Services",
+  "pageTitleExplorer": "Explorer - Hybrid Committed Spend | Red Hat Business Services",
+  "pageTitleOverview": "Overview - Hybrid Committed Spend | Red Hat Business Services"
 }
