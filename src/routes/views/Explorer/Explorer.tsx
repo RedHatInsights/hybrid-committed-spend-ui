@@ -61,10 +61,10 @@ const Explorer: React.FunctionComponent<ExplorerProps> = ({ intl }) => {
                 </Title>
               </StackItem>
               <StackItem>
-                <Link to="/oops"> How to handle 500s in app. </Link>
+                <Link to="/oops"> How to handle 500s in app </Link>
               </StackItem>
               <StackItem>
-                <Link to="/no-permissions"> How to handle 403s in app. </Link>
+                <Link to="/no-permissions"> How to handle 403s in app </Link>
               </StackItem>
             </Stack>
           </StackItem>

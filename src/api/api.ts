@@ -19,6 +19,7 @@ export interface PagedResponse<D = any, M = any> {
 }
 
 export function initApi({ version }: { version: string }) {
+  // axios.defaults.baseURL = `/api/cost-management/${version}/`;
   axios.defaults.baseURL = `https://billing.dev.api.redhat.com/${version}/`;
   axios.interceptors.request.use(authInterceptor);
   axios.interceptors.request.use(insightsAuthInterceptor);

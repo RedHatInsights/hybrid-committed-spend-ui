@@ -34,7 +34,7 @@ type OverviewOwnProps = RouteComponentProps<void> & WrappedComponentProps;
 type OverviewProps = OverviewStateProps & OverviewOwnProps & OverviewDispatchProps;
 
 const reportType = ReportType.cost;
-const reportPathsType = ReportPathsType.sample;
+const reportPathsType = ReportPathsType.billing;
 
 const OverviewBase: React.FunctionComponent<OverviewProps> = ({
   fetchReport,

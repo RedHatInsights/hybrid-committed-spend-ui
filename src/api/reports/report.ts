@@ -71,5 +71,5 @@ export const enum ReportType {
 
 // eslint-disable-next-line no-shadow
 export const enum ReportPathsType {
-  sample = 'sample',
+  billing = 'billing',
 }
