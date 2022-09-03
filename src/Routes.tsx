@@ -1,5 +1,5 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
-import { permissionsComponent } from 'components/permissions';
+import { UserAccess } from 'components/UserAccess';
 import React, { lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -14,12 +14,12 @@ export const paths = {
 
 export const routes = [
   {
-    component: permissionsComponent(Explorer),
+    component: UserAccess(Explorer),
     exact: true,
     path: paths.explorer,
   },
   {
-    component: permissionsComponent(Overview),
+    component: UserAccess(Overview),
     exact: true,
     path: paths.overview,
   },

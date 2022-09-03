@@ -2,7 +2,7 @@ import { Spinner } from '@patternfly/react-core';
 import { getUserAccessQuery } from 'api/queries/userAccessQuery';
 import { UserAccess, UserAccessType } from 'api/userAccess';
 import { AxiosError } from 'axios';
-import { PageTitle } from 'components/pageTitle';
+import { PageTitle } from 'components/PageTitle';
 import React, { lazy, Suspense } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import { createMapStateToProps, FetchStatus } from 'store/common';
 import { uiActions } from 'store/ui';
 import { userAccessActions, userAccessQuery, userAccessSelectors } from 'store/userAccess';
 
-const Permissions = lazy(() => import('components/permissions'));
+const Permissions = lazy(() => import('./Permissions'));
 
 interface PermissionsWrapperOwnProps {
   children?: React.ReactNode;
