@@ -77,7 +77,7 @@ plugins.push(
     },
     shared: [
       { 'react-redux': { requiredVersion: dependencies['react-redux'] } },
-      // { '@unleash/proxy-client-react': { requiredVersion: '*', singleton: true } },
+      { '@unleash/proxy-client-react': { requiredVersion: '*', singleton: true } },
     ],
   }),
   ...externalPlugins
