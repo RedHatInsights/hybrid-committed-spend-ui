@@ -1,14 +1,10 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
+import { UserAccess } from 'components/UserAccess';
 import React, { lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Explorer = lazy(() => import(/* webpackChunkName: "SamplePage" */ 'routes/views/Explorer/Explorer'));
 const Overview = lazy(() => import(/* webpackChunkName: "SamplePage" */ 'routes/views/Overview/Overview'));
-
-const OopsPage = lazy(() => import(/* webpackChunkName: "OopsPage" */ 'routes/views/OopsPage/OopsPage'));
-const NoPermissionsPage = lazy(
-  () => import(/* webpackChunkName: "NoPermissionsPage" */ 'routes/views/NoPermissionsPage/NoPermissionsPage')
-);
 
 // For syncing with permissions
 export const paths = {
@@ -16,24 +12,14 @@ export const paths = {
   overview: '/',
 };
 
-const routes = [
+export const routes = [
   {
-    component: Explorer,
+    component: UserAccess(Explorer),
     exact: true,
     path: paths.explorer,
   },
   {
-    component: NoPermissionsPage,
-    exact: true,
-    path: '/no-permissions',
-  },
-  {
-    component: OopsPage,
-    exact: true,
-    path: '/oops',
-  },
-  {
-    component: Overview,
+    component: UserAccess(Overview),
     exact: true,
     path: paths.overview,
   },

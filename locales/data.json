@@ -41,6 +41,24 @@
         "type": 0,
         "value": "Looking for sources..."
       }
+    ],
+    "pageTitleDefault": [
+      {
+        "type": 0,
+        "value": "Hybrid Committed Spend | Red Hat Business Services"
+      }
+    ],
+    "pageTitleExplorer": [
+      {
+        "type": 0,
+        "value": "Explorer - Hybrid Committed Spend | Red Hat Business Services"
+      }
+    ],
+    "pageTitleOverview": [
+      {
+        "type": 0,
+        "value": "Overview - Hybrid Committed Spend | Red Hat Business Services"
+      }
     ]
   }
 }

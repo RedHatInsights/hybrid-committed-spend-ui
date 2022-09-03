@@ -37,4 +37,19 @@ export default defineMessages({
     description: 'Looking for sources',
     id: 'loadingStateTitle',
   },
+  pageTitleDefault: {
+    defaultMessage: 'Hybrid Committed Spend | Red Hat Business Services',
+    description: 'Hybrid Committed Spend | Red Hat Business Services',
+    id: 'pageTitleDefault',
+  },
+  pageTitleExplorer: {
+    defaultMessage: 'Explorer - Hybrid Committed Spend | Red Hat Business Services',
+    description: 'Explorer - Hybrid Committed Spend | Red Hat Business Services',
+    id: 'pageTitleExplorer',
+  },
+  pageTitleOverview: {
+    defaultMessage: 'Overview - Hybrid Committed Spend | Red Hat Business Services',
+    description: 'Overview - Hybrid Committed Spend | Red Hat Business Services',
+    id: 'pageTitleOverview',
+  },
 });

@@ -1,1 +1,1 @@
-export { initApi } from './api';
+export * from './api';
