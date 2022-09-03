@@ -2,9 +2,6 @@
 
 exports[`default state 1`] = `
 {
-  "isCurrencyFeatureEnabled": false,
-  "isExportsFeatureEnabled": false,
-  "isIbmFeatureEnabled": false,
-  "isOciFeatureEnabled": false,
+  "isExplorerFeatureEnabled": false,
 }
 `;
