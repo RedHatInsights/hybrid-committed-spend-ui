@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fetch widget reports 1`] = `
+[
+  [
+    "billing",
+    "cost",
+    "filter[time_scope_units]=month&filter[time_scope_value]=-1&filter[resolution]=daily",
+  ],
+]
+`;

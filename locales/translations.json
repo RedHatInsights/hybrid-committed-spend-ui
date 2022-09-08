@@ -1,4 +1,7 @@
 {
+  "currencyAbbreviations": "{symbol, select, billion {{value} B} million {{value} M} quadrillion {{value} q} thousand {{value} K} trillion {{value} t} other {}}",
+  "dashboardActualSpendTitle": "Actual spend of included products YTD",
+  "dashboardCommitmentBalanceTitle": "Remaining commitment balance",
   "errorStateNotAuthorizedDesc": "Contact the cost management administrator to provide access to this application",
   "errorStateNotAuthorizedTitle": "You don't have access to the Cost management application",
   "errorStateUnexpectedDesc": "We encountered an unexpected error. Contact your administrator.",
@@ -6,6 +9,8 @@
   "hcs": "Hybrid Committed Spend",
   "loadingStateDesc": "Searching for your sources. Do not refresh the browser",
   "loadingStateTitle": "Looking for sources...",
+  "outOf": "out of {value}",
+  "overLastMonth": "Over last month",
   "pageTitleDefault": "Hybrid Committed Spend | Red Hat Business Services",
   "pageTitleExplorer": "Explorer - Hybrid Committed Spend | Red Hat Business Services",
   "pageTitleOverview": "Overview - Hybrid Committed Spend | Red Hat Business Services"

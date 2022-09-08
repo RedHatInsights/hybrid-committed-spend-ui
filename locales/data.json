@@ -1,5 +1,88 @@
 {
   "en": {
+    "currencyAbbreviations": [
+      {
+        "options": {
+          "billion": {
+            "value": [
+              {
+                "type": 1,
+                "value": "value"
+              },
+              {
+                "type": 0,
+                "value": " B"
+              }
+            ]
+          },
+          "million": {
+            "value": [
+              {
+                "type": 1,
+                "value": "value"
+              },
+              {
+                "type": 0,
+                "value": " M"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "quadrillion": {
+            "value": [
+              {
+                "type": 1,
+                "value": "value"
+              },
+              {
+                "type": 0,
+                "value": " q"
+              }
+            ]
+          },
+          "thousand": {
+            "value": [
+              {
+                "type": 1,
+                "value": "value"
+              },
+              {
+                "type": 0,
+                "value": " K"
+              }
+            ]
+          },
+          "trillion": {
+            "value": [
+              {
+                "type": 1,
+                "value": "value"
+              },
+              {
+                "type": 0,
+                "value": " t"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "symbol"
+      }
+    ],
+    "dashboardActualSpendTitle": [
+      {
+        "type": 0,
+        "value": "Actual spend of included products YTD"
+      }
+    ],
+    "dashboardCommitmentBalanceTitle": [
+      {
+        "type": 0,
+        "value": "Remaining commitment balance"
+      }
+    ],
     "errorStateNotAuthorizedDesc": [
       {
         "type": 0,
@@ -40,6 +123,22 @@
       {
         "type": 0,
         "value": "Looking for sources..."
+      }
+    ],
+    "outOf": [
+      {
+        "type": 0,
+        "value": "out of "
+      },
+      {
+        "type": 1,
+        "value": "value"
+      }
+    ],
+    "overLastMonth": [
+      {
+        "type": 0,
+        "value": "Over last month"
       }
     ],
     "pageTitleDefault": [

@@ -1,0 +1,14 @@
+@import url("~@patternfly/patternfly/base/patternfly-variables.css");
+
+.value {
+  color: var(--pf-global--Color--100);
+  margin-right: var(--pf-global--spacer--sm);
+  font-size: var(--pf-global--FontSize--4xl);
+}
+
+.valueContainer {
+  display: inline-block;
+  margin-bottom: var(--pf-global--spacer--md);
+  width: 50%;
+  word-Wrap: break-word;
+}
