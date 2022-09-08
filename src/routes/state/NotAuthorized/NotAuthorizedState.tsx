@@ -9,7 +9,7 @@ interface NotAuthorizedStateOwnProps {
   pathname?: string;
 }
 
-type NotAuthorizedStateProps = NotAuthorizedStateOwnProps & WrappedComponentProps & RouteComponentProps<void>;
+type NotAuthorizedStateProps = NotAuthorizedStateOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 class NotAuthorizedStateBase extends React.Component<NotAuthorizedStateProps> {
   public render() {
