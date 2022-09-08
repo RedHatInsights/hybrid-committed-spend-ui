@@ -2,6 +2,28 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  currencyAbbreviations: {
+    defaultMessage:
+      '{symbol, select, ' +
+      'billion {{value} B} ' +
+      'million {{value} M} ' +
+      'quadrillion {{value} q} ' +
+      'thousand {{value} K} ' +
+      'trillion {{value} t} ' +
+      'other {}}',
+    description: 'str.match(/([\\D]*)([\\d.,]+)([\\D]*)/)',
+    id: 'currencyAbbreviations',
+  },
+  dashboardActualSpendTitle: {
+    defaultMessage: 'Actual spend of included products YTD',
+    description: 'Actual spend of included products YTD',
+    id: 'dashboardActualSpendTitle',
+  },
+  dashboardCommitmentBalanceTitle: {
+    defaultMessage: 'Remaining commitment balance',
+    description: 'Remaining commitment balance',
+    id: 'dashboardCommitmentBalanceTitle',
+  },
   errorStateNotAuthorizedDesc: {
     defaultMessage: 'Contact the cost management administrator to provide access to this application',
     description: 'Contact the cost management administrator to provide access to this application',
@@ -36,6 +58,16 @@ export default defineMessages({
     defaultMessage: 'Looking for sources...',
     description: 'Looking for sources',
     id: 'loadingStateTitle',
+  },
+  outOf: {
+    defaultMessage: 'out of {value}',
+    description: 'out of {value}',
+    id: 'outOf',
+  },
+  overLastMonth: {
+    defaultMessage: 'Over last month',
+    description: 'Over last month',
+    id: 'overLastMonth',
   },
   pageTitleDefault: {
     defaultMessage: 'Hybrid Committed Spend | Red Hat Business Services',
