@@ -1,4 +1,4 @@
-import './reportSummary.scss';
+import './ReportSummary.scss';
 
 import { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Card, CardBody, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
