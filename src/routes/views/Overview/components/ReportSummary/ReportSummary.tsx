@@ -7,14 +7,16 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FetchStatus } from 'store/common';
 import { skeletonWidth } from 'utils/skeleton';
 
-interface ReportSummaryProps extends WrappedComponentProps {
+interface ReportSummaryOwnProps {
   children?: React.ReactNode;
-  status: number;
+  fetchStatus: number;
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;
 }
 
-const ReportSummaryBase: React.SFC<ReportSummaryProps> = ({ children, intl, title, subTitle, status }) => (
+type ReportSummaryProps = ReportSummaryOwnProps & WrappedComponentProps;
+
+const ReportSummaryBase: React.SFC<ReportSummaryProps> = ({ children, fetchStatus, intl, title, subTitle }) => (
   <Card className="reportSummary">
     <CardTitle>
       <Title headingLevel="h2" size={TitleSizes.lg}>
@@ -23,7 +25,7 @@ const ReportSummaryBase: React.SFC<ReportSummaryProps> = ({ children, intl, titl
       {Boolean(subTitle) && <p className="subtitle">{intl.formatMessage(subTitle)}</p>}
     </CardTitle>
     <CardBody>
-      {status === FetchStatus.inProgress ? (
+      {fetchStatus === FetchStatus.inProgress ? (
         <>
           <Skeleton width="16%" />
           <Skeleton className="chartSkeleton" width={skeletonWidth.md} />

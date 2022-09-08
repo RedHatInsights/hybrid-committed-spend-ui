@@ -6,17 +6,18 @@ import {
   DashboardWidgetStateProps,
 } from 'routes/views/Overview/components/Dashboard';
 import { createMapStateToProps } from 'store/common';
-import { billingDashboardActions, billingDashboardSelectors } from 'store/dashboard/billingDashboard';
+import { billingDashboardSelectors } from 'store/dashboard/billingDashboard';
 import { reportSelectors } from 'store/reports';
 
 interface BillingDashboardWidgetDispatchProps {
-  fetchReports: typeof billingDashboardActions.fetchWidgetReports;
+  // TBD...
 }
 
 const mapStateToProps = createMapStateToProps<DashboardWidgetOwnProps, DashboardWidgetStateProps>(
   (state, { widgetId }) => {
     const widget = billingDashboardSelectors.selectWidget(state, widgetId);
     const queries = billingDashboardSelectors.selectWidgetQueries(state, widgetId);
+
     return {
       ...widget,
       currentQuery: queries.current,
@@ -52,7 +53,7 @@ const mapStateToProps = createMapStateToProps<DashboardWidgetOwnProps, Dashboard
 );
 
 const mapDispatchToProps: BillingDashboardWidgetDispatchProps = {
-  fetchReports: billingDashboardActions.fetchWidgetReports,
+  // TBD...
 };
 
 const BillingDashboardWidget = injectIntl(connect(mapStateToProps, mapDispatchToProps)(DashboardWidgetBase));

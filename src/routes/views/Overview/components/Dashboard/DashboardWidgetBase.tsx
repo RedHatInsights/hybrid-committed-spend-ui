@@ -15,7 +15,7 @@ interface DashboardWidgetOwnProps {
   widgetId: number;
 }
 
-interface DashboardWidgetStateProps extends DashboardWidget<any> {
+interface DashboardWidgetStateProps extends DashboardWidget<any, any> {
   currentQuery: string;
   currentReport: Report;
   currentReportError: AxiosError;
@@ -59,8 +59,8 @@ const DashboardWidgetBase: React.FunctionComponent<DashboardWidgetProps> = ({
       previousReportFetchStatus === FetchStatus.inProgress ? previousReportFetchStatus : currentReportFetchStatus;
 
     return (
-      <ReportSummary status={status} title={title}>
-        <ActualSpend report={currentReport} />
+      <ReportSummary fetchStatus={status} title={title}>
+        <ActualSpend widgetId={0} />
       </ReportSummary>
     );
   };
@@ -70,7 +70,7 @@ const DashboardWidgetBase: React.FunctionComponent<DashboardWidgetProps> = ({
       previousReportFetchStatus === FetchStatus.inProgress ? previousReportFetchStatus : currentReportFetchStatus;
 
     return (
-      <ReportSummary status={status} title={title}>
+      <ReportSummary fetchStatus={status} title={title}>
         <ActualSpendBreakdown report={currentReport} />
       </ReportSummary>
     );
@@ -81,7 +81,7 @@ const DashboardWidgetBase: React.FunctionComponent<DashboardWidgetProps> = ({
       previousReportFetchStatus === FetchStatus.inProgress ? previousReportFetchStatus : currentReportFetchStatus;
 
     return (
-      <ReportSummary status={status} title={title}>
+      <ReportSummary fetchStatus={status} title={title}>
         <CommittedSpend report={currentReport} />
       </ReportSummary>
     );
@@ -92,7 +92,7 @@ const DashboardWidgetBase: React.FunctionComponent<DashboardWidgetProps> = ({
       previousReportFetchStatus === FetchStatus.inProgress ? previousReportFetchStatus : currentReportFetchStatus;
 
     return (
-      <ReportSummary status={status} title={title}>
+      <ReportSummary fetchStatus={status} title={title}>
         <CommittedSpendTrend report={currentReport} />
       </ReportSummary>
     );
@@ -108,7 +108,7 @@ const DashboardWidgetBase: React.FunctionComponent<DashboardWidgetProps> = ({
     case BillingCardType.committedSpendTrend:
       return getCommittedSpendTrendLayout();
     default:
-      return <></>;
+      return null;
   }
 };
 

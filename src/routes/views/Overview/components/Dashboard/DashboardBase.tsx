@@ -1,7 +1,7 @@
 import { Grid, GridItem } from '@patternfly/react-core';
 import React from 'react';
 import { WrappedComponentProps } from 'react-intl';
-import { BillingCardType } from 'store/dashboard/billingDashboard';
+import { BillingCardSize } from 'store/dashboard/billingDashboard';
 
 type DashboardOwnProps = WrappedComponentProps;
 
@@ -16,19 +16,17 @@ interface DashboardDispatchProps {
 
 type DashboardProps = DashboardOwnProps & DashboardStateProps & DashboardDispatchProps;
 
-const DashboardBase: React.SFC<DashboardProps> = ({ DashboardWidget, selectWidgets, widgets }) => (
+const DashboardBase: React.SFC<DashboardProps> = ({ selectWidgets, widgets }) => (
   <Grid hasGutter>
     {widgets.map(widgetId => {
       const widget = selectWidgets[widgetId];
-      const fullGrid =
-        widget.type === BillingCardType.actualSpendBreakdown || widget.type === BillingCardType.committedSpendTrend;
-      return fullGrid ? (
+      return widget.size === BillingCardSize.full ? (
         <GridItem sm={12} key={widgetId}>
-          <DashboardWidget widgetId={widgetId} />
+          <widget.component widgetId={widgetId} />
         </GridItem>
       ) : (
         <GridItem lg={12} xl2={6} key={widgetId}>
-          <DashboardWidget widgetId={widgetId} />
+          <widget.component widgetId={widgetId} />
         </GridItem>
       );
     })}
