@@ -1,21 +1,26 @@
 module.exports = {
   clearMocks: true,
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.js', '!src/**/stories/*'],
+  collectCoverageFrom: ['src/**/*.tsx'],
   coverageDirectory: './coverage/',
   fakeTimers: {
     enableGlobally: true,
   },
-  moduleDirectories: [
-    'node_modules',
-    '<rootDir>/src', // the root directory
-  ],
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  moduleDirectories: ['node_modules', '<rootDir>/src'],
   moduleNameMapper: {
-    '\\.(css|scss)$': 'identity-obj-proxy',
+    '\\.(css|less|sass|scss)$': '<rootDir>/test/styleMock.js',
   },
-  roots: ['<rootDir>/src/'],
-  transformIgnorePatterns: ['/node_modules/(?!@redhat-cloud-services)', '/node_modules/(?!@patternfly)'],
+  roots: ['<rootDir>/src'],
+  setupFiles: ['<rootDir>/test/testEnv.ts'],
   testEnvironment: 'jest-environment-jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost/',
+  },
   testRegex: '\\.test\\.(jsx?|tsx?)$',
-  setupFilesAfterEnv: ['<rootDir>/config/jest.setup.js'],
+  transform: {
+    '^.+\\.[jt]sx?$': '<rootDir>/test/transformTS.js',
+    '^.+\\.(jpg)$': '<rootDir>/test/transformFile.js',
+  },
+  transformIgnorePatterns: ['node_modules/(?!@patternfly/react-icons/dist/esm)'],
 };
