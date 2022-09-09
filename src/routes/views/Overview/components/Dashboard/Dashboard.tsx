@@ -18,7 +18,7 @@ interface DashboardDispatchProps {
 
 type DashboardProps = DashboardOwnProps & DashboardStateProps & DashboardDispatchProps;
 
-const DashboardBase: React.SFC<DashboardProps> = ({ selectWidgets, widgets }) => (
+const DashboardBase: React.FC<DashboardProps> = ({ selectWidgets, widgets }) => (
   <Grid hasGutter>
     {widgets.map(widgetId => {
       const widget = selectWidgets[widgetId];

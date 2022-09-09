@@ -38,7 +38,7 @@ export type ActualSpendProps = ActualSpendStateProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const ActualSpendBase: React.SFC<ActualSpendProps> = ({
+const ActualSpendBase: React.FC<ActualSpendProps> = ({
   fetchReport,
   intl,
   queryString,
