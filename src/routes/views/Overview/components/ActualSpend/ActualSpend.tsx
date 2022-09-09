@@ -12,7 +12,7 @@ import { EmptyValueState } from 'routes/components/state';
 import { NotAvailable } from 'routes/state';
 import { ReportSummary } from 'routes/views/Overview/components/ReportSummary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
-import { billingDashboardSelectors, BillingDashboardWidget } from 'store/dashboard/billingDashboard';
+import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency } from 'utils/format';
 
@@ -26,14 +26,14 @@ interface ActualSpendStateProps {
   report: Report;
   reportError: AxiosError;
   reportFetchStatus: FetchStatus;
-  widget: BillingDashboardWidget;
+  widget: DashboardWidget;
 }
 
 interface ActualSpendDispatchProps {
   fetchReport: typeof reportActions.fetchReport;
 }
 
-type ActualSpendProps = ActualSpendStateProps &
+export type ActualSpendProps = ActualSpendStateProps &
   ActualSpendOwnProps &
   ActualSpendDispatchProps &
   RouteComponentProps<void> &
@@ -84,8 +84,8 @@ const ActualSpendBase: React.SFC<ActualSpendProps> = ({
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mapStateToProps = createMapStateToProps<ActualSpendOwnProps, ActualSpendStateProps>((state, { widgetId }) => {
-  const widget = billingDashboardSelectors.selectWidget(state, widgetId);
-  // const queries = billingDashboardSelectors.selectWidgetQueries(state, widgetId);
+  const widget = dashboardSelectors.selectWidget(state, widgetId);
+  // const queries = dashboardSelectors.selectWidgetQueries(state, widgetId);
 
   // TBD...
   const queryFromRoute = parseQuery<Query>(location.search);

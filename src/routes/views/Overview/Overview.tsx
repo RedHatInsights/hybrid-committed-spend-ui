@@ -5,7 +5,7 @@ import React, { lazy, Suspense } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-const BillingDashboard = lazy(() => import('./BillingDashboard/BillingDashboard'));
+const Dashboard = lazy(() => import('routes/views/Overview/components/Dashboard/Dashboard'));
 
 import { Spinner } from '@patternfly/react-core';
 
@@ -19,7 +19,7 @@ const OverviewBase: React.FunctionComponent<OverviewProps> = ({ intl }) => {
       </PageHeader>
       <Main>
         <Suspense fallback={<Spinner />}>
-          <BillingDashboard />
+          <Dashboard />
         </Suspense>
       </Main>
     </React.Fragment>
