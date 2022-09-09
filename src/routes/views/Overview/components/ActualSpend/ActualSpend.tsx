@@ -65,10 +65,12 @@ const ActualSpendBase: React.SFC<ActualSpendProps> = ({
     );
   }
 
+  // Todo: show errors
+  const isTest = true;
   return (
     <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
-      {reportError ? (
-        <NotAvailable title={widget.title} />
+      {!isTest && reportError ? (
+        <NotAvailable />
       ) : (
         <>
           <div>August 2022 - February 2023</div>
