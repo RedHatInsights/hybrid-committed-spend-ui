@@ -39,7 +39,7 @@ export type ActualSpendBreakdownProps = ActualSpendBreakdownStateProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const ActualSpendBreakdownBase: React.SFC<ActualSpendBreakdownProps> = ({
+const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   fetchReport,
   intl,
   queryString,

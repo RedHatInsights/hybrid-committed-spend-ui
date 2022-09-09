@@ -4,34 +4,20 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { paths, routes } from 'Routes';
 
-interface PageTitleOwnProps extends RouteComponentProps<void> {
+interface PageTitleOwnProps {
   children?: React.ReactNode;
 }
 
-interface PageTitleState {
-  // TBD...
-}
+type PageTitleProps = PageTitleOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-type PageTitleProps = PageTitleOwnProps & WrappedComponentProps;
-
-class PageTitleBase extends React.Component<PageTitleProps> {
-  protected defaultState: PageTitleState = {
-    // TBD...
-  };
-  public state: PageTitleState = { ...this.defaultState };
-
-  private getPath() {
-    const { location }: any = this.props;
-
+const PageTitleBase: React.FC<PageTitleProps> = ({ children = null, intl, location }) => {
+  const getPath = () => {
     const currRoute = routes.find(({ path }) => path === location.pathname);
-
     return currRoute ? currRoute.path : undefined;
-  }
+  };
 
-  private getPageTitle() {
-    const path = this.getPath();
-
-    switch (path) {
+  const getPageTitle = () => {
+    switch (getPath()) {
       case paths.explorer:
         return messages.pageTitleExplorer;
       case paths.overview:
@@ -39,18 +25,13 @@ class PageTitleBase extends React.Component<PageTitleProps> {
       default:
         return messages.pageTitleDefault;
     }
-  }
+  };
 
-  public render() {
-    const { children = null, intl } = this.props;
+  // Set page title
+  document.title = intl.formatMessage(getPageTitle());
 
-    // Set page title
-    document.title = intl.formatMessage(this.getPageTitle());
+  return <>{children}</>;
+};
 
-    return children;
-  }
-}
-
-const PageTitle = injectIntl(withRouter(PageTitleBase));
-
-export { PageTitle };
+const PageTitle = withRouter(PageTitleBase);
+export default injectIntl(PageTitle);

@@ -13,7 +13,7 @@ import './Explorer.scss';
 
 type ExplorerProps = RouteComponentProps<void> & WrappedComponentProps;
 
-const Explorer: React.FunctionComponent<ExplorerProps> = ({ intl }) => {
+const Explorer: React.FC<ExplorerProps> = ({ intl }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {

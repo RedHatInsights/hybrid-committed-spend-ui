@@ -39,7 +39,7 @@ export type CommittedSpendTrendProps = CommittedSpendTrendStateProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const CommittedSpendTrendBase: React.SFC<CommittedSpendTrendProps> = ({
+const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   fetchReport,
   intl,
   queryString,

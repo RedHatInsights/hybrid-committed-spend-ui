@@ -31,7 +31,7 @@ type OverviewProps = OverviewOwnProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const OverviewBase: React.FunctionComponent<OverviewProps> = ({ hasReportErrors, intl }) => {
+const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors, intl }) => {
   // Todo: Remove when APIs are available
   const isTest = true;
   return (

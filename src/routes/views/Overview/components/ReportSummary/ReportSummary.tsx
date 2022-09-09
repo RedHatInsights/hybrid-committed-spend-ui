@@ -16,7 +16,7 @@ interface ReportSummaryOwnProps {
 
 type ReportSummaryProps = ReportSummaryOwnProps & WrappedComponentProps;
 
-const ReportSummaryBase: React.SFC<ReportSummaryProps> = ({ children, fetchStatus, intl, title, subTitle }) => (
+const ReportSummaryBase: React.FC<ReportSummaryProps> = ({ children, fetchStatus, intl, title, subTitle }) => (
   <Card className="reportSummary">
     <CardTitle>
       <Title headingLevel="h2" size={TitleSizes.lg}>
