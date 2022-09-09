@@ -25,3 +25,7 @@ export const selectReportError = (
   reportType: ReportType,
   query: string
 ) => selectReportState(state).errors.get(getReportId(reportPathsType, reportType, query));
+
+export const selectHasErrors = (state: RootState) => {
+  return selectReportState(state).errors.size > 0;
+};

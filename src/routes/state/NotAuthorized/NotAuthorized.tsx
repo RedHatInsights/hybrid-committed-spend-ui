@@ -1,23 +1,25 @@
+import { MessageDescriptor } from '@formatjs/intl/src/types';
 import Main from '@redhat-cloud-services/frontend-components/Main';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import React from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { NotAuthorizedState } from './NotAuthorizedState';
 
 interface NotAuthorizedOwnProps {
   pathname?: string;
-  title?: string;
+  title?: MessageDescriptor;
 }
 
-type NotAuthorizedProps = NotAuthorizedOwnProps & RouteComponentProps<void>;
+type NotAuthorizedProps = NotAuthorizedOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const NotAuthorized = ({ pathname, title }: NotAuthorizedProps) => {
+const NotAuthorizedBase = ({ intl, pathname, title }: NotAuthorizedProps) => {
   return (
     <>
       {title && (
         <PageHeader>
-          <PageHeaderTitle title={title} />
+          <PageHeaderTitle title={intl.formatMessage(title)} />
         </PageHeader>
       )}
       <Main>
@@ -27,4 +29,5 @@ const NotAuthorized = ({ pathname, title }: NotAuthorizedProps) => {
   );
 };
 
-export default withRouter(NotAuthorized);
+const NotAuthorized = withRouter(NotAuthorizedBase);
+export default injectIntl(NotAuthorized);

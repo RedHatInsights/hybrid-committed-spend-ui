@@ -1,20 +1,57 @@
 import './CommittedSpend.scss';
 
+import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
+import { AxiosError } from 'axios';
 import messages from 'locales/messages';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
-import { formatCurrency, FormatOptions } from 'utils/format';
+import { NotAvailable } from 'routes/state';
+import { ReportSummary } from 'routes/views/Overview/components/ReportSummary';
+import { createMapStateToProps, FetchStatus } from 'store/common';
+import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
+import { reportActions, reportSelectors } from 'store/reports';
+import { formatCurrency } from 'utils/format';
 
 interface CommittedSpendOwnProps {
-  formatOptions?: FormatOptions;
-  report: Report;
+  widgetId: number;
 }
 
-type CommittedSpendProps = CommittedSpendOwnProps & WrappedComponentProps;
+interface CommittedSpendStateProps {
+  query: Query;
+  queryString: string;
+  report?: Report;
+  reportError?: AxiosError;
+  reportFetchStatus?: FetchStatus;
+  widget: DashboardWidget;
+}
 
-const CommittedSpendBase: React.SFC<CommittedSpendProps> = ({ formatOptions = {}, intl, report }) => {
+interface CommittedSpendDispatchProps {
+  fetchReport: typeof reportActions.fetchReport;
+}
+
+export type CommittedSpendProps = CommittedSpendStateProps &
+  CommittedSpendOwnProps &
+  CommittedSpendDispatchProps &
+  RouteComponentProps<void> &
+  WrappedComponentProps;
+
+const CommittedSpendBase: React.SFC<CommittedSpendProps> = ({
+  fetchReport,
+  intl,
+  queryString,
+  report,
+  reportError,
+  reportFetchStatus,
+  widget,
+}) => {
+  useMemo(() => {
+    fetchReport(widget.reportPathsType, widget.reportType, queryString);
+  }, [queryString]);
+
   let balance: string | React.ReactNode = <EmptyValueState />;
   let committed: string | React.ReactNode = <EmptyValueState />;
 
@@ -25,26 +62,76 @@ const CommittedSpendBase: React.SFC<CommittedSpendProps> = ({ formatOptions = {}
     balance = formatCurrency(
       hasCost ? report.meta.total.cost.total.value : 0,
       hasCost ? report.meta.total.cost.total.units : 'USD',
-      formatOptions
+      {}
     );
     committed = formatCurrency(
       hasCost ? report.meta.total.cost.total.value : 0,
       hasCost ? report.meta.total.cost.total.units : 'USD',
-      formatOptions
+      {}
     );
   }
 
+  // Todo: show errors
+  const isTest = true;
   return (
-    <>
-      <div>March 2023 - July 31, 2023</div>
-      <div className="valueContainer">
-        <div className={`value`}>{balance}</div>
-        <div>{intl.formatMessage(messages.outOf, { value: committed })}</div>
-      </div>
-    </>
+    <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
+      {!isTest && reportError ? (
+        <NotAvailable />
+      ) : (
+        <>
+          <div>March 2023 - July 31, 2023</div>
+          <div className="valueContainer">
+            <div className={`value`}>{balance}</div>
+            <div>{intl.formatMessage(messages.outOf, { value: committed })}</div>
+          </div>
+        </>
+      )}
+    </ReportSummary>
   );
 };
 
-const CommittedSpend = injectIntl(CommittedSpendBase);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const mapStateToProps = createMapStateToProps<CommittedSpendOwnProps, CommittedSpendStateProps>(
+  (state, { widgetId }) => {
+    const widget = dashboardSelectors.selectWidget(state, widgetId);
+    // const queries = dashboardSelectors.selectWidgetQueries(state, widgetId);
 
-export default CommittedSpend;
+    // TBD...
+    const queryFromRoute = parseQuery<Query>(location.search);
+    const query = {
+      filter: {
+        ...queryFromRoute.filter,
+      },
+    };
+    const queryString = getQuery(query);
+    const report = reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString);
+    const reportError = reportSelectors.selectReportError(
+      state,
+      widget.reportPathsType,
+      widget.reportType,
+      queryString
+    );
+    const reportFetchStatus = reportSelectors.selectReportFetchStatus(
+      state,
+      widget.reportPathsType,
+      widget.reportType,
+      queryString
+    );
+
+    return {
+      query,
+      queryString,
+      report,
+      reportError,
+      reportFetchStatus,
+      widget,
+    };
+  }
+);
+
+const mapDispatchToProps: CommittedSpendDispatchProps = {
+  fetchReport: reportActions.fetchReport,
+};
+
+const CommittedSpend = withRouter(CommittedSpendBase);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CommittedSpend));
