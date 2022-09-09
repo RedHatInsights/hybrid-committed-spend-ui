@@ -9,7 +9,6 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
-import { NotAvailable } from 'routes/state';
 import { ReportSummary } from 'routes/views/Overview/components/ReportSummary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
@@ -23,9 +22,9 @@ interface ActualSpendOwnProps {
 interface ActualSpendStateProps {
   query: Query;
   queryString: string;
-  report: Report;
-  reportError: AxiosError;
-  reportFetchStatus: FetchStatus;
+  report?: Report;
+  reportError?: AxiosError;
+  reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
 }
 
@@ -44,7 +43,6 @@ const ActualSpendBase: React.SFC<ActualSpendProps> = ({
   intl,
   queryString,
   report,
-  reportError,
   reportFetchStatus,
   widget,
 }) => {
@@ -65,21 +63,13 @@ const ActualSpendBase: React.SFC<ActualSpendProps> = ({
     );
   }
 
-  // Todo: show errors
-  const isTest = true;
   return (
     <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
-      {!isTest && reportError ? (
-        <NotAvailable />
-      ) : (
-        <>
-          <div>August 2022 - February 2023</div>
-          <div className="valueContainer">
-            <div className={`value`}>{value}</div>
-            <div>{intl.formatMessage(messages.overLastMonth)}</div>
-          </div>
-        </>
-      )}
+      <div>August 2022 - February 2023</div>
+      <div className="valueContainer">
+        <div className={`value`}>{value}</div>
+        <div>{intl.formatMessage(messages.overLastMonth)}</div>
+      </div>
     </ReportSummary>
   );
 };

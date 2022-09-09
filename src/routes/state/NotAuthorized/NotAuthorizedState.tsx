@@ -1,4 +1,4 @@
-import _NotAuthorized from '@redhat-cloud-services/frontend-components/NotAuthorized';
+import NotAuthorized from '@redhat-cloud-services/frontend-components/NotAuthorized';
 import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -24,7 +24,7 @@ class NotAuthorizedStateBase extends React.Component<NotAuthorizedStateProps> {
         msg = messages.hcs;
         break;
     }
-    return <_NotAuthorized serviceName={intl.formatMessage(msg)} />;
+    return <NotAuthorized serviceName={intl.formatMessage(msg)} />;
   }
 }
 

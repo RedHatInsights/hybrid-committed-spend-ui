@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { createMapStateToProps } from 'store/common';
 import { dashboardSelectors, DashboardSize } from 'store/dashboard';
 
-type DashboardOwnProps = any;
+interface DashboardOwnProps {
+  // TBD...
+}
 
 interface DashboardStateProps {
   widgets: number[];

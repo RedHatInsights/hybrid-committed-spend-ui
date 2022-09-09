@@ -6,25 +6,52 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 const Dashboard = lazy(() => import('routes/views/Overview/components/Dashboard/Dashboard'));
+const NotAvailable = lazy(() => import('routes/state/NotAvailable/NotAvailable'));
 
 import { Spinner } from '@patternfly/react-core';
+import { connect } from 'react-redux';
+import { createMapStateToProps } from 'store/common';
+import { reportSelectors } from 'store/reports';
 
-type OverviewProps = RouteComponentProps<void> & WrappedComponentProps;
+interface OverviewOwnProps {
+  // TBD...
+}
 
-const OverviewBase: React.FunctionComponent<OverviewProps> = ({ intl }) => {
+interface OverviewStateProps {
+  hasReportErrors: boolean;
+}
+
+interface OverviewDispatchProps {
+  // TBD...
+}
+
+type OverviewProps = OverviewOwnProps &
+  OverviewStateProps &
+  OverviewDispatchProps &
+  RouteComponentProps<void> &
+  WrappedComponentProps;
+
+const OverviewBase: React.FunctionComponent<OverviewProps> = ({ hasReportErrors, intl }) => {
+  // Todo: Remove when APIs are available
+  const isTest = true;
   return (
     <React.Fragment>
       <PageHeader>
         <PageHeaderTitle title={intl.formatMessage(messages.hcs)} />
       </PageHeader>
       <Main>
-        <Suspense fallback={<Spinner />}>
-          <Dashboard />
-        </Suspense>
+        <Suspense fallback={<Spinner />}>{!isTest && hasReportErrors ? <NotAvailable /> : <Dashboard />}</Suspense>
       </Main>
     </React.Fragment>
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const mapStateToProps = createMapStateToProps<OverviewOwnProps, OverviewStateProps>((state, props) => {
+  return {
+    hasReportErrors: reportSelectors.selectHasErrors(state),
+  };
+});
+
 const Overview = withRouter(OverviewBase);
-export default injectIntl(Overview);
+export default injectIntl(connect(mapStateToProps, {})(Overview));

@@ -23,9 +23,9 @@ interface CommittedSpendOwnProps {
 interface CommittedSpendStateProps {
   query: Query;
   queryString: string;
-  report: Report;
-  reportError: AxiosError;
-  reportFetchStatus: FetchStatus;
+  report?: Report;
+  reportError?: AxiosError;
+  reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
 }
 
