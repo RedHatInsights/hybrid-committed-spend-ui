@@ -1,4 +1,4 @@
-import { UserAccess } from 'api/userAccess';
+import { UserAccess } from 'api/user-access';
 import { AxiosError } from 'axios';
 import { FetchStatus } from 'store/common';
 import { resetState } from 'store/ui/uiActions';

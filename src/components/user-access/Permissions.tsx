@@ -1,16 +1,15 @@
 import { getUserAccessQuery } from 'api/queries/userAccessQuery';
-import { UserAccess, UserAccessType } from 'api/userAccess';
+import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { paths, routes } from 'Routes';
-import { Loading } from 'routes/state/Loading';
-import { NotAuthorized } from 'routes/state/NotAuthorized';
-import { NotAvailable } from 'routes/state/NotAvailable';
+import { Loading } from 'routes/state';
+import { NotAuthorized, NotAvailable } from 'routes/state';
 import { createMapStateToProps, FetchStatus } from 'store/common';
-import { featureFlagsSelectors } from 'store/featureFlags';
-import { userAccessQuery, userAccessSelectors } from 'store/userAccess';
+import { featureFlagsSelectors } from 'store/feature-flags/';
+import { userAccessQuery, userAccessSelectors } from 'store/user-access';
 import { hasAllAccess } from 'utils/userAccess';
 
 interface PermissionsOwnProps extends RouteComponentProps<void> {

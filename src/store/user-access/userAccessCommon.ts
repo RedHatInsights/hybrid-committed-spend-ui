@@ -1,5 +1,5 @@
 import { UserAccessQuery } from 'api/queries/userAccessQuery';
-import { UserAccessType } from 'api/userAccess';
+import { UserAccessType } from 'api/user-access';
 
 export const stateKey = 'userAccess';
 export const userAccessKey = 'user-access';

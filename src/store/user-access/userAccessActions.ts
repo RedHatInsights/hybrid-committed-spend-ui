@@ -1,5 +1,5 @@
-import { fetchUserAccess as apiGetUserAccess } from 'api/userAccess';
-import { UserAccess, UserAccessType } from 'api/userAccess';
+import { fetchUserAccess as apiGetUserAccess } from 'api/user-access';
+import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
 import { createAction } from 'typesafe-actions';
 

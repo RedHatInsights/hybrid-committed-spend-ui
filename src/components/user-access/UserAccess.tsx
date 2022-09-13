@@ -1,7 +1,7 @@
 import { Spinner } from '@patternfly/react-core';
 import React, { lazy, Suspense } from 'react';
 
-const PermissionsWrapper = lazy(() => import('components/UserAccess/PermissionsWrapper'));
+const PermissionsWrapper = lazy(() => import('components/user-access/PermissionsWrapper'));
 
 // Permissions component wrapper
 export function UserAccess<Props>(Component) {

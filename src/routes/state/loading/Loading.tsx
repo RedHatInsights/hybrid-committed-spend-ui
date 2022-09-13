@@ -4,7 +4,7 @@ import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { LoadingState } from 'routes/components/state/LoadingState';
+import { LoadingState } from 'routes/components/state/loading';
 
 interface LoadingOwnProps {
   title?: MessageDescriptor;

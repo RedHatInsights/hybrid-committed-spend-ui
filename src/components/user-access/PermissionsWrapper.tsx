@@ -1,14 +1,14 @@
 import { Spinner } from '@patternfly/react-core';
 import { getUserAccessQuery } from 'api/queries/userAccessQuery';
-import { UserAccess, UserAccessType } from 'api/userAccess';
+import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
-import { PageTitle } from 'components/PageTitle';
+import { PageTitle } from 'components/page-title';
 import React, { lazy, Suspense } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { uiActions } from 'store/ui';
-import { userAccessActions, userAccessQuery, userAccessSelectors } from 'store/userAccess';
+import { userAccessActions, userAccessQuery, userAccessSelectors } from 'store/user-access';
 
 const Permissions = lazy(() => import('./Permissions'));
 

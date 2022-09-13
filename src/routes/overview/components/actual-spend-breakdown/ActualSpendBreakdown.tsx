@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { NotAvailable } from 'routes/state';
-import { ReportSummary } from 'routes/views/overview/components/ReportSummary';
+import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';

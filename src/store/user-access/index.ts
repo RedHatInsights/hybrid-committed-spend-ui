@@ -1,4 +1,4 @@
-import { userAccessQuery } from 'store/userAccess/userAccessCommon';
+import { userAccessQuery } from 'store/user-access/userAccessCommon';
 
 import * as userAccessActions from './userAccessActions';
 import { stateKey as userAccessStateKey } from './userAccessCommon';

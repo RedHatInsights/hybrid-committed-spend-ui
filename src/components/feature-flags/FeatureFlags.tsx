@@ -2,7 +2,7 @@ import { useFlag } from '@unleash/proxy-client-react';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { featureFlagsActions } from 'store/featureFlags';
+import { featureFlagsActions } from 'store/feature-flags/';
 
 interface FeatureFlagsOwnProps {
   children?: React.ReactNode;
