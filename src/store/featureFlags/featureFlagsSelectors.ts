@@ -4,5 +4,5 @@ import { stateKey } from './featureFlagsReducer';
 
 export const selectFeatureFlagsState = (state: RootState) => state[stateKey];
 
-export const selectIsExplorerFeatureEnabled = (state: RootState) =>
-  selectFeatureFlagsState(state).isExplorerFeatureEnabled;
+export const selectIsDetailsFeatureEnabled = (state: RootState) =>
+  selectFeatureFlagsState(state).isDetailsFeatureEnabled;

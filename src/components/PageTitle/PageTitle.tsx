@@ -18,8 +18,8 @@ const PageTitleBase: React.FC<PageTitleProps> = ({ children = null, intl, locati
 
   const getPageTitle = () => {
     switch (getPath()) {
-      case paths.explorer:
-        return messages.pageTitleExplorer;
+      case paths.details:
+        return messages.pageTitleDetails;
       case paths.overview:
         return messages.pageTitleOverview;
       default:

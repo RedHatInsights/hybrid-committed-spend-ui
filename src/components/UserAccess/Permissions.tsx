@@ -18,7 +18,7 @@ interface PermissionsOwnProps extends RouteComponentProps<void> {
 }
 
 interface PermissionsStateProps {
-  isExplorerFeatureEnabled?: boolean;
+  isDetailsFeatureEnabled?: boolean;
   userAccess: UserAccess;
   userAccessError: AxiosError;
   userAccessFetchStatus: FetchStatus;
@@ -29,7 +29,7 @@ type PermissionsProps = PermissionsOwnProps & PermissionsStateProps;
 
 const PermissionsBase: React.FC<PermissionsProps> = ({
   children = null,
-  isExplorerFeatureEnabled,
+  isDetailsFeatureEnabled,
   location,
   userAccess,
   userAccessError,
@@ -46,12 +46,12 @@ const PermissionsBase: React.FC<PermissionsProps> = ({
     }
 
     const hasAccess = hasAllAccess(userAccess);
-    const explorer = hasAccess && isExplorerFeatureEnabled;
+    const details = hasAccess && isDetailsFeatureEnabled;
     const overview = hasAccess;
 
     switch (getRoutePath()) {
-      case paths.explorer:
-        return explorer;
+      case paths.details:
+        return details;
       case paths.overview:
         return overview;
       default:
@@ -74,7 +74,7 @@ const PermissionsBase: React.FC<PermissionsProps> = ({
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mapStateToProps = createMapStateToProps<PermissionsOwnProps, PermissionsStateProps>((state, props) => {
-  const isExplorerFeatureEnabled = featureFlagsSelectors.selectIsExplorerFeatureEnabled(state);
+  const isDetailsFeatureEnabled = featureFlagsSelectors.selectIsDetailsFeatureEnabled(state);
 
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);
   const userAccess = userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString);
@@ -87,7 +87,7 @@ const mapStateToProps = createMapStateToProps<PermissionsOwnProps, PermissionsSt
   const userAccessFetchStatus = FetchStatus.complete; // Todo: Remove when API is available
 
   return {
-    isExplorerFeatureEnabled,
+    isDetailsFeatureEnabled,
     userAccess,
     userAccessError,
     userAccessFetchStatus,

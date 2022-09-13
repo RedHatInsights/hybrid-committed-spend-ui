@@ -15,7 +15,7 @@ export interface UserAccess {
 // eslint-disable-next-line no-shadow
 export const enum UserAccessType {
   all = 'all',
-  explorer = 'explorer',
+  details = 'details',
 }
 
 // If the user-access API is called without a query parameter, all types are returned in the response

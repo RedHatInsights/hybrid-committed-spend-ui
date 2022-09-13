@@ -12,18 +12,18 @@ type FeatureFlagsProps = FeatureFlagsOwnProps & RouteComponentProps<void>;
 
 // eslint-disable-next-line no-shadow
 const enum FeatureToggle {
-  explorer = 'hybrid-committed-spend.ui.explorer',
+  details = 'hybrid-committed-spend.ui.details',
 }
 
 const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
   const dispatch = useDispatch();
 
-  const isExplorerFeatureEnabled = useFlag(FeatureToggle.explorer);
+  const isDetailsFeatureEnabled = useFlag(FeatureToggle.details);
 
   useEffect(() => {
     dispatch(
       featureFlagsActions.setFeatureFlags({
-        isExplorerFeatureEnabled,
+        isDetailsFeatureEnabled,
       })
     );
   }, []);

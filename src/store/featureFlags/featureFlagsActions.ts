@@ -1,7 +1,7 @@
 import { createAction } from 'typesafe-actions';
 
 export interface FeatureFlagsActionMeta {
-  isExplorerFeatureEnabled?: boolean;
+  isDetailsFeatureEnabled?: boolean;
 }
 
 export const setFeatureFlags = createAction('feature/init_feature_flags')<FeatureFlagsActionMeta>();

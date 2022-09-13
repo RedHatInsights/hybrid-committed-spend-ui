@@ -9,11 +9,11 @@ import { useDispatch } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 const SampleComponent = lazy(() => import('routes/views/components/SampleComponent/SampleComponent'));
 
-import './Explorer.scss';
+import './Details.scss';
 
-type ExplorerProps = RouteComponentProps<void> & WrappedComponentProps;
+type DetailsProps = RouteComponentProps<void> & WrappedComponentProps;
 
-const Explorer: React.FC<ExplorerProps> = ({ intl }) => {
+const Details: React.FC<DetailsProps> = ({ intl }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -74,4 +74,4 @@ const Explorer: React.FC<ExplorerProps> = ({ intl }) => {
   );
 };
 
-export default injectIntl(withRouter(Explorer));
+export default injectIntl(withRouter(Details));

@@ -5,11 +5,11 @@ import { resetState, setFeatureFlags } from './featureFlagsActions';
 export type FeatureFlagsAction = ActionType<typeof setFeatureFlags | typeof resetState>;
 
 export type FeatureFlagsState = Readonly<{
-  isExplorerFeatureEnabled: boolean;
+  isDetailsFeatureEnabled: boolean;
 }>;
 
 export const defaultState: FeatureFlagsState = {
-  isExplorerFeatureEnabled: false,
+  isDetailsFeatureEnabled: false,
 };
 
 export const stateKey = 'featureFlags';
@@ -23,7 +23,7 @@ export function featureFlagsReducer(state = defaultState, action: FeatureFlagsAc
     case getType(setFeatureFlags):
       return {
         ...state,
-        isExplorerFeatureEnabled: action.payload.isExplorerFeatureEnabled,
+        isDetailsFeatureEnabled: action.payload.isDetailsFeatureEnabled,
       };
 
     default:

@@ -3,20 +3,20 @@ import { UserAccess } from 'components/UserAccess';
 import React, { lazy, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-const Explorer = lazy(() => import(/* webpackChunkName: "SamplePage" */ 'routes/views/Explorer/Explorer'));
-const Overview = lazy(() => import(/* webpackChunkName: "SamplePage" */ 'routes/views/Overview/Overview'));
+const Details = lazy(() => import(/* webpackChunkName: "SamplePage" */ 'routes/views/details/Details'));
+const Overview = lazy(() => import(/* webpackChunkName: "SamplePage" */ 'routes/views/overview/Overview'));
 
 // For syncing with permissions
 export const paths = {
-  explorer: '/explorer',
+  details: '/details',
   overview: '/',
 };
 
 export const routes = [
   {
-    component: UserAccess(Explorer),
+    component: UserAccess(Details),
     exact: true,
-    path: paths.explorer,
+    path: paths.details,
   },
   {
     component: UserAccess(Overview),

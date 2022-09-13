@@ -74,10 +74,10 @@ export default defineMessages({
     description: 'Hybrid Committed Spend | Red Hat Business Services',
     id: 'pageTitleDefault',
   },
-  pageTitleExplorer: {
-    defaultMessage: 'Explorer - Hybrid Committed Spend | Red Hat Business Services',
-    description: 'Explorer - Hybrid Committed Spend | Red Hat Business Services',
-    id: 'pageTitleExplorer',
+  pageTitleDetails: {
+    defaultMessage: 'Details - Hybrid Committed Spend | Red Hat Business Services',
+    description: 'Details - Hybrid Committed Spend | Red Hat Business Services',
+    id: 'pageTitleDetails',
   },
   pageTitleOverview: {
     defaultMessage: 'Overview - Hybrid Committed Spend | Red Hat Business Services',

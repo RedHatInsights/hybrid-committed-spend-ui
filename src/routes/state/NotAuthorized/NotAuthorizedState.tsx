@@ -18,7 +18,7 @@ class NotAuthorizedStateBase extends React.Component<NotAuthorizedStateProps> {
     let msg;
 
     switch (pathname) {
-      case paths.explorer:
+      case paths.details:
       case paths.overview:
       default:
         msg = messages.hcs;

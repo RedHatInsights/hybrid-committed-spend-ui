@@ -16,6 +16,6 @@ test('default state', async () => {
 
 test('sample feature is enabled', async () => {
   const store = createUIStore();
-  store.dispatch(actions.setFeatureFlags({ isExplorerFeatureEnabled: true }));
-  expect(featureFlagsSelectors.selectIsExplorerFeatureEnabled(store.getState())).toBe(true);
+  store.dispatch(actions.setFeatureFlags({ isDetailsFeatureEnabled: true }));
+  expect(featureFlagsSelectors.selectIsDetailsFeatureEnabled(store.getState())).toBe(true);
 });
