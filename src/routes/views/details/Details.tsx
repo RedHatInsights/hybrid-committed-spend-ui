@@ -33,7 +33,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   return (
     <React.Fragment>
       <PageHeader>
-        <PageHeaderTitle title={intl.formatMessage(messages.hcs)} />
+        <PageHeaderTitle title={intl.formatMessage(messages.detailsTitle)} />
       </PageHeader>
       <Main>
         <Stack hasGutter>

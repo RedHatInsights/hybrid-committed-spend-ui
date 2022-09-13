@@ -37,7 +37,7 @@ const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors, intl }) => {
   return (
     <React.Fragment>
       <PageHeader>
-        <PageHeaderTitle title={intl.formatMessage(messages.hcs)} />
+        <PageHeaderTitle title={intl.formatMessage(messages.overviewTitle)} />
       </PageHeader>
       <Main>
         <Suspense fallback={<Spinner />}>{!isTest && hasReportErrors ? <NotAvailable /> : <Dashboard />}</Suspense>

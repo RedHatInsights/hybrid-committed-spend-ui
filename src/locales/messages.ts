@@ -24,6 +24,11 @@ export default defineMessages({
     description: 'Remaining commitment balance',
     id: 'dashboardCommitmentBalanceTitle',
   },
+  detailsTitle: {
+    defaultMessage: 'Committed Spend details',
+    description: 'Committed Spend details',
+    id: 'detailsTitle',
+  },
   errorStateNotAuthorizedDesc: {
     defaultMessage: 'Contact the cost management administrator to provide access to this application',
     description: 'Contact the cost management administrator to provide access to this application',
@@ -68,6 +73,11 @@ export default defineMessages({
     defaultMessage: 'Over last month',
     description: 'Over last month',
     id: 'overLastMonth',
+  },
+  overviewTitle: {
+    defaultMessage: 'Committed Spend overview',
+    description: 'Committed Spend overview',
+    id: 'overviewTitle',
   },
   pageTitleDefault: {
     defaultMessage: 'Hybrid Committed Spend | Red Hat Business Services',

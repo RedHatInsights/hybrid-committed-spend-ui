@@ -83,6 +83,12 @@
         "value": "Remaining commitment balance"
       }
     ],
+    "detailsTitle": [
+      {
+        "type": 0,
+        "value": "Committed Spend details"
+      }
+    ],
     "errorStateNotAuthorizedDesc": [
       {
         "type": 0,
@@ -141,16 +147,22 @@
         "value": "Over last month"
       }
     ],
+    "overviewTitle": [
+      {
+        "type": 0,
+        "value": "Committed Spend overview"
+      }
+    ],
     "pageTitleDefault": [
       {
         "type": 0,
         "value": "Hybrid Committed Spend | Red Hat Business Services"
       }
     ],
-    "pageTitleExplorer": [
+    "pageTitleDetails": [
       {
         "type": 0,
-        "value": "Explorer - Hybrid Committed Spend | Red Hat Business Services"
+        "value": "Details - Hybrid Committed Spend | Red Hat Business Services"
       }
     ],
     "pageTitleOverview": [
