@@ -9,7 +9,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
-import { ReportSummary } from 'routes/views/Overview/components/ReportSummary';
+import { ReportSummary } from 'routes/views/overview/components/ReportSummary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';

@@ -4,8 +4,8 @@ import { lazy } from 'react';
 
 import { DashboardType, DashboardWidget } from './dashboardCommon';
 
-const ActualSpend = lazy(() => import('routes/views/Overview/components/ActualSpend/ActualSpend'));
-const CommittedSpend = lazy(() => import('routes/views/Overview/components/CommittedSpend/CommittedSpend'));
+const ActualSpend = lazy(() => import('routes/views/overview/components/ActualSpend/ActualSpend'));
+const CommittedSpend = lazy(() => import('routes/views/overview/components/CommittedSpend/CommittedSpend'));
 
 let currrentId = 0;
 const getId = () => currrentId++;

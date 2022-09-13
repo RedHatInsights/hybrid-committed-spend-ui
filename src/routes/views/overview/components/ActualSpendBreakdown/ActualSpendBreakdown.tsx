@@ -1,4 +1,4 @@
-import './CommittedSpendTrend.scss';
+import './ActualSpendBreakdown.scss';
 
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
@@ -10,17 +10,17 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { NotAvailable } from 'routes/state';
-import { ReportSummary } from 'routes/views/Overview/components/ReportSummary';
+import { ReportSummary } from 'routes/views/overview/components/ReportSummary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency } from 'utils/format';
 
-interface CommittedSpendTrendOwnProps {
+interface ActualSpendBreakdownOwnProps {
   widgetId: number;
 }
 
-interface CommittedSpendTrendStateProps {
+interface ActualSpendBreakdownStateProps {
   query: Query;
   queryString: string;
   report?: Report;
@@ -29,17 +29,17 @@ interface CommittedSpendTrendStateProps {
   widget: DashboardWidget;
 }
 
-interface CommittedSpendTrendDispatchProps {
+interface ActualSpendBreakdownDispatchProps {
   fetchReport: typeof reportActions.fetchReport;
 }
 
-export type CommittedSpendTrendProps = CommittedSpendTrendStateProps &
-  CommittedSpendTrendOwnProps &
-  CommittedSpendTrendDispatchProps &
+export type ActualSpendBreakdownProps = ActualSpendBreakdownStateProps &
+  ActualSpendBreakdownOwnProps &
+  ActualSpendBreakdownDispatchProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
+const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   fetchReport,
   intl,
   queryString,
@@ -52,19 +52,13 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
     fetchReport(widget.reportPathsType, widget.reportType, queryString);
   }, [queryString]);
 
-  let balance: string | React.ReactNode = <EmptyValueState />;
-  let committed: string | React.ReactNode = <EmptyValueState />;
+  let value: string | React.ReactNode = <EmptyValueState />;
 
   const hasTotal = report && report.meta && report.meta.total;
   const hasCost = hasTotal && report.meta.total.cost && report.meta.total.cost.total;
 
   if (hasTotal) {
-    balance = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
-    );
-    committed = formatCurrency(
+    value = formatCurrency(
       hasCost ? report.meta.total.cost.total.value : 0,
       hasCost ? report.meta.total.cost.total.units : 'USD',
       {}
@@ -79,10 +73,10 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
         <NotAvailable />
       ) : (
         <>
-          <div>March 2023 - July 31, 2023</div>
+          <div>August 2022 - February 2023</div>
           <div className="valueContainer">
-            <div className={`value`}>{balance}</div>
-            <div>{intl.formatMessage(messages.outOf, { value: committed })}</div>
+            <div className={`value`}>{value}</div>
+            <div>{intl.formatMessage(messages.overLastMonth)}</div>
           </div>
         </>
       )}
@@ -91,7 +85,7 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, CommittedSpendTrendStateProps>(
+const mapStateToProps = createMapStateToProps<ActualSpendBreakdownOwnProps, ActualSpendBreakdownStateProps>(
   (state, { widgetId }) => {
     const widget = dashboardSelectors.selectWidget(state, widgetId);
     // const queries = dashboardSelectors.selectWidgetQueries(state, widgetId);
@@ -129,9 +123,9 @@ const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, Commi
   }
 );
 
-const mapDispatchToProps: CommittedSpendTrendDispatchProps = {
+const mapDispatchToProps: ActualSpendBreakdownDispatchProps = {
   fetchReport: reportActions.fetchReport,
 };
 
-const CommittedSpendTrend = withRouter(CommittedSpendTrendBase);
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CommittedSpendTrend));
+const ActualSpendBreakdown = withRouter(ActualSpendBreakdownBase);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ActualSpendBreakdown));

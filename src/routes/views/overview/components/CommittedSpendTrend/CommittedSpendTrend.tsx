@@ -1,4 +1,4 @@
-import './CommittedSpend.scss';
+import './CommittedSpendTrend.scss';
 
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
@@ -10,17 +10,17 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { NotAvailable } from 'routes/state';
-import { ReportSummary } from 'routes/views/Overview/components/ReportSummary';
+import { ReportSummary } from 'routes/views/overview/components/ReportSummary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency } from 'utils/format';
 
-interface CommittedSpendOwnProps {
+interface CommittedSpendTrendOwnProps {
   widgetId: number;
 }
 
-interface CommittedSpendStateProps {
+interface CommittedSpendTrendStateProps {
   query: Query;
   queryString: string;
   report?: Report;
@@ -29,17 +29,17 @@ interface CommittedSpendStateProps {
   widget: DashboardWidget;
 }
 
-interface CommittedSpendDispatchProps {
+interface CommittedSpendTrendDispatchProps {
   fetchReport: typeof reportActions.fetchReport;
 }
 
-export type CommittedSpendProps = CommittedSpendStateProps &
-  CommittedSpendOwnProps &
-  CommittedSpendDispatchProps &
+export type CommittedSpendTrendProps = CommittedSpendTrendStateProps &
+  CommittedSpendTrendOwnProps &
+  CommittedSpendTrendDispatchProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
+const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   fetchReport,
   intl,
   queryString,
@@ -91,7 +91,7 @@ const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<CommittedSpendOwnProps, CommittedSpendStateProps>(
+const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, CommittedSpendTrendStateProps>(
   (state, { widgetId }) => {
     const widget = dashboardSelectors.selectWidget(state, widgetId);
     // const queries = dashboardSelectors.selectWidgetQueries(state, widgetId);
@@ -129,9 +129,9 @@ const mapStateToProps = createMapStateToProps<CommittedSpendOwnProps, CommittedS
   }
 );
 
-const mapDispatchToProps: CommittedSpendDispatchProps = {
+const mapDispatchToProps: CommittedSpendTrendDispatchProps = {
   fetchReport: reportActions.fetchReport,
 };
 
-const CommittedSpend = withRouter(CommittedSpendBase);
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CommittedSpend));
+const CommittedSpendTrend = withRouter(CommittedSpendTrendBase);
+export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CommittedSpendTrend));

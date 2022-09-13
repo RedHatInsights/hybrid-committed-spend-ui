@@ -5,7 +5,7 @@ import React, { lazy, Suspense } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-const Dashboard = lazy(() => import('routes/views/Overview/components/Dashboard/Dashboard'));
+const Dashboard = lazy(() => import('routes/views/overview/components/Dashboard/Dashboard'));
 const NotAvailable = lazy(() => import('routes/state/NotAvailable/NotAvailable'));
 
 import { Spinner } from '@patternfly/react-core';
