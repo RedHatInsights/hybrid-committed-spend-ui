@@ -1,5 +1,53 @@
 {
   "en": {
+    "accountName": [
+      {
+        "type": 0,
+        "value": "Account name: "
+      },
+      {
+        "type": 1,
+        "value": "value"
+      }
+    ],
+    "accountNumber": [
+      {
+        "type": 0,
+        "value": "Account number: "
+      },
+      {
+        "type": 1,
+        "value": "value"
+      }
+    ],
+    "consumptionDate": [
+      {
+        "type": 0,
+        "value": "Consumption date: "
+      },
+      {
+        "type": 1,
+        "value": "date"
+      }
+    ],
+    "contractDates": [
+      {
+        "type": 0,
+        "value": "Contract dates: "
+      },
+      {
+        "type": 1,
+        "value": "startDate"
+      },
+      {
+        "type": 0,
+        "value": " - "
+      },
+      {
+        "type": 1,
+        "value": "endDate"
+      }
+    ],
     "currencyAbbreviations": [
       {
         "options": {

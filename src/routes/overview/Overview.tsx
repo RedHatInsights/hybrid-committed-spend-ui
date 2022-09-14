@@ -1,6 +1,4 @@
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import messages from 'locales/messages';
 import React, { lazy, Suspense } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -12,6 +10,8 @@ import { Spinner } from '@patternfly/react-core';
 import { connect } from 'react-redux';
 import { createMapStateToProps } from 'store/common';
 import { reportSelectors } from 'store/reports';
+
+import { OverviewHeader } from './index';
 
 interface OverviewOwnProps {
   // TBD...
@@ -31,14 +31,12 @@ type OverviewProps = OverviewOwnProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors, intl }) => {
+const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors }) => {
   // Todo: Remove when APIs are available
   const isTest = true;
   return (
     <React.Fragment>
-      <PageHeader>
-        <PageHeaderTitle title={intl.formatMessage(messages.overviewTitle)} />
-      </PageHeader>
+      <OverviewHeader />
       <Main>
         <Suspense fallback={<Spinner />}>{!isTest && hasReportErrors ? <NotAvailable /> : <Dashboard />}</Suspense>
       </Main>

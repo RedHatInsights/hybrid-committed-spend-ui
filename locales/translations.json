@@ -1,4 +1,8 @@
 {
+  "accountName": "Account name: {value}",
+  "accountNumber": "Account number: {value}",
+  "consumptionDate": "Consumption date: {date}",
+  "contractDates": "Contract dates: {startDate} - {endDate}",
   "currencyAbbreviations": "{symbol, select, billion {{value} B} million {{value} M} quadrillion {{value} q} thousand {{value} K} trillion {{value} t} other {}}",
   "dashboardActualSpendTitle": "Actual spend of included products YTD",
   "dashboardCommitmentBalanceTitle": "Remaining commitment balance",

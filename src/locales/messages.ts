@@ -2,6 +2,26 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  accountName: {
+    defaultMessage: 'Account name: {value}',
+    description: 'Account name: {value}',
+    id: 'accountName',
+  },
+  accountNumber: {
+    defaultMessage: 'Account number: {value}',
+    description: 'Account number: {value}',
+    id: 'accountNumber',
+  },
+  consumptionDate: {
+    defaultMessage: 'Consumption date: {date}',
+    description: 'Consumption date: {date}',
+    id: 'consumptionDate',
+  },
+  contractDates: {
+    defaultMessage: 'Contract dates: {startDate} - {endDate}',
+    description: 'Contract dates: {startDate} - {endDate}',
+    id: 'contractDates',
+  },
   currencyAbbreviations: {
     defaultMessage:
       '{symbol, select, ' +
