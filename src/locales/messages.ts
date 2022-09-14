@@ -2,6 +2,26 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  accountName: {
+    defaultMessage: 'Account name: {value}',
+    description: 'Account name: {value}',
+    id: 'accountName',
+  },
+  accountNumber: {
+    defaultMessage: 'Account number: {value}',
+    description: 'Account number: {value}',
+    id: 'accountNumber',
+  },
+  consumptionDate: {
+    defaultMessage: 'Consumption date: {date}',
+    description: 'Consumption date: {date}',
+    id: 'consumptionDate',
+  },
+  contractDates: {
+    defaultMessage: 'Contract dates: {startDate} - {endDate}',
+    description: 'Contract dates: {startDate} - {endDate}',
+    id: 'contractDates',
+  },
   currencyAbbreviations: {
     defaultMessage:
       '{symbol, select, ' +
@@ -23,6 +43,11 @@ export default defineMessages({
     defaultMessage: 'Remaining commitment balance',
     description: 'Remaining commitment balance',
     id: 'dashboardCommitmentBalanceTitle',
+  },
+  detailsTitle: {
+    defaultMessage: 'Committed Spend details',
+    description: 'Committed Spend details',
+    id: 'detailsTitle',
   },
   errorStateNotAuthorizedDesc: {
     defaultMessage: 'Contact the cost management administrator to provide access to this application',
@@ -69,15 +94,20 @@ export default defineMessages({
     description: 'Over last month',
     id: 'overLastMonth',
   },
+  overviewTitle: {
+    defaultMessage: 'Committed Spend overview',
+    description: 'Committed Spend overview',
+    id: 'overviewTitle',
+  },
   pageTitleDefault: {
     defaultMessage: 'Hybrid Committed Spend | Red Hat Business Services',
     description: 'Hybrid Committed Spend | Red Hat Business Services',
     id: 'pageTitleDefault',
   },
-  pageTitleExplorer: {
-    defaultMessage: 'Explorer - Hybrid Committed Spend | Red Hat Business Services',
-    description: 'Explorer - Hybrid Committed Spend | Red Hat Business Services',
-    id: 'pageTitleExplorer',
+  pageTitleDetails: {
+    defaultMessage: 'Details - Hybrid Committed Spend | Red Hat Business Services',
+    description: 'Details - Hybrid Committed Spend | Red Hat Business Services',
+    id: 'pageTitleDetails',
   },
   pageTitleOverview: {
     defaultMessage: 'Overview - Hybrid Committed Spend | Red Hat Business Services',

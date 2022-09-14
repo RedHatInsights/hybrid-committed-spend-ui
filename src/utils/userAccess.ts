@@ -1,4 +1,4 @@
-import { UserAccess, UserAccessType } from 'api/userAccess';
+import { UserAccess, UserAccessType } from 'api/user-access';
 
 const hasAccess = (userAccess: UserAccess, userAccessType: UserAccessType) => {
   let result = false;

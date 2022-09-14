@@ -1,5 +1,53 @@
 {
   "en": {
+    "accountName": [
+      {
+        "type": 0,
+        "value": "Account name: "
+      },
+      {
+        "type": 1,
+        "value": "value"
+      }
+    ],
+    "accountNumber": [
+      {
+        "type": 0,
+        "value": "Account number: "
+      },
+      {
+        "type": 1,
+        "value": "value"
+      }
+    ],
+    "consumptionDate": [
+      {
+        "type": 0,
+        "value": "Consumption date: "
+      },
+      {
+        "type": 1,
+        "value": "date"
+      }
+    ],
+    "contractDates": [
+      {
+        "type": 0,
+        "value": "Contract dates: "
+      },
+      {
+        "type": 1,
+        "value": "startDate"
+      },
+      {
+        "type": 0,
+        "value": " - "
+      },
+      {
+        "type": 1,
+        "value": "endDate"
+      }
+    ],
     "currencyAbbreviations": [
       {
         "options": {
@@ -83,6 +131,12 @@
         "value": "Remaining commitment balance"
       }
     ],
+    "detailsTitle": [
+      {
+        "type": 0,
+        "value": "Committed Spend details"
+      }
+    ],
     "errorStateNotAuthorizedDesc": [
       {
         "type": 0,
@@ -141,16 +195,22 @@
         "value": "Over last month"
       }
     ],
+    "overviewTitle": [
+      {
+        "type": 0,
+        "value": "Committed Spend overview"
+      }
+    ],
     "pageTitleDefault": [
       {
         "type": 0,
         "value": "Hybrid Committed Spend | Red Hat Business Services"
       }
     ],
-    "pageTitleExplorer": [
+    "pageTitleDetails": [
       {
         "type": 0,
-        "value": "Explorer - Hybrid Committed Spend | Red Hat Business Services"
+        "value": "Details - Hybrid Committed Spend | Red Hat Business Services"
       }
     ],
     "pageTitleOverview": [
