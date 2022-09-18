@@ -1,8 +1,7 @@
-import './CommittedSpend.scss';
-
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
+import { parseISO } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -10,11 +9,12 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { NotAvailable } from 'routes/state';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency } from 'utils/format';
+
+import { styles } from './CommittedSpend.styles';
 
 interface CommittedSpendOwnProps {
   widgetId: number;
@@ -44,7 +44,6 @@ const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
   intl,
   queryString,
   report,
-  reportError,
   reportFetchStatus,
   widget,
 }) => {
@@ -53,39 +52,37 @@ const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
   }, [queryString]);
 
   let balance: string | React.ReactNode = <EmptyValueState />;
-  let committed: string | React.ReactNode = <EmptyValueState />;
+  let committedSpend: string | React.ReactNode = <EmptyValueState />;
+  let dateRange: string | React.ReactNode = <EmptyValueState />;
 
+  const isTest = true;
   const hasTotal = report && report.meta && report.meta.total;
-  const hasCost = hasTotal && report.meta.total.cost && report.meta.total.cost.total;
 
-  if (hasTotal) {
-    balance = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
-    );
-    committed = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
-    );
+  if (isTest || hasTotal) {
+    balance = formatCurrency(182054.9, 'USD');
+    committedSpend = formatCurrency(1000000.0, 'USD');
+
+    const startDate = new Date(parseISO('2021-08-01T00:00:00'));
+    const endDate = new Date(parseISO('2022-02-01T00:00:00'));
+
+    dateRange = intl.formatDateTimeRange(startDate, endDate, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
   }
 
-  // Todo: show errors
-  const isTest = true;
   return (
-    <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
-      {!isTest && reportError ? (
-        <NotAvailable />
-      ) : (
-        <>
-          <div>March 2023 - July 31, 2023</div>
-          <div className="valueContainer">
-            <div className={`value`}>{balance}</div>
-            <div>{intl.formatMessage(messages.outOf, { value: committed })}</div>
+    <ReportSummary bodyStyle={styles.body} fetchStatus={reportFetchStatus} title={widget.title}>
+      <div>{dateRange}</div>
+      <div style={styles.valueContainer}>
+        <div>
+          <div style={styles.value}>{balance}</div>
+          <div style={styles.committedSpend}>
+            <div>{intl.formatMessage(messages.outOf, { value: committedSpend })}</div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </ReportSummary>
   );
 };
