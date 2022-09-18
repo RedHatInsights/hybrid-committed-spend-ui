@@ -1,8 +1,8 @@
-import './ActualSpend.scss';
-
+import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
+import { parseISO } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -13,7 +13,9 @@ import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
-import { formatCurrency } from 'utils/format';
+import { formatCurrency, formatPercentage } from 'utils/format';
+
+import { styles } from './ActualSpend.styles';
 
 interface ActualSpendOwnProps {
   widgetId: number;
@@ -50,25 +52,39 @@ const ActualSpendBase: React.FC<ActualSpendProps> = ({
     fetchReport(widget.reportPathsType, widget.reportType, queryString);
   }, [queryString]);
 
-  let value: string | React.ReactNode = <EmptyValueState />;
+  let actualSpend: string | React.ReactNode = <EmptyValueState />;
+  let dateRange: string | React.ReactNode = <EmptyValueState />;
+  let percent: string | React.ReactNode = <EmptyValueState />;
 
+  const isTest = true;
   const hasTotal = report && report.meta && report.meta.total;
-  const hasCost = hasTotal && report.meta.total.cost && report.meta.total.cost.total;
 
-  if (hasTotal) {
-    value = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
-    );
+  if (isTest || hasTotal) {
+    actualSpend = formatCurrency(817945.1, 'USD');
+    percent = formatPercentage(10);
+
+    const startDate = new Date(parseISO('2021-08-01T00:00:00'));
+    const endDate = new Date(parseISO('2022-02-01T00:00:00'));
+
+    dateRange = intl.formatDateTimeRange(startDate, endDate, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
   }
 
   return (
-    <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
-      <div>August 2022 - February 2023</div>
-      <div className="valueContainer">
-        <div className={`value`}>{value}</div>
-        <div>{intl.formatMessage(messages.overLastMonth)}</div>
+    <ReportSummary bodyStyle={styles.body} fetchStatus={reportFetchStatus} title={widget.title}>
+      <div>{dateRange}</div>
+      <div style={styles.valueContainer}>
+        <div style={styles.value}>{actualSpend}</div>
+        <div>
+          <div style={styles.percentContainer}>
+            <ArrowUpIcon style={styles.arrowIcon} />
+            <span style={styles.percent}>{intl.formatMessage(messages.percent, { value: percent })}</span>
+          </div>
+          {intl.formatMessage(messages.overLastMonth)}
+        </div>
       </div>
     </ReportSummary>
   );

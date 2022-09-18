@@ -8,6 +8,7 @@ import { FetchStatus } from 'store/common';
 import { skeletonWidth } from 'utils/skeleton';
 
 interface ReportSummaryOwnProps {
+  bodyStyle?: React.CSSProperties;
   children?: React.ReactNode;
   fetchStatus: number;
   subTitle?: MessageDescriptor;
@@ -16,7 +17,14 @@ interface ReportSummaryOwnProps {
 
 type ReportSummaryProps = ReportSummaryOwnProps & WrappedComponentProps;
 
-const ReportSummaryBase: React.FC<ReportSummaryProps> = ({ children, fetchStatus, intl, title, subTitle }) => (
+const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
+  bodyStyle,
+  children,
+  fetchStatus,
+  intl,
+  title,
+  subTitle,
+}) => (
   <Card className="reportSummary">
     <CardTitle>
       <Title headingLevel="h2" size={TitleSizes.lg}>
@@ -24,7 +32,7 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({ children, fetchStatus
       </Title>
       {Boolean(subTitle) && <p className="subtitle">{intl.formatMessage(subTitle)}</p>}
     </CardTitle>
-    <CardBody>
+    <CardBody style={bodyStyle}>
       {fetchStatus === FetchStatus.inProgress ? (
         <>
           <Skeleton width="16%" />

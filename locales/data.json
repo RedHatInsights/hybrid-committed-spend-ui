@@ -218,6 +218,16 @@
         "type": 0,
         "value": "Overview - Hybrid Committed Spend | Red Hat Business Services"
       }
+    ],
+    "percent": [
+      {
+        "type": 1,
+        "value": "value"
+      },
+      {
+        "type": 0,
+        "value": " %"
+      }
     ]
   }
 }
