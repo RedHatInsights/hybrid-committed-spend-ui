@@ -19,5 +19,6 @@
   "overviewTitle": "Committed Spend overview",
   "pageTitleDefault": "Hybrid Committed Spend | Red Hat Business Services",
   "pageTitleDetails": "Details - Hybrid Committed Spend | Red Hat Business Services",
-  "pageTitleOverview": "Overview - Hybrid Committed Spend | Red Hat Business Services"
+  "pageTitleOverview": "Overview - Hybrid Committed Spend | Red Hat Business Services",
+  "percent": "{value} %"
 }

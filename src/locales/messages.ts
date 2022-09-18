@@ -114,4 +114,9 @@ export default defineMessages({
     description: 'Overview - Hybrid Committed Spend | Red Hat Business Services',
     id: 'pageTitleOverview',
   },
+  percent: {
+    defaultMessage: '{value} %',
+    description: 'Percent value',
+    id: 'percent',
+  },
 });
