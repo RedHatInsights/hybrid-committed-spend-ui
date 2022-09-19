@@ -19,8 +19,9 @@ export interface PagedResponse<D = any, M = any> {
 }
 
 export function initApi({ version }: { version: string }) {
-  // axios.defaults.baseURL = `/api/cost-management/${version}/`;
   axios.defaults.baseURL = `https://billing.dev.api.redhat.com/${version}/`;
+  // axios.defaults.baseURL = `https://billing.qa.api.redhat.com/${version}/`;
+  // axios.defaults.baseURL = `https://billing.stage.api.redhat.com/${version}/`;
   axios.interceptors.request.use(authInterceptor);
   axios.interceptors.request.use(insightsAuthInterceptor);
 }
@@ -35,6 +36,7 @@ export function authInterceptor(reqConfig: AxiosRequestConfig): AxiosRequestConf
       ...reqConfig,
       headers: {
         ...reqConfig.headers,
+        Accept: 'application/json',
         Authorization: `Bearer ${token}`,
       },
     };

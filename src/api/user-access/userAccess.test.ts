@@ -10,5 +10,5 @@ import { fetchUserAccess } from './userAccess';
 test('api get provider calls axios.get', () => {
   const query = getUserAccessQuery(billingUserAccessQuery);
   fetchUserAccess(query);
-  expect(axios.get).toBeCalledWith('user-access/?type=any');
+  expect(axios.get).toBeCalledWith('authorization/hcsEnrollment?type=any');
 });

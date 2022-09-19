@@ -1,15 +1,7 @@
-import { PagedLinks, PagedMetaData } from 'api';
 import axios from 'axios';
 
-export interface UserAccessData {
-  access?: boolean;
-  type?: UserAccessType;
-}
-
 export interface UserAccess {
-  meta?: PagedMetaData;
-  links?: PagedLinks;
-  data?: UserAccessData[] | boolean;
+  hcsDeal?: boolean;
 }
 
 // eslint-disable-next-line no-shadow
@@ -24,9 +16,9 @@ export function fetchUserAccess(query: string) {
   const queryString = query ? `?${query}` : '';
   if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
     return insights.chrome.auth.getUser().then(() => {
-      return axios.get<UserAccess>(`user-access/${queryString}`); // Todo: Update URL
+      return axios.get<UserAccess>(`authorization/hcsEnrollment${queryString}`);
     });
   } else {
-    return axios.get<UserAccess>(`user-access/${queryString}`);
+    return axios.get<UserAccess>(`authorization/hcsEnrollment${queryString}`);
   }
 }

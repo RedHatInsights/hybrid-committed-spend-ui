@@ -35,14 +35,11 @@ type PermissionsWrapperProps = PermissionsWrapperOwnProps &
 
 class PermissionsWrapperBase extends React.Component<PermissionsWrapperProps> {
   public componentDidMount() {
-    // const { fetchUserAccess, resetState, userAccessQueryString } = this.props;
-    const { resetState } = this.props;
+    const { fetchUserAccess, resetState, userAccessQueryString } = this.props;
 
     // Clear cached API responses
     resetState();
-
-    // Todo: Enable when API is available
-    // fetchUserAccess(UserAccessType.all, userAccessQueryString);
+    fetchUserAccess(UserAccessType.all, userAccessQueryString);
   }
 
   public render() {
@@ -64,12 +61,11 @@ const mapStateToProps = createMapStateToProps<PermissionsWrapperOwnProps, Permis
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);
   const userAccess = userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString);
   const userAccessError = userAccessSelectors.selectUserAccessError(state, UserAccessType.all, userAccessQueryString);
-  // const userAccessFetchStatus = userAccessSelectors.selectUserAccessFetchStatus(
-  //   state,
-  //   UserAccessType.all,
-  //   userAccessQueryString
-  // );
-  const userAccessFetchStatus = FetchStatus.complete; // Todo: Remove when API is available
+  const userAccessFetchStatus = userAccessSelectors.selectUserAccessFetchStatus(
+    state,
+    UserAccessType.all,
+    userAccessQueryString
+  );
 
   return {
     userAccess,
