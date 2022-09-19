@@ -36,10 +36,18 @@ const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors }) => {
   const isTest = true;
   return (
     <React.Fragment>
-      <OverviewHeader />
-      <Main>
-        <Suspense fallback={<Spinner />}>{!isTest && hasReportErrors ? <NotAvailable /> : <Dashboard />}</Suspense>
-      </Main>
+      {!isTest && hasReportErrors ? (
+        <NotAvailable />
+      ) : (
+        <>
+          <OverviewHeader />
+          <Main>
+            <Suspense fallback={<Spinner />}>
+              <Dashboard />
+            </Suspense>
+          </Main>
+        </>
+      )}
     </React.Fragment>
   );
 };
