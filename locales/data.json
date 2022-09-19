@@ -20,6 +20,1487 @@
         "value": "value"
       }
     ],
+    "chartCostLegendLabel": [
+      {
+        "options": {
+          "0": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Jan "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Jan "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "1": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Feb "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Feb "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "2": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Mar "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Mar "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "3": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Apr "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Apr "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "4": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (May "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (May "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "5": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Jun "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Jun "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "6": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Jul "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Jul "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "7": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Aug "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Aug "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "8": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Sep "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Sep "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "9": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Oct "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Oct "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "10": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Nov "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Nov "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "11": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Dec "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Cost (Dec "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": ")"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          }
+        },
+        "type": 5,
+        "value": "month"
+      }
+    ],
+    "chartCostLegendNoDataLabel": [
+      {
+        "type": 0,
+        "value": "Cost (no data)"
+      }
+    ],
+    "chartCostLegendTooltip": [
+      {
+        "options": {
+          "0": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Jan)"
+              }
+            ]
+          },
+          "1": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Feb)"
+              }
+            ]
+          },
+          "2": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Mar)"
+              }
+            ]
+          },
+          "3": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Apr)"
+              }
+            ]
+          },
+          "4": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (May)"
+              }
+            ]
+          },
+          "5": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Jun)"
+              }
+            ]
+          },
+          "6": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Jul)"
+              }
+            ]
+          },
+          "7": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Aug)"
+              }
+            ]
+          },
+          "8": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Sep)"
+              }
+            ]
+          },
+          "9": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Oct)"
+              }
+            ]
+          },
+          "10": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Nov)"
+              }
+            ]
+          },
+          "11": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cost (Dec)"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          }
+        },
+        "type": 5,
+        "value": "month"
+      }
+    ],
+    "chartDateRange": [
+      {
+        "options": {
+          "0": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Jan "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Jan "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "1": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Feb "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Feb "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "2": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Mar "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Mar "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "3": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Apr "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Apr "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "4": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "May "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " May "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "5": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Jun "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Jun "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "6": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Jul "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Jul "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "7": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Aug "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Aug "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "8": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Sep "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Sep "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "9": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Oct "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Oct "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "10": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Nov "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Nov "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "11": {
+            "value": [
+              {
+                "offset": 0,
+                "options": {
+                  "one": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "Dec "
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "-"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": " Dec "
+                      },
+                      {
+                        "type": 1,
+                        "value": "year"
+                      }
+                    ]
+                  }
+                },
+                "pluralType": "cardinal",
+                "type": 6,
+                "value": "count"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          }
+        },
+        "type": 5,
+        "value": "month"
+      }
+    ],
+    "chartDayOfTheMonth": [
+      {
+        "type": 0,
+        "value": "Day "
+      },
+      {
+        "type": 1,
+        "value": "day"
+      }
+    ],
+    "chartNoData": [
+      {
+        "type": 0,
+        "value": "no data"
+      }
+    ],
+    "chartOthers": [
+      {
+        "offset": 0,
+        "options": {
+          "one": {
+            "value": [
+              {
+                "type": 1,
+                "value": "count"
+              },
+              {
+                "type": 0,
+                "value": " Other"
+              }
+            ]
+          },
+          "other": {
+            "value": [
+              {
+                "type": 1,
+                "value": "count"
+              },
+              {
+                "type": 0,
+                "value": " Others"
+              }
+            ]
+          }
+        },
+        "pluralType": "cardinal",
+        "type": 6,
+        "value": "count"
+      }
+    ],
     "consumptionDate": [
       {
         "type": 0,
@@ -125,10 +1606,16 @@
         "value": "Actual spend of included products YTD"
       }
     ],
-    "dashboardCommitmentBalanceTitle": [
+    "dashboardCommitmentSpendTitle": [
       {
         "type": 0,
         "value": "Remaining commitment balance"
+      }
+    ],
+    "dashboardCommitmentSpendTrendTitle": [
+      {
+        "type": 0,
+        "value": "Committed spend trend"
       }
     ],
     "detailsTitle": [
@@ -227,6 +1714,12 @@
       {
         "type": 0,
         "value": " %"
+      }
+    ],
+    "viewDetails": [
+      {
+        "type": 0,
+        "value": "View details"
       }
     ]
   }

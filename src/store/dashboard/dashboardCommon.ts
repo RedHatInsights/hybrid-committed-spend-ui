@@ -33,6 +33,7 @@ export interface DashboardWidget {
   size?: DashboardSize;
   title?: MessageDescriptor;
   type: DashboardType;
+  viewAllPath?: string;
 }
 
 export function getQueryForWidget(filter: BillingFilters = dashboardDefaultFilters, props?) {

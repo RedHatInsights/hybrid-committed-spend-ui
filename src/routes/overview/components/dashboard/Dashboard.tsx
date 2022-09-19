@@ -22,12 +22,12 @@ const DashboardBase: React.FC<DashboardProps> = ({ selectWidgets, widgets }) => 
   <Grid hasGutter>
     {widgets.map(widgetId => {
       const widget = selectWidgets[widgetId];
-      return widget.size === DashboardSize.full ? (
-        <GridItem sm={12} key={widgetId}>
+      return widget.size === DashboardSize.half ? (
+        <GridItem lg={12} xl2={6} key={widgetId}>
           <widget.component widgetId={widgetId} />
         </GridItem>
       ) : (
-        <GridItem lg={12} xl2={6} key={widgetId}>
+        <GridItem sm={12} key={widgetId}>
           <widget.component widgetId={widgetId} />
         </GridItem>
       );
