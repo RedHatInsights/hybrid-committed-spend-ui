@@ -78,12 +78,11 @@ const mapStateToProps = createMapStateToProps<PermissionsOwnProps, PermissionsSt
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);
   const userAccess = userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString);
   const userAccessError = userAccessSelectors.selectUserAccessError(state, UserAccessType.all, userAccessQueryString);
-  // const userAccessFetchStatus = userAccessSelectors.selectUserAccessFetchStatus(
-  //   state,
-  //   UserAccessType.all,
-  //   userAccessQueryString
-  // );
-  const userAccessFetchStatus = FetchStatus.complete; // Todo: Remove when API is available
+  const userAccessFetchStatus = userAccessSelectors.selectUserAccessFetchStatus(
+    state,
+    UserAccessType.all,
+    userAccessQueryString
+  );
 
   return {
     isDetailsFeatureEnabled,

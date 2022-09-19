@@ -18,12 +18,7 @@ const createProdvidersStore = createMockStoreCreator({
 const fetchUserAccessMock = fetchUserAccess as jest.Mock;
 
 const userAccessMock: UserAccess = {
-  data: [
-    {
-      access: true,
-      type: UserAccessType.all,
-    },
-  ],
+  hcsDeal: true,
 };
 
 fetchUserAccessMock.mockReturnValue(Promise.resolve({ data: userAccessMock }));
