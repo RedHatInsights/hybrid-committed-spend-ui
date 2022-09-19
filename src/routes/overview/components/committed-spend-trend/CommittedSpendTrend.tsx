@@ -8,6 +8,7 @@ import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { NotAvailable } from 'routes/state';
@@ -71,10 +72,20 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
     );
   }
 
+  const getDetailsLink = () => {
+    if (widget.viewAllPath) {
+      const href = `${widget.viewAllPath}?${getQuery({
+        // TBD...
+      })}`;
+      return <Link to={href}>{intl.formatMessage(messages.viewDetails)}</Link>;
+    }
+    return null;
+  };
+
   // Todo: show errors
   const isTest = true;
   return (
-    <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
+    <ReportSummary detailsLink={getDetailsLink()} fetchStatus={reportFetchStatus} title={widget.title}>
       {!isTest && reportError ? (
         <NotAvailable />
       ) : (

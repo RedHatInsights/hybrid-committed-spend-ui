@@ -1,5 +1,6 @@
 import { UserAccess, UserAccessType } from 'api/user-access';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const hasAccess = (userAccess: UserAccess, userAccessType = UserAccessType.all) => {
   return userAccess ? userAccess.hcsDeal : false;
 };
