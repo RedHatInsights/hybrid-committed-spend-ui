@@ -1,15 +1,18 @@
 import './ReportSummary.scss';
 
 import { MessageDescriptor } from '@formatjs/intl/src/types';
-import { Card, CardBody, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
+import { Card, CardBody, CardFooter, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FetchStatus } from 'store/common';
 import { skeletonWidth } from 'utils/skeleton';
 
+import { styles } from './ReportSummary.styles';
+
 interface ReportSummaryOwnProps {
   bodyStyle?: React.CSSProperties;
   children?: React.ReactNode;
+  detailsLink?: React.ReactNode;
   fetchStatus: number;
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;
@@ -20,6 +23,7 @@ type ReportSummaryProps = ReportSummaryOwnProps & WrappedComponentProps;
 const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
   bodyStyle,
   children,
+  detailsLink,
   fetchStatus,
   intl,
   title,
@@ -44,6 +48,7 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
         children
       )}
     </CardBody>
+    {Boolean(detailsLink) && <CardFooter style={styles.cardFooter}>{detailsLink}</CardFooter>}
   </Card>
 );
 

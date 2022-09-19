@@ -6,6 +6,11 @@
   margin-top: var(--pf-global--spacer--md);
 }
 
+.cardFooter {
+  display: flex;
+  justify-content: center;
+}
+
 .legendSkeleton {
   margin-top: var(--pf-global--spacer--md),
 }
