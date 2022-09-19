@@ -1,5 +1,3 @@
-import './ReportSummary.scss';
-
 import { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Card, CardBody, CardFooter, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
 import React from 'react';
@@ -29,20 +27,20 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
   title,
   subTitle,
 }) => (
-  <Card className="reportSummary">
+  <Card style={styles.reportSummary}>
     <CardTitle>
       <Title headingLevel="h2" size={TitleSizes.lg}>
         {intl.formatMessage(title)}
       </Title>
-      {Boolean(subTitle) && <p className="subtitle">{intl.formatMessage(subTitle)}</p>}
+      {Boolean(subTitle) && <p style={styles.subtitle}>{intl.formatMessage(subTitle)}</p>}
     </CardTitle>
     <CardBody style={bodyStyle}>
       {fetchStatus === FetchStatus.inProgress ? (
         <>
           <Skeleton width="16%" />
-          <Skeleton className="chartSkeleton" width={skeletonWidth.md} />
+          <Skeleton style={styles.chartSkeleton} width={skeletonWidth.md} />
           <Skeleton width="33%" />
-          <Skeleton className="legendSkeleton" width={skeletonWidth.xs} />
+          <Skeleton style={styles.legendSkeleton} width={skeletonWidth.xs} />
         </>
       ) : (
         children
