@@ -1,7 +1,7 @@
 import { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Report } from 'api/reports/report';
 import { intl } from 'components/i18n';
-import { endOfMonth, format, getDate, getYear, startOfMonth } from 'date-fns';
+import { endOfMonth, format, getDate, startOfMonth } from 'date-fns';
 import messages from 'locales/messages';
 import { formatCurrency, FormatOptions } from 'utils/format';
 import { ComputedReportItem, getComputedReportItems } from 'utils/getComputedReportItems';
@@ -48,7 +48,7 @@ export const enum ChartType {
 
 export function transformReport(
   report: Report,
-  type: ChartType = ChartType.daily,
+  type: ChartType = ChartType.monthly,
   idKey: any = 'date',
   reportItem: string = 'cost',
   reportItemValue: string = 'total' // useful for infrastructure.usage values
@@ -76,7 +76,10 @@ export function transformReport(
       return [...acc, createReportDatum(prevValue + val, d, idKey, reportItem, reportItemValue)];
     }, []);
   }
-  return idKey === 'date' ? padChartDatums(chartDatums, type) : chartDatums;
+  return chartDatums;
+
+  // TODO: Need to pad monthly, not daily
+  // return idKey === 'date' ? padChartDatums(chartDatums, type) : chartDatums;
 }
 
 export function createReportDatum<T extends ComputedReportItem>(
@@ -86,7 +89,12 @@ export function createReportDatum<T extends ComputedReportItem>(
   reportItem: string = 'cost',
   reportItemValue: string = 'total' // useful for infrastructure.usage values
 ): ChartDatum {
-  const xVal = idKey === 'date' ? getDate(new Date(computedItem.id + 'T00:00:00')) : computedItem.label;
+  const xVal =
+    idKey === 'date'
+      ? intl.formatDate(computedItem.id, {
+          month: 'long',
+        })
+      : computedItem.label;
   const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
   return {
     x: xVal,
@@ -175,77 +183,33 @@ export function padChartDatums(datums: ChartDatum[], type: ChartType = ChartType
   return fillChartDatums(result, type);
 }
 
-export function getDatumDateRange(datums: ChartDatum[], offset: number = 0): [Date, Date] {
+export function getDateRange(datums: ChartDatum[]): [Date, Date] {
   if (!(datums && datums.length)) {
     const today = new Date();
-
-    // If datums is empty, obtain the month based on offset (e.g., to show previous month in chart legends)
-    if (offset) {
-      today.setDate(1); // Required to obtain correct month
-      today.setMonth(today.getMonth() - offset);
-    }
-    const firstOfMonth = startOfMonth(today);
-    return [firstOfMonth, today];
+    return [today, today];
   }
 
-  // Find the first populated (non-null) day
-  let firstDay = 0;
-  for (let i = firstDay; i < datums.length; i++) {
+  // Find the first populated (non-null) month
+  let firstMonth = 0;
+  for (let i = firstMonth; i < datums.length; i++) {
     if (datums[i].y && datums[i].y !== null) {
-      firstDay = i;
+      firstMonth = i;
       break;
     }
   }
 
-  // Find the last populated (non-null) day
-  let lastDay = datums.length - 1;
-  for (let i = lastDay; i >= 0; i--) {
+  // Find the last populated (non-null) month
+  let lastMonth = datums.length - 1;
+  for (let i = lastMonth; i >= 0; i--) {
     if (datums[i].y && datums[i].y !== null) {
-      lastDay = i;
+      lastMonth = i;
       break;
     }
   }
 
-  const start = new Date(datums[firstDay].key + 'T00:00:00');
-  const end = new Date(datums[lastDay].key + 'T00:00:00');
+  const start = new Date(datums[firstMonth].key + 'T00:00:00');
+  const end = new Date(datums[lastMonth].key + 'T00:00:00');
   return [start, end];
-}
-
-export function getDateRange(
-  datums: ChartDatum[],
-  firstOfMonth: boolean = true,
-  lastOfMonth: boolean = false,
-  offset: number = 0
-): [Date, Date] {
-  const [start, end] = getDatumDateRange(datums, offset);
-
-  // Show the date range we are trying to cover (i.e., days 1-30/31)
-  if (firstOfMonth && start.setDate) {
-    start.setDate(1);
-  }
-  if (lastOfMonth && start.setDate) {
-    const lastDate = endOfMonth(start).getDate();
-    end.setDate(lastDate);
-  }
-  return [start, end];
-}
-
-// TODO: remove? this doesn't appear to be used anywhere
-export function getDateRangeString(
-  datums: ChartDatum[],
-  firstOfMonth: boolean = false,
-  lastOfMonth: boolean = false,
-  offset: number = 0
-) {
-  const [start, end] = getDateRange(datums, firstOfMonth, lastOfMonth, offset);
-
-  const count = getDate(end);
-  const endDate = format(end, 'dd');
-  const month = Number(format(start, 'M')) - 1; // Required to obtain correct month message
-  const startDate = format(start, 'dd');
-  const year = getYear(end);
-
-  return intl.formatMessage(messages.chartDateRange, { count, startDate, endDate, month, year });
 }
 
 export function getMaxValue(datums: ChartDatum[]) {
@@ -287,27 +251,19 @@ export function getTooltipContent(formatter) {
 
 export function getCostRangeString(
   datums: ChartDatum[],
-  key: MessageDescriptor = messages.chartCostLegendLabel,
-  firstOfMonth: boolean = false,
-  lastOfMonth: boolean = false,
-  offset: number = 0,
+  key: MessageDescriptor,
   noDataKey: MessageDescriptor = messages.chartNoData
 ) {
   if (!(datums && datums.length)) {
     return intl.formatMessage(noDataKey);
   }
-
-  const [start, end] = getDateRange(datums, firstOfMonth, lastOfMonth, offset);
-
-  const month = Number(format(start, 'M')) - 1; // Required to obtain correct month message
-  const year = getYear(end);
-
+  const [start, end] = getDateRange(datums);
+  const dateRange = intl.formatDateTimeRange(start, end, {
+    month: 'long',
+    year: 'numeric',
+  });
   return intl.formatMessage(key, {
-    count: getDate(end),
-    startDate: format(start, 'd'),
-    endDate: format(end, 'd'),
-    month,
-    year,
+    dateRange,
   });
 }
 
