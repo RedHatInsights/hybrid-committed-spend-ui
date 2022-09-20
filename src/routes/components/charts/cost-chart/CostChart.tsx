@@ -40,6 +40,7 @@ interface CostChartOwnProps {
   legendItemsPerRow?: number;
   padding?: any;
   previousData?: any;
+  thresholdData?: any;
   title?: string;
   formatter?: Formatter;
   formatOptions?: FormatOptions;
@@ -69,7 +70,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
   }
 
   public componentDidUpdate(prevProps: CostChartProps) {
-    if (prevProps.currentData !== this.props.currentData || prevProps.previousData !== this.props.previousData) {
+    if (prevProps.currentData !== this.props.currentData || prevProps.previousData !== this.props.previousData || prevProps.thresholdData !== this.props.thresholdData) {
       this.initDatum();
     }
   }
@@ -81,7 +82,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
   }
 
   private initDatum = () => {
-    const { currentData, previousData } = this.props;
+    const { currentData, previousData, thresholdData } = this.props;
 
     // Show all legends, regardless of length
 
@@ -127,6 +128,28 @@ class CostChartBase extends React.Component<CostChartProps, State> {
           data: {
             ...styles.previousSpend,
             stroke: styles.previousColorScale[0],
+          },
+        },
+      },
+      {
+        childName: 'threshold',
+        data: thresholdData,
+        legendItem: {
+          name: getCostRangeString(
+            thresholdData,
+            messages.chartThresholdSpendLegendLabel,
+            messages.chartThresholdSpendNoDataLegendLabel
+          ),
+          symbol: {
+            fill: styles.thresholdColorScale[0],
+            type: 'minus',
+          },
+          tooltip: getCostRangeString(thresholdData, messages.chartThresholdSpendTooltip),
+        },
+        style: {
+          data: {
+            ...styles.threshold,
+            stroke: styles.thresholdColorScale[0],
           },
         },
       },
@@ -235,8 +258,8 @@ class CostChartBase extends React.Component<CostChartProps, State> {
       intl,
       padding = {
         bottom: 50,
-        left: 8,
-        right: 8,
+        left: 40,
+        right: 40,
         top: 8,
       },
       title,
@@ -291,6 +314,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
                 })}
               <ChartAxis
                 domainPadding={{ y: [100, 100] }}
+                fixLabelOverlap
                 style={styles.xAxis}
                 tickFormat={t =>
                   intl.formatDate(t, {

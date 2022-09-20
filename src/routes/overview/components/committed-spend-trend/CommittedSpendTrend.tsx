@@ -15,8 +15,9 @@ import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 
 import { chartStyles } from './CommittedSpendTrend.styles';
-import { currentDataReport } from './currentDataReport';
-import { previousDataReport } from './previousDataReport';
+import { currentData } from './data/currentData';
+import { previousData } from './data/previousData';
+import { thresholdData } from './data/thresholdData';
 
 interface CommittedSpendTrendOwnProps {
   widgetId: number;
@@ -32,6 +33,7 @@ interface CommittedSpendTrendStateProps {
   previousReportError?: AxiosError;
   previousReportFetchStatus?: FetchStatus;
   query: Query;
+  thresholdReport?: Report;
   widget: DashboardWidget;
 }
 
@@ -54,6 +56,7 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   previousQueryString,
   previousReport,
   previousReportFetchStatus,
+  thresholdReport,
   widget,
 }) => {
   useMemo(() => {
@@ -75,10 +78,13 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
 
   const getChart = () => {
     // Cost data
-    const currentData = transformReport(currentReport, ChartType.monthly);
-    const previousData = transformReport(previousReport, ChartType.monthly, 1);
+    const current = transformReport(currentReport, ChartType.monthly);
+    const previous = transformReport(previousReport, ChartType.monthly, 1);
+    const threshold = transformReport(thresholdReport, ChartType.monthly);
 
-    return <CostChart currentData={currentData} height={chartStyles.height} previousData={previousData} />;
+    return (
+      <CostChart currentData={current} height={chartStyles.height} previousData={previous} thresholdData={threshold} />
+    );
   };
 
   return (
@@ -114,7 +120,7 @@ const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, Commi
     //   widget.reportType,
     //   currentQueryString
     // );
-    const currentReport = currentDataReport;
+    const currentReport = currentData as any;
     const currentReportError = reportSelectors.selectReportError(
       state,
       widget.reportPathsType,
@@ -136,7 +142,7 @@ const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, Commi
     //   widget.reportType,
     //   previousQueryString
     // );
-    const previousReport = previousDataReport;
+    const previousReport = previousData as any;
     const previousReportError = reportSelectors.selectReportError(
       state,
       widget.reportPathsType,
@@ -160,6 +166,7 @@ const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, Commi
       previousReportError,
       previousReportFetchStatus,
       query,
+      thresholdReport: thresholdData as any,
       widget,
     };
   }
