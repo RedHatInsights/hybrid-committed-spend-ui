@@ -1,0 +1,7 @@
+@import "~@patternfly/patternfly/base/patternfly-variables.css";
+
+.chartOverride {
+  :not(foo) svg {
+    overflow: visible;
+  }
+}
