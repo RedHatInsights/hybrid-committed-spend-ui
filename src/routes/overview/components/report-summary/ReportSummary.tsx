@@ -11,7 +11,7 @@ interface ReportSummaryOwnProps {
   bodyStyle?: React.CSSProperties;
   children?: React.ReactNode;
   detailsLink?: React.ReactNode;
-  fetchStatus: number;
+  fetchStatus: number | number[];
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;
 }
@@ -26,29 +26,41 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
   intl,
   title,
   subTitle,
-}) => (
-  <Card style={styles.reportSummary}>
-    <CardTitle>
-      <Title headingLevel="h2" size={TitleSizes.lg}>
-        {intl.formatMessage(title)}
-      </Title>
-      {Boolean(subTitle) && <p style={styles.subtitle}>{intl.formatMessage(subTitle)}</p>}
-    </CardTitle>
-    <CardBody style={bodyStyle}>
-      {fetchStatus === FetchStatus.inProgress ? (
-        <>
-          <Skeleton width="16%" />
-          <Skeleton style={styles.chartSkeleton} width={skeletonWidth.md} />
-          <Skeleton width="33%" />
-          <Skeleton style={styles.legendSkeleton} width={skeletonWidth.xs} />
-        </>
-      ) : (
-        children
-      )}
-    </CardBody>
-    {Boolean(detailsLink) && <CardFooter style={styles.cardFooter}>{detailsLink}</CardFooter>}
-  </Card>
-);
+}) => {
+  const isSkeleton = () => {
+    if (Array.isArray(fetchStatus)) {
+      fetchStatus.forEach(status => {
+        if (status === FetchStatus.inProgress) {
+          return true;
+        }
+      });
+    }
+    return fetchStatus === FetchStatus.inProgress;
+  };
+  return (
+    <Card style={styles.reportSummary}>
+      <CardTitle>
+        <Title headingLevel="h2" size={TitleSizes.lg}>
+          {intl.formatMessage(title)}
+        </Title>
+        {Boolean(subTitle) && <p style={styles.subtitle}>{intl.formatMessage(subTitle)}</p>}
+      </CardTitle>
+      <CardBody style={bodyStyle}>
+        {isSkeleton() ? (
+          <>
+            <Skeleton width="16%" />
+            <Skeleton style={styles.chartSkeleton} width={skeletonWidth.md} />
+            <Skeleton width="33%" />
+            <Skeleton style={styles.legendSkeleton} width={skeletonWidth.xs} />
+          </>
+        ) : (
+          children
+        )}
+      </CardBody>
+      {Boolean(detailsLink) && <CardFooter style={styles.cardFooter}>{detailsLink}</CardFooter>}
+    </Card>
+  );
+};
 
 const ReportSummary = injectIntl(ReportSummaryBase);
 
