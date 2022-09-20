@@ -1,5 +1,3 @@
-import './CommittedSpendTrend.scss';
-
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
@@ -9,24 +7,31 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { EmptyValueState } from 'routes/components/state';
+import { ChartType, transformReport } from 'routes/components/charts/common/chart-datum-utils';
+import { CostChart } from 'routes/components/charts/cost-chart';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { NotAvailable } from 'routes/state';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
-import { formatCurrency } from 'utils/format';
+
+import { chartStyles } from './CommittedSpendTrend.styles';
+import { currentDataReport } from './currentDataReport';
+import { previousDataReport } from './previousDataReport';
 
 interface CommittedSpendTrendOwnProps {
   widgetId: number;
 }
 
 interface CommittedSpendTrendStateProps {
+  currentQueryString: string;
+  currentReport?: Report;
+  currentReportError?: AxiosError;
+  currentReportFetchStatus?: FetchStatus;
+  previousQueryString: string;
+  previousReport?: Report;
+  previousReportError?: AxiosError;
+  previousReportFetchStatus?: FetchStatus;
   query: Query;
-  queryString: string;
-  report?: Report;
-  reportError?: AxiosError;
-  reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
 }
 
@@ -41,36 +46,22 @@ export type CommittedSpendTrendProps = CommittedSpendTrendStateProps &
   WrappedComponentProps;
 
 const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
+  currentQueryString,
+  currentReport,
+  currentReportFetchStatus,
   fetchReport,
   intl,
-  queryString,
-  report,
-  reportError,
-  reportFetchStatus,
+  previousQueryString,
+  previousReport,
+  previousReportFetchStatus,
   widget,
 }) => {
   useMemo(() => {
-    fetchReport(widget.reportPathsType, widget.reportType, queryString);
-  }, [queryString]);
-
-  let balance: string | React.ReactNode = <EmptyValueState />;
-  let committed: string | React.ReactNode = <EmptyValueState />;
-
-  const hasTotal = report && report.meta && report.meta.total;
-  const hasCost = hasTotal && report.meta.total.cost && report.meta.total.cost.total;
-
-  if (hasTotal) {
-    balance = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
-    );
-    committed = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
-    );
-  }
+    fetchReport(widget.reportPathsType, widget.reportType, currentQueryString);
+  }, [currentQueryString]);
+  useMemo(() => {
+    fetchReport(widget.reportPathsType, widget.reportType, previousQueryString);
+  }, [previousQueryString]);
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -82,21 +73,21 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
     return null;
   };
 
-  // Todo: show errors
-  const isTest = true;
+  const getChart = () => {
+    // Cost data
+    const currentData = transformReport(currentReport, ChartType.monthly, 'date');
+    const previousData = transformReport(previousReport, ChartType.monthly, 'date');
+
+    return <CostChart currentData={currentData} height={chartStyles.height} previousData={previousData} />;
+  };
+
   return (
-    <ReportSummary detailsLink={getDetailsLink()} fetchStatus={reportFetchStatus} title={widget.title}>
-      {!isTest && reportError ? (
-        <NotAvailable />
-      ) : (
-        <>
-          <div>March 2023 - July 31, 2023</div>
-          <div className="valueContainer">
-            <div className={`value`}>{balance}</div>
-            <div>{intl.formatMessage(messages.outOf, { value: committed })}</div>
-          </div>
-        </>
-      )}
+    <ReportSummary
+      detailsLink={getDetailsLink()}
+      fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
+      title={widget.title}
+    >
+      {getChart()}
     </ReportSummary>
   );
 };
@@ -114,27 +105,61 @@ const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, Commi
         ...queryFromRoute.filter,
       },
     };
-    const queryString = getQuery(query);
-    const report = reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString);
-    const reportError = reportSelectors.selectReportError(
+
+    // Current report
+    const currentQueryString = getQuery(query);
+    // const currentReport = reportSelectors.selectReport(
+    //   state,
+    //   widget.reportPathsType,
+    //   widget.reportType,
+    //   currentQueryString
+    // );
+    const currentReport = currentDataReport;
+    const currentReportError = reportSelectors.selectReportError(
       state,
       widget.reportPathsType,
       widget.reportType,
-      queryString
+      currentQueryString
     );
-    const reportFetchStatus = reportSelectors.selectReportFetchStatus(
+    const currentReportFetchStatus = reportSelectors.selectReportFetchStatus(
       state,
       widget.reportPathsType,
       widget.reportType,
-      queryString
+      currentQueryString
+    );
+
+    // Previous report
+    const previousQueryString = getQuery(query);
+    // const previousReport = reportSelectors.selectReport(
+    //   state,
+    //   widget.reportPathsType,
+    //   widget.reportType,
+    //   previousQueryString
+    // );
+    const previousReport = previousDataReport;
+    const previousReportError = reportSelectors.selectReportError(
+      state,
+      widget.reportPathsType,
+      widget.reportType,
+      previousQueryString
+    );
+    const previousReportFetchStatus = reportSelectors.selectReportFetchStatus(
+      state,
+      widget.reportPathsType,
+      widget.reportType,
+      previousQueryString
     );
 
     return {
+      currentQueryString,
+      currentReport,
+      currentReportError,
+      currentReportFetchStatus,
+      previousQueryString,
+      previousReport,
+      previousReportError,
+      previousReportFetchStatus,
       query,
-      queryString,
-      report,
-      reportError,
-      reportFetchStatus,
       widget,
     };
   }

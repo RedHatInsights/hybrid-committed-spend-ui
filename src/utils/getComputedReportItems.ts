@@ -1,6 +1,4 @@
 import { Report, ReportData, ReportItem, ReportItemValue, ReportValue } from 'api/reports/report';
-import { intl } from 'components/i18n';
-import messages from 'locales/messages';
 import { sort, SortDirection } from 'utils/sort';
 
 export interface ComputedReportValue {
@@ -155,13 +153,8 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
         const source_uuid = val.source_uuid ? val.source_uuid : [];
 
         let label;
-        if (report.meta && report.meta.others && (id === 'Other' || id === 'Others')) {
-          // Add count to "Others" label
-          label = intl.formatMessage(messages.chartOthers, { count: report.meta.others });
-        } else {
-          if (label === undefined || label.trim().length === 0) {
-            label = val.alias && val.alias.trim().length > 0 ? val.alias : val[idKey];
-          }
+        if (label === undefined || label.trim().length === 0) {
+          label = val.alias && val.alias.trim().length > 0 ? val.alias : val[idKey];
         }
 
         if (daily) {

@@ -4,7 +4,7 @@ import messages from 'locales/messages';
 import { FormatOptions, Formatter } from 'utils/format';
 import { DomainTuple, VictoryStyleInterface } from 'victory-core';
 
-import { getMaxMinValues, getTooltipContent } from './chartDatumUtils';
+import { getMaxMinValues, getTooltipContent } from './chart-datum-utils';
 
 export interface ChartData {
   childName?: string;
@@ -42,7 +42,7 @@ export const getChartNames = (series: ChartSeries[]) => {
 };
 
 export const getDomain = (series: ChartSeries[], hiddenSeries: Set<number>) => {
-  const domain: { x: DomainTuple; y?: DomainTuple } = { x: [1, 31] };
+  const domain: { x?: DomainTuple; y?: DomainTuple } = {};
   let maxValue = -1;
   let minValue = -1;
 
@@ -85,6 +85,21 @@ export const getLegendData = (series: ChartSeries[], hiddenSeries: Set<number>, 
     };
     return data;
   });
+  return result;
+};
+
+export const getTickValues = (series: ChartSeries[]) => {
+  const result = [];
+
+  if (series) {
+    series.forEach((s: any) => {
+      s.data.forEach((datum: any) => {
+        if (!result.find(month => month === datum.x)) {
+          result.push(datum.x);
+        }
+      });
+    });
+  }
   return result;
 };
 

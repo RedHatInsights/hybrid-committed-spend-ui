@@ -5,7 +5,7 @@ import NotificationsPortal from '@redhat-cloud-services/frontend-components-noti
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
 import { FeatureFlags } from 'components/feature-flags';
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Reducer } from 'redux';
 
@@ -35,11 +35,11 @@ const App = () => {
   }, [chrome]);
 
   return (
-    <Fragment>
+    <div className="hybrid-committed-spend">
       <FeatureFlags />
       <NotificationsPortal />
       <Routes />
-    </Fragment>
+    </div>
   );
 };
 
