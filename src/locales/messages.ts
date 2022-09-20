@@ -23,8 +23,8 @@ export default defineMessages({
     id: 'chartCurrentSpendNoDataLegendLabel',
   },
   chartCurrentSpendTooltip: {
-    defaultMessage: 'Actual spend YTD',
-    description: 'Actual spend YTD',
+    defaultMessage: 'Actual spend YTD ({year})',
+    description: 'Actual spend YTD ({year})',
     id: 'chartCurrentSpendTooltip',
   },
   chartNoData: {
@@ -43,8 +43,8 @@ export default defineMessages({
     id: 'chartPreviousSpendNoDataLegendLabel',
   },
   chartPreviousSpendTooltip: {
-    defaultMessage: 'Previous year spend',
-    description: 'Previous year spend',
+    defaultMessage: 'Previous year spend ({year})',
+    description: 'Previous year spend ({year})',
     id: 'chartPreviousSpendTooltip',
   },
   chartTooltipTitle: {

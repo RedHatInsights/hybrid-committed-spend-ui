@@ -75,8 +75,8 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
 
   const getChart = () => {
     // Cost data
-    const currentData = transformReport(currentReport, ChartType.monthly, 'date');
-    const previousData = transformReport(previousReport, ChartType.monthly, 'date');
+    const currentData = transformReport(currentReport, ChartType.monthly);
+    const previousData = transformReport(previousReport, ChartType.monthly, 1);
 
     return <CostChart currentData={currentData} height={chartStyles.height} previousData={previousData} />;
   };

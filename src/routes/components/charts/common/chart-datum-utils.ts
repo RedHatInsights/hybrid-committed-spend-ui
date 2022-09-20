@@ -49,7 +49,7 @@ export const enum ChartType {
 export function transformReport(
   report: Report,
   type: ChartType = ChartType.monthly,
-  idKey: any = 'date',
+  offset: number = 0, // Shift the year, so we can overlap current and previous months
   reportItem: string = 'cost',
   reportItemValue: string = 'total' // useful for infrastructure.usage values
 ): ChartDatum[] {
@@ -57,7 +57,6 @@ export function transformReport(
     return [];
   }
   const items = {
-    idKey,
     report,
     sortKey: 'id',
     sortDirection: SortDirection.desc,
@@ -67,13 +66,13 @@ export function transformReport(
   if (type === ChartType.daily || type === ChartType.monthly) {
     chartDatums = computedItems.map(i => {
       const val = i[reportItem][reportItemValue] ? i[reportItem][reportItemValue].value : i[reportItem].value;
-      return createReportDatum(val, i, idKey, reportItem, reportItemValue);
+      return createReportDatum(val, i, offset, reportItem, reportItemValue);
     });
   } else {
     chartDatums = computedItems.reduce<ChartDatum[]>((acc, d) => {
       const prevValue = acc.length ? acc[acc.length - 1].y : 0;
       const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;
-      return [...acc, createReportDatum(prevValue + val, d, idKey, reportItem, reportItemValue)];
+      return [...acc, createReportDatum(prevValue + val, d, offset, reportItem, reportItemValue)];
     }, []);
   }
   return chartDatums;
@@ -85,16 +84,19 @@ export function transformReport(
 export function createReportDatum<T extends ComputedReportItem>(
   value: number,
   computedItem: T,
-  idKey = 'date',
+  offset: number = 0, // Shift the year, so we can overlap current and previous months
   reportItem: string = 'cost',
   reportItemValue: string = 'total' // useful for infrastructure.usage values
 ): ChartDatum {
-  const xVal =
-    idKey === 'date'
-      ? intl.formatDate(computedItem.id, {
-          month: 'long',
-        })
-      : computedItem.label;
+  const getXVal = () => {
+    if (offset > 0) {
+      const date = new Date(computedItem.id + 'T00:00:00');
+      date.setFullYear(date.getFullYear() + offset);
+      return format(date, 'yyyy-MM');
+    }
+    return computedItem.id;
+  };
+  const xVal = getXVal();
   const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
   return {
     x: xVal,
@@ -167,7 +169,7 @@ export function padChartDatums(datums: ChartDatum[], type: ChartType = ChartType
   for (let i = padDate.getDate(); i < firstDate.getDate(); i++) {
     padDate.setDate(i);
     const id = format(padDate, 'yyyy-MM-dd');
-    result.push(createReportDatum(null, { id }, 'date', null));
+    result.push(createReportDatum(null, { id }, null));
   }
 
   // Fill middle with existing data
@@ -178,7 +180,7 @@ export function padChartDatums(datums: ChartDatum[], type: ChartType = ChartType
   for (let i = padDate.getDate() + 1; i <= endOfMonth(lastDate).getDate(); i++) {
     padDate.setDate(i);
     const id = format(padDate, 'yyyy-MM-dd');
-    result.push(createReportDatum(null, { id }, 'date', null));
+    result.push(createReportDatum(null, { id }, null));
   }
   return fillChartDatums(result, type);
 }
@@ -262,8 +264,12 @@ export function getCostRangeString(
     month: 'long',
     year: 'numeric',
   });
+  const year = intl.formatDateTimeRange(start, end, {
+    year: 'numeric',
+  });
   return intl.formatMessage(key, {
     dateRange,
+    year,
   });
 }
 

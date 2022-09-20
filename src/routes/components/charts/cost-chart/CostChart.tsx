@@ -251,7 +251,13 @@ class CostChartBase extends React.Component<CostChartProps, State> {
           labelComponent: (
             <ChartLegendTooltip
               legendData={getLegendData(series, hiddenSeries, true)}
-              title={datum => intl.formatMessage(messages.chartTooltipTitle, { value: datum.x })}
+              title={datum =>
+                intl.formatMessage(messages.chartTooltipTitle, {
+                  value: intl.formatDate(datum.x, {
+                    month: 'long',
+                  }),
+                })
+              }
             />
           ),
         })
@@ -283,7 +289,16 @@ class CostChartBase extends React.Component<CostChartProps, State> {
                 series.map((s, index) => {
                   return this.getChart(s, index);
                 })}
-              <ChartAxis style={styles.xAxis} tickValues={getTickValues(series)} />
+              <ChartAxis
+                domainPadding={{ y: [100, 100] }}
+                style={styles.xAxis}
+                tickFormat={t =>
+                  intl.formatDate(t, {
+                    month: 'long',
+                  })
+                }
+                tickValues={getTickValues(series)}
+              />
               <ChartAxis dependentAxis style={styles.yAxis} />
             </Chart>
           </div>

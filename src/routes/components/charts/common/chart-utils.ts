@@ -100,7 +100,15 @@ export const getTickValues = (series: ChartSeries[]) => {
       });
     });
   }
-  return result;
+  return result.sort((a, b) => {
+    if (new Date(a) < new Date(b)) {
+      return -1;
+    }
+    if (new Date(a) > new Date(b)) {
+      return 1;
+    }
+    return 0;
+  });
 };
 
 // Note: Forecast is expected to use both datum.y and datum.y0

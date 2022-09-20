@@ -43,7 +43,15 @@
     "chartCurrentSpendTooltip": [
       {
         "type": 0,
-        "value": "Actual spend YTD"
+        "value": "Actual spend YTD ("
+      },
+      {
+        "type": 1,
+        "value": "year"
+      },
+      {
+        "type": 0,
+        "value": ")"
       }
     ],
     "chartNoData": [
@@ -75,7 +83,15 @@
     "chartPreviousSpendTooltip": [
       {
         "type": 0,
-        "value": "Previous year spend"
+        "value": "Previous year spend ("
+      },
+      {
+        "type": 1,
+        "value": "year"
+      },
+      {
+        "type": 0,
+        "value": ")"
       }
     ],
     "chartTooltipTitle": [
