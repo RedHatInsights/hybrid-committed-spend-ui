@@ -1,4 +1,4 @@
-import 'routes/views/components/charts/common/charts-common.scss';
+import 'routes/components/charts/common/chart.scss';
 
 import {
   Chart,
@@ -10,36 +10,36 @@ import {
   getInteractiveLegendEvents,
 } from '@patternfly/react-charts';
 import { Title } from '@patternfly/react-core';
-import { getDate } from 'date-fns';
 import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { default as ChartTheme } from 'routes/components/charts/chartTheme';
-import { getCostRangeString, getDateRange } from 'routes/components/charts/common/chartDatumUtils';
+import { default as ChartTheme } from 'routes/components/charts/chart-theme';
+import { getCostRangeString } from 'routes/components/charts/common/chart-datum-utils';
 import {
   ChartSeries,
   getChartNames,
   getDomain,
   getLegendData,
   getResizeObserver,
+  getTickValues,
   getTooltipLabel,
   initHiddenSeries,
   isDataAvailable,
   isSeriesHidden,
-} from 'routes/components/charts/common/chartUtils';
+} from 'routes/components/charts/common/chart-utils';
 import { FormatOptions, Formatter } from 'utils/format';
 import { noop } from 'utils/noop';
 
-import { styles } from './costChart.styles';
+import { styles } from './CostChart.styles';
 
 interface CostChartOwnProps {
   adjustContainerHeight?: boolean;
   containerHeight?: number;
-  currentCostData: any;
+  currentData: any;
   height?: number;
   legendItemsPerRow?: number;
   padding?: any;
-  previousCostData?: any;
+  previousData?: any;
   title?: string;
   formatter?: Formatter;
   formatOptions?: FormatOptions;
@@ -69,10 +69,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
   }
 
   public componentDidUpdate(prevProps: CostChartProps) {
-    if (
-      prevProps.currentCostData !== this.props.currentCostData ||
-      prevProps.previousCostData !== this.props.previousCostData
-    ) {
+    if (prevProps.currentData !== this.props.currentData || prevProps.previousData !== this.props.previousData) {
       this.initDatum();
     }
   }
@@ -84,47 +81,52 @@ class CostChartBase extends React.Component<CostChartProps, State> {
   }
 
   private initDatum = () => {
-    const { currentCostData, previousCostData } = this.props;
+    const { currentData, previousData } = this.props;
 
-    const costKey = messages.chartCostLegendLabel;
-    const costTooltipKey = messages.chartCostLegendTooltip;
-
-    // Show all legends, regardless of length -- https://github.com/project-koku/koku-ui/issues/248
+    // Show all legends, regardless of length
 
     const series: ChartSeries[] = [
       {
-        childName: 'previousCost',
-        data: previousCostData,
+        childName: 'currentSpend',
+        data: currentData,
         legendItem: {
-          name: getCostRangeString(previousCostData, costKey, true, true, 1, messages.chartCostLegendNoDataLabel),
-          symbol: {
-            fill: styles.previousColorScale[0],
-            type: 'minus',
-          },
-          tooltip: getCostRangeString(previousCostData, costTooltipKey, false, false, 1),
-        },
-        style: {
-          data: {
-            ...styles.previousCostData,
-            stroke: styles.previousColorScale[0],
-          },
-        },
-      },
-      {
-        childName: 'currentCost',
-        data: currentCostData,
-        legendItem: {
-          name: getCostRangeString(currentCostData, costKey, true, false, 0, messages.chartCostLegendNoDataLabel),
+          name: getCostRangeString(
+            currentData,
+            messages.chartCurrentSpendLegendLabel,
+            messages.chartCurrentSpendNoDataLegendLabel
+          ),
           symbol: {
             fill: styles.currentColorScale[0],
             type: 'minus',
           },
-          tooltip: getCostRangeString(currentCostData, costTooltipKey, false, false),
+          tooltip: getCostRangeString(currentData, messages.chartCurrentSpendTooltip),
         },
         style: {
           data: {
-            ...styles.currentCostData,
+            ...styles.currentSpend,
             stroke: styles.currentColorScale[0],
+          },
+        },
+      },
+      {
+        childName: 'previousSpend',
+        data: previousData,
+        legendItem: {
+          name: getCostRangeString(
+            previousData,
+            messages.chartPreviousSpendLegendLabel,
+            messages.chartPreviousSpendNoDataLegendLabel
+          ),
+          symbol: {
+            fill: styles.previousColorScale[0],
+            type: 'minus',
+          },
+          tooltip: getCostRangeString(previousData, messages.chartPreviousSpendTooltip),
+        },
+        style: {
+          data: {
+            ...styles.previousSpend,
+            stroke: styles.previousColorScale[0],
           },
         },
       },
@@ -198,15 +200,6 @@ class CostChartBase extends React.Component<CostChartProps, State> {
     return result;
   }
 
-  private getEndDate() {
-    const { currentCostData, previousCostData } = this.props;
-
-    const currentCostDate = currentCostData ? getDate(getDateRange(currentCostData, true, true)[1]) : 0;
-    const previousUsageDate = previousCostData ? getDate(getDateRange(previousCostData, true, true)[1]) : 0;
-
-    return currentCostDate > 0 || previousUsageDate > 0 ? Math.max(currentCostDate, previousUsageDate) : 31;
-  }
-
   private getLegend = () => {
     const { hiddenSeries, series } = this.state;
 
@@ -250,13 +243,6 @@ class CostChartBase extends React.Component<CostChartProps, State> {
     } = this.props;
     const { cursorVoronoiContainer, hiddenSeries, series, width } = this.state;
     const domain = getDomain(series, hiddenSeries);
-    const lastDate = this.getEndDate();
-
-    const half = Math.floor(lastDate / 2);
-    const _1stDay = 1;
-    const _2ndDay = _1stDay + Math.floor(half / 2);
-    const _3rdDay = _1stDay + half;
-    const _4thDay = lastDate - Math.floor(half / 2);
 
     // Clone original container. See https://issues.redhat.com/browse/COST-762
     const container = cursorVoronoiContainer
@@ -265,7 +251,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
           labelComponent: (
             <ChartLegendTooltip
               legendData={getLegendData(series, hiddenSeries, true)}
-              title={datum => intl.formatMessage(messages.chartDayOfTheMonth, { day: datum.x })}
+              title={datum => intl.formatMessage(messages.chartTooltipTitle, { value: datum.x })}
             />
           ),
         })
@@ -297,7 +283,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
                 series.map((s, index) => {
                   return this.getChart(s, index);
                 })}
-              <ChartAxis style={styles.xAxis} tickValues={[_1stDay, _2ndDay, _3rdDay, _4thDay, lastDate]} />
+              <ChartAxis style={styles.xAxis} tickValues={getTickValues(series)} />
               <ChartAxis dependentAxis style={styles.yAxis} />
             </Chart>
           </div>

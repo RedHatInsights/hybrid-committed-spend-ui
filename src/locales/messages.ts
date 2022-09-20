@@ -12,82 +12,45 @@ export default defineMessages({
     description: 'Account number: {value}',
     id: 'accountNumber',
   },
-  chartCostLegendLabel: {
-    defaultMessage:
-      '{month, select, ' +
-      '0 {{count, plural, one {Cost (Jan {startDate})} other {Cost (Jan {startDate}-{endDate})}}} ' +
-      '1 {{count, plural, one {Cost (Feb {startDate})} other {Cost (Feb {startDate}-{endDate})}}} ' +
-      '2 {{count, plural, one {Cost (Mar {startDate})} other {Cost (Mar {startDate}-{endDate})}}} ' +
-      '3 {{count, plural, one {Cost (Apr {startDate})} other {Cost (Apr {startDate}-{endDate})}}} ' +
-      '4 {{count, plural, one {Cost (May {startDate})} other {Cost (May {startDate}-{endDate})}}} ' +
-      '5 {{count, plural, one {Cost (Jun {startDate})} other {Cost (Jun {startDate}-{endDate})}}} ' +
-      '6 {{count, plural, one {Cost (Jul {startDate})} other {Cost (Jul {startDate}-{endDate})}}} ' +
-      '7 {{count, plural, one {Cost (Aug {startDate})} other {Cost (Aug {startDate}-{endDate})}}} ' +
-      '8 {{count, plural, one {Cost (Sep {startDate})} other {Cost (Sep {startDate}-{endDate})}}} ' +
-      '9 {{count, plural, one {Cost (Oct {startDate})} other {Cost (Oct {startDate}-{endDate})}}} ' +
-      '10 {{count, plural, one {Cost (Nov {startDate})} other {Cost (Nov {startDate}-{endDate})}}} ' +
-      '11 {{count, plural, one {Cost (Dec {startDate})} other {Cost (Dec {startDate}-{endDate})}}} ' +
-      'other {}}',
-    description: 'Cost date label',
-    id: 'chartCostLegendLabel',
+  chartCurrentSpendLegendLabel: {
+    defaultMessage: 'Actual spend YTD ({dateRange})',
+    description: 'Actual spend YTD ({dateRange})',
+    id: 'chartCurrentSpendLegendLabel',
   },
-  chartCostLegendNoDataLabel: {
-    defaultMessage: 'Cost (no data)',
-    description: 'Cost (no data)',
-    id: 'chartCostLegendNoDataLabel',
+  chartCurrentSpendNoDataLegendLabel: {
+    defaultMessage: 'Actual spend YTD (no data)',
+    description: 'Actual spend YTD (no data)',
+    id: 'chartCurrentSpendNoDataLegendLabel',
   },
-  chartCostLegendTooltip: {
-    defaultMessage:
-      '{month, select, ' +
-      '0 {Cost (Jan)} ' +
-      '1 {Cost (Feb)} ' +
-      '2 {Cost (Mar)} ' +
-      '3 {Cost (Apr)} ' +
-      '4 {Cost (May)} ' +
-      '5 {Cost (Jun)} ' +
-      '6 {Cost (Jul)} ' +
-      '7 {Cost (Aug)} ' +
-      '8 {Cost (Sep)} ' +
-      '9 {Cost (Oct)} ' +
-      '10 {Cost (Nov)} ' +
-      '11 {Cost (Dec)} ' +
-      'other {}}',
-    description: 'Cost (month)',
-    id: 'chartCostLegendTooltip',
-  },
-  chartDateRange: {
-    defaultMessage:
-      '{month, select, ' +
-      '0 {{count, plural, one {Jan {startDate} {year}} other {{startDate}-{endDate} Jan {year}}}} ' +
-      '1 {{count, plural, one {Feb {startDate} {year}} other {{startDate}-{endDate} Feb {year}}}} ' +
-      '2 {{count, plural, one {Mar {startDate} {year}} other {{startDate}-{endDate} Mar {year}}}} ' +
-      '3 {{count, plural, one {Apr {startDate} {year}} other {{startDate}-{endDate} Apr {year}}}} ' +
-      '4 {{count, plural, one {May {startDate} {year}} other {{startDate}-{endDate} May {year}}}} ' +
-      '5 {{count, plural, one {Jun {startDate} {year}} other {{startDate}-{endDate} Jun {year}}}} ' +
-      '6 {{count, plural, one {Jul {startDate} {year}} other {{startDate}-{endDate} Jul {year}}}} ' +
-      '7 {{count, plural, one {Aug {startDate} {year}} other {{startDate}-{endDate} Aug {year}}}} ' +
-      '8 {{count, plural, one {Sep {startDate} {year}} other {{startDate}-{endDate} Sep {year}}}} ' +
-      '9 {{count, plural, one {Oct {startDate} {year}} other {{startDate}-{endDate} Oct {year}}}} ' +
-      '10 {{count, plural, one {Nov {startDate} {year}} other {{startDate}-{endDate} Nov {year}}}} ' +
-      '11 {{count, plural, one {Dec {startDate} {year}} other {{startDate}-{endDate} Dec {year}}}} ' +
-      'other {}}',
-    description: 'Date range that handles singular and plural',
-    id: 'chartDateRange',
-  },
-  chartDayOfTheMonth: {
-    defaultMessage: 'Day {day}',
-    description: 'The day of the month',
-    id: 'chartDayOfTheMonth',
+  chartCurrentSpendTooltip: {
+    defaultMessage: 'Actual spend YTD',
+    description: 'Actual spend YTD',
+    id: 'chartCurrentSpendTooltip',
   },
   chartNoData: {
     defaultMessage: 'no data',
     description: 'no data',
     id: 'chartNoData',
   },
-  chartOthers: {
-    defaultMessage: '{count, plural, one {{count} Other} other {{count} Others}}',
-    description: 'TODO: UNUSED Others category for top costliest',
-    id: 'chartOthers',
+  chartPreviousSpendLegendLabel: {
+    defaultMessage: 'Previous year spend ({dateRange})',
+    description: 'Previous year spend ({dateRange})',
+    id: 'chartPreviousSpendLegendLabel',
+  },
+  chartPreviousSpendNoDataLegendLabel: {
+    defaultMessage: 'Previous year spend (no data)',
+    description: 'Previous year spend (no data)',
+    id: 'chartPreviousSpendNoDataLegendLabel',
+  },
+  chartPreviousSpendTooltip: {
+    defaultMessage: 'Previous year spend',
+    description: 'Previous year spend',
+    id: 'chartPreviousSpendTooltip',
+  },
+  chartTooltipTitle: {
+    defaultMessage: '{value}',
+    description: 'Chart tooltip title showing datum month',
+    id: 'chartTooltipTitle',
   },
   consumptionDate: {
     defaultMessage: 'Consumption date: {date}',
