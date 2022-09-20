@@ -264,12 +264,8 @@ export function getCostRangeString(
     month: 'long',
     year: 'numeric',
   });
-  const year = intl.formatDateTimeRange(start, end, {
-    year: 'numeric',
-  });
   return intl.formatMessage(key, {
     dateRange,
-    year,
   });
 }
 

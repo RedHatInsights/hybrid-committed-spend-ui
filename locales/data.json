@@ -43,15 +43,7 @@
     "chartCurrentSpendTooltip": [
       {
         "type": 0,
-        "value": "Actual spend YTD ("
-      },
-      {
-        "type": 1,
-        "value": "year"
-      },
-      {
-        "type": 0,
-        "value": ")"
+        "value": "Actual spend YTD"
       }
     ],
     "chartNoData": [
@@ -83,15 +75,7 @@
     "chartPreviousSpendTooltip": [
       {
         "type": 0,
-        "value": "Previous year spend ("
-      },
-      {
-        "type": 1,
-        "value": "year"
-      },
-      {
-        "type": 0,
-        "value": ")"
+        "value": "Previous year spend"
       }
     ],
     "chartThresholdSpendLegendLabel": [
@@ -117,15 +101,7 @@
     "chartThresholdSpendTooltip": [
       {
         "type": 0,
-        "value": "Committed spend ("
-      },
-      {
-        "type": 1,
-        "value": "year"
-      },
-      {
-        "type": 0,
-        "value": ")"
+        "value": "Committed spend"
       }
     ],
     "chartTooltipTitle": [
