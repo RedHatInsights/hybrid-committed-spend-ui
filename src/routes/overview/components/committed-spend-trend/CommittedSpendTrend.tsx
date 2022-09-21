@@ -7,7 +7,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { ChartType, transformReport } from 'routes/components/charts/common/chart-datum-utils';
+import { transformReport } from 'routes/components/charts/common/chart-datum-utils';
 import { CostChart } from 'routes/components/charts/cost-chart';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
@@ -77,9 +77,9 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   };
 
   const getChart = () => {
-    const current = transformReport(currentReport, ChartType.monthly);
-    const previous = transformReport(previousReport, ChartType.monthly, 1);
-    const threshold = transformReport(thresholdReport, ChartType.monthly);
+    const current = transformReport({ report: currentReport });
+    const previous = transformReport({ report: previousReport, offset: 1 });
+    const threshold = transformReport({ report: thresholdReport });
 
     return (
       <CostChart

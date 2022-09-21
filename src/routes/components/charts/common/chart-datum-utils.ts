@@ -3,7 +3,7 @@ import { Report } from 'api/reports/report';
 import { intl } from 'components/i18n';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
-import { getToday } from 'utils/dateRange';
+import { getToday, getYear } from 'utils/dateRange';
 import { formatCurrency, FormatOptions } from 'utils/format';
 import { ComputedReportItem, getComputedReportItems } from 'utils/getComputedReportItems';
 import { SortDirection } from 'utils/sort';
@@ -19,6 +19,30 @@ export interface ChartDatum {
   x: string | number;
   y: number;
   y0?: number;
+}
+
+export interface TransformData {
+  report: Report;
+  startDate?: Date;
+  endDate?: Date;
+  offset?: number; // Shift the year, so we can overlap current and previous months
+  type?: ChartType;
+  reportItem?: string;
+  reportItemValue?: string; // useful for infrastructure.usage values
+}
+
+export interface ReportData<T extends ComputedReportItem> {
+  computedItem: T;
+  offset?;
+  reportItem?: string;
+  reportItemValue?: string; // useful for infrastructure.usage values
+  value: number;
+}
+
+export interface PadtData {
+  datums: ChartDatum[];
+  endDate?: Date;
+  startDate?: Date;
 }
 
 // The computed report cost or usage item
@@ -47,61 +71,68 @@ export const enum ChartType {
   monthly,
 }
 
-export function transformReport(
-  report: Report,
-  type: ChartType = ChartType.monthly,
-  offset: number = 0, // Shift the year, so we can overlap current and previous months
-  reportItem: string = 'cost',
-  reportItemValue: string = 'total' // useful for infrastructure.usage values
-): ChartDatum[] {
+export function transformReport({
+  report,
+  startDate,
+  endDate,
+  offset = 0, // Shift the year, so we can overlap current and previous months
+  type = ChartType.monthly,
+  reportItem = 'cost',
+  reportItemValue = 'total', // useful for infrastructure.usage values
+}: TransformData): ChartDatum[] {
   if (!report) {
     return [];
   }
   const items = {
     report,
-    sortKey: 'id',
+    sortKey: 'date',
     sortDirection: SortDirection.desc,
   } as any;
   const computedItems = getComputedReportItems(items);
-  let chartDatums;
-  if (type === ChartType.daily || type === ChartType.monthly) {
-    chartDatums = computedItems.map(i => {
-      const val = i[reportItem][reportItemValue] ? i[reportItem][reportItemValue].value : i[reportItem].value;
-      return createReportDatum(val, i, offset, reportItem, reportItemValue);
+  let datums;
+  if (type === ChartType.monthly) {
+    datums = computedItems.map(computedItem => {
+      const value = computedItem[reportItem][reportItemValue]
+        ? computedItem[reportItem][reportItemValue].value
+        : undefined;
+      return createReportDatum({ value, computedItem, offset, reportItem, reportItemValue });
     });
   } else {
-    chartDatums = computedItems.reduce<ChartDatum[]>((acc, d) => {
+    datums = computedItems.reduce<ChartDatum[]>((acc, d) => {
       const prevValue = acc.length ? acc[acc.length - 1].y : 0;
       const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;
-      return [...acc, createReportDatum(prevValue + val, d, offset, reportItem, reportItemValue)];
+      return [
+        ...acc,
+        createReportDatum({ value: prevValue + val, computedItem: d, offset, reportItem, reportItemValue }),
+      ];
     }, []);
   }
-  return padChartDatums(chartDatums, offset);
+  return padChartDatums({ datums, startDate, endDate });
 }
 
-function getXVal<T extends ComputedReportItem>(computedItem: T, offset: number = 0) {
-  if (offset > 0) {
-    const date = new Date(computedItem.id + 'T00:00:00');
-    date.setFullYear(date.getFullYear() + offset);
-    return format(date, 'yyyy-MM');
-  }
-  return computedItem.id;
-}
-
-export function createReportDatum<T extends ComputedReportItem>(
-  value: number,
-  computedItem: T,
-  offset: number = 0, // Shift the year, so we can overlap current and previous months
-  reportItem: string = 'cost',
-  reportItemValue: string = 'total' // useful for infrastructure.usage values
-): ChartDatum {
-  const xVal = getXVal(computedItem, offset);
+export function createReportDatum<T extends ComputedReportItem>({
+  computedItem,
+  value,
+  offset = 0, // Shift the year, so we can overlap current and previous months
+  reportItem = 'cost',
+  reportItemValue = 'total', // useful for infrastructure.usage values
+}: ReportData<T>): ChartDatum {
+  const getXVal = () => {
+    if (offset > 0) {
+      const date = new Date(computedItem.date + 'T00:00:00');
+      date.setFullYear(date.getFullYear() + offset);
+      return format(date, 'yyyy-MM');
+    }
+    return computedItem.date;
+  };
+  const xVal = getXVal();
   const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
   return {
     x: xVal,
     y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips
+    // ...(value === null && { _y: 0 }), // Todo: Force "no data" tooltips for bar charts.
     key: xVal,
-    name: computedItem.id,
+    name: computedItem.date,
     units: computedItem[reportItem]
       ? computedItem[reportItem][reportItemValue]
         ? computedItem[reportItem][reportItemValue].units // cost, infrastructure, supplementary
@@ -110,75 +141,30 @@ export function createReportDatum<T extends ComputedReportItem>(
   };
 }
 
-// Fill in missing data with previous value to represent cumulative daily cost
-export function fillChartDatums(
-  datums: ChartDatum[],
-  offset: number = 0 // Shift the year, so we can overlap current and previous months
-): ChartDatum[] {
-  const result = [];
-  if (!datums || datums.length === 0) {
-    return result;
-  }
-  const firstDate = new Date(datums[0].key + 'T00:00:00');
-  const lastDate = new Date(datums[datums.length - 1].key + 'T00:00:00');
-
-  let prevChartDatum;
-  for (let padDate = firstDate; padDate <= lastDate; padDate.setMonth(padDate.getMonth() + 1)) {
-    const id = format(padDate, 'yyyy-MM');
-    const chartDatum = datums.find(val => val.key === id);
-    if (chartDatum) {
-      result.push(chartDatum);
-
-      // Note: We want to identify missing data, but charts won't extrapolate (connect data points) if we return null here
-      // for missing daily values. For example, if there is only data for the first and last day of the month, charts would
-      // typically draw a line between two points by default. However, showing "no data" is more obvious there was a problem.
-      prevChartDatum = {
-        key: id,
-        x: getXVal({ id }, offset),
-        y: null,
-      };
-    } else if (prevChartDatum) {
-      result.push({
-        ...prevChartDatum,
-        key: id,
-        x: getXVal({ id }, offset),
-      });
-    }
-  }
-  return result;
-}
-
 // This pads chart datums with null datum objects, representing missing data at the beginning and end of the
 // data series. The remaining data is left as is to allow for extrapolation. This allows us to display a "no data"
 // message in the tooltip, which helps distinguish between zero values and when there is no data available.
-export function padChartDatums(datums: ChartDatum[], offset: number = 0): ChartDatum[] {
+export function padChartDatums({ datums, startDate = getYear(1), endDate = getToday() }: PadtData): ChartDatum[] {
   const result = [];
   if (!datums || datums.length === 0) {
     return result;
   }
-  const firstDate = new Date(datums[0].key + 'T00:00:00');
-  const lastDate = new Date(datums[datums.length - 1].key + 'T00:00:00');
-
-  for (const padDate = firstDate; padDate < lastDate; padDate.setMonth(padDate.getMonth() + 1)) {
-    const id = format(padDate, 'yyyy-MM');
-    const chartDatum = datums.find(val => val.key === id);
-    if (!chartDatum) {
-      result.push(createReportDatum(null, { id }, null));
+  for (const padDate = startDate; padDate <= endDate; padDate.setMonth(padDate.getMonth() + 1)) {
+    const date = format(padDate, 'yyyy-MM');
+    const chartDatum = datums.find(val => val.key === date);
+    if (chartDatum) {
+      result.push(chartDatum);
+    } else {
+      result.push(
+        createReportDatum({
+          value: null,
+          computedItem: { date },
+          reportItemValue: null,
+        })
+      );
     }
   }
-
-  // Fill middle with existing data
-  result.push(...datums);
-
-  // Pad end for missing data
-  for (const padDate = lastDate; padDate <= getToday(); padDate.setMonth(padDate.getMonth() + 1)) {
-    const id = format(padDate, 'yyyy-MM');
-    const chartDatum = datums.find(val => val.key === id);
-    if (!chartDatum) {
-      result.push(createReportDatum(null, { id }, null));
-    }
-  }
-  return fillChartDatums(result, offset);
+  return result;
 }
 
 export function getDateRange(datums: ChartDatum[]): [Date, Date] {
