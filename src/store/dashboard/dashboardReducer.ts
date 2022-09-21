@@ -1,7 +1,12 @@
 import { ActionType } from 'typesafe-actions';
 
 import { DashboardWidget } from './dashboardCommon';
-import { actualSpendWidget, committedSpendTrendWidget, committedSpendWidget } from './dashboardWidgets';
+import {
+  actualSpendBreakdownWidget,
+  actualSpendWidget,
+  committedSpendTrendWidget,
+  committedSpendWidget,
+} from './dashboardWidgets';
 
 export type DashboardState = Readonly<{
   widgets: Record<number, DashboardWidget>;
@@ -9,11 +14,17 @@ export type DashboardState = Readonly<{
 }>;
 
 export const defaultState: DashboardState = {
-  currentWidgets: [actualSpendWidget.id, committedSpendWidget.id, committedSpendTrendWidget.id],
+  currentWidgets: [
+    actualSpendWidget.id,
+    committedSpendWidget.id,
+    committedSpendTrendWidget.id,
+    actualSpendBreakdownWidget.id,
+  ],
   widgets: {
     [actualSpendWidget.id]: actualSpendWidget,
     [committedSpendWidget.id]: committedSpendWidget,
     [committedSpendTrendWidget.id]: committedSpendTrendWidget,
+    [actualSpendBreakdownWidget.id]: actualSpendBreakdownWidget,
   },
 };
 

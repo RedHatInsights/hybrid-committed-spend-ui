@@ -16,23 +16,15 @@ export const enum DashboardSize {
   half = 'half',
 }
 
-// eslint-disable-next-line no-shadow
-export const enum DashboardType {
-  actualSpend = 'actualSpend',
-  actualSpendBreakdown = 'actualSpendBreakdown',
-  committedSpend = 'committedSpend',
-  committedSpendTrend = 'committedSpendTrend',
-}
-
 export interface DashboardWidget {
   component: React.ReactNode;
+  chartName: string;
   filter?: any;
   id: number;
   reportPathsType?: ReportPathsType;
   reportType?: ReportType;
   size?: DashboardSize;
   title?: MessageDescriptor;
-  type: DashboardType;
   viewAllPath?: string;
 }
 
