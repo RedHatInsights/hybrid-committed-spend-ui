@@ -209,6 +209,12 @@
         "value": "symbol"
       }
     ],
+    "dashboardActualSpendBreakdownTitle": [
+      {
+        "type": 0,
+        "value": "Actual spend breakdowns"
+      }
+    ],
     "dashboardActualSpendTitle": [
       {
         "type": 0,

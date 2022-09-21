@@ -89,6 +89,11 @@ export default defineMessages({
     description: 'str.match(/([\\D]*)([\\d.,]+)([\\D]*)/)',
     id: 'currencyAbbreviations',
   },
+  dashboardActualSpendBreakdownTitle: {
+    defaultMessage: 'Actual spend breakdowns',
+    description: 'Actual spend breakdowns',
+    id: 'dashboardActualSpendBreakdownTitle',
+  },
   dashboardActualSpendTitle: {
     defaultMessage: 'Actual spend of included products YTD',
     description: 'Actual spend of included products YTD',

@@ -1,5 +1,3 @@
-import './ActualSpendBreakdown.scss';
-
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
@@ -8,24 +6,27 @@ import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { EmptyValueState } from 'routes/components/state';
+import { Link } from 'react-router-dom';
+import { transformReport } from 'routes/components/charts/common/chart-datum-utils';
+import { TrendChart } from 'routes/components/charts/trend-chart';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { NotAvailable } from 'routes/state';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
-import { formatCurrency } from 'utils/format';
+
+import { chartStyles } from './ActualSpendBreakdown.styles';
+import { currentData } from './data/currentData';
 
 interface ActualSpendBreakdownOwnProps {
   widgetId: number;
 }
 
 interface ActualSpendBreakdownStateProps {
+  currentQueryString: string;
+  currentReport?: Report;
+  currentReportError?: AxiosError;
+  currentReportFetchStatus?: FetchStatus;
   query: Query;
-  queryString: string;
-  report?: Report;
-  reportError?: AxiosError;
-  reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
 }
 
@@ -40,46 +41,36 @@ export type ActualSpendBreakdownProps = ActualSpendBreakdownStateProps &
   WrappedComponentProps;
 
 const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
+  currentQueryString,
+  currentReport,
+  currentReportFetchStatus,
   fetchReport,
   intl,
-  queryString,
-  report,
-  reportError,
-  reportFetchStatus,
   widget,
 }) => {
   useMemo(() => {
-    fetchReport(widget.reportPathsType, widget.reportType, queryString);
-  }, [queryString]);
+    fetchReport(widget.reportPathsType, widget.reportType, currentQueryString);
+  }, [currentQueryString]);
 
-  let value: string | React.ReactNode = <EmptyValueState />;
+  const getDetailsLink = () => {
+    if (widget.viewAllPath) {
+      const href = `${widget.viewAllPath}?${getQuery({
+        // TBD...
+      })}`;
+      return <Link to={href}>{intl.formatMessage(messages.viewDetails)}</Link>;
+    }
+    return null;
+  };
 
-  const hasTotal = report && report.meta && report.meta.total;
-  const hasCost = hasTotal && report.meta.total.cost && report.meta.total.cost.total;
+  const getChart = () => {
+    const current = transformReport({ report: currentReport });
 
-  if (hasTotal) {
-    value = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
-    );
-  }
+    return <TrendChart adjustContainerHeight currentData={current} height={chartStyles.height} />;
+  };
 
-  // Todo: show errors
-  const isTest = true;
   return (
-    <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
-      {!isTest && reportError ? (
-        <NotAvailable />
-      ) : (
-        <>
-          <div>August 2022 - February 2023</div>
-          <div className="valueContainer">
-            <div className={`value`}>{value}</div>
-            <div>{intl.formatMessage(messages.overLastMonth)}</div>
-          </div>
-        </>
-      )}
+    <ReportSummary detailsLink={getDetailsLink()} fetchStatus={currentReportFetchStatus} title={widget.title}>
+      {getChart()}
     </ReportSummary>
   );
 };
@@ -97,27 +88,34 @@ const mapStateToProps = createMapStateToProps<ActualSpendBreakdownOwnProps, Actu
         ...queryFromRoute.filter,
       },
     };
-    const queryString = getQuery(query);
-    const report = reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString);
-    const reportError = reportSelectors.selectReportError(
+
+    const currentQueryString = getQuery(query);
+    // const currentReport = reportSelectors.selectReport(
+    //   state,
+    //   widget.reportPathsType,
+    //   widget.reportType,
+    //   currentQueryString
+    // );
+    const currentReport = currentData as any;
+    const currentReportError = reportSelectors.selectReportError(
       state,
       widget.reportPathsType,
       widget.reportType,
-      queryString
+      currentQueryString
     );
-    const reportFetchStatus = reportSelectors.selectReportFetchStatus(
+    const currentReportFetchStatus = reportSelectors.selectReportFetchStatus(
       state,
       widget.reportPathsType,
       widget.reportType,
-      queryString
+      currentQueryString
     );
 
     return {
+      currentQueryString,
+      currentReport,
+      currentReportError,
+      currentReportFetchStatus,
       query,
-      queryString,
-      report,
-      reportError,
-      reportFetchStatus,
       widget,
     };
   }

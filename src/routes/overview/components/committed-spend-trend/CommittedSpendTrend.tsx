@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { transformReport } from 'routes/components/charts/common/chart-datum-utils';
-import { CostChart } from 'routes/components/charts/cost-chart';
+import { TrendChart } from 'routes/components/charts/trend-chart';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
@@ -82,7 +82,7 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
     const threshold = transformReport({ report: thresholdReport });
 
     return (
-      <CostChart
+      <TrendChart
         adjustContainerHeight
         currentData={current}
         height={chartStyles.height}

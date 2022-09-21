@@ -15,6 +15,7 @@
   "consumptionDate": "Consumption date: {date}",
   "contractDates": "Contract dates: {startDate} - {endDate}",
   "currencyAbbreviations": "{symbol, select, billion {{value} B} million {{value} M} quadrillion {{value} q} thousand {{value} K} trillion {{value} t} other {}}",
+  "dashboardActualSpendBreakdownTitle": "Actual spend breakdowns",
   "dashboardActualSpendTitle": "Actual spend of included products YTD",
   "dashboardCommitmentSpendTitle": "Remaining commitment balance",
   "dashboardCommitmentSpendTrendTitle": "Committed spend trend",
