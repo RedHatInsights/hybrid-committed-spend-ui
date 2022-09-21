@@ -30,9 +30,9 @@ import {
 import { FormatOptions, Formatter } from 'utils/format';
 import { noop } from 'utils/noop';
 
-import { styles } from './CostChart.styles';
+import { styles } from './TrendChart.styles';
 
-interface CostChartOwnProps {
+interface TrendChartOwnProps {
   adjustContainerHeight?: boolean;
   containerHeight?: number;
   currentData?: any;
@@ -53,9 +53,9 @@ interface State {
   width: number;
 }
 
-type CostChartProps = CostChartOwnProps & WrappedComponentProps;
+type TrendChartProps = TrendChartOwnProps & WrappedComponentProps;
 
-class CostChartBase extends React.Component<CostChartProps, State> {
+class TrendChartBase extends React.Component<TrendChartProps, State> {
   private containerRef = React.createRef<HTMLDivElement>();
   private observer: any = noop;
 
@@ -69,7 +69,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
     this.observer = getResizeObserver(this.containerRef.current, this.handleResize);
   }
 
-  public componentDidUpdate(prevProps: CostChartProps) {
+  public componentDidUpdate(prevProps: TrendChartProps) {
     if (
       prevProps.currentData !== this.props.currentData ||
       prevProps.previousData !== this.props.previousData ||
@@ -341,6 +341,6 @@ class CostChartBase extends React.Component<CostChartProps, State> {
   }
 }
 
-const CostChart = injectIntl(CostChartBase);
+const TrendChart = injectIntl(TrendChartBase);
 
-export { CostChart, CostChartProps };
+export { TrendChart, TrendChartProps };
