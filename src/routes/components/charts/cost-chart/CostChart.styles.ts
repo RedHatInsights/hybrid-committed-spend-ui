@@ -48,8 +48,8 @@ export const styles = {
     grid: {
       stroke: 'none',
     },
-    ticks: {
-      stroke: 'none',
-    },
+    // ticks: {
+    //   stroke: 'none',
+    // },
   },
 };

@@ -35,7 +35,7 @@ import { styles } from './CostChart.styles';
 interface CostChartOwnProps {
   adjustContainerHeight?: boolean;
   containerHeight?: number;
-  currentData: any;
+  currentData?: any;
   height?: number;
   legendItemsPerRow?: number;
   padding?: any;
@@ -70,7 +70,11 @@ class CostChartBase extends React.Component<CostChartProps, State> {
   }
 
   public componentDidUpdate(prevProps: CostChartProps) {
-    if (prevProps.currentData !== this.props.currentData || prevProps.previousData !== this.props.previousData || prevProps.thresholdData !== this.props.thresholdData) {
+    if (
+      prevProps.currentData !== this.props.currentData ||
+      prevProps.previousData !== this.props.previousData ||
+      prevProps.thresholdData !== this.props.thresholdData
+    ) {
       this.initDatum();
     }
   }
@@ -86,8 +90,9 @@ class CostChartBase extends React.Component<CostChartProps, State> {
 
     // Show all legends, regardless of length
 
-    const series: ChartSeries[] = [
-      {
+    const series: ChartSeries[] = [];
+    if (currentData) {
+      series.push({
         childName: 'currentSpend',
         data: currentData,
         legendItem: {
@@ -108,8 +113,10 @@ class CostChartBase extends React.Component<CostChartProps, State> {
             stroke: styles.currentColorScale[0],
           },
         },
-      },
-      {
+      });
+    }
+    if (previousData) {
+      series.push({
         childName: 'previousSpend',
         data: previousData,
         legendItem: {
@@ -130,8 +137,10 @@ class CostChartBase extends React.Component<CostChartProps, State> {
             stroke: styles.previousColorScale[0],
           },
         },
-      },
-      {
+      });
+    }
+    if (thresholdData) {
+      series.push({
         childName: 'threshold',
         data: thresholdData,
         legendItem: {
@@ -152,8 +161,8 @@ class CostChartBase extends React.Component<CostChartProps, State> {
             stroke: styles.thresholdColorScale[0],
           },
         },
-      },
-    ];
+      });
+    }
     const cursorVoronoiContainer = this.getCursorVoronoiContainer();
     this.setState({ cursorVoronoiContainer, series });
   };
@@ -164,9 +173,9 @@ class CostChartBase extends React.Component<CostChartProps, State> {
 
     let adjustedContainerHeight = containerHeight;
     if (adjustContainerHeight) {
-      if (width > 450 && width < 725) {
+      if (width > 950 && width < 1150) {
         adjustedContainerHeight += 25;
-      } else if (width <= 450) {
+      } else if (width <= 950) {
         adjustedContainerHeight += 50;
       }
     }
@@ -233,6 +242,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
         gutter={20}
         name="legend"
         responsive={false}
+        y={275}
       />
     );
   };
@@ -257,7 +267,7 @@ class CostChartBase extends React.Component<CostChartProps, State> {
       height,
       intl,
       padding = {
-        bottom: 50,
+        bottom: 75,
         left: 40,
         right: 40,
         top: 8,
@@ -313,7 +323,6 @@ class CostChartBase extends React.Component<CostChartProps, State> {
                   return this.getChart(s, index);
                 })}
               <ChartAxis
-                domainPadding={{ y: [100, 100] }}
                 fixLabelOverlap
                 style={styles.xAxis}
                 tickFormat={t =>

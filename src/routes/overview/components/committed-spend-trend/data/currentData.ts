@@ -1033,6 +1033,7 @@ export const currentData = {
         },
       ],
     },
+    /*
     {
       date: '2022-09',
       values: [
@@ -1119,5 +1120,7 @@ export const currentData = {
         },
       ],
     },
+
+     */
   ],
 };

@@ -1,8 +1,9 @@
 import { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Report } from 'api/reports/report';
 import { intl } from 'components/i18n';
-import { endOfMonth, format, getDate, startOfMonth } from 'date-fns';
+import { format } from 'date-fns';
 import messages from 'locales/messages';
+import { getToday } from 'utils/dateRange';
 import { formatCurrency, FormatOptions } from 'utils/format';
 import { ComputedReportItem, getComputedReportItems } from 'utils/getComputedReportItems';
 import { SortDirection } from 'utils/sort';
@@ -75,10 +76,16 @@ export function transformReport(
       return [...acc, createReportDatum(prevValue + val, d, offset, reportItem, reportItemValue)];
     }, []);
   }
-  return chartDatums;
+  return padChartDatums(chartDatums, offset);
+}
 
-  // TODO: Need to pad monthly, not daily
-  // return idKey === 'date' ? padChartDatums(chartDatums, type) : chartDatums;
+function getXVal<T extends ComputedReportItem>(computedItem: T, offset: number = 0) {
+  if (offset > 0) {
+    const date = new Date(computedItem.id + 'T00:00:00');
+    date.setFullYear(date.getFullYear() + offset);
+    return format(date, 'yyyy-MM');
+  }
+  return computedItem.id;
 }
 
 export function createReportDatum<T extends ComputedReportItem>(
@@ -88,21 +95,13 @@ export function createReportDatum<T extends ComputedReportItem>(
   reportItem: string = 'cost',
   reportItemValue: string = 'total' // useful for infrastructure.usage values
 ): ChartDatum {
-  const getXVal = () => {
-    if (offset > 0) {
-      const date = new Date(computedItem.id + 'T00:00:00');
-      date.setFullYear(date.getFullYear() + offset);
-      return format(date, 'yyyy-MM');
-    }
-    return computedItem.id;
-  };
-  const xVal = getXVal();
+  const xVal = getXVal(computedItem, offset);
   const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
   return {
     x: xVal,
     y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips
-    key: computedItem.id,
-    name: computedItem.label ? computedItem.label : computedItem.id, // legend item label
+    key: xVal,
+    name: computedItem.id,
     units: computedItem[reportItem]
       ? computedItem[reportItem][reportItemValue]
         ? computedItem[reportItem][reportItemValue].units // cost, infrastructure, supplementary
@@ -112,7 +111,10 @@ export function createReportDatum<T extends ComputedReportItem>(
 }
 
 // Fill in missing data with previous value to represent cumulative daily cost
-export function fillChartDatums(datums: ChartDatum[], type: ChartType = ChartType.daily): ChartDatum[] {
+export function fillChartDatums(
+  datums: ChartDatum[],
+  offset: number = 0 // Shift the year, so we can overlap current and previous months
+): ChartDatum[] {
   const result = [];
   if (!datums || datums.length === 0) {
     return result;
@@ -120,34 +122,27 @@ export function fillChartDatums(datums: ChartDatum[], type: ChartType = ChartTyp
   const firstDate = new Date(datums[0].key + 'T00:00:00');
   const lastDate = new Date(datums[datums.length - 1].key + 'T00:00:00');
 
-  const padDate = startOfMonth(firstDate);
   let prevChartDatum;
-  for (let i = padDate.getDate(); i <= endOfMonth(lastDate).getDate(); i++) {
-    padDate.setDate(i);
-    const id = format(padDate, 'yyyy-MM-dd');
+  for (let padDate = firstDate; padDate <= lastDate; padDate.setMonth(padDate.getMonth() + 1)) {
+    const id = format(padDate, 'yyyy-MM');
     const chartDatum = datums.find(val => val.key === id);
     if (chartDatum) {
       result.push(chartDatum);
+
+      // Note: We want to identify missing data, but charts won't extrapolate (connect data points) if we return null here
+      // for missing daily values. For example, if there is only data for the first and last day of the month, charts would
+      // typically draw a line between two points by default. However, showing "no data" is more obvious there was a problem.
+      prevChartDatum = {
+        key: id,
+        x: getXVal({ id }, offset),
+        y: null,
+      };
     } else if (prevChartDatum) {
       result.push({
         ...prevChartDatum,
         key: id,
-        x: getDate(new Date(id + 'T00:00:00')),
+        x: getXVal({ id }, offset),
       });
-    }
-    if (chartDatum) {
-      // Note: We want to identify missing data, but charts won't extrapolate (connect data points) if we return null here
-      // for missing daily values. For example, if there is only data for the first and last day of the month, charts would
-      // typically draw a line between two points by default. However, showing "no data" is more obvious there was a problem.
-      if (type === ChartType.daily) {
-        prevChartDatum = {
-          key: id,
-          x: getDate(new Date(id + 'T00:00:00')),
-          y: null,
-        };
-      } else {
-        prevChartDatum = chartDatum;
-      }
     }
   }
   return result;
@@ -156,7 +151,7 @@ export function fillChartDatums(datums: ChartDatum[], type: ChartType = ChartTyp
 // This pads chart datums with null datum objects, representing missing data at the beginning and end of the
 // data series. The remaining data is left as is to allow for extrapolation. This allows us to display a "no data"
 // message in the tooltip, which helps distinguish between zero values and when there is no data available.
-export function padChartDatums(datums: ChartDatum[], type: ChartType = ChartType.daily): ChartDatum[] {
+export function padChartDatums(datums: ChartDatum[], offset: number = 0): ChartDatum[] {
   const result = [];
   if (!datums || datums.length === 0) {
     return result;
@@ -164,25 +159,26 @@ export function padChartDatums(datums: ChartDatum[], type: ChartType = ChartType
   const firstDate = new Date(datums[0].key + 'T00:00:00');
   const lastDate = new Date(datums[datums.length - 1].key + 'T00:00:00');
 
-  // Pad start for missing data
-  let padDate = startOfMonth(firstDate);
-  for (let i = padDate.getDate(); i < firstDate.getDate(); i++) {
-    padDate.setDate(i);
-    const id = format(padDate, 'yyyy-MM-dd');
-    result.push(createReportDatum(null, { id }, null));
+  for (const padDate = firstDate; padDate < lastDate; padDate.setMonth(padDate.getMonth() + 1)) {
+    const id = format(padDate, 'yyyy-MM');
+    const chartDatum = datums.find(val => val.key === id);
+    if (!chartDatum) {
+      result.push(createReportDatum(null, { id }, null));
+    }
   }
 
   // Fill middle with existing data
   result.push(...datums);
 
   // Pad end for missing data
-  padDate = new Date(lastDate);
-  for (let i = padDate.getDate() + 1; i <= endOfMonth(lastDate).getDate(); i++) {
-    padDate.setDate(i);
-    const id = format(padDate, 'yyyy-MM-dd');
-    result.push(createReportDatum(null, { id }, null));
+  for (const padDate = lastDate; padDate <= getToday(); padDate.setMonth(padDate.getMonth() + 1)) {
+    const id = format(padDate, 'yyyy-MM');
+    const chartDatum = datums.find(val => val.key === id);
+    if (!chartDatum) {
+      result.push(createReportDatum(null, { id }, null));
+    }
   }
-  return fillChartDatums(result, type);
+  return fillChartDatums(result, offset);
 }
 
 export function getDateRange(datums: ChartDatum[]): [Date, Date] {
