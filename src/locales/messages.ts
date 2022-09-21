@@ -47,6 +47,21 @@ export default defineMessages({
     description: 'Previous year spend',
     id: 'chartPreviousSpendTooltip',
   },
+  chartThresholdSpendLegendLabel: {
+    defaultMessage: 'Committed spend ({dateRange})',
+    description: 'Committed spend ({dateRange})',
+    id: 'chartThresholdSpendLegendLabel',
+  },
+  chartThresholdSpendNoDataLegendLabel: {
+    defaultMessage: 'Committed spend (no data)',
+    description: 'Committed spend (no data)',
+    id: 'chartThresholdSpendNoDataLegendLabel',
+  },
+  chartThresholdSpendTooltip: {
+    defaultMessage: 'Committed spend',
+    description: 'Committed spend',
+    id: 'chartThresholdSpendTooltip',
+  },
   chartTooltipTitle: {
     defaultMessage: '{value}',
     description: 'Chart tooltip title showing datum month',

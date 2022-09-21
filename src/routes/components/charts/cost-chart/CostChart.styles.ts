@@ -1,4 +1,6 @@
 import { chart_color_black_200 } from '@patternfly/react-tokens/dist/js/chart_color_black_200';
+import { chart_color_blue_100 } from '@patternfly/react-tokens/dist/js/chart_color_blue_100';
+import { chart_color_blue_200 } from '@patternfly/react-tokens/dist/js/chart_color_blue_200';
 import { chart_color_green_100 } from '@patternfly/react-tokens/dist/js/chart_color_green_100';
 import { chart_color_green_200 } from '@patternfly/react-tokens/dist/js/chart_color_green_200';
 import { chart_color_green_300 } from '@patternfly/react-tokens/dist/js/chart_color_green_300';
@@ -6,23 +8,24 @@ import { chart_color_green_400 } from '@patternfly/react-tokens/dist/js/chart_co
 import { chart_color_green_500 } from '@patternfly/react-tokens/dist/js/chart_color_green_500';
 
 export const styles = {
-  currentColorScale: [
+  currentColorScale: [chart_color_blue_100.value, chart_color_blue_200.value],
+  currentSpend: {
+    fill: 'none',
+  },
+  previousColorScale: [chart_color_black_200.value, chart_color_black_200.value],
+  previousSpend: {
+    fill: 'none',
+  },
+  thresholdColorScale: [
     chart_color_green_400.value,
     chart_color_green_300.value,
     chart_color_green_200.value,
     chart_color_green_100.value,
     chart_color_green_500.value,
   ],
-  currentSpend: {
-    fill: 'none',
-  },
-  committedSpendData: {
+  threshold: {
     fill: 'none',
     strokeDasharray: '3,3',
-  },
-  previousColorScale: [chart_color_black_200.value, chart_color_black_200.value],
-  previousSpend: {
-    fill: 'none',
   },
   yAxis: {
     axisLabel: {
@@ -45,8 +48,8 @@ export const styles = {
     grid: {
       stroke: 'none',
     },
-    ticks: {
-      stroke: 'none',
-    },
+    // ticks: {
+    //   stroke: 'none',
+    // },
   },
 };

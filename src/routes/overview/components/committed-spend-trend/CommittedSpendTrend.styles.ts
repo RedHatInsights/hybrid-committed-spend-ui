@@ -1,5 +1,5 @@
 export const chartStyles = {
-  height: 250,
+  height: 300,
 };
 
 export const styles = {

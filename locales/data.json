@@ -78,6 +78,32 @@
         "value": "Previous year spend"
       }
     ],
+    "chartThresholdSpendLegendLabel": [
+      {
+        "type": 0,
+        "value": "Committed spend ("
+      },
+      {
+        "type": 1,
+        "value": "dateRange"
+      },
+      {
+        "type": 0,
+        "value": ")"
+      }
+    ],
+    "chartThresholdSpendNoDataLegendLabel": [
+      {
+        "type": 0,
+        "value": "Committed spend (no data)"
+      }
+    ],
+    "chartThresholdSpendTooltip": [
+      {
+        "type": 0,
+        "value": "Committed spend"
+      }
+    ],
     "chartTooltipTitle": [
       {
         "type": 1,

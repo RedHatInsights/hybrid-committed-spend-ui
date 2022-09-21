@@ -93,14 +93,22 @@ export const getTickValues = (series: ChartSeries[]) => {
 
   if (series) {
     series.forEach((s: any) => {
-      s.data.forEach((datum: any) => {
+      s.data?.forEach((datum: any) => {
         if (!result.find(month => month === datum.x)) {
           result.push(datum.x);
         }
       });
     });
   }
-  return result;
+  return result.sort((a, b) => {
+    if (new Date(a) < new Date(b)) {
+      return -1;
+    }
+    if (new Date(a) > new Date(b)) {
+      return 1;
+    }
+    return 0;
+  });
 };
 
 // Note: Forecast is expected to use both datum.y and datum.y0
