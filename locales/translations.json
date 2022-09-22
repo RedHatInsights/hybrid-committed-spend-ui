@@ -1,6 +1,7 @@
 {
   "accountName": "Account name: {value}",
   "accountNumber": "Account number: {value}",
+  "breakdownPerspectiveValues": "{value, select, yearly {Yearly subs} on_demand {On-Demand Subs} reseller {Reseller / Distributor} marketplace {Red Hat Marketplace} aws {Amazon Web Services} azure {Microsoft Azure} gcp {Google Cloud Platform} other {}}",
   "chartCurrentSpendLegendLabel": "Actual spend YTD ({dateRange})",
   "chartCurrentSpendNoDataLegendLabel": "Actual spend YTD (no data)",
   "chartCurrentSpendTooltip": "Actual spend YTD",
@@ -13,6 +14,7 @@
   "chartThresholdSpendNoDataLegendLabel": "Committed spend (no data)",
   "chartThresholdSpendTooltip": "Committed spend",
   "chartTooltipTitle": "{value}",
+  "committedSpendPerspectiveValuescommittedSpendTrendPerspectiveValues": "{value, select, actual {Actual spend} past_two_actual {Past two years actual spend} previous_over_actual {Previous year over actual spend} other {}}",
   "consumptionDate": "Consumption date: {date}",
   "contractDates": "Contract dates: {startDate} - {endDate}",
   "currencyAbbreviations": "{symbol, select, billion {{value} B} million {{value} M} quadrillion {{value} q} thousand {{value} K} trillion {{value} t} other {}}",

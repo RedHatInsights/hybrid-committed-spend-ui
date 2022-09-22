@@ -12,6 +12,16 @@ export default defineMessages({
     description: 'Account number: {value}',
     id: 'accountNumber',
   },
+  actualSpendBreakdownPerspectiveValues: {
+    defaultMessage:
+      '{value, select, ' +
+      'sources {Top 3 sources of spend} ' +
+      'affiliates {Top 3 affiliates of spend} ' +
+      'products {Top 3 products of spend} ' +
+      'other {}}',
+    description: 'Actual spend breakdown perspective values',
+    id: 'actualSpendBreakdownPerspectiveValues',
+  },
   chartCurrentSpendLegendLabel: {
     defaultMessage: 'Actual spend YTD ({dateRange})',
     description: 'Actual spend YTD ({dateRange})',
@@ -71,6 +81,16 @@ export default defineMessages({
     defaultMessage: '{value}',
     description: 'Chart tooltip title showing datum month',
     id: 'chartTooltipTitle',
+  },
+  committedSpendTrendPerspectiveValues: {
+    defaultMessage:
+      '{value, select, ' +
+      'actual {Actual spend} ' +
+      'past_two_actual {Past two years actual spend} ' +
+      'previous_over_actual {Previous year over actual spend} ' +
+      'other {}}',
+    description: 'Committed spend trend perspective values',
+    id: 'committedSpendPerspectiveValuescommittedSpendTrendPerspectiveValues',
   },
   consumptionDate: {
     defaultMessage: 'Consumption date: {date}',
