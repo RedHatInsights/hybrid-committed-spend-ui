@@ -20,6 +20,73 @@
         "value": "value"
       }
     ],
+    "breakdownPerspectiveValues": [
+      {
+        "options": {
+          "aws": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Amazon Web Services"
+              }
+            ]
+          },
+          "azure": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Microsoft Azure"
+              }
+            ]
+          },
+          "gcp": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Google Cloud Platform"
+              }
+            ]
+          },
+          "marketplace": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Red Hat Marketplace"
+              }
+            ]
+          },
+          "on_demand": {
+            "value": [
+              {
+                "type": 0,
+                "value": "On-Demand Subs"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "reseller": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Reseller / Distributor"
+              }
+            ]
+          },
+          "yearly": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Yearly subs"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
     "chartCurrentSpendLegendLabel": [
       {
         "type": 0,
@@ -141,6 +208,41 @@
     "chartTooltipTitle": [
       {
         "type": 1,
+        "value": "value"
+      }
+    ],
+    "committedSpendPerspectiveValuescommittedSpendTrendPerspectiveValues": [
+      {
+        "options": {
+          "actual": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Actual spend"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "past_two_actual": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Past two years actual spend"
+              }
+            ]
+          },
+          "previous_over_actual": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Previous year over actual spend"
+              }
+            ]
+          }
+        },
+        "type": 5,
         "value": "value"
       }
     ],

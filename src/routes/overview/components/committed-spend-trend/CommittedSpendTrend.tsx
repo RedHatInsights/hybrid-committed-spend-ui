@@ -2,19 +2,21 @@ import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
 import messages from 'locales/messages';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { transformReport } from 'routes/components/charts/common/chart-datum-utils';
 import { TrendChart } from 'routes/components/charts/trend-chart';
+import { Perspective } from 'routes/overview/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
+import { getToday, getYear } from 'utils/dateRange';
 
-import { chartStyles } from './CommittedSpendTrend.styles';
+import { chartStyles, styles } from './CommittedSpendTrend.styles';
 import { currentData } from './data/currentData';
 import { previousData } from './data/previousData';
 import { thresholdData } from './data/thresholdData';
@@ -47,6 +49,12 @@ export type CommittedSpendTrendProps = CommittedSpendTrendStateProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
+const perspectiveOptions = [
+  { label: messages.committedSpendTrendPerspectiveValues, value: 'actual' },
+  { label: messages.committedSpendTrendPerspectiveValues, value: 'previous_over_actual' },
+  { label: messages.committedSpendTrendPerspectiveValues, value: 'past_two_actual' },
+];
+
 const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   currentQueryString,
   currentReport,
@@ -66,6 +74,8 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
     fetchReport(widget.reportPathsType, widget.reportType, previousQueryString);
   }, [previousQueryString]);
 
+  const [perspectiveItem, setPerspectiveItem] = useState(perspectiveOptions[1].value);
+
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
       const href = `${widget.viewAllPath}?${getQuery({
@@ -77,9 +87,33 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   };
 
   const getChart = () => {
-    const current = transformReport({ report: currentReport });
-    const previous = transformReport({ report: previousReport, offset: 1 });
-    const threshold = transformReport({ report: thresholdReport });
+    const endDate = getToday();
+    let startDate = getYear(1);
+    let isYear = true;
+    let offset = 0;
+
+    switch (perspectiveItem) {
+      case perspectiveOptions[0].value: // Actual spend
+        break;
+      case perspectiveOptions[1].value: // Previous year over actual spend
+        offset = 1;
+        isYear = false;
+        break;
+      case perspectiveOptions[2].value: // Past two years actual spend
+        startDate = getYear(2);
+        break;
+      default:
+        break;
+    }
+
+    const current = transformReport({ report: currentReport, startDate: new Date(startDate.getTime()), endDate });
+    const previous = transformReport({
+      report: previousReport,
+      startDate: new Date(startDate.getTime()),
+      endDate,
+      offset,
+    });
+    const threshold = transformReport({ report: thresholdReport, startDate: new Date(startDate.getTime()), endDate });
 
     return (
       <TrendChart
@@ -88,10 +122,15 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
         currentData={current}
         height={chartStyles.chartHeight}
         name={widget.chartName}
-        previousData={previous}
+        previousData={offset ? previous : undefined}
         thresholdData={threshold}
+        isYear={isYear}
       />
     );
+  };
+
+  const handleOnPerspectiveSelected = value => {
+    setPerspectiveItem(value);
   };
 
   return (
@@ -100,7 +139,12 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
       fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
       title={widget.title}
     >
-      {getChart()}
+      <Perspective
+        currentItem={perspectiveItem}
+        onSelected={handleOnPerspectiveSelected}
+        options={perspectiveOptions}
+      />
+      <div style={styles.chartContainer}>{getChart()}</div>
     </ReportSummary>
   );
 };
