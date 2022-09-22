@@ -32,6 +32,7 @@ export const actualSpendBreakdownWidget: DashboardWidget = {
   title: messages.dashboardActualSpendBreakdownTitle,
   reportPathsType: ReportPathsType.billing,
   reportType: ReportType.cost,
+  viewAllPath: paths.details,
 };
 
 export const committedSpendWidget: DashboardWidget = {
