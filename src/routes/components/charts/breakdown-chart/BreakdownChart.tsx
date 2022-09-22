@@ -411,7 +411,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
               legendData={getLegendData(series, hiddenSeries, true)}
               title={datum =>
                 intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(datum.x, {
+                  value: intl.formatDate(`${datum.x}T23:59:59z`, {
                     month: 'long',
                     year: 'numeric',
                   }),
@@ -453,7 +453,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
               fixLabelOverlap
               style={styles.xAxis}
               tickFormat={t =>
-                intl.formatDate(t, {
+                intl.formatDate(`${t}T23:59:59z`, {
                   month: 'short',
                   year: 'numeric',
                 })

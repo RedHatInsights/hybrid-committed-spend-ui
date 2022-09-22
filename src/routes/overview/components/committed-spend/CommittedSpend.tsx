@@ -62,8 +62,8 @@ const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
     balance = formatCurrency(182054.9, 'USD');
     committedSpend = formatCurrency(1000000.0, 'USD');
 
-    const startDate = new Date(parseISO('2021-08-01T00:00:00'));
-    const endDate = new Date(parseISO('2022-02-01T00:00:00'));
+    const startDate = new Date(parseISO('2021-08-01T23:59:59z'));
+    const endDate = new Date(parseISO('2022-02-01T23:59:59z'));
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
       day: 'numeric',

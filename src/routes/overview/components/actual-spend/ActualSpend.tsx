@@ -63,8 +63,8 @@ const ActualSpendBase: React.FC<ActualSpendProps> = ({
     actualSpend = formatCurrency(817945.1, 'USD');
     percent = formatPercentage(10);
 
-    const startDate = new Date(parseISO('2021-08-01T00:00:00'));
-    const endDate = new Date(parseISO('2022-02-01T00:00:00'));
+    const startDate = new Date(parseISO('2021-08-01T23:59:59z'));
+    const endDate = new Date(parseISO('2022-02-01T23:59:59z'));
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
       day: 'numeric',

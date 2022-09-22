@@ -122,7 +122,7 @@ export function createReportDatum<T extends ComputedReportItem>({
 }: ReportData<T>): ChartDatum {
   const getXVal = () => {
     if (idKey === 'date' || offset > 0) {
-      const date = new Date(computedItem.date + 'T00:00:00');
+      const date = new Date(`${computedItem.date}T23:59:59z`);
       if (offset > 0) {
         date.setFullYear(date.getFullYear() + offset);
       }
@@ -154,7 +154,7 @@ export function padChartDatums({ datums, startDate = getYear(1), endDate = getTo
   if (!datums || datums.length === 0) {
     return result;
   }
-  for (const padDate = new Date(startDate.getTime()); padDate <= endDate; padDate.setMonth(padDate.getMonth() + 1)) {
+  for (const padDate = new Date(startDate.getTime()); padDate < endDate; padDate.setMonth(padDate.getMonth() + 1)) {
     const date = format(padDate, 'yyyy-MM');
     const chartDatum = datums.find(val => val.key === date);
     if (chartDatum) {
@@ -196,8 +196,8 @@ export function getDateRange(datums: ChartDatum[]): [Date, Date] {
     }
   }
 
-  const start = new Date(datums[firstMonth].key + 'T00:00:00');
-  const end = new Date(datums[lastMonth].key + 'T00:00:00');
+  const start = new Date(`${datums[firstMonth].key}T23:59:59z`);
+  const end = new Date(`${datums[lastMonth].key}T23:59:59z`);
   return [start, end];
 }
 

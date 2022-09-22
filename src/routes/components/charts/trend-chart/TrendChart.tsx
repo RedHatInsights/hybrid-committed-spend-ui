@@ -313,7 +313,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
               legendData={getLegendData(series, hiddenSeries, true)}
               title={datum =>
                 intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(datum.x, {
+                  value: intl.formatDate(`${datum.x}T23:59:59z`, {
                     month: 'long',
                     ...(isYear && { year: 'numeric' }),
                   }),
@@ -355,7 +355,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
                 fixLabelOverlap
                 style={styles.xAxis}
                 tickFormat={t =>
-                  intl.formatDate(t, {
+                  intl.formatDate(`${t}T23:59:59z`, {
                     month: isYear ? 'short' : 'long',
                     ...(isYear && { year: 'numeric' }),
                   })
