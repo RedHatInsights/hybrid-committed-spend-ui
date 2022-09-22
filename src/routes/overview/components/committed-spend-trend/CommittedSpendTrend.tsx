@@ -106,14 +106,14 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
         break;
     }
 
-    const current = transformReport({ report: currentReport, startDate: new Date(startDate.getTime()), endDate });
+    const current = transformReport({ report: currentReport, startDate, endDate });
     const previous = transformReport({
       report: previousReport,
-      startDate: new Date(startDate.getTime()),
+      startDate,
       endDate,
       offset,
     });
-    const threshold = transformReport({ report: thresholdReport, startDate: new Date(startDate.getTime()), endDate });
+    const threshold = transformReport({ report: thresholdReport, startDate, endDate });
 
     return (
       <TrendChart

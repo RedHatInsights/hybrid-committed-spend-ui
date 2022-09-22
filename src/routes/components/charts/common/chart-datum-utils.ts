@@ -154,7 +154,7 @@ export function padChartDatums({ datums, startDate = getYear(1), endDate = getTo
   if (!datums || datums.length === 0) {
     return result;
   }
-  for (const padDate = startDate; padDate <= endDate; padDate.setMonth(padDate.getMonth() + 1)) {
+  for (const padDate = new Date(startDate.getTime()); padDate <= endDate; padDate.setMonth(padDate.getMonth() + 1)) {
     const date = format(padDate, 'yyyy-MM');
     const chartDatum = datums.find(val => val.key === date);
     if (chartDatum) {
