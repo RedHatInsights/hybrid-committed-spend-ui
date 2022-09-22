@@ -2206,7 +2206,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1596.5083054191301,
+                  value: 1596.50830541913,
                   units: 'USD',
                 },
               },
@@ -2250,7 +2250,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2433.0483054191302,
+                  value: 2433.04830541913,
                   units: 'USD',
                 },
               },
@@ -2362,7 +2362,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 18303.255066666667,
+                  value: 18303.2550666666,
                   units: 'USD',
                 },
                 distributed: {
@@ -2539,7 +2539,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1396.5083054191301,
+                  value: 1396.50830541913,
                   units: 'USD',
                 },
               },
@@ -2583,7 +2583,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2233.0483054191302,
+                  value: 2233.04830541913,
                   units: 'USD',
                 },
               },

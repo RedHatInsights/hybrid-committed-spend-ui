@@ -1,4 +1,9 @@
-import { actualSpendWidget, committedSpendTrendWidget, committedSpendWidget } from './dashboardWidgets';
+import {
+  actualSpendBreakdownWidget,
+  actualSpendWidget,
+  committedSpendTrendWidget,
+  committedSpendWidget,
+} from './dashboardWidgets';
 
 jest.mock('store/reports/reportActions');
 
@@ -26,6 +31,7 @@ test('default state', () => {
     actualSpendWidget.id,
     committedSpendWidget.id,
     committedSpendTrendWidget.id,
+    actualSpendBreakdownWidget.id,
   ]);
   expect(selectors.selectWidget(state, actualSpendWidget.id)).toEqual(actualSpendWidget);
 });
