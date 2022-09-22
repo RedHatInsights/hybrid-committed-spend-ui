@@ -320,19 +320,21 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
 
   // Returns onMouseOver, onMouseOut, and onClick events for the interactive legend
   private getEvents = () => {
+    const { name } = this.props;
     const { hiddenSeries, series } = this.state;
 
     const result = getInteractiveLegendEvents({
       chartNames: getChartNames(series),
       isDataHidden: data => isDataHidden(series, hiddenSeries, data),
       isHidden: index => isSeriesHidden(hiddenSeries, index),
-      legendName: 'legend',
+      legendName: `${name}-legend`,
       onLegendClick: props => this.handleLegendClick(props.index),
     });
     return result;
   };
 
   private getLegend = () => {
+    const { name } = this.props;
     const { hiddenSeries, series } = this.state;
 
     return (
@@ -340,7 +342,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
         data={getLegendData(series, hiddenSeries)}
         gutter={20}
         height={25}
-        name="legend"
+        name={`${name}-legend`}
         responsive={false}
         y={240}
       />
