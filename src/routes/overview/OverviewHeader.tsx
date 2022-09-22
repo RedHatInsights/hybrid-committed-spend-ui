@@ -56,9 +56,9 @@ const OverviewHeaderBase: React.FC<OverviewHeaderProps> = ({ fetchReport, intl, 
   if (isTest || hasTotal) {
     accountName = 'Acme Corporation';
     accountNumber = '12345';
-    contractEndDate = format(parseISO('2026-07-01T00:00:00'), 'MMMM dd, yyyy');
-    contractStartDate = format(parseISO('2021-08-01T00:00:00'), 'MMMM dd, yyyy');
-    consumptionDate = format(parseISO('2003-03-01T00:00:00'), 'MMMM dd, yyyy');
+    contractEndDate = format(parseISO('2022-08-01T00:00:00'), 'MMMM dd, yyyy');
+    contractStartDate = format(parseISO('2021-09-01T00:00:00'), 'MMMM dd, yyyy');
+    consumptionDate = format(parseISO('2002-07-01T00:00:00'), 'MMMM dd, yyyy');
   }
 
   return (
