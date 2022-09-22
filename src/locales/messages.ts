@@ -86,7 +86,6 @@ export default defineMessages({
     defaultMessage:
       '{value, select, ' +
       'actual {Actual spend} ' +
-      'past_two_actual {Past two years actual spend} ' +
       'previous_over_actual {Previous year over actual spend} ' +
       'other {}}',
     description: 'Committed spend trend perspective values',
