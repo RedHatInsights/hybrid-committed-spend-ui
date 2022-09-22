@@ -13,7 +13,7 @@ import { Title } from '@patternfly/react-core';
 import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { default as ChartTheme } from 'routes/components/charts/chart-theme';
+import ChartTheme from 'routes/components/charts/chart-theme';
 import { getCostRangeString } from 'routes/components/charts/common/chart-datum-utils';
 import {
   ChartSeries,
@@ -27,7 +27,7 @@ import {
   isDataAvailable,
   isSeriesHidden,
 } from 'routes/components/charts/common/chart-utils';
-import { FormatOptions, Formatter } from 'utils/format';
+import { formatCurrencyAbbreviation, FormatOptions, Formatter } from 'utils/format';
 import { noop } from 'utils/noop';
 
 import { styles } from './TrendChart.styles';
@@ -38,6 +38,7 @@ interface TrendChartOwnProps {
   currentData?: any;
   height?: number;
   legendItemsPerRow?: number;
+  name?: string;
   padding?: any;
   previousData?: any;
   thresholdData?: any;
@@ -51,6 +52,7 @@ interface State {
   hiddenSeries: Set<number>;
   series?: ChartSeries[];
   width: number;
+  units?: string;
 }
 
 type TrendChartProps = TrendChartOwnProps & WrappedComponentProps;
@@ -164,7 +166,8 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
       });
     }
     const cursorVoronoiContainer = this.getCursorVoronoiContainer();
-    this.setState({ cursorVoronoiContainer, series });
+    const units = this.getUnits(series);
+    this.setState({ cursorVoronoiContainer, series, units });
   };
 
   private getAdjustedContainerHeight = () => {
@@ -211,8 +214,8 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
         voronoiDimension="x"
         voronoiPadding={{
           bottom: 75,
-          left: 8,
-          right: 8,
+          left: 55,
+          right: 40,
           top: 8,
         }}
       />
@@ -233,18 +236,38 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
   }
 
   private getLegend = () => {
-    const { hiddenSeries, series } = this.state;
+    const { hiddenSeries, series, width } = this.state;
 
     return (
       <ChartLegend
         data={getLegendData(series, hiddenSeries)}
-        height={25}
         gutter={20}
+        height={25}
+        itemsPerRow={width < 550 ? 1 : undefined}
         name="legend"
         responsive={false}
-        y={275}
+        y={240}
       />
     );
+  };
+
+  private getTickValue = (t: number) => {
+    const { units } = this.state;
+
+    return formatCurrencyAbbreviation(t, units);
+  };
+
+  private getUnits = (series: ChartSeries[]) => {
+    if (series) {
+      for (const s of series) {
+        for (const datum of s.data) {
+          if (datum.units) {
+            return datum.units;
+          }
+        }
+      }
+    }
+    return 'USD';
   };
 
   // Hide each data series individually
@@ -266,16 +289,16 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
     const {
       height,
       intl,
+      name,
       padding = {
         bottom: 75,
-        left: 40,
+        left: 55,
         right: 40,
         top: 8,
       },
       title,
     } = this.props;
     const { cursorVoronoiContainer, hiddenSeries, series, width } = this.state;
-    const domain = getDomain(series, hiddenSeries);
 
     // Clone original container. See https://issues.redhat.com/browse/COST-762
     const container = cursorVoronoiContainer
@@ -307,13 +330,14 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
           <div style={{ height, width }}>
             <Chart
               containerComponent={container}
-              domain={domain}
+              domain={getDomain(series, hiddenSeries)}
               events={this.getEvents()}
               height={height}
               legendAllowWrap
               legendComponent={this.getLegend()}
               legendData={getLegendData(series, hiddenSeries)}
               legendPosition="bottom-left"
+              name={name}
               padding={padding}
               theme={ChartTheme}
               width={width}
@@ -332,7 +356,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
                 }
                 tickValues={getTickValues(series)}
               />
-              <ChartAxis dependentAxis style={styles.yAxis} />
+              <ChartAxis dependentAxis style={styles.yAxis} tickFormat={this.getTickValue} />
             </Chart>
           </div>
         </div>

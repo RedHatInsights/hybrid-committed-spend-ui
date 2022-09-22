@@ -34,12 +34,6 @@ export const styles = {
     grid: {
       stroke: 'none',
     },
-    ticks: {
-      stroke: 'none',
-    },
-    tickLabels: {
-      fontSize: 0,
-    },
   },
   xAxis: {
     axisLabel: {
@@ -48,8 +42,5 @@ export const styles = {
     grid: {
       stroke: 'none',
     },
-    // ticks: {
-    //   stroke: 'none',
-    // },
   },
 };
