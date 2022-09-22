@@ -32,6 +32,11 @@ export default defineMessages({
     description: 'no data',
     id: 'chartNoData',
   },
+  chartOthers: {
+    defaultMessage: '{count, plural, one {{count} Other} other {{count} Others}}',
+    description: 'Others category for top costliest',
+    id: 'chartOthers',
+  },
   chartPreviousSpendLegendLabel: {
     defaultMessage: 'Previous year spend ({dateRange})',
     description: 'Previous year spend ({dateRange})',
@@ -133,6 +138,11 @@ export default defineMessages({
     defaultMessage: 'Oops!',
     description: 'Oops!',
     id: 'errorStateUnexpectedTitle',
+  },
+  exploreMore: {
+    defaultMessage: 'Explore more',
+    description: 'Explore more',
+    id: 'exploreMore',
   },
   hcs: {
     defaultMessage: 'Hybrid Committed Spend',
