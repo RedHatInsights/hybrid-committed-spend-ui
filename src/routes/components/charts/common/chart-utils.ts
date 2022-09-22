@@ -67,6 +67,8 @@ export const getDomain = (series: ChartSeries[], hiddenSeries: Set<number>) => {
 
   if (max > 0) {
     domain.y = [min, max];
+  } else if (max <= 0) {
+    domain.y = [0, 100];
   }
   return domain;
 };
@@ -93,11 +95,13 @@ export const getTickValues = (series: ChartSeries[]) => {
 
   if (series) {
     series.forEach((s: any) => {
-      s.data?.forEach((datum: any) => {
-        if (!result.find(month => month === datum.x)) {
-          result.push(datum.x);
-        }
-      });
+      if (Array.isArray(s.data)) {
+        s.data?.forEach((datum: any) => {
+          if (!result.find(month => month === datum.x)) {
+            result.push(datum.x);
+          }
+        });
+      }
     });
   }
   return result.sort((a, b) => {

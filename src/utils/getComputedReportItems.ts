@@ -1,4 +1,6 @@
 import { Report, ReportData, ReportItem, ReportItemValue, ReportValue } from 'api/reports/report';
+import { intl } from 'components/i18n';
+import messages from 'locales/messages';
 import { sort, SortDirection } from 'utils/sort';
 
 export interface ComputedReportValue {
@@ -39,24 +41,24 @@ export interface ComputedReportItem extends ComputedReportOcpItem, ComputedRepor
 }
 
 export interface ComputedReportItemsParams<R extends Report, T extends ReportItem> {
-  daily?: boolean;
   idKey: keyof T;
+  isDateMap?: boolean;
   report: R;
   sortKey?: keyof ComputedReportItem;
   sortDirection?: SortDirection;
 }
 
 export function getComputedReportItems<R extends Report, T extends ReportItem>({
-  daily,
   idKey,
+  isDateMap,
   report,
   sortDirection = SortDirection.asc,
   sortKey = 'date',
 }: ComputedReportItemsParams<R, T>) {
   return sort(
     getUnsortedComputedReportItems<R, T>({
-      daily,
       idKey,
+      isDateMap,
       report,
       sortDirection,
       sortKey,
@@ -120,9 +122,9 @@ function getUsageData(val, item?: any) {
 
 // Details pages typically use this function with filter[resolution]=monthly
 export function getUnsortedComputedReportItems<R extends Report, T extends ReportItem>({
-  daily = false,
-  report,
   idKey, // Note: The idKey must use org_entities for reports, while group_by uses org_unit_id
+  isDateMap = false,
+  report,
 }: ComputedReportItemsParams<R, T>) {
   if (!report) {
     return [];
@@ -153,11 +155,13 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
         const source_uuid = val.source_uuid ? val.source_uuid : [];
 
         let label;
-        if (label === undefined || label.trim().length === 0) {
-          label = val.alias && val.alias.trim().length > 0 ? val.alias : val[idKey];
+        if (report.meta && report.meta.others && (id === 'Other' || id === 'Others')) {
+          // Add count to "Others" label
+          label = intl.formatMessage(messages.chartOthers, { count: report.meta.others });
         }
 
-        if (daily) {
+        if (isDateMap) {
+          // Map idKey by date
           const data = {
             ...getUsageData(val), // capacity, limit, request, & usage
             cluster,

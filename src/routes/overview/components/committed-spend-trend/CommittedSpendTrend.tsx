@@ -7,8 +7,8 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { ChartType, transformReport } from 'routes/components/charts/common/chart-datum-utils';
-import { CostChart } from 'routes/components/charts/cost-chart';
+import { transformReport } from 'routes/components/charts/common/chart-datum-utils';
+import { TrendChart } from 'routes/components/charts/trend-chart';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
@@ -77,15 +77,17 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   };
 
   const getChart = () => {
-    const current = transformReport(currentReport, ChartType.monthly);
-    const previous = transformReport(previousReport, ChartType.monthly, 1);
-    const threshold = transformReport(thresholdReport, ChartType.monthly);
+    const current = transformReport({ report: currentReport });
+    const previous = transformReport({ report: previousReport, offset: 1 });
+    const threshold = transformReport({ report: thresholdReport });
 
     return (
-      <CostChart
+      <TrendChart
         adjustContainerHeight
+        containerHeight={chartStyles.chartContainerHeight}
         currentData={current}
-        height={chartStyles.height}
+        height={chartStyles.chartHeight}
+        name={widget.chartName}
         previousData={previous}
         thresholdData={threshold}
       />

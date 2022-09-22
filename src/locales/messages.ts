@@ -32,6 +32,11 @@ export default defineMessages({
     description: 'no data',
     id: 'chartNoData',
   },
+  chartOthers: {
+    defaultMessage: '{count, plural, one {{count} Other} other {{count} Others}}',
+    description: 'Others category for top costliest',
+    id: 'chartOthers',
+  },
   chartPreviousSpendLegendLabel: {
     defaultMessage: 'Previous year spend ({dateRange})',
     description: 'Previous year spend ({dateRange})',
@@ -89,6 +94,11 @@ export default defineMessages({
     description: 'str.match(/([\\D]*)([\\d.,]+)([\\D]*)/)',
     id: 'currencyAbbreviations',
   },
+  dashboardActualSpendBreakdownTitle: {
+    defaultMessage: 'Actual spend breakdowns',
+    description: 'Actual spend breakdowns',
+    id: 'dashboardActualSpendBreakdownTitle',
+  },
   dashboardActualSpendTitle: {
     defaultMessage: 'Actual spend of included products YTD',
     description: 'Actual spend of included products YTD',
@@ -128,6 +138,11 @@ export default defineMessages({
     defaultMessage: 'Oops!',
     description: 'Oops!',
     id: 'errorStateUnexpectedTitle',
+  },
+  exploreMore: {
+    defaultMessage: 'Explore more',
+    description: 'Explore more',
+    id: 'exploreMore',
   },
   hcs: {
     defaultMessage: 'Hybrid Committed Spend',

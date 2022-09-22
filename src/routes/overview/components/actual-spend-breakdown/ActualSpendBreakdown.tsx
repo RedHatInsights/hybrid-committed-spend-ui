@@ -1,20 +1,29 @@
-import './ActualSpendBreakdown.scss';
-
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
+import { format } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { EmptyValueState } from 'routes/components/state';
+import { Link } from 'react-router-dom';
+import { BreakdownChart } from 'routes/components/charts/breakdown-chart';
+import {
+  ChartDatum,
+  ComputedReportItemType,
+  ComputedReportItemValueType,
+  createReportDatum,
+} from 'routes/components/charts/common/chart-datum-utils';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { NotAvailable } from 'routes/state';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
-import { formatCurrency } from 'utils/format';
+import { getToday, getYear } from 'utils/dateRange';
+import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/getComputedReportItems';
+
+import { chartStyles } from './ActualSpendBreakdown.styles';
+import { currentData } from './data/currentData';
 
 interface ActualSpendBreakdownOwnProps {
   widgetId: number;
@@ -44,7 +53,6 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   intl,
   queryString,
   report,
-  reportError,
   reportFetchStatus,
   widget,
 }) => {
@@ -52,34 +60,97 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
     fetchReport(widget.reportPathsType, widget.reportType, queryString);
   }, [queryString]);
 
-  let value: string | React.ReactNode = <EmptyValueState />;
+  const getDetailsLink = () => {
+    if (widget.viewAllPath) {
+      const href = `${widget.viewAllPath}?${getQuery({
+        // TBD...
+      })}`;
+      return <Link to={href}>{intl.formatMessage(messages.exploreMore)}</Link>;
+    }
+    return null;
+  };
 
-  const hasTotal = report && report.meta && report.meta.total;
-  const hasCost = hasTotal && report.meta.total.cost && report.meta.total.cost.total;
+  const getChart = () => {
+    const datums = getChartDatums(getComputedItems());
 
-  if (hasTotal) {
-    value = formatCurrency(
-      hasCost ? report.meta.total.cost.total.value : 0,
-      hasCost ? report.meta.total.cost.total.units : 'USD',
-      {}
+    return (
+      <BreakdownChart
+        adjustContainerHeight
+        containerHeight={chartStyles.chartContainerHeight}
+        height={chartStyles.chartHeight}
+        name={widget.chartName}
+        top1stData={datums.length > 0 ? datums[0] : []}
+        top2ndData={datums.length > 1 ? datums[1] : []}
+        top3rdData={datums.length > 2 ? datums[2] : []}
+        top4thData={datums.length > 3 ? datums[3] : []}
+        top5thData={datums.length > 4 ? datums[4] : []}
+        top6thData={datums.length > 5 ? datums[5] : []}
+      />
     );
-  }
+  };
 
-  // Todo: show errors
-  const isTest = true;
+  const getChartDatums = (computedItems: ComputedReportItem[]) => {
+    const reportItem = ComputedReportItemType.cost;
+    const reportItemValue = ComputedReportItemValueType.total;
+    const chartDatums = [];
+
+    computedItems.map(computedItem => {
+      const datums = [];
+
+      if (computedItem instanceof Map) {
+        const items = Array.from(computedItem.values());
+        items.map(i => {
+          const value = i[reportItem][reportItemValue] ? i[reportItem][reportItemValue].value : i[reportItem].value;
+          datums.push(createReportDatum({ value, computedItem: i, reportItem, reportItemValue }));
+        });
+      }
+      chartDatums.push(datums);
+    });
+    return padChartDatums(chartDatums);
+  };
+
+  const getComputedItems = () => {
+    return getUnsortedComputedReportItems({
+      idKey: 'project', // Todo: this.getGroupBy(),
+      isDateMap: true,
+      report,
+    } as any);
+  };
+
+  // This pads chart datums with null datum objects, representing missing data at the beginning and end of the
+  // data series. The remaining data is left as is to allow for extrapolation. This allows us to display a "no data"
+  // message in the tooltip, which helps distinguish between zero values and when there is no data available.
+  const padChartDatums = (items: any[]): ChartDatum[] => {
+    const endDate = getToday();
+    const result = [];
+
+    items.map(datums => {
+      const newItems = [];
+
+      for (let padDate = getYear(1); padDate <= endDate; padDate.setMonth(padDate.getMonth() + 1)) {
+        const date = format(padDate, 'yyyy-MM');
+        const chartDatum = datums.find(val => val.key === date);
+        if (chartDatum) {
+          newItems.push(chartDatum);
+        } else {
+          newItems.push(
+            createReportDatum({
+              computedItem: { date, id: datums[0].name },
+              isForceNoData: true,
+              reportItemValue: null,
+              value: null,
+            })
+          );
+        }
+      }
+      result.push(newItems);
+    });
+    return result;
+  };
+
   return (
-    <ReportSummary fetchStatus={reportFetchStatus} title={widget.title}>
-      {!isTest && reportError ? (
-        <NotAvailable />
-      ) : (
-        <>
-          <div>August 2022 - February 2023</div>
-          <div className="valueContainer">
-            <div className={`value`}>{value}</div>
-            <div>{intl.formatMessage(messages.overLastMonth)}</div>
-          </div>
-        </>
-      )}
+    <ReportSummary detailsLink={getDetailsLink()} fetchStatus={reportFetchStatus} title={widget.title}>
+      {getChart()}
     </ReportSummary>
   );
 };
@@ -97,15 +168,22 @@ const mapStateToProps = createMapStateToProps<ActualSpendBreakdownOwnProps, Actu
         ...queryFromRoute.filter,
       },
     };
+
     const queryString = getQuery(query);
-    const report = reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString);
+    // const currentReport = reportSelectors.selectReport(
+    //   state,
+    //   widget.reportPathsType,
+    //   widget.reportType,
+    //   currentQueryString
+    // );
+    const report = currentData as any;
     const reportError = reportSelectors.selectReportError(
       state,
       widget.reportPathsType,
       widget.reportType,
       queryString
     );
-    const reportFetchStatus = reportSelectors.selectReportFetchStatus(
+    const currentReportFetchStatus = reportSelectors.selectReportFetchStatus(
       state,
       widget.reportPathsType,
       widget.reportType,
@@ -113,11 +191,11 @@ const mapStateToProps = createMapStateToProps<ActualSpendBreakdownOwnProps, Actu
     );
 
     return {
-      query,
       queryString,
       report,
       reportError,
-      reportFetchStatus,
+      currentReportFetchStatus,
+      query,
       widget,
     };
   }
