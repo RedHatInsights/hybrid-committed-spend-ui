@@ -3,7 +3,7 @@ import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -15,6 +15,7 @@ import {
   ComputedReportItemValueType,
   createReportDatum,
 } from 'routes/components/charts/common/chart-datum-utils';
+import { Perspective } from 'routes/overview/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
@@ -22,6 +23,7 @@ import { reportActions, reportSelectors } from 'store/reports';
 import { getToday, getYear } from 'utils/dateRange';
 import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/getComputedReportItems';
 
+import { styles } from './ActualSpendBreakdown.styles';
 import { chartStyles } from './ActualSpendBreakdown.styles';
 import { currentData } from './data/currentData';
 
@@ -48,6 +50,12 @@ export type ActualSpendBreakdownProps = ActualSpendBreakdownStateProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
+const perspectiveOptions = [
+  { label: messages.actualSpendBreakdownPerspectiveValues, value: 'sources' },
+  { label: messages.actualSpendBreakdownPerspectiveValues, value: 'affiliates' },
+  { label: messages.actualSpendBreakdownPerspectiveValues, value: 'products' },
+];
+
 const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   fetchReport,
   intl,
@@ -59,6 +67,8 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   useMemo(() => {
     fetchReport(widget.reportPathsType, widget.reportType, queryString);
   }, [queryString]);
+
+  const [perspectiveItem, setPerspectiveItem] = useState('previous_over_actual');
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -148,9 +158,18 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
     return result;
   };
 
+  const handleOnPerspectiveSelected = value => {
+    setPerspectiveItem(value);
+  };
+
   return (
     <ReportSummary detailsLink={getDetailsLink()} fetchStatus={reportFetchStatus} title={widget.title}>
-      {getChart()}
+      <Perspective
+        currentItem={perspectiveItem}
+        onSelected={handleOnPerspectiveSelected}
+        options={perspectiveOptions}
+      />
+      <div style={styles.chartContainer}>{getChart()}</div>
     </ReportSummary>
   );
 };
