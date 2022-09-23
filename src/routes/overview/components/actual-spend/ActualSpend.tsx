@@ -1,15 +1,15 @@
 import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
-import { getQuery, parseQuery, Query } from 'api/queries/query';
-import { Report } from 'api/reports/report';
+import { Report } from 'api/reports';
 import { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { createMapStateToProps, FetchStatus } from 'store/common';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency, formatPercentage } from 'utils/format';
@@ -21,35 +21,16 @@ interface ActualSpendOwnProps {
 }
 
 interface ActualSpendStateProps {
-  query: Query;
-  queryString: string;
   report?: Report;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
 }
 
-interface ActualSpendDispatchProps {
-  fetchReport: typeof reportActions.fetchReport;
-}
+export type ActualSpendProps = ActualSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-export type ActualSpendProps = ActualSpendStateProps &
-  ActualSpendOwnProps &
-  ActualSpendDispatchProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
-
-const ActualSpendBase: React.FC<ActualSpendProps> = ({
-  fetchReport,
-  intl,
-  queryString,
-  report,
-  reportFetchStatus,
-  widget,
-}) => {
-  useMemo(() => {
-    fetchReport(widget.reportPathsType, widget.reportType, queryString);
-  }, [queryString]);
+const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
+  const { report, reportFetchStatus, widget } = mapToProps(widgetId);
 
   let actualSpend: string | React.ReactNode = <EmptyValueState />;
   let dateRange: string | React.ReactNode = <EmptyValueState />;
@@ -88,41 +69,38 @@ const ActualSpendBase: React.FC<ActualSpendProps> = ({
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<ActualSpendOwnProps, ActualSpendStateProps>((state, { widgetId }) => {
-  const widget = dashboardSelectors.selectWidget(state, widgetId);
-  // const queries = dashboardSelectors.selectWidgetQueries(state, widgetId);
+const mapToProps = (widgetId): ActualSpendStateProps => {
+  const queryString = ''; // Todo: add query string for API when available
+  const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
-  // TBD...
-  const queryFromRoute = parseQuery<Query>(location.search);
-  const query = {
-    filter: {
-      ...queryFromRoute.filter,
-    },
-  };
-  const queryString = getQuery(query);
-  const report = reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString);
-  const reportError = reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString);
-  const reportFetchStatus = reportSelectors.selectReportFetchStatus(
-    state,
-    widget.reportPathsType,
-    widget.reportType,
-    queryString
+  const report = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
+    return {
+      meta: {
+        total: {
+          value: 0,
+          units: 'USD',
+        },
+      },
+    } as any;
+  });
+  const reportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, queryString)
+  );
+  const reportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString)
   );
 
+  useMemo(() => {
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
+  }, [queryString]);
+
   return {
-    query,
-    queryString,
     report,
-    reportError,
     reportFetchStatus,
+    reportError,
     widget,
   };
-});
-
-const mapDispatchToProps: ActualSpendDispatchProps = {
-  fetchReport: reportActions.fetchReport,
 };
 
-const ActualSpend = withRouter(ActualSpendBase);
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ActualSpend));
+export default injectIntl(withRouter(ActualSpend));
