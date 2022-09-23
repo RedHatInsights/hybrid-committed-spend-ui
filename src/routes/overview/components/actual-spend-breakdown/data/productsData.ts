@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-loss-of-precision */
+
 // https://console.stage.redhat.com/api/cost-management/v1/reports/openshift/costs/?filter[limit]=3&group_by[project]=*&start_date=2022-06-23&end_date=2022-09-21&filter[resolution]=monthly
 
 export const productsData = {
@@ -3615,7 +3617,7 @@ export const productsData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 221619.181524760065,
+                  value: 221619.18152476,
                   units: 'USD',
                 },
               },
@@ -3643,7 +3645,7 @@ export const productsData = {
               },
               cost: {
                 raw: {
-                  value: 221619.181524760065,
+                  value: 221619.18152476,
                   units: 'USD',
                 },
                 markup: {
@@ -3686,7 +3688,7 @@ export const productsData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 24035.5726649186668,
+                  value: 24035.57266491866,
                   units: 'USD',
                 },
                 markup: {
@@ -3702,7 +3704,7 @@ export const productsData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 235057.56576491867,
+                  value: 235057.565764918,
                   units: 'USD',
                 },
               },
@@ -3724,13 +3726,13 @@ export const productsData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2214980.808964011283,
+                  value: 2214980.808964011,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 24035.5726649186668,
+                  value: 24035.57266491866,
                   units: 'USD',
                 },
                 markup: {

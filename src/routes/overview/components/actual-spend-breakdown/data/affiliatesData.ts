@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-loss-of-precision */
+
 // https://console.stage.redhat.com/api/cost-management/v1/reports/openshift/costs/?filter[limit]=3&group_by[project]=*&start_date=2022-06-23&end_date=2022-09-21&filter[resolution]=monthly
 
 export const affiliatesData = {
