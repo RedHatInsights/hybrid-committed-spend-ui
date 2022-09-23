@@ -25,7 +25,7 @@ export interface TransformData {
   report: Report;
   startDate?: Date;
   endDate?: Date;
-  offset?: number; // Shift the year, so we can overlap current and previous months
+  shiftDateByYear?: number; // Shift the year, so we can overlap current and previous months
   type?: ChartType;
   reportItem?: string;
   reportItemValue?: string; // useful for infrastructure.usage values
@@ -35,7 +35,7 @@ export interface ReportData<T extends ComputedReportItem> {
   computedItem: T;
   idKey?: string;
   isForceNoData?: boolean;
-  offset?;
+  shiftDateByYear?; // Shift the year, so we can overlap current and previous months
   reportItem?: string;
   reportItemValue?: string; // useful for infrastructure.usage values
   value: number;
@@ -76,7 +76,7 @@ export function transformReport({
   report,
   startDate,
   endDate,
-  offset = 0, // Shift the year, so we can overlap current and previous months
+  shiftDateByYear = 0, // Shift the year, so we can overlap current and previous months
   type,
   reportItem = 'cost',
   reportItemValue = 'total', // useful for infrastructure.usage values
@@ -97,7 +97,7 @@ export function transformReport({
       const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;
       return [
         ...acc,
-        createReportDatum({ value: prevValue + val, computedItem: d, offset, reportItem, reportItemValue }),
+        createReportDatum({ value: prevValue + val, computedItem: d, shiftDateByYear, reportItem, reportItemValue }),
       ];
     }, []);
   } else {
@@ -105,7 +105,7 @@ export function transformReport({
       const value = computedItem[reportItem][reportItemValue]
         ? computedItem[reportItem][reportItemValue].value
         : undefined;
-      return createReportDatum({ value, computedItem, offset, reportItem, reportItemValue });
+      return createReportDatum({ value, computedItem, shiftDateByYear, reportItem, reportItemValue });
     });
   }
   return padChartDatums({ datums, startDate, endDate });
@@ -115,28 +115,31 @@ export function createReportDatum<T extends ComputedReportItem>({
   computedItem,
   idKey = 'date',
   isForceNoData,
-  offset = 0, // Shift the year, so we can overlap current and previous months
+  shiftDateByYear = 0, // Shift the year, so we can overlap current and previous months
   reportItem = 'cost',
   reportItemValue = 'total', // useful for infrastructure.usage values
   value,
 }: ReportData<T>): ChartDatum {
+  const getDate = () => {
+    return new Date(`${computedItem.date}T23:59:59z`);
+  };
   const getXVal = () => {
-    if (idKey === 'date' || offset > 0) {
-      const date = new Date(`${computedItem.date}T23:59:59z`);
-      if (offset > 0) {
-        date.setFullYear(date.getFullYear() + offset);
+    if (idKey === 'date' || shiftDateByYear > 0) {
+      const date = getDate();
+      if (shiftDateByYear > 0) {
+        date.setFullYear(date.getFullYear() + shiftDateByYear);
       }
       return format(date, 'yyyy-MM');
     }
-    return computedItem.date;
+    return computedItem.label;
   };
   const xVal = getXVal();
   const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
   return {
-    x: idKey === 'date' ? xVal : computedItem.label,
+    x: xVal,
     y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips
     ...(value === null && isForceNoData && { _y: 0 }), // Todo: Force "no data" tooltips for bar charts.
-    key: xVal,
+    key: idKey === 'date' ? format(getDate(), 'yyyy-MM') : computedItem.id,
     name: computedItem.label ? computedItem.label : computedItem.id, // legend item label
     units: computedItem[reportItem]
       ? computedItem[reportItem][reportItemValue]

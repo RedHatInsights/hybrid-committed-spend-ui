@@ -85,29 +85,19 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   };
 
   const getChart = () => {
-    const startDate = new Date('2021-12-01T23:59:59z');
-    const endDate = new Date('2022-12-01T23:59:59z');
-    let isYear = true;
-    let offset = 0;
-
-    switch (perspectiveItem) {
-      case perspectiveOptions[0].value: // Actual spend
-        break;
-      case perspectiveOptions[1].value: // Previous year over actual spend
-        offset = 1;
-        isYear = false;
-        break;
-      default:
-        break;
+    let previous;
+    if (perspectiveItem === perspectiveOptions[1].value) {
+      previous = transformReport({
+        report: previousReport,
+        startDate: new Date('2020-12-01T23:59:59z'),
+        endDate: new Date('2021-12-01T23:59:59z'),
+        shiftDateByYear: 1,
+      });
     }
 
+    const startDate = new Date('2021-12-01T23:59:59z');
+    const endDate = new Date('2022-12-01T23:59:59z');
     const current = transformReport({ report: currentReport, startDate, endDate });
-    const previous = transformReport({
-      report: previousReport,
-      startDate,
-      endDate,
-      offset,
-    });
     const threshold = transformReport({ report: thresholdReport, startDate, endDate });
 
     return (
@@ -117,9 +107,9 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
         currentData={current}
         height={chartStyles.chartHeight}
         name={widget.chartName}
-        previousData={offset ? previous : undefined}
+        previousData={previous}
         thresholdData={threshold}
-        isYear={isYear}
+        isYearVisible={!previous}
       />
     );
   };
