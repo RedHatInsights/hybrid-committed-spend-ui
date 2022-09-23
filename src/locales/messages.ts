@@ -96,10 +96,10 @@ export default defineMessages({
     description: 'Consumption date: {date}',
     id: 'consumptionDate',
   },
-  contractDates: {
-    defaultMessage: 'Contract dates: {startDate} - {endDate}',
-    description: 'Contract dates: {startDate} - {endDate}',
-    id: 'contractDates',
+  contractDate: {
+    defaultMessage: 'Contract dates: {dateRange}',
+    description: 'Contract dates: {dateRange}',
+    id: 'contractDate',
   },
   currencyAbbreviations: {
     defaultMessage:

@@ -2,7 +2,6 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 import { getQuery, parseQuery, Query } from 'api/queries';
 import { Report, ReportPathsType, ReportType } from 'api/reports';
 import { AxiosError } from 'axios';
-import { format, parseISO } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -46,9 +45,6 @@ const OverviewHeaderBase: React.FC<OverviewHeaderProps> = ({ fetchReport, intl, 
 
   let accountName: string | React.ReactNode = <EmptyValueState />;
   let accountNumber: string | React.ReactNode = <EmptyValueState />;
-  let contractEndDate: string | React.ReactNode = <EmptyValueState />;
-  let contractStartDate: string | React.ReactNode = <EmptyValueState />;
-  let consumptionDate: string | React.ReactNode = <EmptyValueState />;
 
   const isTest = true;
   const hasTotal = report && report.meta && report.meta.total;
@@ -56,10 +52,11 @@ const OverviewHeaderBase: React.FC<OverviewHeaderProps> = ({ fetchReport, intl, 
   if (isTest || hasTotal) {
     accountName = 'Acme Corporation';
     accountNumber = '12345';
-    contractEndDate = format(parseISO('2022-12-31'), 'MMMM dd, yyyy');
-    contractStartDate = format(parseISO('2022-01-01'), 'MMMM dd, yyyy');
-    consumptionDate = format(parseISO('2002-09-01'), 'MMMM dd, yyyy');
   }
+
+  const contractStartDate = new Date('2021-12-01T23:59:59z');
+  const contractEndDate = new Date('2022-11-01T23:59:59z');
+  const consumptionDate = new Date('2002-08-01T23:59:59z');
 
   return (
     <PageHeader>
@@ -73,10 +70,21 @@ const OverviewHeaderBase: React.FC<OverviewHeaderProps> = ({ fetchReport, intl, 
             {intl.formatMessage(messages.accountNumber, { value: accountNumber })}
           </div>
           <div style={styles.headerContentRight}>
-            {intl.formatMessage(messages.contractDates, { startDate: contractStartDate, endDate: contractEndDate })}
+            {intl.formatMessage(messages.contractDate, {
+              dateRange: intl.formatDateTimeRange(contractStartDate, contractEndDate, {
+                month: 'long',
+                year: 'numeric',
+              }),
+            })}
           </div>
           <div style={styles.headerContentRight}>
-            {intl.formatMessage(messages.consumptionDate, { date: consumptionDate })}
+            {intl.formatMessage(messages.consumptionDate, {
+              date: intl.formatDate(consumptionDate, {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              }),
+            })}
           </div>
         </div>
       </div>

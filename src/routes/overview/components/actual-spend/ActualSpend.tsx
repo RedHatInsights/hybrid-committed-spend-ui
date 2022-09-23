@@ -2,7 +2,6 @@ import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-ico
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
-import { parseISO } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -63,11 +62,10 @@ const ActualSpendBase: React.FC<ActualSpendProps> = ({
     actualSpend = formatCurrency(817945.1, 'USD');
     percent = formatPercentage(10);
 
-    const startDate = new Date(parseISO('2021-08-01T23:59:59z'));
-    const endDate = new Date(parseISO('2022-02-01T23:59:59z'));
+    const startDate = new Date('2021-12-01T23:59:59z');
+    const endDate = new Date('2022-08-01T23:59:59z');
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
-      day: 'numeric',
       month: 'long',
       year: 'numeric',
     });

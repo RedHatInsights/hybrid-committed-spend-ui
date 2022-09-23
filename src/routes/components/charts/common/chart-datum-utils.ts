@@ -162,9 +162,9 @@ export function padChartDatums({ datums, startDate = getYear(1), endDate = getTo
     } else {
       result.push(
         createReportDatum({
-          value: null,
-          computedItem: { date },
+          computedItem: { date, label: date },
           reportItemValue: null,
+          value: null,
         })
       );
     }
