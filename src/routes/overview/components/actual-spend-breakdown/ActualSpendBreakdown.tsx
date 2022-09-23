@@ -1,27 +1,29 @@
-import { getQuery, parseQuery, Query } from 'api/queries/query';
+import { getQuery } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Perspective } from 'routes/overview/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { createMapStateToProps, FetchStatus } from 'store/common';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 
-import ActualSpendBreakdownChart from './ActualSpendBreakdownChart';
+import { ActualSpendBreakdownChart } from './ActualSpendBreakdownChart';
+import { affiliatesData } from './data/affiliatesData';
+import { productsData } from './data/productsData';
+import { sourcesData } from './data/sourcesData';
 
 interface ActualSpendBreakdownOwnProps {
   widgetId: number;
 }
 
 interface ActualSpendBreakdownStateProps {
-  query: Query;
-  queryString: string;
   report?: Report;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
@@ -39,7 +41,7 @@ export type ActualSpendBreakdownProps = ActualSpendBreakdownStateProps &
   WrappedComponentProps;
 
 // eslint-disable-next-line no-shadow
-export enum DataType {
+export enum ComparisonType {
   cumulative = 'cumulative',
   monthly = 'monthly',
 }
@@ -52,8 +54,8 @@ export enum PerspectiveType {
 }
 
 const dataTypeOptions = [
-  { label: messages.actualSpendBreakdownDataValues, value: DataType.monthly },
-  { label: messages.actualSpendBreakdownDataValues, value: DataType.cumulative },
+  { label: messages.actualSpendBreakdownDataValues, value: ComparisonType.monthly },
+  { label: messages.actualSpendBreakdownDataValues, value: ComparisonType.cumulative },
 ];
 
 const perspectiveOptions = [
@@ -62,20 +64,11 @@ const perspectiveOptions = [
   { label: messages.actualSpendBreakdownPerspectiveValues, value: PerspectiveType.products },
 ];
 
-const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
-  intl,
-  fetchReport,
-  queryString,
-  reportFetchStatus,
-  widget,
-  widgetId,
-}) => {
-  useMemo(() => {
-    fetchReport(widget.reportPathsType, widget.reportType, queryString);
-  }, [queryString]);
+const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, widgetId }) => {
+  const [comparison, setComparison] = useState(ComparisonType.monthly);
+  const [perspective, setPerspective] = useState(PerspectiveType.sources);
 
-  const [dataType, setDataType] = useState(DataType.monthly);
-  const [perspectiveType, setPerspectiveType] = useState(PerspectiveType.sources);
+  const { report, reportFetchStatus, widget } = mapToProps(perspective, widgetId);
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -87,64 +80,61 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
     return null;
   };
 
-  const handleOnDataTypeSelected = value => {
-    setDataType(value);
+  const handleOnComparisonSelected = value => {
+    setComparison(value);
   };
 
   const handleOnPerspectiveSelected = value => {
-    setPerspectiveType(value);
+    setPerspective(value);
   };
 
   return (
     <ReportSummary detailsLink={getDetailsLink()} fetchStatus={reportFetchStatus} title={widget.title}>
-      <Perspective
-        currentItem={perspectiveType}
-        onSelected={handleOnPerspectiveSelected}
-        options={perspectiveOptions}
-      />
-      <Perspective currentItem={dataType} onSelected={handleOnDataTypeSelected} options={dataTypeOptions} />
+      <Perspective currentItem={perspective} onSelected={handleOnPerspectiveSelected} options={perspectiveOptions} />
+      <Perspective currentItem={comparison} onSelected={handleOnComparisonSelected} options={dataTypeOptions} />
       <ActualSpendBreakdownChart
-        isCumulative={dataType === DataType.cumulative}
-        perspective={perspectiveType}
-        widgetId={widgetId}
+        chartName={widget.chartName}
+        isCumulative={comparison === ComparisonType.cumulative}
+        perspective={perspective}
+        report={report}
       />
     </ReportSummary>
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<ActualSpendBreakdownOwnProps, ActualSpendBreakdownStateProps>(
-  (state, { widgetId }) => {
-    const widget = dashboardSelectors.selectWidget(state, widgetId);
+const mapToProps = (perspective, widgetId): ActualSpendBreakdownStateProps => {
+  const queryString = ''; // Todo: add query string for API when available
+  const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
-    // TBD...
-    const queryFromRoute = parseQuery<Query>(location.search);
-    const query = {
-      filter: {
-        ...queryFromRoute.filter,
-      },
-    };
+  const report = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
+    switch (perspective) {
+      case PerspectiveType.affiliates: // affiliates
+        return affiliatesData;
+      case PerspectiveType.products: // product
+        return productsData as any;
+      case PerspectiveType.sources: // sources
+      default:
+        return sourcesData;
+    }
+  });
+  const reportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, queryString)
+  );
+  const reportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString)
+  );
 
-    const queryString = getQuery(query);
-    const reportFetchStatus = reportSelectors.selectReportFetchStatus(
-      state,
-      widget.reportPathsType,
-      widget.reportType,
-      queryString
-    );
+  useMemo(() => {
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
+  }, [queryString]);
 
-    return {
-      queryString,
-      query,
-      reportFetchStatus,
-      widget,
-    };
-  }
-);
-
-const mapDispatchToProps: ActualSpendBreakdownDispatchProps = {
-  fetchReport: reportActions.fetchReport,
+  return {
+    report,
+    reportFetchStatus,
+    reportError,
+    widget,
+  };
 };
 
-const ActualSpendBreakdown = withRouter(ActualSpendBreakdownBase);
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ActualSpendBreakdown));
+export default injectIntl(withRouter(ActualSpendBreakdownBase));

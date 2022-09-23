@@ -1,14 +1,13 @@
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { getQuery, parseQuery, Query } from 'api/queries';
-import { Report, ReportPathsType, ReportType } from 'api/reports';
-import { AxiosError } from 'axios';
+import { ReportPathsType, ReportType } from 'api/reports';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
-import { createMapStateToProps, FetchStatus } from 'store/common';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 
 import { styles } from './overview.styles';
@@ -17,31 +16,10 @@ interface OverviewHeaderOwnProps {
   // TBD...
 }
 
-interface OverviewHeaderStateProps {
-  query: Query;
-  queryString: string;
-  report?: Report;
-  reportError?: AxiosError;
-  reportFetchStatus?: FetchStatus;
-}
+type OverviewHeaderProps = OverviewHeaderOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-interface OverviewHeaderDispatchProps {
-  fetchReport: typeof reportActions.fetchReport;
-}
-
-type OverviewHeaderProps = OverviewHeaderOwnProps &
-  OverviewHeaderStateProps &
-  OverviewHeaderDispatchProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
-
-const reportPathsType = ReportPathsType.billing;
-const reportType = ReportType.cost;
-
-const OverviewHeaderBase: React.FC<OverviewHeaderProps> = ({ fetchReport, intl, queryString, report }) => {
-  useMemo(() => {
-    fetchReport(reportPathsType, reportType, queryString);
-  }, [queryString]);
+const OverviewHeader: React.FC<OverviewHeaderProps> = ({ intl }) => {
+  const { report, reportFetchStatus } = mapToProps();
 
   let accountName: string | React.ReactNode = <EmptyValueState />;
   let accountNumber: string | React.ReactNode = <EmptyValueState />;
@@ -62,62 +40,65 @@ const OverviewHeaderBase: React.FC<OverviewHeaderProps> = ({ fetchReport, intl, 
     <PageHeader>
       <div style={styles.headerContent}>
         <PageHeaderTitle title={intl.formatMessage(messages.overviewTitle)} />
-        <div>
-          <div style={styles.headerContentRight}>
-            {intl.formatMessage(messages.accountName, { value: accountName })}
+        {reportFetchStatus !== FetchStatus.inProgress && (
+          <div>
+            <div style={styles.headerContentRight}>
+              {intl.formatMessage(messages.accountName, { value: accountName })}
+            </div>
+            <div style={styles.headerContentRight}>
+              {intl.formatMessage(messages.accountNumber, { value: accountNumber })}
+            </div>
+            <div style={styles.headerContentRight}>
+              {intl.formatMessage(messages.contractDate, {
+                dateRange: intl.formatDateTimeRange(contractStartDate, contractEndDate, {
+                  month: 'long',
+                  year: 'numeric',
+                }),
+              })}
+            </div>
+            <div style={styles.headerContentRight}>
+              {intl.formatMessage(messages.consumptionDate, {
+                date: intl.formatDate(consumptionDate, {
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                }),
+              })}
+            </div>
           </div>
-          <div style={styles.headerContentRight}>
-            {intl.formatMessage(messages.accountNumber, { value: accountNumber })}
-          </div>
-          <div style={styles.headerContentRight}>
-            {intl.formatMessage(messages.contractDate, {
-              dateRange: intl.formatDateTimeRange(contractStartDate, contractEndDate, {
-                month: 'long',
-                year: 'numeric',
-              }),
-            })}
-          </div>
-          <div style={styles.headerContentRight}>
-            {intl.formatMessage(messages.consumptionDate, {
-              date: intl.formatDate(consumptionDate, {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              }),
-            })}
-          </div>
-        </div>
+        )}
       </div>
     </PageHeader>
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<OverviewHeaderOwnProps, OverviewHeaderStateProps>((state, props) => {
-  // TBD...
-  const queryFromRoute = parseQuery<Query>(location.search);
-  const query = {
-    filter: {
-      ...queryFromRoute.filter,
-    },
-  };
-  const queryString = getQuery(query);
-  const report = reportSelectors.selectReport(state, reportPathsType, reportType, queryString);
-  const reportError = reportSelectors.selectReportError(state, reportPathsType, reportType, queryString);
-  const reportFetchStatus = reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString);
+const mapToProps = () => {
+  const queryString = ''; // Todo: add query string for API when available
+  const reportPathsType = ReportPathsType.billing;
+  const reportType = ReportType.cost;
+  const report = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, reportPathsType, reportType, queryString)
+    return {
+      meta: {
+        total: {
+          value: 0,
+          units: 'USD',
+        },
+      },
+    };
+  });
+  const reportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString)
+  );
+
+  useMemo(() => {
+    reportActions.fetchReport(reportPathsType, reportType, queryString);
+  }, [queryString]);
 
   return {
-    query,
-    queryString,
     report,
-    reportError,
     reportFetchStatus,
   };
-});
-
-const mapDispatchToProps: OverviewHeaderDispatchProps = {
-  fetchReport: reportActions.fetchReport,
 };
 
-const OverviewHeader = withRouter(OverviewHeaderBase);
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(OverviewHeader));
+export default injectIntl(withRouter(OverviewHeader));
