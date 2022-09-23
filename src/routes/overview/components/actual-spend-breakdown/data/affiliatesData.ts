@@ -1,6 +1,6 @@
 // https://console.stage.redhat.com/api/cost-management/v1/reports/openshift/costs/?filter[limit]=3&group_by[project]=*&start_date=2022-06-23&end_date=2022-09-21&filter[resolution]=monthly
 
-export const currentData = {
+export const affiliatesData = {
   meta: {
     count: 4,
     others: 22,
@@ -17,7 +17,7 @@ export const currentData = {
     total: {
       infrastructure: {
         raw: {
-          value: 33658.682170681524,
+          value: 133658.682170681524,
           units: 'USD',
         },
         markup: {
@@ -25,15 +25,15 @@ export const currentData = {
           units: 'USD',
         },
         usage: {
-          value: 126159.64748172043,
+          value: 1126159.64748172043,
           units: 'USD',
         },
         distributed: {
-          value: 3600,
+          value: 13600,
           units: 'USD',
         },
         total: {
-          value: 163418.32965240197,
+          value: 1163418.32965240197,
           units: 'USD',
         },
       },
@@ -47,21 +47,21 @@ export const currentData = {
           units: 'USD',
         },
         usage: {
-          value: 87187.64,
+          value: 187187.64,
           units: 'USD',
         },
         distributed: {
-          value: 15000,
+          value: 115000,
           units: 'USD',
         },
         total: {
-          value: 102187.64,
+          value: 1102187.64,
           units: 'USD',
         },
       },
       cost: {
         raw: {
-          value: 33658.682170681524,
+          value: 133658.682170681524,
           units: 'USD',
         },
         markup: {
@@ -69,15 +69,15 @@ export const currentData = {
           units: 'USD',
         },
         usage: {
-          value: 213347.28748172044,
+          value: 1213347.28748172044,
           units: 'USD',
         },
         distributed: {
-          value: 18600,
+          value: 118600,
           units: 'USD',
         },
         total: {
-          value: 265605.969652402,
+          value: 1265605.969652402,
           units: 'USD',
         },
       },
@@ -95,16 +95,16 @@ export const currentData = {
       date: '2021-10',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2021-10',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 1896.9065085362465,
+                  value: 11896.9065085362465,
                   units: 'USD',
                 },
                 markup: {
@@ -120,7 +120,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1896.9065085362465,
+                  value: 11896.9065085362465,
                   units: 'USD',
                 },
               },
@@ -134,7 +134,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 5664,
+                  value: 15664,
                   units: 'USD',
                 },
                 distributed: {
@@ -142,13 +142,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 5664,
+                  value: 15664,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1896.9065085362465,
+                  value: 11896.9065085362465,
                   units: 'USD',
                 },
                 markup: {
@@ -156,7 +156,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 5664,
+                  value: 15664,
                   units: 'USD',
                 },
                 distributed: {
@@ -164,7 +164,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 7560.906508536246,
+                  value: 17560.906508536246,
                   units: 'USD',
                 },
               },
@@ -172,11 +172,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2021-10',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -191,7 +191,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 1228.540293096156,
+                  value: 11228.540293096156,
                   units: 'USD',
                 },
                 markup: {
@@ -199,7 +199,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2412.27805,
+                  value: 12412.27805,
                   units: 'USD',
                 },
                 distributed: {
@@ -207,7 +207,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3640.818343096156,
+                  value: 13640.818343096156,
                   units: 'USD',
                 },
               },
@@ -221,21 +221,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1645.5,
+                  value: 11645.5,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 303.02220048269066,
+                  value: 1303.02220048269066,
                   units: 'USD',
                 },
                 total: {
-                  value: 1948.5222004826906,
+                  value: 11948.5222004826906,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1228.540293096156,
+                  value: 11228.540293096156,
                   units: 'USD',
                 },
                 markup: {
@@ -243,15 +243,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4057.77805,
+                  value: 14057.77805,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 303.02220048269066,
+                  value: 1303.02220048269066,
                   units: 'USD',
                 },
                 total: {
-                  value: 5589.340543578846,
+                  value: 15589.340543578846,
                   units: 'USD',
                 },
               },
@@ -259,16 +259,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2021-10',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 875.1810565474063,
+                  value: 1875.1810565474063,
                   units: 'USD',
                 },
                 markup: {
@@ -284,7 +284,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 875.1810565474063,
+                  value: 1875.1810565474063,
                   units: 'USD',
                 },
               },
@@ -298,7 +298,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3302.79,
+                  value: 13302.79,
                   units: 'USD',
                 },
                 distributed: {
@@ -306,13 +306,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3302.79,
+                  value: 13302.79,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 875.1810565474063,
+                  value: 1875.1810565474063,
                   units: 'USD',
                 },
                 markup: {
@@ -320,7 +320,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3302.79,
+                  value: 13302.79,
                   units: 'USD',
                 },
                 distributed: {
@@ -328,7 +328,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4177.971056547406,
+                  value: 14177.971056547406,
                   units: 'USD',
                 },
               },
@@ -355,7 +355,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 2176.0068953291475,
+                  value: 12176.0068953291475,
                   units: 'USD',
                 },
                 markup: {
@@ -363,15 +363,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 31359.924316666667,
+                  value: 131359.924316666667,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 34735.93121199581,
+                  value: 134735.93121199581,
                   units: 'USD',
                 },
               },
@@ -385,21 +385,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 8261.69,
+                  value: 18261.69,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4696.977799517309,
+                  value: 14696.977799517309,
                   units: 'USD',
                 },
                 total: {
-                  value: 12958.667799517309,
+                  value: 112958.667799517309,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 2176.0068953291475,
+                  value: 12176.0068953291475,
                   units: 'USD',
                 },
                 markup: {
@@ -407,15 +407,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 39621.614316666666,
+                  value: 139621.614316666666,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5896.977799517309,
+                  value: 15896.977799517309,
                   units: 'USD',
                 },
                 total: {
-                  value: 47694.59901151312,
+                  value: 147694.59901151312,
                   units: 'USD',
                 },
               },
@@ -428,16 +428,16 @@ export const currentData = {
       date: '2021-11',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2021-11',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
                 markup: {
@@ -453,7 +453,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
               },
@@ -467,7 +467,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
                 distributed: {
@@ -475,13 +475,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
                 markup: {
@@ -489,7 +489,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
                 distributed: {
@@ -497,7 +497,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 10528.200014032687,
+                  value: 110528.200014032687,
                   units: 'USD',
                 },
               },
@@ -505,11 +505,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2021-11',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -524,7 +524,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 797.1670545550679,
+                  value: 1797.1670545550679,
                   units: 'USD',
                 },
                 markup: {
@@ -532,7 +532,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2293.9787,
+                  value: 12293.9787,
                   units: 'USD',
                 },
                 distributed: {
@@ -540,7 +540,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3091.145754555068,
+                  value: 13091.145754555068,
                   units: 'USD',
                 },
               },
@@ -554,21 +554,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2064.61,
+                  value: 12064.61,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 394.13103598871703,
+                  value: 1394.13103598871703,
                   units: 'USD',
                 },
                 total: {
-                  value: 2458.741035988717,
+                  value: 12458.741035988717,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 797.1670545550679,
+                  value: 1797.1670545550679,
                   units: 'USD',
                 },
                 markup: {
@@ -576,15 +576,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4358.5887,
+                  value: 14358.5887,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 394.13103598871703,
+                  value: 1394.13103598871703,
                   units: 'USD',
                 },
                 total: {
-                  value: 5549.886790543785,
+                  value: 15549.886790543785,
                   units: 'USD',
                 },
               },
@@ -592,16 +592,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2021-11',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
                 markup: {
@@ -617,7 +617,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
               },
@@ -631,7 +631,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
                 distributed: {
@@ -639,13 +639,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
                 markup: {
@@ -653,7 +653,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
                 distributed: {
@@ -661,7 +661,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 5755.951524760065,
+                  value: 15755.951524760065,
                   units: 'USD',
                 },
               },
@@ -688,7 +688,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 4035.5726649186668,
+                  value: 14035.5726649186668,
                   units: 'USD',
                 },
                 markup: {
@@ -696,15 +696,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 29821.9931,
+                  value: 129821.9931,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 35057.56576491867,
+                  value: 135057.56576491867,
                   units: 'USD',
                 },
               },
@@ -718,21 +718,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10374.94,
+                  value: 110374.94,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4605.868964011283,
+                  value: 14605.868964011283,
                   units: 'USD',
                 },
                 total: {
-                  value: 14980.808964011283,
+                  value: 114980.808964011283,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 4035.5726649186668,
+                  value: 14035.5726649186668,
                   units: 'USD',
                 },
                 markup: {
@@ -740,15 +740,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 40196.9331,
+                  value: 140196.9331,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5805.868964011283,
+                  value: 15805.868964011283,
                   units: 'USD',
                 },
                 total: {
-                  value: 50038.37472892995,
+                  value: 150038.37472892995,
                   units: 'USD',
                 },
               },
@@ -761,16 +761,16 @@ export const currentData = {
       date: '2021-12',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2021-12',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
                 markup: {
@@ -786,7 +786,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
               },
@@ -800,7 +800,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
                 distributed: {
@@ -808,13 +808,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
                 markup: {
@@ -822,7 +822,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
                 distributed: {
@@ -830,7 +830,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 16462.4570484137,
+                  value: 116462.4570484137,
                   units: 'USD',
                 },
               },
@@ -838,11 +838,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2021-12',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -857,7 +857,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 1329.1420881835122,
+                  value: 11329.1420881835122,
                   units: 'USD',
                 },
                 markup: {
@@ -865,7 +865,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3358.67285,
+                  value: 13358.67285,
                   units: 'USD',
                 },
                 distributed: {
@@ -873,7 +873,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4687.814938183512,
+                  value: 14687.814938183512,
                   units: 'USD',
                 },
               },
@@ -887,21 +887,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3068.53,
+                  value: 13068.53,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 374.20754778865626,
+                  value: 1374.20754778865626,
                   units: 'USD',
                 },
                 total: {
-                  value: 3442.7375477886562,
+                  value: 13442.7375477886562,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1329.1420881835122,
+                  value: 11329.1420881835122,
                   units: 'USD',
                 },
                 markup: {
@@ -909,15 +909,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6427.20285,
+                  value: 16427.20285,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 374.20754778865626,
+                  value: 1374.20754778865626,
                   units: 'USD',
                 },
                 total: {
-                  value: 8130.552485972168,
+                  value: 18130.552485972168,
                   units: 'USD',
                 },
               },
@@ -925,16 +925,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2021-12',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
                 markup: {
@@ -950,7 +950,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
               },
@@ -964,7 +964,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
                 distributed: {
@@ -972,13 +972,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
                 markup: {
@@ -986,7 +986,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
                 distributed: {
@@ -994,7 +994,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 8823.411686451038,
+                  value: 18823.411686451038,
                   units: 'USD',
                 },
               },
@@ -1021,7 +1021,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 6766.332394984845,
+                  value: 16766.332394984845,
                   units: 'USD',
                 },
                 markup: {
@@ -1029,15 +1029,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 43663.150598387096,
+                  value: 143663.150598387096,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 51629.482993371945,
+                  value: 151629.482993371945,
                   units: 'USD',
                 },
               },
@@ -1051,21 +1051,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 15234.56,
+                  value: 115234.56,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4625.7924522113435,
+                  value: 14625.7924522113435,
                   units: 'USD',
                 },
                 total: {
-                  value: 19860.352452211344,
+                  value: 119860.352452211344,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 6766.332394984845,
+                  value: 16766.332394984845,
                   units: 'USD',
                 },
                 markup: {
@@ -1073,15 +1073,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 58897.71059838709,
+                  value: 158897.71059838709,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5825.7924522113435,
+                  value: 15825.7924522113435,
                   units: 'USD',
                 },
                 total: {
-                  value: 71489.83544558329,
+                  value: 171489.83544558329,
                   units: 'USD',
                 },
               },
@@ -1095,16 +1095,16 @@ export const currentData = {
       date: '2022-01',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-01',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
                 markup: {
@@ -1120,7 +1120,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
               },
@@ -1134,7 +1134,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
                 distributed: {
@@ -1142,13 +1142,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
                 markup: {
@@ -1156,7 +1156,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
                 distributed: {
@@ -1164,7 +1164,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 16462.4570484137,
+                  value: 116462.4570484137,
                   units: 'USD',
                 },
               },
@@ -1172,11 +1172,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-01',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -1191,7 +1191,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 1329.1420881835122,
+                  value: 11329.1420881835122,
                   units: 'USD',
                 },
                 markup: {
@@ -1199,7 +1199,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3358.67285,
+                  value: 13358.67285,
                   units: 'USD',
                 },
                 distributed: {
@@ -1207,7 +1207,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4687.814938183512,
+                  value: 14687.814938183512,
                   units: 'USD',
                 },
               },
@@ -1221,21 +1221,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3068.53,
+                  value: 13068.53,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 374.20754778865626,
+                  value: 1374.20754778865626,
                   units: 'USD',
                 },
                 total: {
-                  value: 3442.7375477886562,
+                  value: 13442.7375477886562,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1329.1420881835122,
+                  value: 11329.1420881835122,
                   units: 'USD',
                 },
                 markup: {
@@ -1243,15 +1243,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6427.20285,
+                  value: 16427.20285,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 374.20754778865626,
+                  value: 1374.20754778865626,
                   units: 'USD',
                 },
                 total: {
-                  value: 8130.552485972168,
+                  value: 18130.552485972168,
                   units: 'USD',
                 },
               },
@@ -1259,16 +1259,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-01',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
                 markup: {
@@ -1284,7 +1284,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
               },
@@ -1298,7 +1298,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
                 distributed: {
@@ -1306,13 +1306,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
                 markup: {
@@ -1320,7 +1320,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
                 distributed: {
@@ -1328,7 +1328,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 8823.411686451038,
+                  value: 18823.411686451038,
                   units: 'USD',
                 },
               },
@@ -1355,7 +1355,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 6766.332394984845,
+                  value: 16766.332394984845,
                   units: 'USD',
                 },
                 markup: {
@@ -1363,15 +1363,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 43663.150598387096,
+                  value: 143663.150598387096,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 51629.482993371945,
+                  value: 151629.482993371945,
                   units: 'USD',
                 },
               },
@@ -1385,21 +1385,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 15234.56,
+                  value: 115234.56,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4625.7924522113435,
+                  value: 14625.7924522113435,
                   units: 'USD',
                 },
                 total: {
-                  value: 19860.352452211344,
+                  value: 119860.352452211344,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 6766.332394984845,
+                  value: 16766.332394984845,
                   units: 'USD',
                 },
                 markup: {
@@ -1407,15 +1407,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 58897.71059838709,
+                  value: 158897.71059838709,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5825.7924522113435,
+                  value: 15825.7924522113435,
                   units: 'USD',
                 },
                 total: {
-                  value: 71489.83544558329,
+                  value: 171489.83544558329,
                   units: 'USD',
                 },
               },
@@ -1428,16 +1428,16 @@ export const currentData = {
       date: '2022-02',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-02',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 1896.9065085362465,
+                  value: 11896.9065085362465,
                   units: 'USD',
                 },
                 markup: {
@@ -1453,7 +1453,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1896.9065085362465,
+                  value: 11896.9065085362465,
                   units: 'USD',
                 },
               },
@@ -1467,7 +1467,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 5664,
+                  value: 15664,
                   units: 'USD',
                 },
                 distributed: {
@@ -1475,13 +1475,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 5664,
+                  value: 15664,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1896.9065085362465,
+                  value: 11896.9065085362465,
                   units: 'USD',
                 },
                 markup: {
@@ -1489,7 +1489,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 5664,
+                  value: 15664,
                   units: 'USD',
                 },
                 distributed: {
@@ -1497,7 +1497,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 7560.906508536246,
+                  value: 17560.906508536246,
                   units: 'USD',
                 },
               },
@@ -1505,11 +1505,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-02',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -1524,7 +1524,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 1228.540293096156,
+                  value: 11228.540293096156,
                   units: 'USD',
                 },
                 markup: {
@@ -1532,7 +1532,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2412.27805,
+                  value: 12412.27805,
                   units: 'USD',
                 },
                 distributed: {
@@ -1540,7 +1540,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3640.818343096156,
+                  value: 13640.818343096156,
                   units: 'USD',
                 },
               },
@@ -1554,21 +1554,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1645.5,
+                  value: 11645.5,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 303.02220048269066,
+                  value: 1303.02220048269066,
                   units: 'USD',
                 },
                 total: {
-                  value: 1948.5222004826906,
+                  value: 11948.5222004826906,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1228.540293096156,
+                  value: 11228.540293096156,
                   units: 'USD',
                 },
                 markup: {
@@ -1576,15 +1576,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4057.77805,
+                  value: 14057.77805,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 303.02220048269066,
+                  value: 1303.02220048269066,
                   units: 'USD',
                 },
                 total: {
-                  value: 5589.340543578846,
+                  value: 15589.340543578846,
                   units: 'USD',
                 },
               },
@@ -1592,16 +1592,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-02',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 875.1810565474063,
+                  value: 1875.1810565474063,
                   units: 'USD',
                 },
                 markup: {
@@ -1617,7 +1617,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 875.1810565474063,
+                  value: 1875.1810565474063,
                   units: 'USD',
                 },
               },
@@ -1631,7 +1631,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3302.79,
+                  value: 13302.79,
                   units: 'USD',
                 },
                 distributed: {
@@ -1639,13 +1639,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3302.79,
+                  value: 13302.79,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 875.1810565474063,
+                  value: 1875.1810565474063,
                   units: 'USD',
                 },
                 markup: {
@@ -1653,7 +1653,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3302.79,
+                  value: 13302.79,
                   units: 'USD',
                 },
                 distributed: {
@@ -1661,7 +1661,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4177.971056547406,
+                  value: 14177.971056547406,
                   units: 'USD',
                 },
               },
@@ -1688,7 +1688,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 2176.0068953291475,
+                  value: 12176.0068953291475,
                   units: 'USD',
                 },
                 markup: {
@@ -1696,15 +1696,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 31359.924316666667,
+                  value: 131359.924316666667,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 34735.93121199581,
+                  value: 134735.93121199581,
                   units: 'USD',
                 },
               },
@@ -1718,21 +1718,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 8261.69,
+                  value: 18261.69,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4696.977799517309,
+                  value: 14696.977799517309,
                   units: 'USD',
                 },
                 total: {
-                  value: 12958.667799517309,
+                  value: 112958.667799517309,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 2176.0068953291475,
+                  value: 12176.0068953291475,
                   units: 'USD',
                 },
                 markup: {
@@ -1740,15 +1740,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 39621.614316666666,
+                  value: 139621.614316666666,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5896.977799517309,
+                  value: 15896.977799517309,
                   units: 'USD',
                 },
                 total: {
-                  value: 47694.59901151312,
+                  value: 147694.59901151312,
                   units: 'USD',
                 },
               },
@@ -1761,16 +1761,16 @@ export const currentData = {
       date: '2022-03',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-03',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
                 markup: {
@@ -1786,7 +1786,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
               },
@@ -1800,7 +1800,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
                 distributed: {
@@ -1808,13 +1808,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
                 markup: {
@@ -1822,7 +1822,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
                 distributed: {
@@ -1830,7 +1830,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 10528.200014032687,
+                  value: 110528.200014032687,
                   units: 'USD',
                 },
               },
@@ -1838,11 +1838,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-03',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -1857,7 +1857,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 797.1670545550679,
+                  value: 1797.1670545550679,
                   units: 'USD',
                 },
                 markup: {
@@ -1865,7 +1865,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2293.9787,
+                  value: 12293.9787,
                   units: 'USD',
                 },
                 distributed: {
@@ -1873,7 +1873,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3091.145754555068,
+                  value: 13091.145754555068,
                   units: 'USD',
                 },
               },
@@ -1887,21 +1887,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2064.61,
+                  value: 12064.61,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 394.13103598871703,
+                  value: 1394.13103598871703,
                   units: 'USD',
                 },
                 total: {
-                  value: 2458.741035988717,
+                  value: 12458.741035988717,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 797.1670545550679,
+                  value: 1797.1670545550679,
                   units: 'USD',
                 },
                 markup: {
@@ -1909,15 +1909,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4358.5887,
+                  value: 14358.5887,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 394.13103598871703,
+                  value: 1394.13103598871703,
                   units: 'USD',
                 },
                 total: {
-                  value: 5549.886790543785,
+                  value: 15549.886790543785,
                   units: 'USD',
                 },
               },
@@ -1925,16 +1925,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-03',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
                 markup: {
@@ -1950,7 +1950,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
               },
@@ -1964,7 +1964,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
                 distributed: {
@@ -1972,13 +1972,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
                 markup: {
@@ -1986,7 +1986,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
                 distributed: {
@@ -1994,7 +1994,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 5755.951524760065,
+                  value: 15755.951524760065,
                   units: 'USD',
                 },
               },
@@ -2021,7 +2021,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 4035.5726649186668,
+                  value: 14035.5726649186668,
                   units: 'USD',
                 },
                 markup: {
@@ -2029,15 +2029,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 29821.9931,
+                  value: 129821.9931,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 35057.56576491867,
+                  value: 135057.56576491867,
                   units: 'USD',
                 },
               },
@@ -2051,21 +2051,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10374.94,
+                  value: 110374.94,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4605.868964011283,
+                  value: 14605.868964011283,
                   units: 'USD',
                 },
                 total: {
-                  value: 14980.808964011283,
+                  value: 114980.808964011283,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 4035.5726649186668,
+                  value: 14035.5726649186668,
                   units: 'USD',
                 },
                 markup: {
@@ -2073,15 +2073,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 40196.9331,
+                  value: 140196.9331,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5805.868964011283,
+                  value: 15805.868964011283,
                   units: 'USD',
                 },
                 total: {
-                  value: 50038.37472892995,
+                  value: 150038.37472892995,
                   units: 'USD',
                 },
               },
@@ -2094,16 +2094,16 @@ export const currentData = {
       date: '2022-04',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-04',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 939.9514813845437,
+                  value: 1939.9514813845437,
                   units: 'USD',
                 },
                 markup: {
@@ -2119,7 +2119,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 939.9514813845437,
+                  value: 1939.9514813845437,
                   units: 'USD',
                 },
               },
@@ -2133,7 +2133,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 8944,
+                  value: 18944,
                   units: 'USD',
                 },
                 distributed: {
@@ -2141,13 +2141,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2944,
+                  value: 12944,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 939.9514813845437,
+                  value: 1939.9514813845437,
                   units: 'USD',
                 },
                 markup: {
@@ -2155,7 +2155,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 8944,
+                  value: 18944,
                   units: 'USD',
                 },
                 distributed: {
@@ -2163,7 +2163,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3883.9514813845435,
+                  value: 13883.9514813845435,
                   units: 'USD',
                 },
               },
@@ -2171,11 +2171,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-04',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -2190,7 +2190,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 56.11350541913017,
+                  value: 156.11350541913017,
                   units: 'USD',
                 },
                 markup: {
@@ -2198,7 +2198,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1546.3948,
+                  value: 11546.3948,
                   units: 'USD',
                 },
                 distributed: {
@@ -2206,7 +2206,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1596.50830541913,
+                  value: 11596.50830541913,
                   units: 'USD',
                 },
               },
@@ -2220,7 +2220,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1436.54,
+                  value: 11436.54,
                   units: 'USD',
                 },
                 distributed: {
@@ -2228,13 +2228,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1436.54,
+                  value: 11436.54,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 56.11350541913017,
+                  value: 156.11350541913017,
                   units: 'USD',
                 },
                 markup: {
@@ -2242,7 +2242,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2382.9348,
+                  value: 12382.9348,
                   units: 'USD',
                 },
                 distributed: {
@@ -2250,7 +2250,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2433.04830541913,
+                  value: 12433.04830541913,
                   units: 'USD',
                 },
               },
@@ -2258,16 +2258,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-04',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 179.70350866113299,
+                  value: 1179.70350866113299,
                   units: 'USD',
                 },
                 markup: {
@@ -2283,7 +2283,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 179.70350866113299,
+                  value: 1179.70350866113299,
                   units: 'USD',
                 },
               },
@@ -2297,7 +2297,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2312.64,
+                  value: 12312.64,
                   units: 'USD',
                 },
                 distributed: {
@@ -2305,13 +2305,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2312.64,
+                  value: 12312.64,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 179.70350866113299,
+                  value: 1179.70350866113299,
                   units: 'USD',
                 },
                 markup: {
@@ -2319,7 +2319,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2312.64,
+                  value: 12312.64,
                   units: 'USD',
                 },
                 distributed: {
@@ -2327,7 +2327,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2432.343508661133,
+                  value: 12432.343508661133,
                   units: 'USD',
                 },
               },
@@ -2354,7 +2354,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 883.3144454081793,
+                  value: 1883.3144454081793,
                   units: 'USD',
                 },
                 markup: {
@@ -2362,7 +2362,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 18303.2550666666,
+                  value: 118303.2550666666,
                   units: 'USD',
                 },
                 distributed: {
@@ -2370,7 +2370,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 18586.569512074846,
+                  value: 118586.569512074846,
                   units: 'USD',
                 },
               },
@@ -2384,7 +2384,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10268.57,
+                  value: 110268.57,
                   units: 'USD',
                 },
                 distributed: {
@@ -2392,13 +2392,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 10268.57,
+                  value: 110268.57,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 883.3144454081793,
+                  value: 1883.3144454081793,
                   units: 'USD',
                 },
                 markup: {
@@ -2406,7 +2406,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 22571.825066666668,
+                  value: 122571.825066666668,
                   units: 'USD',
                 },
                 distributed: {
@@ -2414,7 +2414,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 22855.139512074846,
+                  value: 122855.139512074846,
                   units: 'USD',
                 },
               },
@@ -2427,16 +2427,16 @@ export const currentData = {
       date: '2022-05',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-05',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 839.9514813845437,
+                  value: 1839.9514813845437,
                   units: 'USD',
                 },
                 markup: {
@@ -2452,7 +2452,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 839.9514813845437,
+                  value: 1839.9514813845437,
                   units: 'USD',
                 },
               },
@@ -2466,7 +2466,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 7944,
+                  value: 17944,
                   units: 'USD',
                 },
                 distributed: {
@@ -2474,13 +2474,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 7944,
+                  value: 17944,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 839.9514813845437,
+                  value: 1839.9514813845437,
                   units: 'USD',
                 },
                 markup: {
@@ -2488,7 +2488,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6944,
+                  value: 16944,
                   units: 'USD',
                 },
                 distributed: {
@@ -2496,7 +2496,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3683.9514813845435,
+                  value: 13683.9514813845435,
                   units: 'USD',
                 },
               },
@@ -2504,11 +2504,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-05',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -2523,7 +2523,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 54.11350541913017,
+                  value: 154.11350541913017,
                   units: 'USD',
                 },
                 markup: {
@@ -2531,7 +2531,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1346.3948,
+                  value: 11346.3948,
                   units: 'USD',
                 },
                 distributed: {
@@ -2539,7 +2539,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1396.50830541913,
+                  value: 11396.50830541913,
                   units: 'USD',
                 },
               },
@@ -2553,7 +2553,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1236.54,
+                  value: 11236.54,
                   units: 'USD',
                 },
                 distributed: {
@@ -2561,13 +2561,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1236.54,
+                  value: 11236.54,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 54.11350541913017,
+                  value: 154.11350541913017,
                   units: 'USD',
                 },
                 markup: {
@@ -2575,7 +2575,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2182.9348,
+                  value: 12182.9348,
                   units: 'USD',
                 },
                 distributed: {
@@ -2583,7 +2583,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2233.04830541913,
+                  value: 12233.04830541913,
                   units: 'USD',
                 },
               },
@@ -2591,16 +2591,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-05',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 149.70350866113299,
+                  value: 1149.70350866113299,
                   units: 'USD',
                 },
                 markup: {
@@ -2616,7 +2616,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 149.70350866113299,
+                  value: 1149.70350866113299,
                   units: 'USD',
                 },
               },
@@ -2630,7 +2630,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2012.64,
+                  value: 12012.64,
                   units: 'USD',
                 },
                 distributed: {
@@ -2638,13 +2638,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2012.64,
+                  value: 12012.64,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 149.70350866113299,
+                  value: 1149.70350866113299,
                   units: 'USD',
                 },
                 markup: {
@@ -2652,7 +2652,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2012.64,
+                  value: 12012.64,
                   units: 'USD',
                 },
                 distributed: {
@@ -2660,7 +2660,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2132.343508661133,
+                  value: 12132.343508661133,
                   units: 'USD',
                 },
               },
@@ -2687,7 +2687,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 285.3144454081793,
+                  value: 1285.3144454081793,
                   units: 'USD',
                 },
                 markup: {
@@ -2695,7 +2695,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 14303.255066666667,
+                  value: 114303.255066666667,
                   units: 'USD',
                 },
                 distributed: {
@@ -2703,7 +2703,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 14586.569512074846,
+                  value: 114586.569512074846,
                   units: 'USD',
                 },
               },
@@ -2717,7 +2717,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4468.57,
+                  value: 14468.57,
                   units: 'USD',
                 },
                 distributed: {
@@ -2725,13 +2725,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4468.57,
+                  value: 14468.57,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 303.3144454081793,
+                  value: 1303.3144454081793,
                   units: 'USD',
                 },
                 markup: {
@@ -2739,7 +2739,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 18571.825066666668,
+                  value: 118571.825066666668,
                   units: 'USD',
                 },
                 distributed: {
@@ -2747,7 +2747,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 18855.139512074846,
+                  value: 118855.139512074846,
                   units: 'USD',
                 },
               },
@@ -2760,16 +2760,16 @@ export const currentData = {
       date: '2022-06',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-06',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 339.9514813845437,
+                  value: 1339.9514813845437,
                   units: 'USD',
                 },
                 markup: {
@@ -2785,7 +2785,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 339.9514813845437,
+                  value: 1339.9514813845437,
                   units: 'USD',
                 },
               },
@@ -2799,7 +2799,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2944,
+                  value: 12944,
                   units: 'USD',
                 },
                 distributed: {
@@ -2807,13 +2807,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2944,
+                  value: 12944,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 339.9514813845437,
+                  value: 1339.9514813845437,
                   units: 'USD',
                 },
                 markup: {
@@ -2821,7 +2821,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2944,
+                  value: 12944,
                   units: 'USD',
                 },
                 distributed: {
@@ -2829,7 +2829,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3283.9514813845435,
+                  value: 13283.9514813845435,
                   units: 'USD',
                 },
               },
@@ -2837,11 +2837,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-06',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -2856,7 +2856,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 50.11350541913017,
+                  value: 150.11350541913017,
                   units: 'USD',
                 },
                 markup: {
@@ -2864,7 +2864,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 946.3948,
+                  value: 1946.3948,
                   units: 'USD',
                 },
                 distributed: {
@@ -2872,7 +2872,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 996.5083054191301,
+                  value: 1996.5083054191301,
                   units: 'USD',
                 },
               },
@@ -2886,7 +2886,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 836.54,
+                  value: 1836.54,
                   units: 'USD',
                 },
                 distributed: {
@@ -2894,13 +2894,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 836.54,
+                  value: 1836.54,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 50.11350541913017,
+                  value: 150.11350541913017,
                   units: 'USD',
                 },
                 markup: {
@@ -2908,7 +2908,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1782.9348,
+                  value: 11782.9348,
                   units: 'USD',
                 },
                 distributed: {
@@ -2916,7 +2916,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1833.0483054191302,
+                  value: 11833.0483054191302,
                   units: 'USD',
                 },
               },
@@ -2924,16 +2924,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-06',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 119.70350866113299,
+                  value: 1119.70350866113299,
                   units: 'USD',
                 },
                 markup: {
@@ -2949,7 +2949,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 119.70350866113299,
+                  value: 1119.70350866113299,
                   units: 'USD',
                 },
               },
@@ -2963,7 +2963,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1712.64,
+                  value: 11712.64,
                   units: 'USD',
                 },
                 distributed: {
@@ -2971,13 +2971,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1712.64,
+                  value: 11712.64,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 119.70350866113299,
+                  value: 1119.70350866113299,
                   units: 'USD',
                 },
                 markup: {
@@ -2985,7 +2985,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 1712.64,
+                  value: 11712.64,
                   units: 'USD',
                 },
                 distributed: {
@@ -2993,7 +2993,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1832.343508661133,
+                  value: 11832.343508661133,
                   units: 'USD',
                 },
               },
@@ -3020,7 +3020,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 283.3144454081793,
+                  value: 1283.3144454081793,
                   units: 'USD',
                 },
                 markup: {
@@ -3028,7 +3028,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 12303.255066666667,
+                  value: 112303.255066666667,
                   units: 'USD',
                 },
                 distributed: {
@@ -3036,7 +3036,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 12586.569512074846,
+                  value: 112586.569512074846,
                   units: 'USD',
                 },
               },
@@ -3050,7 +3050,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4268.57,
+                  value: 14268.57,
                   units: 'USD',
                 },
                 distributed: {
@@ -3058,13 +3058,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4268.57,
+                  value: 14268.57,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 283.3144454081793,
+                  value: 1283.3144454081793,
                   units: 'USD',
                 },
                 markup: {
@@ -3072,7 +3072,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 16571.825066666668,
+                  value: 116571.825066666668,
                   units: 'USD',
                 },
                 distributed: {
@@ -3080,7 +3080,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 16855.139512074846,
+                  value: 116855.139512074846,
                   units: 'USD',
                 },
               },
@@ -3093,16 +3093,16 @@ export const currentData = {
       date: '2022-07',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-07',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
                 markup: {
@@ -3118,7 +3118,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
               },
@@ -3132,7 +3132,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
                 distributed: {
@@ -3140,13 +3140,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 6014.457048413701,
+                  value: 16014.457048413701,
                   units: 'USD',
                 },
                 markup: {
@@ -3154,7 +3154,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10448,
+                  value: 110448,
                   units: 'USD',
                 },
                 distributed: {
@@ -3162,7 +3162,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 16462.4570484137,
+                  value: 116462.4570484137,
                   units: 'USD',
                 },
               },
@@ -3170,11 +3170,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-07',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -3189,7 +3189,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 1329.1420881835122,
+                  value: 11329.1420881835122,
                   units: 'USD',
                 },
                 markup: {
@@ -3197,7 +3197,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3358.67285,
+                  value: 13358.67285,
                   units: 'USD',
                 },
                 distributed: {
@@ -3205,7 +3205,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4687.814938183512,
+                  value: 14687.814938183512,
                   units: 'USD',
                 },
               },
@@ -3219,21 +3219,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 3068.53,
+                  value: 13068.53,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 374.20754778865626,
+                  value: 1374.20754778865626,
                   units: 'USD',
                 },
                 total: {
-                  value: 3442.7375477886562,
+                  value: 13442.7375477886562,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1329.1420881835122,
+                  value: 11329.1420881835122,
                   units: 'USD',
                 },
                 markup: {
@@ -3241,15 +3241,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6427.20285,
+                  value: 16427.20285,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 374.20754778865626,
+                  value: 1374.20754778865626,
                   units: 'USD',
                 },
                 total: {
-                  value: 8130.552485972168,
+                  value: 18130.552485972168,
                   units: 'USD',
                 },
               },
@@ -3257,16 +3257,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-07',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
                 markup: {
@@ -3282,7 +3282,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
               },
@@ -3296,7 +3296,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
                 distributed: {
@@ -3304,13 +3304,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 2734.911686451038,
+                  value: 12734.911686451038,
                   units: 'USD',
                 },
                 markup: {
@@ -3318,7 +3318,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 6088.5,
+                  value: 16088.5,
                   units: 'USD',
                 },
                 distributed: {
@@ -3326,7 +3326,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 8823.411686451038,
+                  value: 18823.411686451038,
                   units: 'USD',
                 },
               },
@@ -3353,7 +3353,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 6766.332394984845,
+                  value: 16766.332394984845,
                   units: 'USD',
                 },
                 markup: {
@@ -3361,15 +3361,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 43663.150598387096,
+                  value: 143663.150598387096,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 51629.482993371945,
+                  value: 151629.482993371945,
                   units: 'USD',
                 },
               },
@@ -3383,21 +3383,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 15234.56,
+                  value: 115234.56,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4625.7924522113435,
+                  value: 14625.7924522113435,
                   units: 'USD',
                 },
                 total: {
-                  value: 19860.352452211344,
+                  value: 119860.352452211344,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 6766.332394984845,
+                  value: 16766.332394984845,
                   units: 'USD',
                 },
                 markup: {
@@ -3405,15 +3405,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 58897.71059838709,
+                  value: 158897.71059838709,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5825.7924522113435,
+                  value: 15825.7924522113435,
                   units: 'USD',
                 },
                 total: {
-                  value: 71489.83544558329,
+                  value: 171489.83544558329,
                   units: 'USD',
                 },
               },
@@ -3426,16 +3426,16 @@ export const currentData = {
       date: '2022-08',
       projects: [
         {
-          project: 'analytics',
+          project: 'ACME - Anvils',
           values: [
             {
               date: '2022-08',
-              project: 'analytics',
+              project: 'ACME - Anvils',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
                 markup: {
@@ -3451,7 +3451,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
               },
@@ -3465,7 +3465,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
                 distributed: {
@@ -3473,13 +3473,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 3392.2000140326872,
+                  value: 13392.2000140326872,
                   units: 'USD',
                 },
                 markup: {
@@ -3487,7 +3487,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 7136,
+                  value: 17136,
                   units: 'USD',
                 },
                 distributed: {
@@ -3495,7 +3495,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 10528.200014032687,
+                  value: 110528.200014032687,
                   units: 'USD',
                 },
               },
@@ -3503,11 +3503,11 @@ export const currentData = {
           ],
         },
         {
-          project: 'openshift',
+          project: 'ACME - Fireworks',
           values: [
             {
               date: '2022-08',
-              project: 'openshift',
+              project: 'ACME - Fireworks',
               source_uuid: [
                 '1899fc34-7096-47d6-82d8-e371268530b1',
                 '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
@@ -3522,7 +3522,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 797.1670545550679,
+                  value: 1797.1670545550679,
                   units: 'USD',
                 },
                 markup: {
@@ -3530,7 +3530,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2293.9787,
+                  value: 12293.9787,
                   units: 'USD',
                 },
                 distributed: {
@@ -3538,7 +3538,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 3091.145754555068,
+                  value: 13091.145754555068,
                   units: 'USD',
                 },
               },
@@ -3552,21 +3552,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 2064.61,
+                  value: 12064.61,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 394.13103598871703,
+                  value: 1394.13103598871703,
                   units: 'USD',
                 },
                 total: {
-                  value: 2458.741035988717,
+                  value: 12458.741035988717,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 797.1670545550679,
+                  value: 1797.1670545550679,
                   units: 'USD',
                 },
                 markup: {
@@ -3574,15 +3574,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4358.5887,
+                  value: 14358.5887,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 394.13103598871703,
+                  value: 1394.13103598871703,
                   units: 'USD',
                 },
                 total: {
-                  value: 5549.886790543785,
+                  value: 15549.886790543785,
                   units: 'USD',
                 },
               },
@@ -3590,16 +3590,16 @@ export const currentData = {
           ],
         },
         {
-          project: 'cost-management',
+          project: 'ACME - Tunnels',
           values: [
             {
               date: '2022-08',
-              project: 'cost-management',
+              project: 'ACME - Tunnels',
               source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
               clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
               infrastructure: {
                 raw: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
                 markup: {
@@ -3615,7 +3615,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
               },
@@ -3629,7 +3629,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
                 distributed: {
@@ -3637,13 +3637,13 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 1619.181524760065,
+                  value: 11619.181524760065,
                   units: 'USD',
                 },
                 markup: {
@@ -3651,7 +3651,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 4136.77,
+                  value: 14136.77,
                   units: 'USD',
                 },
                 distributed: {
@@ -3659,7 +3659,7 @@ export const currentData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 5755.951524760065,
+                  value: 15755.951524760065,
                   units: 'USD',
                 },
               },
@@ -3686,7 +3686,7 @@ export const currentData = {
               ],
               infrastructure: {
                 raw: {
-                  value: 4035.5726649186668,
+                  value: 14035.5726649186668,
                   units: 'USD',
                 },
                 markup: {
@@ -3694,15 +3694,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 29821.9931,
+                  value: 129821.9931,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 1200,
+                  value: 11200,
                   units: 'USD',
                 },
                 total: {
-                  value: 35057.56576491867,
+                  value: 135057.56576491867,
                   units: 'USD',
                 },
               },
@@ -3716,21 +3716,21 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 10374.94,
+                  value: 110374.94,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 4605.868964011283,
+                  value: 14605.868964011283,
                   units: 'USD',
                 },
                 total: {
-                  value: 14980.808964011283,
+                  value: 114980.808964011283,
                   units: 'USD',
                 },
               },
               cost: {
                 raw: {
-                  value: 4035.5726649186668,
+                  value: 14035.5726649186668,
                   units: 'USD',
                 },
                 markup: {
@@ -3738,15 +3738,15 @@ export const currentData = {
                   units: 'USD',
                 },
                 usage: {
-                  value: 40196.9331,
+                  value: 140196.9331,
                   units: 'USD',
                 },
                 distributed: {
-                  value: 5805.868964011283,
+                  value: 15805.868964011283,
                   units: 'USD',
                 },
                 total: {
-                  value: 50038.37472892995,
+                  value: 150038.37472892995,
                   units: 'USD',
                 },
               },
@@ -3755,341 +3755,5 @@ export const currentData = {
         },
       ],
     },
-    /*
-    {
-      date: '2022-09',
-      projects: [
-        {
-          project: 'analytics',
-          values: [
-            {
-              date: '2022-09',
-              project: 'analytics',
-              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
-              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
-              infrastructure: {
-                raw: {
-                  value: 1896.9065085362465,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 0,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 0,
-                  units: 'USD',
-                },
-                total: {
-                  value: 1896.9065085362465,
-                  units: 'USD',
-                },
-              },
-              supplementary: {
-                raw: {
-                  value: 0,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 5664,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 0,
-                  units: 'USD',
-                },
-                total: {
-                  value: 5664,
-                  units: 'USD',
-                },
-              },
-              cost: {
-                raw: {
-                  value: 1896.9065085362465,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 5664,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 0,
-                  units: 'USD',
-                },
-                total: {
-                  value: 7560.906508536246,
-                  units: 'USD',
-                },
-              },
-            },
-          ],
-        },
-        {
-          project: 'openshift',
-          values: [
-            {
-              date: '2022-09',
-              project: 'openshift',
-              source_uuid: [
-                '1899fc34-7096-47d6-82d8-e371268530b1',
-                '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
-                'a99443de-af6d-4b4b-a1d9-fdeea529606d',
-                'ae7cd5c5-b6b8-4059-966d-0548287cb609',
-              ],
-              clusters: [
-                'OpenShift on AWS - Nise Populator',
-                'OpenShift on Azure - Nise Populator',
-                'OpenShift on GCP - Nise Populator',
-                'OpenShift on OpenStack - Nise Populator',
-              ],
-              infrastructure: {
-                raw: {
-                  value: 1228.540293096156,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 2412.27805,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 0,
-                  units: 'USD',
-                },
-                total: {
-                  value: 3640.818343096156,
-                  units: 'USD',
-                },
-              },
-              supplementary: {
-                raw: {
-                  value: 0,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 1645.5,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 303.02220048269066,
-                  units: 'USD',
-                },
-                total: {
-                  value: 1948.5222004826906,
-                  units: 'USD',
-                },
-              },
-              cost: {
-                raw: {
-                  value: 1228.540293096156,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 4057.77805,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 303.02220048269066,
-                  units: 'USD',
-                },
-                total: {
-                  value: 5589.340543578846,
-                  units: 'USD',
-                },
-              },
-            },
-          ],
-        },
-        {
-          project: 'cost-management',
-          values: [
-            {
-              date: '2022-09',
-              project: 'cost-management',
-              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
-              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
-              infrastructure: {
-                raw: {
-                  value: 875.1810565474063,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 0,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 0,
-                  units: 'USD',
-                },
-                total: {
-                  value: 875.1810565474063,
-                  units: 'USD',
-                },
-              },
-              supplementary: {
-                raw: {
-                  value: 0,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 3302.79,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 0,
-                  units: 'USD',
-                },
-                total: {
-                  value: 3302.79,
-                  units: 'USD',
-                },
-              },
-              cost: {
-                raw: {
-                  value: 875.1810565474063,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 3302.79,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 0,
-                  units: 'USD',
-                },
-                total: {
-                  value: 4177.971056547406,
-                  units: 'USD',
-                },
-              },
-            },
-          ],
-        },
-        {
-          project: 'Others',
-          values: [
-            {
-              date: '2022-09',
-              project: 'Others',
-              source_uuid: [
-                'a99443de-af6d-4b4b-a1d9-fdeea529606d',
-                '1899fc34-7096-47d6-82d8-e371268530b1',
-                '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
-                'ae7cd5c5-b6b8-4059-966d-0548287cb609',
-              ],
-              clusters: [
-                'OpenShift on GCP - Nise Populator',
-                'OpenShift on AWS - Nise Populator',
-                'OpenShift on Azure - Nise Populator',
-                'OpenShift on OpenStack - Nise Populator',
-              ],
-              infrastructure: {
-                raw: {
-                  value: 2176.0068953291475,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 31359.924316666667,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 1200,
-                  units: 'USD',
-                },
-                total: {
-                  value: 34735.93121199581,
-                  units: 'USD',
-                },
-              },
-              supplementary: {
-                raw: {
-                  value: 0,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 8261.69,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 4696.977799517309,
-                  units: 'USD',
-                },
-                total: {
-                  value: 12958.667799517309,
-                  units: 'USD',
-                },
-              },
-              cost: {
-                raw: {
-                  value: 2176.0068953291475,
-                  units: 'USD',
-                },
-                markup: {
-                  value: 0,
-                  units: 'USD',
-                },
-                usage: {
-                  value: 39621.614316666666,
-                  units: 'USD',
-                },
-                distributed: {
-                  value: 5896.977799517309,
-                  units: 'USD',
-                },
-                total: {
-                  value: 47694.59901151312,
-                  units: 'USD',
-                },
-              },
-            },
-          ],
-        },
-      ],
-    },
-
-     */
   ],
 };
