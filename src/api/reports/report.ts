@@ -67,6 +67,12 @@ export interface Report extends PagedResponse<ReportData, ReportMeta> {}
 // eslint-disable-next-line no-shadow
 export const enum ReportType {
   cost = 'cost',
+
+  // Todo: for testing
+  actualSpend = 'actualSpend',
+  actualSpendBreakdown = 'actualSpendBreakdown',
+  committedSpend = 'committedSpend',
+  committedSpendTrend = 'committedSpendTrend',
 }
 
 // eslint-disable-next-line no-shadow

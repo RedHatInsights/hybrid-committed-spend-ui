@@ -46,6 +46,11 @@ export interface BillingReport extends Report {
 export const ReportTypePaths: Partial<Record<ReportType, string>> = {
   // [ReportType.cost]: 'reports/aws/costs/',
   [ReportType.cost]: '',
+
+  [ReportType.actualSpend]: '',
+  [ReportType.actualSpendBreakdown]: '',
+  [ReportType.committedSpend]: '',
+  [ReportType.committedSpendTrend]: '',
 };
 
 export function runReport(reportType: ReportType, query: string) {
