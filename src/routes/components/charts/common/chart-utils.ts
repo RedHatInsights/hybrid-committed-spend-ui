@@ -97,8 +97,8 @@ export const getTickValues = (series: ChartSeries[]) => {
     series.forEach((s: any) => {
       if (Array.isArray(s.data)) {
         s.data?.forEach((datum: any) => {
-          if (!result.find(val => val === datum.key)) {
-            result.push(datum.key);
+          if (!result.find(val => val === datum.x)) {
+            result.push(datum.x);
           }
         });
       }
