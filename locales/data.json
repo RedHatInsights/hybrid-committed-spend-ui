@@ -20,65 +20,60 @@
         "value": "value"
       }
     ],
-    "breakdownPerspectiveValues": [
+    "actualSpendBreakdownDataValues": [
       {
         "options": {
-          "aws": {
+          "cumulative": {
             "value": [
               {
                 "type": 0,
-                "value": "Amazon Web Services"
+                "value": "Cumulative"
               }
             ]
           },
-          "azure": {
+          "monthly": {
             "value": [
               {
                 "type": 0,
-                "value": "Microsoft Azure"
+                "value": "Monthly"
               }
             ]
           },
-          "gcp": {
+          "other": {
+            "value": []
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "actualSpendBreakdownPerspectiveValues": [
+      {
+        "options": {
+          "affiliates": {
             "value": [
               {
                 "type": 0,
-                "value": "Google Cloud Platform"
-              }
-            ]
-          },
-          "marketplace": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Red Hat Marketplace"
-              }
-            ]
-          },
-          "on_demand": {
-            "value": [
-              {
-                "type": 0,
-                "value": "On-Demand Subs"
+                "value": "Top 3 affiliates of spend"
               }
             ]
           },
           "other": {
             "value": []
           },
-          "reseller": {
+          "products": {
             "value": [
               {
                 "type": 0,
-                "value": "Reseller / Distributor"
+                "value": "Top 3 products of spend"
               }
             ]
           },
-          "yearly": {
+          "sources": {
             "value": [
               {
                 "type": 0,
-                "value": "Yearly subs"
+                "value": "Top 3 sources of spend"
               }
             ]
           }
@@ -225,14 +220,6 @@
           "other": {
             "value": []
           },
-          "past_two_actual": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Past two years actual spend"
-              }
-            ]
-          },
           "previous_over_actual": {
             "value": [
               {
@@ -256,22 +243,14 @@
         "value": "date"
       }
     ],
-    "contractDates": [
+    "contractDate": [
       {
         "type": 0,
         "value": "Contract dates: "
       },
       {
         "type": 1,
-        "value": "startDate"
-      },
-      {
-        "type": 0,
-        "value": " - "
-      },
-      {
-        "type": 1,
-        "value": "endDate"
+        "value": "dateRange"
       }
     ],
     "currencyAbbreviations": [

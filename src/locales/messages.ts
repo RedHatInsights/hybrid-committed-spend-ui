@@ -12,6 +12,11 @@ export default defineMessages({
     description: 'Account number: {value}',
     id: 'accountNumber',
   },
+  actualSpendBreakdownDataValues: {
+    defaultMessage: '{value, select, ' + 'monthly {Monthly} ' + 'cumulative {Cumulative} ' + 'other {}}',
+    description: 'Actual spend breakdown data values',
+    id: 'actualSpendBreakdownDataValues',
+  },
   actualSpendBreakdownPerspectiveValues: {
     defaultMessage:
       '{value, select, ' +
