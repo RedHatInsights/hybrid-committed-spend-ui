@@ -15,7 +15,7 @@ import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ChartTheme from 'routes/components/charts/chart-theme';
-import { getMaxValue } from 'routes/components/charts/common/chart-datum-utils';
+import { getMaxValue, isFloat, isInt } from 'routes/components/charts/common/chart-datum-utils';
 import {
   ChartSeries,
   getChartNames,
@@ -320,19 +320,21 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
 
   // Returns onMouseOver, onMouseOut, and onClick events for the interactive legend
   private getEvents = () => {
+    const { name } = this.props;
     const { hiddenSeries, series } = this.state;
 
     const result = getInteractiveLegendEvents({
       chartNames: getChartNames(series),
       isDataHidden: data => isDataHidden(series, hiddenSeries, data),
       isHidden: index => isSeriesHidden(hiddenSeries, index),
-      legendName: 'legend',
+      legendName: `${name}-legend`,
       onLegendClick: props => this.handleLegendClick(props.index),
     });
     return result;
   };
 
   private getLegend = () => {
+    const { name } = this.props;
     const { hiddenSeries, series } = this.state;
 
     return (
@@ -340,7 +342,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
         data={getLegendData(series, hiddenSeries)}
         gutter={20}
         height={25}
-        name="legend"
+        name={`${name}-legend`}
         responsive={false}
         y={240}
       />
@@ -409,7 +411,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
               legendData={getLegendData(series, hiddenSeries, true)}
               title={datum =>
                 intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(datum.x, {
+                  value: intl.formatDate(`${datum.x}T23:59:59z`, {
                     month: 'long',
                     year: 'numeric',
                   }),
@@ -450,12 +452,15 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
             <ChartAxis
               fixLabelOverlap
               style={styles.xAxis}
-              tickFormat={t =>
-                intl.formatDate(t, {
+              tickFormat={t => {
+                if (isFloat(t) || isInt(t)) {
+                  return t;
+                }
+                return intl.formatDate(`${t}T23:59:59z`, {
                   month: 'short',
                   year: 'numeric',
-                })
-              }
+                });
+              }}
               tickValues={getTickValues(series)}
             />
             <ChartAxis dependentAxis style={styles.yAxis} tickFormat={this.getTickValue} />

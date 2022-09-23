@@ -86,7 +86,6 @@ export default defineMessages({
     defaultMessage:
       '{value, select, ' +
       'actual {Actual spend} ' +
-      'past_two_actual {Past two years actual spend} ' +
       'previous_over_actual {Previous year over actual spend} ' +
       'other {}}',
     description: 'Committed spend trend perspective values',
@@ -97,10 +96,10 @@ export default defineMessages({
     description: 'Consumption date: {date}',
     id: 'consumptionDate',
   },
-  contractDates: {
-    defaultMessage: 'Contract dates: {startDate} - {endDate}',
-    description: 'Contract dates: {startDate} - {endDate}',
-    id: 'contractDates',
+  contractDate: {
+    defaultMessage: 'Contract dates: {dateRange}',
+    description: 'Contract dates: {dateRange}',
+    id: 'contractDate',
   },
   currencyAbbreviations: {
     defaultMessage:

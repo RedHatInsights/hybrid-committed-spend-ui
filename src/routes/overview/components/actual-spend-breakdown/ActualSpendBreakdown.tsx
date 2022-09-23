@@ -20,7 +20,6 @@ import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
-import { getToday, getYear } from 'utils/dateRange';
 import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/getComputedReportItems';
 
 import { styles } from './ActualSpendBreakdown.styles';
@@ -81,7 +80,9 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   };
 
   const getChart = () => {
-    const datums = getChartDatums(getComputedItems());
+    const startDate = new Date('2021-12-01T23:59:59z');
+    const endDate = new Date('2022-12-01T23:59:59z');
+    const datums = getChartDatums(getComputedItems(), startDate, endDate);
 
     return (
       <BreakdownChart
@@ -99,7 +100,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
     );
   };
 
-  const getChartDatums = (computedItems: ComputedReportItem[]) => {
+  const getChartDatums = (computedItems: ComputedReportItem[], startDate, endDate) => {
     const reportItem = ComputedReportItemType.cost;
     const reportItemValue = ComputedReportItemValueType.total;
     const chartDatums = [];
@@ -116,7 +117,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
       }
       chartDatums.push(datums);
     });
-    return padChartDatums(chartDatums);
+    return padChartDatums(chartDatums, startDate, endDate);
   };
 
   const getComputedItems = () => {
@@ -130,14 +131,13 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   // This pads chart datums with null datum objects, representing missing data at the beginning and end of the
   // data series. The remaining data is left as is to allow for extrapolation. This allows us to display a "no data"
   // message in the tooltip, which helps distinguish between zero values and when there is no data available.
-  const padChartDatums = (items: any[]): ChartDatum[] => {
-    const endDate = getToday();
+  const padChartDatums = (items: any[], startDate, endDate): ChartDatum[] => {
     const result = [];
 
     items.map(datums => {
       const newItems = [];
 
-      for (let padDate = getYear(1); padDate <= endDate; padDate.setMonth(padDate.getMonth() + 1)) {
+      for (let padDate = new Date(startDate.getTime()); padDate < endDate; padDate.setMonth(padDate.getMonth() + 1)) {
         const date = format(padDate, 'yyyy-MM');
         const chartDatum = datums.find(val => val.key === date);
         if (chartDatum) {

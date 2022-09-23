@@ -14,7 +14,7 @@ import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ChartTheme from 'routes/components/charts/chart-theme';
-import { getCostRangeString } from 'routes/components/charts/common/chart-datum-utils';
+import { getCostRangeString, isFloat, isInt } from 'routes/components/charts/common/chart-datum-utils';
 import {
   ChartSeries,
   getChartNames,
@@ -225,18 +225,20 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
 
   // Returns onMouseOver, onMouseOut, and onClick events for the interactive legend
   private getEvents() {
+    const { name } = this.props;
     const { hiddenSeries, series } = this.state;
 
     const result = getInteractiveLegendEvents({
       chartNames: getChartNames(series),
       isHidden: index => isSeriesHidden(hiddenSeries, index),
-      legendName: 'legend',
+      legendName: `${name}-legend`,
       onLegendClick: props => this.handleLegendClick(props.index),
     });
     return result;
   }
 
   private getLegend = () => {
+    const { name } = this.props;
     const { hiddenSeries, series, width } = this.state;
 
     return (
@@ -245,7 +247,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
         gutter={20}
         height={25}
         itemsPerRow={width < 550 ? 1 : undefined}
-        name="legend"
+        name={`${name}-legend`}
         responsive={false}
         y={240}
       />
@@ -311,7 +313,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
               legendData={getLegendData(series, hiddenSeries, true)}
               title={datum =>
                 intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(datum.x, {
+                  value: intl.formatDate(`${datum.key}T23:59:59z`, {
                     month: 'long',
                     ...(isYear && { year: 'numeric' }),
                   }),
@@ -352,12 +354,15 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
               <ChartAxis
                 fixLabelOverlap
                 style={styles.xAxis}
-                tickFormat={t =>
-                  intl.formatDate(t, {
+                tickFormat={t => {
+                  if (isFloat(t) || isInt(t)) {
+                    return t;
+                  }
+                  return intl.formatDate(`${t}T23:59:59z`, {
                     month: isYear ? 'short' : 'long',
                     ...(isYear && { year: 'numeric' }),
-                  })
-                }
+                  });
+                }}
                 tickValues={getTickValues(series)}
               />
               <ChartAxis dependentAxis style={styles.yAxis} tickFormat={this.getTickValue} />

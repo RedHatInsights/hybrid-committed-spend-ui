@@ -1,7 +1,6 @@
 import { getQuery, parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { AxiosError } from 'axios';
-import { parseISO } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -62,11 +61,10 @@ const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
     balance = formatCurrency(182054.9, 'USD');
     committedSpend = formatCurrency(1000000.0, 'USD');
 
-    const startDate = new Date(parseISO('2021-08-01T00:00:00'));
-    const endDate = new Date(parseISO('2022-02-01T00:00:00'));
+    const startDate = new Date('2022-09-01T23:59:59z');
+    const endDate = new Date('2022-11-01T23:59:59z');
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
-      day: 'numeric',
       month: 'long',
       year: 'numeric',
     });

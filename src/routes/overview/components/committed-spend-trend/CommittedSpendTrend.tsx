@@ -14,7 +14,6 @@ import { ReportSummary } from 'routes/overview/components/report-summary';
 import { createMapStateToProps, FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
-import { getToday, getYear } from 'utils/dateRange';
 
 import { chartStyles, styles } from './CommittedSpendTrend.styles';
 import { currentData } from './data/currentData';
@@ -52,7 +51,6 @@ export type CommittedSpendTrendProps = CommittedSpendTrendStateProps &
 const perspectiveOptions = [
   { label: messages.committedSpendTrendPerspectiveValues, value: 'actual' },
   { label: messages.committedSpendTrendPerspectiveValues, value: 'previous_over_actual' },
-  { label: messages.committedSpendTrendPerspectiveValues, value: 'past_two_actual' },
 ];
 
 const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
@@ -87,8 +85,8 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
   };
 
   const getChart = () => {
-    const endDate = getToday();
-    let startDate = getYear(1);
+    const startDate = new Date('2021-12-01T23:59:59z');
+    const endDate = new Date('2022-12-01T23:59:59z');
     let isYear = true;
     let offset = 0;
 
@@ -99,21 +97,18 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
         offset = 1;
         isYear = false;
         break;
-      case perspectiveOptions[2].value: // Past two years actual spend
-        startDate = getYear(2);
-        break;
       default:
         break;
     }
 
-    const current = transformReport({ report: currentReport, startDate: new Date(startDate.getTime()), endDate });
+    const current = transformReport({ report: currentReport, startDate, endDate });
     const previous = transformReport({
       report: previousReport,
-      startDate: new Date(startDate.getTime()),
+      startDate,
       endDate,
       offset,
     });
-    const threshold = transformReport({ report: thresholdReport, startDate: new Date(startDate.getTime()), endDate });
+    const threshold = transformReport({ report: thresholdReport, startDate, endDate });
 
     return (
       <TrendChart
