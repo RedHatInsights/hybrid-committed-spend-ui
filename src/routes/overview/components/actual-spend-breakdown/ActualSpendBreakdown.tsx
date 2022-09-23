@@ -49,6 +49,11 @@ export type ActualSpendBreakdownProps = ActualSpendBreakdownStateProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
+const dataTypeOptions = [
+  { label: messages.actualSpendBreakdownDataValues, value: 'monthly' },
+  { label: messages.actualSpendBreakdownDataValues, value: 'cumulative' },
+];
+
 const perspectiveOptions = [
   { label: messages.actualSpendBreakdownPerspectiveValues, value: 'sources' },
   { label: messages.actualSpendBreakdownPerspectiveValues, value: 'affiliates' },
@@ -68,6 +73,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
   }, [queryString]);
 
   const [perspectiveItem, setPerspectiveItem] = useState('previous_over_actual');
+  const [dataType, setDataType] = useState('monthly');
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -106,14 +112,27 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
     const chartDatums = [];
 
     computedItems.map(computedItem => {
-      const datums = [];
+      let datums = [];
 
       if (computedItem instanceof Map) {
         const items = Array.from(computedItem.values());
-        items.map(i => {
-          const value = i[reportItem][reportItemValue] ? i[reportItem][reportItemValue].value : i[reportItem].value;
-          datums.push(createReportDatum({ value, computedItem: i, reportItem, reportItemValue }));
-        });
+
+        // Show cumulative
+        if (dataType === dataTypeOptions[1].value) {
+          datums = items.reduce<ChartDatum[]>((acc, d) => {
+            const prevValue = acc.length ? acc[acc.length - 1].y : 0;
+            const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;
+            return [
+              ...acc,
+              createReportDatum({ value: prevValue + val, computedItem: d, reportItem, reportItemValue }),
+            ];
+          }, []);
+        } else {
+          items.map(i => {
+            const value = i[reportItem][reportItemValue] ? i[reportItem][reportItemValue].value : i[reportItem].value;
+            datums.push(createReportDatum({ value, computedItem: i, reportItem, reportItemValue }));
+          });
+        }
       }
       chartDatums.push(datums);
     });
@@ -158,6 +177,10 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
     return result;
   };
 
+  const handleOnDataTypeSelected = value => {
+    setDataType(value);
+  };
+
   const handleOnPerspectiveSelected = value => {
     setPerspectiveItem(value);
   };
@@ -169,6 +192,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({
         onSelected={handleOnPerspectiveSelected}
         options={perspectiveOptions}
       />
+      <Perspective currentItem={dataType} onSelected={handleOnDataTypeSelected} options={dataTypeOptions} />
       <div style={styles.chartContainer}>{getChart()}</div>
     </ReportSummary>
   );
