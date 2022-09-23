@@ -15,7 +15,7 @@ import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ChartTheme from 'routes/components/charts/chart-theme';
-import { getMaxValue } from 'routes/components/charts/common/chart-datum-utils';
+import { getMaxValue, isFloat, isInt } from 'routes/components/charts/common/chart-datum-utils';
 import {
   ChartSeries,
   getChartNames,
@@ -452,12 +452,15 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
             <ChartAxis
               fixLabelOverlap
               style={styles.xAxis}
-              tickFormat={t =>
-                intl.formatDate(`${t}T23:59:59z`, {
+              tickFormat={t => {
+                if (isFloat(t) || isInt(t)) {
+                  return t;
+                }
+                return intl.formatDate(`${t}T23:59:59z`, {
                   month: 'short',
                   year: 'numeric',
-                })
-              }
+                });
+              }}
               tickValues={getTickValues(series)}
             />
             <ChartAxis dependentAxis style={styles.yAxis} tickFormat={this.getTickValue} />
