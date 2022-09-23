@@ -3,8 +3,8 @@
 export const currentData = {
   meta: {
     count: 4,
-    start_date: '2021-08',
-    end_date: '2022-09',
+    start_date: '2021-12',
+    end_date: '2022-08',
     filter: {
       resolution: 'monthly',
     },
@@ -861,94 +861,5 @@ export const currentData = {
         },
       ],
     },
-    /*
-    {
-      date: '2022-09',
-      values: [
-        {
-          date: '2022-09',
-          clusters: [
-            'OpenShift on AWS - Nise Populator',
-            'OpenShift on Azure - Nise Populator',
-            'OpenShift on GCP - Nise Populator',
-            'OpenShift on OpenStack - Nise Populator',
-          ],
-          source_uuid: [
-            '1899fc34-7096-47d6-82d8-e371268530b1',
-            '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
-            'a99443de-af6d-4b4b-a1d9-fdeea529606d',
-            'ae7cd5c5-b6b8-4059-966d-0548287cb609',
-          ],
-          infrastructure: {
-            raw: {
-              value: 6998.895414788647,
-              units: 'USD',
-            },
-            markup: {
-              value: 0,
-              units: 'USD',
-            },
-            usage: {
-              value: 30459.7899,
-              units: 'USD',
-            },
-            distributed: {
-              value: 1200,
-              units: 'USD',
-            },
-            total: {
-              value: 38658.68531478865,
-              units: 'USD',
-            },
-          },
-          supplementary: {
-            raw: {
-              value: 0,
-              units: 'USD',
-            },
-            markup: {
-              value: 0,
-              units: 'USD',
-            },
-            usage: {
-              value: 16421.53,
-              units: 'USD',
-            },
-            distributed: {
-              value: 5000,
-              units: 'USD',
-            },
-            total: {
-              value: 21421.53,
-              units: 'USD',
-            },
-          },
-          cost: {
-            raw: {
-              value: 6998.895414788647,
-              units: 'USD',
-            },
-            markup: {
-              value: 0,
-              units: 'USD',
-            },
-            usage: {
-              value: 46881.3199,
-              units: 'USD',
-            },
-            distributed: {
-              value: 6200,
-              units: 'USD',
-            },
-            total: {
-              value: 60080.21531478865,
-              units: 'USD',
-            },
-          },
-        },
-      ],
-    },
-
-     */
   ],
 };

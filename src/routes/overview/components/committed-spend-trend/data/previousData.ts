@@ -3,8 +3,8 @@
 export const previousData = {
   meta: {
     count: 4,
-    start_date: '2020-08',
-    end_date: '2021-09',
+    start_date: '2020-12',
+    end_date: '2021-12',
     filter: {
       resolution: 'monthly',
     },
