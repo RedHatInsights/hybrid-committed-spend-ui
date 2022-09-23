@@ -133,7 +133,7 @@ export function createReportDatum<T extends ComputedReportItem>({
   const xVal = getXVal();
   const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
   return {
-    x: idKey === 'date' ? xVal : computedItem.date,
+    x: idKey === 'date' ? xVal : computedItem.label,
     y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips
     ...(value === null && isForceNoData && { _y: 0 }), // Todo: Force "no data" tooltips for bar charts.
     key: xVal,
@@ -162,7 +162,7 @@ export function padChartDatums({ datums, startDate = getYear(1), endDate = getTo
     } else {
       result.push(
         createReportDatum({
-          computedItem: { date, label: date },
+          computedItem: { date, id: date },
           reportItemValue: null,
           value: null,
         })
