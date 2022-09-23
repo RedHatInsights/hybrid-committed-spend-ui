@@ -37,7 +37,7 @@ interface TrendChartOwnProps {
   containerHeight?: number;
   currentData?: any;
   height?: number;
-  isYear?: boolean;
+  isYearVisible?: boolean;
   legendItemsPerRow?: number;
   name?: string;
   padding?: any;
@@ -292,7 +292,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
     const {
       height,
       intl,
-      isYear,
+      isYearVisible,
       name,
       padding = {
         bottom: 75,
@@ -315,7 +315,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
                 intl.formatMessage(messages.chartTooltipTitle, {
                   value: intl.formatDate(`${datum.key}T23:59:59z`, {
                     month: 'long',
-                    ...(isYear && { year: 'numeric' }),
+                    ...(isYearVisible && { year: 'numeric' }),
                   }),
                 })
               }
@@ -359,8 +359,8 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
                     return t;
                   }
                   return intl.formatDate(`${t}T23:59:59z`, {
-                    month: isYear ? 'short' : 'long',
-                    ...(isYear && { year: 'numeric' }),
+                    month: isYearVisible ? 'short' : 'long',
+                    ...(isYearVisible && { year: 'numeric' }),
                   });
                 }}
                 tickValues={getTickValues(series)}
