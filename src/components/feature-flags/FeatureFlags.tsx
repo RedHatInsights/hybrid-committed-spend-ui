@@ -15,10 +15,9 @@ const enum FeatureToggle {
   details = 'hybrid-committed-spend.ui.details',
 }
 
-const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
-  const dispatch = useDispatch();
-
+const initFeatureFlags = () => {
   const isDetailsFeatureEnabled = useFlag(FeatureToggle.details);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
@@ -27,10 +26,13 @@ const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
       })
     );
   }, []);
+};
 
+const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
+  initFeatureFlags();
   return <>{children}</>;
 };
 
 const FeatureFlags = withRouter(FeatureFlagsBase);
 
-export { FeatureFlags, FeatureToggle };
+export { FeatureFlags, FeatureToggle, initFeatureFlags };
