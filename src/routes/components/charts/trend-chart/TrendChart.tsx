@@ -94,7 +94,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
     // Show all legends, regardless of length
 
     const series: ChartSeries[] = [];
-    if (currentData) {
+    if (currentData && currentData.length) {
       series.push({
         childName: 'currentSpend',
         data: currentData,
@@ -118,7 +118,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
         },
       });
     }
-    if (previousData) {
+    if (previousData && previousData.length) {
       series.push({
         childName: 'previousSpend',
         data: previousData,
@@ -142,7 +142,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
         },
       });
     }
-    if (thresholdData) {
+    if (thresholdData && thresholdData.length) {
       series.push({
         childName: 'threshold',
         data: thresholdData,
