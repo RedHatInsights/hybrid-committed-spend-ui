@@ -70,6 +70,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
   return (
     <ReportSummary
       detailsLink={getDetailsLink()}
+      excessActualSpend={98321.34}
       fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
       title={widget.title}
     >

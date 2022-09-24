@@ -89,7 +89,12 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
   };
 
   return (
-    <ReportSummary detailsLink={getDetailsLink()} fetchStatus={reportFetchStatus} title={widget.title}>
+    <ReportSummary
+      detailsLink={getDetailsLink()}
+      excessActualSpendBreakdown={98321.34}
+      fetchStatus={reportFetchStatus}
+      title={widget.title}
+    >
       <Perspective currentItem={perspective} onSelected={handleOnPerspectiveSelected} options={perspectiveOptions} />
       <Perspective currentItem={comparison} onSelected={handleOnComparisonSelected} options={dataTypeOptions} />
       <ActualSpendBreakdownChart

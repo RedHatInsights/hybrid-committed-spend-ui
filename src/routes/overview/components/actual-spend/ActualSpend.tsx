@@ -53,7 +53,12 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   }
 
   return (
-    <ReportSummary bodyStyle={styles.body} fetchStatus={reportFetchStatus} title={widget.title}>
+    <ReportSummary
+      bodyStyle={styles.body}
+      fetchStatus={reportFetchStatus}
+      excessActualSpend={98321.34}
+      title={widget.title}
+    >
       <div>{dateRange}</div>
       <div style={styles.valueContainer}>
         <div style={styles.value}>{actualSpend}</div>
