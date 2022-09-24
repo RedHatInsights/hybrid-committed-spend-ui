@@ -163,6 +163,41 @@ export default defineMessages({
     description: 'Oops!',
     id: 'errorStateUnexpectedTitle',
   },
+  excessActualSpendBreakdownDesc: {
+    defaultMessage:
+      'The previous year had an excess actual spend of {value}. That amount will not be reflected in these breakdowns',
+    description:
+      'The previous year had an excess actual spend of {value}. That amount will not be reflected in these breakdowns',
+    id: 'excessActualSpendBreakdownDesc',
+  },
+  excessActualSpendButtonAriaLabel: {
+    defaultMessage: 'A dialog with a description of actual spend roll over',
+    description: 'A dialog with a description of actual spend roll over',
+    id: 'excessActualSpendAriaLabel',
+  },
+  excessActualSpendDesc: {
+    defaultMessage:
+      "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
+    description:
+      "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
+    id: 'excessActualSpendDesc',
+  },
+  excessActualSpendLabel: {
+    defaultMessage: 'Excess actual spend included',
+    description: 'Excess actual spend included',
+    id: 'excessActualSpendLabel',
+  },
+  excessActualSpendPopoverAriaLabel: {
+    defaultMessage: 'A description of actual spend roll over',
+    description: 'A description of actual spend roll over',
+    id: 'excessActualSpendAriaLabel',
+  },
+  excessSpendTitle: {
+    defaultMessage: 'Excess actual spend included',
+    description: 'Excess actual spend included',
+    id: 'excessSpendTitle',
+  },
+
   exploreMore: {
     defaultMessage: 'Explore more',
     description: 'Explore more',
