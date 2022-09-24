@@ -215,7 +215,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
     }
     const cursorVoronoiContainer = this.getCursorVoronoiContainer();
     const units = this.getUnits(series);
-    this.setState({ cursorVoronoiContainer, series, units });
+    this.setState({ cursorVoronoiContainer, hiddenSeries: new Set(), series, units });
   };
 
   // Adds a child name to help identify hidden data series

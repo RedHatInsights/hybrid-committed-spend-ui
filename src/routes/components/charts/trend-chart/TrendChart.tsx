@@ -168,7 +168,7 @@ class TrendChartBase extends React.Component<TrendChartProps, State> {
     }
     const cursorVoronoiContainer = this.getCursorVoronoiContainer();
     const units = this.getUnits(series);
-    this.setState({ cursorVoronoiContainer, series, units });
+    this.setState({ cursorVoronoiContainer, hiddenSeries: new Set(), series, units });
   };
 
   private getAdjustedContainerHeight = () => {
