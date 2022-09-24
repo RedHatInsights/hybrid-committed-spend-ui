@@ -26,7 +26,7 @@ interface PerspectiveOption extends SelectOptionObject {
 
 type PerspectiveProps = PerspectiveOwnProps & WrappedComponentProps;
 
-class PerspectiveBase extends React.Component<PerspectiveProps> {
+class Perspective extends React.Component<PerspectiveProps> {
   protected defaultState: PerspectiveState = {
     isSelectOpen: false,
   };
@@ -94,6 +94,4 @@ class PerspectiveBase extends React.Component<PerspectiveProps> {
   }
 }
 
-const Perspective = injectIntl(PerspectiveBase);
-
-export default Perspective;
+export default injectIntl(Perspective);

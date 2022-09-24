@@ -24,4 +24,8 @@ export const styles = {
     color: global_Color_200.var,
     marginBottom: 0,
   },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 };

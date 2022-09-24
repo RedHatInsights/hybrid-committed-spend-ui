@@ -1,14 +1,14 @@
-import { getQuery, parseQuery, Query } from 'api/queries/query';
-import { Report } from 'api/reports/report';
+import { Report } from 'api/reports';
 import { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { createMapStateToProps, FetchStatus } from 'store/common';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency } from 'utils/format';
@@ -20,35 +20,16 @@ interface CommittedSpendOwnProps {
 }
 
 interface CommittedSpendStateProps {
-  query: Query;
-  queryString: string;
   report?: Report;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
 }
 
-interface CommittedSpendDispatchProps {
-  fetchReport: typeof reportActions.fetchReport;
-}
+export type CommittedSpendProps = CommittedSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-export type CommittedSpendProps = CommittedSpendStateProps &
-  CommittedSpendOwnProps &
-  CommittedSpendDispatchProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
-
-const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
-  fetchReport,
-  intl,
-  queryString,
-  report,
-  reportFetchStatus,
-  widget,
-}) => {
-  useMemo(() => {
-    fetchReport(widget.reportPathsType, widget.reportType, queryString);
-  }, [queryString]);
+const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
+  const { report, reportFetchStatus, widget } = mapToProps(widgetId);
 
   let balance: string | React.ReactNode = <EmptyValueState />;
   let committedSpend: string | React.ReactNode = <EmptyValueState />;
@@ -85,48 +66,38 @@ const CommittedSpendBase: React.FC<CommittedSpendProps> = ({
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<CommittedSpendOwnProps, CommittedSpendStateProps>(
-  (state, { widgetId }) => {
-    const widget = dashboardSelectors.selectWidget(state, widgetId);
-    // const queries = dashboardSelectors.selectWidgetQueries(state, widgetId);
+const mapToProps = (widgetId): CommittedSpendStateProps => {
+  const queryString = ''; // Todo: add query string for API when available
+  const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
-    // TBD...
-    const queryFromRoute = parseQuery<Query>(location.search);
-    const query = {
-      filter: {
-        ...queryFromRoute.filter,
-      },
-    };
-    const queryString = getQuery(query);
-    const report = reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString);
-    const reportError = reportSelectors.selectReportError(
-      state,
-      widget.reportPathsType,
-      widget.reportType,
-      queryString
-    );
-    const reportFetchStatus = reportSelectors.selectReportFetchStatus(
-      state,
-      widget.reportPathsType,
-      widget.reportType,
-      queryString
-    );
-
+  const report = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
     return {
-      query,
-      queryString,
-      report,
-      reportError,
-      reportFetchStatus,
-      widget,
-    };
-  }
-);
+      meta: {
+        total: {
+          value: 0,
+          units: 'USD',
+        },
+      },
+    } as any;
+  });
+  const reportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, queryString)
+  );
+  const reportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString)
+  );
 
-const mapDispatchToProps: CommittedSpendDispatchProps = {
-  fetchReport: reportActions.fetchReport,
+  useMemo(() => {
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
+  }, [queryString]);
+
+  return {
+    report,
+    reportFetchStatus,
+    reportError,
+    widget,
+  };
 };
 
-const CommittedSpend = withRouter(CommittedSpendBase);
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CommittedSpend));
+export default injectIntl(withRouter(CommittedSpend));

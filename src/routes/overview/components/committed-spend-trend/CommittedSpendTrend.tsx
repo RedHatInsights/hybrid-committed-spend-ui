@@ -1,21 +1,20 @@
-import { getQuery, parseQuery, Query } from 'api/queries/query';
-import { Report } from 'api/reports/report';
+import { getQuery } from 'api/queries/query';
+import { Report } from 'api/reports';
 import { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { transformReport } from 'routes/components/charts/common/chart-datum-utils';
-import { TrendChart } from 'routes/components/charts/trend-chart';
 import { Perspective } from 'routes/overview/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { createMapStateToProps, FetchStatus } from 'store/common';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 
-import { chartStyles, styles } from './CommittedSpendTrend.styles';
+import { CommittedSpendTrendChart } from './CommittedSpendTrendChart';
 import { currentData } from './data/currentData';
 import { previousData } from './data/previousData';
 import { thresholdData } from './data/thresholdData';
@@ -25,54 +24,34 @@ interface CommittedSpendTrendOwnProps {
 }
 
 interface CommittedSpendTrendStateProps {
-  currentQueryString: string;
   currentReport?: Report;
-  currentReportError?: AxiosError;
   currentReportFetchStatus?: FetchStatus;
-  previousQueryString: string;
+  currentReportError?: AxiosError;
   previousReport?: Report;
-  previousReportError?: AxiosError;
   previousReportFetchStatus?: FetchStatus;
-  query: Query;
-  thresholdReport?: Report;
+  previousReportError?: AxiosError;
   widget: DashboardWidget;
 }
 
-interface CommittedSpendTrendDispatchProps {
-  fetchReport: typeof reportActions.fetchReport;
+export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+
+// eslint-disable-next-line no-shadow
+export enum PerspectiveType {
+  actual = 'actual',
+  previous_over_actual = 'previous_over_actual',
 }
 
-export type CommittedSpendTrendProps = CommittedSpendTrendStateProps &
-  CommittedSpendTrendOwnProps &
-  CommittedSpendTrendDispatchProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
-
 const perspectiveOptions = [
-  { label: messages.committedSpendTrendPerspectiveValues, value: 'actual' },
-  { label: messages.committedSpendTrendPerspectiveValues, value: 'previous_over_actual' },
+  { label: messages.committedSpendTrendPerspectiveValues, value: PerspectiveType.actual },
+  { label: messages.committedSpendTrendPerspectiveValues, value: PerspectiveType.previous_over_actual },
 ];
 
-const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
-  currentQueryString,
-  currentReport,
-  currentReportFetchStatus,
-  fetchReport,
-  intl,
-  previousQueryString,
-  previousReport,
-  previousReportFetchStatus,
-  thresholdReport,
-  widget,
-}) => {
-  useMemo(() => {
-    fetchReport(widget.reportPathsType, widget.reportType, currentQueryString);
-  }, [currentQueryString]);
-  useMemo(() => {
-    fetchReport(widget.reportPathsType, widget.reportType, previousQueryString);
-  }, [previousQueryString]);
-
-  const [perspectiveItem, setPerspectiveItem] = useState(perspectiveOptions[1].value);
+const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetId }) => {
+  const [perspective, setPerspective] = useState(PerspectiveType.previous_over_actual);
+  const { currentReport, currentReportFetchStatus, previousReport, previousReportFetchStatus, widget } = mapToProps(
+    perspective,
+    widgetId
+  );
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -84,133 +63,72 @@ const CommittedSpendTrendBase: React.FC<CommittedSpendTrendProps> = ({
     return null;
   };
 
-  const getChart = () => {
-    let previous;
-    if (perspectiveItem === perspectiveOptions[1].value) {
-      previous = transformReport({
-        report: previousReport,
-        startDate: new Date('2020-12-01T23:59:59z'),
-        endDate: new Date('2021-12-01T23:59:59z'),
-        shiftDateByYear: 1,
-      });
-    }
-
-    const startDate = new Date('2021-12-01T23:59:59z');
-    const endDate = new Date('2022-12-01T23:59:59z');
-    const current = transformReport({ report: currentReport, startDate, endDate });
-    const threshold = transformReport({ report: thresholdReport, startDate, endDate });
-
-    return (
-      <TrendChart
-        adjustContainerHeight
-        containerHeight={chartStyles.chartContainerHeight}
-        currentData={current}
-        height={chartStyles.chartHeight}
-        name={widget.chartName}
-        previousData={previous}
-        thresholdData={threshold}
-        isYearVisible={!previous}
-      />
-    );
-  };
-
   const handleOnPerspectiveSelected = value => {
-    setPerspectiveItem(value);
+    setPerspective(value);
   };
 
   return (
     <ReportSummary
       detailsLink={getDetailsLink()}
+      excessActualSpend={98321.34}
       fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
       title={widget.title}
     >
-      <Perspective
-        currentItem={perspectiveItem}
-        onSelected={handleOnPerspectiveSelected}
-        options={perspectiveOptions}
+      <Perspective currentItem={perspective} onSelected={handleOnPerspectiveSelected} options={perspectiveOptions} />
+      <CommittedSpendTrendChart
+        chartName={widget.chartName}
+        currentReport={currentReport}
+        perspective={perspective}
+        previousReport={previousReport}
+        thresholdReport={thresholdData as any}
       />
-      <div style={styles.chartContainer}>{getChart()}</div>
     </ReportSummary>
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<CommittedSpendTrendOwnProps, CommittedSpendTrendStateProps>(
-  (state, { widgetId }) => {
-    const widget = dashboardSelectors.selectWidget(state, widgetId);
-    // const queries = dashboardSelectors.selectWidgetQueries(state, widgetId);
+const mapToProps = (perspective, widgetId): CommittedSpendTrendStateProps => {
+  const currentQueryString = ''; // Todo: add query string for API when available
+  const previousQueryString = ''; // Todo: add query string for API when available
+  const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
-    // TBD...
-    const queryFromRoute = parseQuery<Query>(location.search);
-    const query = {
-      filter: {
-        ...queryFromRoute.filter,
-      },
-    };
+  const currentReport = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, currentQueryString)
+    return currentData as any;
+  });
+  const currentReportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, currentQueryString)
+  );
+  const currentReportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, currentQueryString)
+  );
 
-    // Current report
-    const currentQueryString = getQuery(query);
-    // const currentReport = reportSelectors.selectReport(
-    //   state,
-    //   widget.reportPathsType,
-    //   widget.reportType,
-    //   currentQueryString
-    // );
-    const currentReport = currentData as any;
-    const currentReportError = reportSelectors.selectReportError(
-      state,
-      widget.reportPathsType,
-      widget.reportType,
-      currentQueryString
-    );
-    const currentReportFetchStatus = reportSelectors.selectReportFetchStatus(
-      state,
-      widget.reportPathsType,
-      widget.reportType,
-      currentQueryString
-    );
+  const previousReport = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, previousQueryString)
+    return previousData as any;
+  });
+  const previousReportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, previousQueryString)
+  );
+  const previousReportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, previousQueryString)
+  );
 
-    // Previous report
-    const previousQueryString = getQuery(query);
-    // const previousReport = reportSelectors.selectReport(
-    //   state,
-    //   widget.reportPathsType,
-    //   widget.reportType,
-    //   previousQueryString
-    // );
-    const previousReport = previousData as any;
-    const previousReportError = reportSelectors.selectReportError(
-      state,
-      widget.reportPathsType,
-      widget.reportType,
-      previousQueryString
-    );
-    const previousReportFetchStatus = reportSelectors.selectReportFetchStatus(
-      state,
-      widget.reportPathsType,
-      widget.reportType,
-      previousQueryString
-    );
+  useMemo(() => {
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, currentQueryString);
+  }, [currentQueryString]);
+  useMemo(() => {
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, previousQueryString);
+  }, [previousQueryString]);
 
-    return {
-      currentQueryString,
-      currentReport,
-      currentReportError,
-      currentReportFetchStatus,
-      previousQueryString,
-      previousReport,
-      previousReportError,
-      previousReportFetchStatus,
-      query,
-      thresholdReport: thresholdData as any,
-      widget,
-    };
-  }
-);
-
-const mapDispatchToProps: CommittedSpendTrendDispatchProps = {
-  fetchReport: reportActions.fetchReport,
+  return {
+    currentReport,
+    currentReportFetchStatus,
+    currentReportError,
+    previousReport,
+    previousReportFetchStatus,
+    previousReportError,
+    widget,
+  };
 };
 
-const CommittedSpendTrend = withRouter(CommittedSpendTrendBase);
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(CommittedSpendTrend));
+export default injectIntl(withRouter(CommittedSpendTrend));

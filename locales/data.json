@@ -378,6 +378,52 @@
         "value": "Oops!"
       }
     ],
+    "excessActualSpendAriaLabel": [
+      {
+        "type": 0,
+        "value": "A description of actual spend roll over"
+      }
+    ],
+    "excessActualSpendBreakdownDesc": [
+      {
+        "type": 0,
+        "value": "The previous year had an excess actual spend of "
+      },
+      {
+        "type": 1,
+        "value": "value"
+      },
+      {
+        "type": 0,
+        "value": ". That amount will not be reflected in these breakdowns"
+      }
+    ],
+    "excessActualSpendDesc": [
+      {
+        "type": 0,
+        "value": "The previous year had an excess actual spend of "
+      },
+      {
+        "type": 1,
+        "value": "value"
+      },
+      {
+        "type": 0,
+        "value": ". That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals."
+      }
+    ],
+    "excessActualSpendLabel": [
+      {
+        "type": 0,
+        "value": "Excess actual spend included"
+      }
+    ],
+    "excessSpendTitle": [
+      {
+        "type": 0,
+        "value": "Excess actual spend included"
+      }
+    ],
     "exploreMore": [
       {
         "type": 0,

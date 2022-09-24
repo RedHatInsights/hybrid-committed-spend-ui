@@ -5,6 +5,7 @@ export function runReport(reportPathsType: ReportPathsType, reportType: ReportTy
   let report;
   switch (reportPathsType) {
     case ReportPathsType.billing:
+    default:
       report = runBillingReport(reportType, query);
       break;
   }

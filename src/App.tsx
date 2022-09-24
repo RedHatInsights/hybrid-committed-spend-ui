@@ -4,12 +4,12 @@ import { useChrome } from '@redhat-cloud-services/frontend-components/useChrome'
 import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
-import { FeatureFlags } from 'components/feature-flags';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Reducer } from 'redux';
 
 import pckg from '../package.json';
+import { initFeatureFlags } from './components/feature-flags';
 import { Routes } from './Routes';
 
 type Unregister = () => void;
@@ -34,9 +34,10 @@ const App = () => {
     };
   }, [chrome]);
 
+  initFeatureFlags();
+
   return (
     <div className="hybrid-committed-spend">
-      <FeatureFlags />
       <NotificationsPortal />
       <Routes />
     </div>

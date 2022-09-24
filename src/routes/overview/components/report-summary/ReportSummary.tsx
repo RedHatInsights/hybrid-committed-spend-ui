@@ -2,6 +2,7 @@ import { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Card, CardBody, CardFooter, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { ExcessActualSpend } from 'routes/overview/components/excess-actual-spend';
 import { FetchStatus } from 'store/common';
 import { skeletonWidth } from 'utils/skeleton';
 
@@ -11,6 +12,8 @@ interface ReportSummaryOwnProps {
   bodyStyle?: React.CSSProperties;
   children?: React.ReactNode;
   detailsLink?: React.ReactNode;
+  excessActualSpend?: number;
+  excessActualSpendBreakdown?: number;
   fetchStatus: number | number[];
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;
@@ -24,6 +27,8 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
   detailsLink,
   fetchStatus,
   intl,
+  excessActualSpend,
+  excessActualSpendBreakdown,
   title,
   subTitle,
 }) => {
@@ -40,10 +45,22 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
   return (
     <Card style={styles.reportSummary}>
       <CardTitle>
-        <Title headingLevel="h2" size={TitleSizes.lg}>
-          {intl.formatMessage(title)}
-        </Title>
-        {Boolean(subTitle) && <p style={styles.subtitle}>{intl.formatMessage(subTitle)}</p>}
+        <div style={styles.titleContainer}>
+          <div>
+            <Title headingLevel="h2" size={TitleSizes.lg}>
+              {intl.formatMessage(title)}
+            </Title>
+            {Boolean(subTitle) && <p style={styles.subtitle}>{intl.formatMessage(subTitle)}</p>}
+          </div>
+          {(excessActualSpend !== undefined || excessActualSpendBreakdown !== undefined) && (
+            <div>
+              <ExcessActualSpend
+                excessActualSpend={excessActualSpend}
+                excessActualSpendBreakdown={excessActualSpendBreakdown}
+              />
+            </div>
+          )}
+        </div>
       </CardTitle>
       <CardBody style={bodyStyle}>
         {isSkeleton() ? (
