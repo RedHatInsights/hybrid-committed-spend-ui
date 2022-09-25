@@ -3,13 +3,13 @@ import { format } from 'date-fns';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { BreakdownChart } from 'routes/components/charts/breakdown-chart';
+import { BreakdownChart } from 'routes/components/charts/breakdown';
 import {
   ChartDatum,
   ComputedReportItemType,
   ComputedReportItemValueType,
   createReportDatum,
-} from 'routes/components/charts/common/chart-datum-utils';
+} from 'routes/components/charts/common/chart-datum';
 import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/getComputedReportItems';
 
 import { PerspectiveType } from './ActualSpendBreakdown';

@@ -13,8 +13,7 @@ import { Title } from '@patternfly/react-core';
 import messages from 'locales/messages';
 import React, { useEffect, useMemo, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import ChartTheme from 'routes/components/charts/chart-theme';
-import { getCostRangeString, isFloat, isInt } from 'routes/components/charts/common/chart-datum-utils';
+import { getCostRangeString, isFloat, isInt } from 'routes/components/charts/common/chart-datum';
 import {
   ChartSeries,
   getChartNames,
@@ -27,6 +26,7 @@ import {
   isDataAvailable,
   isSeriesHidden,
 } from 'routes/components/charts/common/chart-utils';
+import ChartTheme from 'routes/components/charts/theme';
 import { formatCurrencyAbbreviation, FormatOptions, Formatter } from 'utils/format';
 
 import { styles } from './TrendOverChart.styles';

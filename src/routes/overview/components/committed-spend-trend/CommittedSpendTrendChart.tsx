@@ -2,9 +2,9 @@ import { Report } from 'api/reports/report';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { transformReport } from 'routes/components/charts/common/chart-datum-utils';
-import { TrendChart } from 'routes/components/charts/trend-chart';
-import { TrendOverChart } from 'routes/components/charts/trend-over-chart';
+import { transformReport } from 'routes/components/charts/common/chart-datum';
+import { TrendChart } from 'routes/components/charts/trend';
+import { TrendOverChart } from 'routes/components/charts/trend-over';
 
 import { chartStyles, styles } from './CommittedSpendTrendChart.styles';
 

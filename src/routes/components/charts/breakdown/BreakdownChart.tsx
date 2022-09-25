@@ -14,8 +14,7 @@ import {
 import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import ChartTheme from 'routes/components/charts/chart-theme';
-import { getMaxValue, isFloat, isInt } from 'routes/components/charts/common/chart-datum-utils';
+import { getMaxValue, isFloat, isInt } from 'routes/components/charts/common/chart-datum';
 import {
   ChartSeries,
   getChartNames,
@@ -28,6 +27,7 @@ import {
   isDataHidden,
   isSeriesHidden,
 } from 'routes/components/charts/common/chart-utils';
+import ChartTheme from 'routes/components/charts/theme';
 import { formatCurrencyAbbreviation, FormatOptions, Formatter } from 'utils/format';
 import { noop } from 'utils/noop';
 

@@ -1,1 +1,1 @@
-export { ChartDatum } from './chart-datum-utils';
+export { ChartDatum } from './chart-datum';
