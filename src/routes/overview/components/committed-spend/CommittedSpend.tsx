@@ -29,7 +29,7 @@ interface CommittedSpendStateProps {
 export type CommittedSpendProps = CommittedSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
-  const { report, reportFetchStatus, widget } = mapToProps(widgetId);
+  const { report, reportFetchStatus, widget } = mapToProps({ widgetId });
 
   let balance: string | React.ReactNode = <EmptyValueState />;
   let committedSpend: string | React.ReactNode = <EmptyValueState />;
@@ -66,7 +66,7 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
   );
 };
 
-const mapToProps = (widgetId): CommittedSpendStateProps => {
+const mapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStateProps => {
   const queryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
