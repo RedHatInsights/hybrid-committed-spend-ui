@@ -38,7 +38,6 @@ interface TrendChartOwnProps {
   height?: number;
   name?: string;
   padding?: any;
-  previousData?: any;
   thresholdData?: any;
   title?: string;
   formatter?: Formatter;
@@ -60,7 +59,6 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
     right: 40,
     top: 8,
   },
-  previousData,
   thresholdData,
   title,
   formatter,
@@ -224,30 +222,6 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
         },
       });
     }
-    if (previousData && previousData.length) {
-      newSeries.push({
-        childName: 'previous',
-        data: previousData,
-        legendItem: {
-          name: getCostRangeString(
-            previousData,
-            messages.chartPreviousSpendLegendLabel,
-            messages.chartPreviousSpendNoDataLegendLabel
-          ),
-          symbol: {
-            fill: styles.previousColorScale[0],
-            type: 'minus',
-          },
-          tooltip: getCostRangeString(previousData, messages.chartPreviousSpendTooltip),
-        },
-        style: {
-          data: {
-            ...styles.previous,
-            stroke: styles.previousColorScale[0],
-          },
-        },
-      });
-    }
     if (thresholdData && thresholdData.length) {
       newSeries.push({
         childName: 'threshold',
@@ -280,7 +254,7 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
 
   useMemo(() => {
     initDatum();
-  }, [currentData, previousData, thresholdData]);
+  }, [currentData, thresholdData]);
 
   useEffect(() => {
     const unobserve = getResizeObserver(containerRef.current, handleResize);
