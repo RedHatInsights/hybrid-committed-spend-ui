@@ -30,7 +30,7 @@ interface ActualSpendStateProps {
 export type ActualSpendProps = ActualSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
-  const { report, reportFetchStatus, widget } = mapToProps(widgetId);
+  const { report, reportFetchStatus, widget } = mapToProps({ widgetId });
 
   let actualSpend: string | React.ReactNode = <EmptyValueState />;
   let dateRange: string | React.ReactNode = <EmptyValueState />;
@@ -74,7 +74,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   );
 };
 
-const mapToProps = (widgetId): ActualSpendStateProps => {
+const mapToProps = ({ widgetId }: ActualSpendOwnProps): ActualSpendStateProps => {
   const queryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 

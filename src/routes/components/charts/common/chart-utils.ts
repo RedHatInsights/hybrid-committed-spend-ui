@@ -4,7 +4,7 @@ import messages from 'locales/messages';
 import { FormatOptions, Formatter } from 'utils/format';
 import { DomainTuple, VictoryStyleInterface } from 'victory-core';
 
-import { getMaxMinValues, getTooltipContent } from './chart-datum-utils';
+import { getMaxMinValues, getTooltipContent } from './chart-datum';
 
 export interface ChartData {
   childName?: string;

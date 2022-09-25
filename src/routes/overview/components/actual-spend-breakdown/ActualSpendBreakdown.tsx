@@ -20,6 +20,7 @@ import { productsData } from './data/productsData';
 import { sourcesData } from './data/sourcesData';
 
 interface ActualSpendBreakdownOwnProps {
+  perspective?: PerspectiveType;
   widgetId: number;
 }
 
@@ -30,13 +31,7 @@ interface ActualSpendBreakdownStateProps {
   widget: DashboardWidget;
 }
 
-interface ActualSpendBreakdownDispatchProps {
-  fetchReport: typeof reportActions.fetchReport;
-}
-
-export type ActualSpendBreakdownProps = ActualSpendBreakdownStateProps &
-  ActualSpendBreakdownOwnProps &
-  ActualSpendBreakdownDispatchProps &
+export type ActualSpendBreakdownProps = ActualSpendBreakdownOwnProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
@@ -68,7 +63,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
   const [comparison, setComparison] = useState(ComparisonType.monthly);
   const [perspective, setPerspective] = useState(PerspectiveType.sources);
 
-  const { report, reportFetchStatus, widget } = mapToProps(perspective, widgetId);
+  const { report, reportFetchStatus, widget } = mapToProps({ perspective, widgetId });
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -107,7 +102,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
   );
 };
 
-const mapToProps = (perspective, widgetId): ActualSpendBreakdownStateProps => {
+const mapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps): ActualSpendBreakdownStateProps => {
   const queryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 

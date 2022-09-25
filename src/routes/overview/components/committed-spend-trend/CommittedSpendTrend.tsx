@@ -48,10 +48,9 @@ const perspectiveOptions = [
 
 const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetId }) => {
   const [perspective, setPerspective] = useState(PerspectiveType.previous_over_actual);
-  const { currentReport, currentReportFetchStatus, previousReport, previousReportFetchStatus, widget } = mapToProps(
-    perspective,
-    widgetId
-  );
+  const { currentReport, currentReportFetchStatus, previousReport, previousReportFetchStatus, widget } = mapToProps({
+    widgetId,
+  });
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -78,15 +77,14 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
       <CommittedSpendTrendChart
         chartName={widget.chartName}
         currentReport={currentReport}
-        perspective={perspective}
-        previousReport={previousReport}
+        previousReport={perspective === PerspectiveType.previous_over_actual ? previousReport : undefined}
         thresholdReport={thresholdData as any}
       />
     </ReportSummary>
   );
 };
 
-const mapToProps = (perspective, widgetId): CommittedSpendTrendStateProps => {
+const mapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTrendStateProps => {
   const currentQueryString = ''; // Todo: add query string for API when available
   const previousQueryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
