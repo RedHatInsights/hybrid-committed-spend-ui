@@ -9,11 +9,11 @@ import { chart_color_green_500 } from '@patternfly/react-tokens/dist/js/chart_co
 
 export const styles = {
   currentColorScale: [chart_color_blue_300.value, chart_color_blue_400.value],
-  currentSpend: {
+  current: {
     fill: 'none',
   },
   previousColorScale: [chart_color_black_200.value, chart_color_black_200.value],
-  previousSpend: {
+  previous: {
     fill: 'none',
   },
   thresholdColorScale: [
