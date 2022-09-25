@@ -12,7 +12,7 @@ import {
   getInteractiveLegendEvents,
 } from '@patternfly/react-charts';
 import messages from 'locales/messages';
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { getMaxValue, isFloat, isInt } from 'routes/components/charts/common/chart-datum';
 import {
@@ -29,7 +29,6 @@ import {
 } from 'routes/components/charts/common/chart-utils';
 import ChartTheme from 'routes/components/charts/theme';
 import { formatCurrencyAbbreviation, FormatOptions, Formatter } from 'utils/format';
-import { noop } from 'utils/noop';
 
 import { styles } from './BreakdownChart.styles';
 
@@ -50,184 +49,59 @@ interface BreakdownChartOwnProps {
   top6thData: any;
 }
 
-interface State {
-  cursorVoronoiContainer?: any;
-  hiddenSeries: Set<number>;
-  series?: ChartSeries[];
-  tickValues?: number[];
-  width: number;
-  units?: string;
-}
-
 type BreakdownChartProps = BreakdownChartOwnProps & WrappedComponentProps;
 
-class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
-  private containerRef = React.createRef<HTMLDivElement>();
-  private observer: any = noop;
+const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
+  adjustContainerHeight,
+  containerHeight,
+  formatter,
+  formatOptions,
+  height,
+  intl,
+  name,
+  padding = {
+    bottom: 75,
+    left: 55,
+    right: 40,
+    top: 8,
+  },
+  top1stData,
+  top2ndData,
+  top3rdData,
+  top4thData,
+  top5thData,
+  top6thData,
+}) => {
+  const [containerRef] = useState(React.createRef<HTMLDivElement>());
+  const [cursorVoronoiContainer, setCursorVoronoiContainer] = useState<any>();
+  const [hiddenSeries, setHiddenSeries] = useState(new Set<number>());
+  const [series, setSeries] = useState<ChartSeries[]>();
+  const [units, setUnits] = useState('USD');
+  const [width, setWidth] = useState(0);
 
-  public state: State = {
-    hiddenSeries: new Set(),
-    tickValues: [],
-    width: 0,
+  // Clone original container. See https://issues.redhat.com/browse/COST-762
+  const cloneContainer = () => {
+    return cursorVoronoiContainer
+      ? React.cloneElement(cursorVoronoiContainer, {
+          disable: !isDataAvailable(series, hiddenSeries),
+          labelComponent: (
+            <ChartLegendTooltip
+              legendData={getLegendData(series, hiddenSeries, true)}
+              title={datum =>
+                intl.formatMessage(messages.chartTooltipTitle, {
+                  value: intl.formatDate(`${datum.x}T23:59:59z`, {
+                    month: 'long',
+                    year: 'numeric',
+                  }),
+                })
+              }
+            />
+          ),
+        })
+      : undefined;
   };
 
-  public componentDidMount() {
-    this.initDatum();
-    this.observer = getResizeObserver(this.containerRef.current, this.handleResize);
-  }
-
-  public componentDidUpdate(prevProps: BreakdownChartProps) {
-    if (
-      prevProps.top1stData !== this.props.top1stData ||
-      prevProps.top2ndData !== this.props.top2ndData ||
-      prevProps.top3rdData !== this.props.top3rdData ||
-      prevProps.top4thData !== this.props.top4thData ||
-      prevProps.top5thData !== this.props.top5thData ||
-      prevProps.top6thData !== this.props.top6thData
-    ) {
-      this.initDatum();
-    }
-  }
-
-  public componentWillUnmount() {
-    if (this.observer) {
-      this.observer();
-    }
-  }
-
-  private initDatum = () => {
-    const { top1stData, top2ndData, top3rdData, top4thData, top5thData, top6thData } = this.props;
-
-    const series: ChartSeries[] = [];
-    if (top1stData && top1stData.length) {
-      const name = this.getTruncatedString(top1stData[0].name);
-      series.push({
-        childName: 'top1stData',
-        data: this.initDatumChildName(top1stData, 'top1stData'),
-        legendItem: {
-          name,
-          symbol: {
-            // fill: styles.colorScale[0],
-          },
-          tooltip: name,
-        },
-        style: {
-          data: {
-            // fill: styles.colorScale[0],
-          },
-        },
-      });
-    }
-    if (top2ndData && top2ndData.length) {
-      const name = this.getTruncatedString(top2ndData[0].name);
-      series.push({
-        childName: 'top2ndData',
-        data: this.initDatumChildName(top2ndData, 'top2ndData'),
-        legendItem: {
-          name,
-          symbol: {
-            // fill: styles.colorScale[1],
-          },
-          tooltip: name,
-        },
-        style: {
-          data: {
-            // fill: styles.colorScale[1],
-          },
-        },
-      });
-    }
-    if (top3rdData && top3rdData.length) {
-      const name = this.getTruncatedString(top3rdData[0].name);
-      series.push({
-        childName: 'top3rdData',
-        data: this.initDatumChildName(top3rdData, 'top3rdData'),
-        legendItem: {
-          name,
-          symbol: {
-            // fill: styles.colorScale[2],
-          },
-          tooltip: name,
-        },
-        style: {
-          data: {
-            // fill: styles.colorScale[2],
-          },
-        },
-      });
-    }
-    if (top4thData && top4thData.length) {
-      const name = this.getTruncatedString(top4thData[0].name);
-      series.push({
-        childName: 'top4thData',
-        data: this.initDatumChildName(top4thData, 'top4thData'),
-        legendItem: {
-          name,
-          symbol: {
-            // fill: styles.colorScale[3],
-          },
-          tooltip: name,
-        },
-        style: {
-          data: {
-            // fill: styles.colorScale[3],
-          },
-        },
-      });
-    }
-    if (top5thData && top5thData.length) {
-      const name = this.getTruncatedString(top5thData[0].name);
-      series.push({
-        childName: 'top5thData',
-        data: this.initDatumChildName(top5thData, 'top5thData'),
-        legendItem: {
-          name,
-          symbol: {
-            // fill: styles.colorScale[4],
-          },
-          tooltip: name,
-        },
-        style: {
-          data: {
-            // fill: styles.colorScale[4],
-          },
-        },
-      });
-    }
-    if (top6thData && top6thData.length) {
-      const name = this.getTruncatedString(top6thData[0].name);
-      series.push({
-        childName: 'top6thData',
-        data: this.initDatumChildName(top6thData, 'top6thData'),
-        legendItem: {
-          name,
-          symbol: {
-            // fill: styles.colorScale[5],
-          },
-          tooltip: name,
-        },
-        style: {
-          data: {
-            // fill: styles.colorScale[5],
-          },
-        },
-      });
-    }
-    const cursorVoronoiContainer = this.getCursorVoronoiContainer();
-    const units = this.getUnits(series);
-    this.setState({ cursorVoronoiContainer, hiddenSeries: new Set(), series, units });
-  };
-
-  // Adds a child name to help identify hidden data series
-  private initDatumChildName = (data: any, childName: string) => {
-    data.map(datum => (datum.childName = childName));
-    return data;
-  };
-
-  private getAdjustedContainerHeight = () => {
-    const { adjustContainerHeight, height, containerHeight = height } = this.props;
-    const { width } = this.state;
-
+  const getAdjustedContainerHeight = () => {
     let adjustedContainerHeight = containerHeight;
     if (adjustContainerHeight) {
       if (width < 550) {
@@ -238,8 +112,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
   };
 
   // If bar width exceeds max and domainPadding is true, extra width is returned to help center bars horizontally
-  private getBarWidth = (domainPadding: boolean = false) => {
-    const { hiddenSeries, series, width } = this.state;
+  const getBarWidth = (domainPadding: boolean = false) => {
     const maxWidth = 10;
     let maxValue = -1;
 
@@ -266,19 +139,16 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
     return sectionWidth > maxWidth ? maxWidth : sectionWidth;
   };
 
-  private getChart = (series: ChartSeries, index: number, barWidth: number) => {
-    const { hiddenSeries } = this.state;
-    const data = !hiddenSeries.has(index) ? series.data : [{ y: null }];
+  const getChart = (serie: ChartSeries, index: number, barWidth: number) => {
+    const data = !hiddenSeries.has(index) ? serie.data : [{ y: null }];
 
     return (
-      <ChartBar barWidth={barWidth} data={data} key={series.childName} name={series.childName} style={series.style} />
+      <ChartBar barWidth={barWidth} data={data} key={serie.childName} name={serie.childName} style={serie.style} />
     );
   };
 
   // Returns CursorVoronoiContainer component
-  private getCursorVoronoiContainer = () => {
-    const { formatter, formatOptions } = this.props;
-
+  const getCursorVoronoiContainer = () => {
     // Note: Container order is important
     const CursorVoronoiContainer: any = createContainer('voronoi', 'cursor');
 
@@ -299,7 +169,7 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
   };
 
   // Returns domain only if max y values are zero
-  private getDomain = (series: ChartSeries[], hiddenSeries: Set<number>) => {
+  const getDomain = () => {
     let maxValue = -1;
     let domain;
 
@@ -319,24 +189,18 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
   };
 
   // Returns onMouseOver, onMouseOut, and onClick events for the interactive legend
-  private getEvents = () => {
-    const { name } = this.props;
-    const { hiddenSeries, series } = this.state;
-
+  const getEvents = () => {
     const result = getInteractiveLegendEvents({
       chartNames: getChartNames(series),
       isDataHidden: data => isDataHidden(series, hiddenSeries, data),
       isHidden: index => isSeriesHidden(hiddenSeries, index),
       legendName: `${name}-legend`,
-      onLegendClick: props => this.handleLegendClick(props.index),
+      onLegendClick: props => handleLegendClick(props.index),
     });
     return result;
   };
 
-  private getLegend = () => {
-    const { name } = this.props;
-    const { hiddenSeries, series } = this.state;
-
+  const getLegend = () => {
     return (
       <ChartLegend
         data={getLegendData(series, hiddenSeries)}
@@ -349,18 +213,16 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
     );
   };
 
-  private getTruncatedString = (str: string) => {
+  const getTruncatedString = (str: string) => {
     const maxChars = 20;
     return str.length > maxChars ? str.substr(0, maxChars - 1) + '...' : str;
   };
 
-  private getTickValue = (t: number) => {
-    const { units } = this.state;
-
+  const getTickValue = (t: number) => {
     return formatCurrencyAbbreviation(t, units);
   };
 
-  private getUnits = (series: ChartSeries[]) => {
+  const getUnits = () => {
     if (series) {
       for (const s of series) {
         for (const datum of s.data) {
@@ -374,102 +236,207 @@ class BreakdownChartBase extends React.Component<BreakdownChartProps, State> {
   };
 
   // Hide each data series individually
-  private handleLegendClick = (index: number) => {
-    const hiddenSeries = initHiddenSeries(this.state.series, this.state.hiddenSeries, index);
-    this.setState({ hiddenSeries });
+  const handleLegendClick = (index: number) => {
+    const newHiddenSeries = initHiddenSeries(series, hiddenSeries, index);
+    setHiddenSeries(newHiddenSeries);
   };
 
-  private handleResize = () => {
-    const { width } = this.state;
-    const { clientWidth = 0 } = this.containerRef.current || {};
+  const handleResize = () => {
+    const { clientWidth = 0 } = containerRef.current || {};
 
     if (clientWidth !== width) {
-      this.setState({ width: clientWidth });
+      setWidth(clientWidth);
     }
   };
 
-  public render() {
-    const {
-      height,
-      intl,
-      name,
-      padding = {
-        bottom: 75,
-        left: 55,
-        right: 40,
-        top: 8,
-      },
-    } = this.props;
-    const { cursorVoronoiContainer, hiddenSeries, series, width } = this.state;
+  // Adds a child name to help identify hidden data series
+  const initDatumChildName = (data: any, childName: string) => {
+    data.map(datum => (datum.childName = childName));
+    return data;
+  };
 
-    // Clone original container. See https://issues.redhat.com/browse/COST-762
-    const container = cursorVoronoiContainer
-      ? React.cloneElement(cursorVoronoiContainer, {
-          disable: !isDataAvailable(series, hiddenSeries),
-          labelComponent: (
-            <ChartLegendTooltip
-              legendData={getLegendData(series, hiddenSeries, true)}
-              title={datum =>
-                intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(`${datum.x}T23:59:59z`, {
-                    month: 'long',
-                    year: 'numeric',
-                  }),
-                })
+  const initDatum = () => {
+    const newSeries: ChartSeries[] = [];
+    if (top1stData && top1stData.length) {
+      const shortName = getTruncatedString(top1stData[0].name);
+      newSeries.push({
+        childName: 'top1stData',
+        data: initDatumChildName(top1stData, 'top1stData'),
+        legendItem: {
+          name: shortName,
+          symbol: {
+            // fill: styles.colorScale[0],
+          },
+          tooltip: shortName,
+        },
+        style: {
+          data: {
+            // fill: styles.colorScale[0],
+          },
+        },
+      });
+    }
+    if (top2ndData && top2ndData.length) {
+      const shortName = getTruncatedString(top2ndData[0].name);
+      newSeries.push({
+        childName: 'top2ndData',
+        data: initDatumChildName(top2ndData, 'top2ndData'),
+        legendItem: {
+          name: shortName,
+          symbol: {
+            // fill: styles.colorScale[1],
+          },
+          tooltip: shortName,
+        },
+        style: {
+          data: {
+            // fill: styles.colorScale[1],
+          },
+        },
+      });
+    }
+    if (top3rdData && top3rdData.length) {
+      const shortName = getTruncatedString(top3rdData[0].name);
+      newSeries.push({
+        childName: 'top3rdData',
+        data: initDatumChildName(top3rdData, 'top3rdData'),
+        legendItem: {
+          name: shortName,
+          symbol: {
+            // fill: styles.colorScale[2],
+          },
+          tooltip: shortName,
+        },
+        style: {
+          data: {
+            // fill: styles.colorScale[2],
+          },
+        },
+      });
+    }
+    if (top4thData && top4thData.length) {
+      const shortName = getTruncatedString(top4thData[0].name);
+      newSeries.push({
+        childName: 'top4thData',
+        data: initDatumChildName(top4thData, 'top4thData'),
+        legendItem: {
+          name: shortName,
+          symbol: {
+            // fill: styles.colorScale[3],
+          },
+          tooltip: shortName,
+        },
+        style: {
+          data: {
+            // fill: styles.colorScale[3],
+          },
+        },
+      });
+    }
+    if (top5thData && top5thData.length) {
+      const shortName = getTruncatedString(top5thData[0].name);
+      newSeries.push({
+        childName: 'top5thData',
+        data: initDatumChildName(top5thData, 'top5thData'),
+        legendItem: {
+          name: shortName,
+          symbol: {
+            // fill: styles.colorScale[4],
+          },
+          tooltip: shortName,
+        },
+        style: {
+          data: {
+            // fill: styles.colorScale[4],
+          },
+        },
+      });
+    }
+    if (top6thData && top6thData.length) {
+      const shortName = getTruncatedString(top6thData[0].name);
+      newSeries.push({
+        childName: 'top6thData',
+        data: initDatumChildName(top6thData, 'top6thData'),
+        legendItem: {
+          name: shortName,
+          symbol: {
+            // fill: styles.colorScale[5],
+          },
+          tooltip: shortName,
+        },
+        style: {
+          data: {
+            // fill: styles.colorScale[5],
+          },
+        },
+      });
+    }
+    setSeries(newSeries);
+    setCursorVoronoiContainer(getCursorVoronoiContainer());
+    setHiddenSeries(new Set());
+    setUnits(getUnits());
+  };
+
+  useMemo(() => {
+    initDatum();
+  }, [top1stData, top2ndData, top3rdData, top4thData, top5thData]);
+
+  useEffect(() => {
+    const unobserve = getResizeObserver(containerRef.current, handleResize);
+    return () => {
+      if (unobserve) {
+        unobserve();
+      }
+    };
+  }, [containerRef]);
+
+  const barWidth = getBarWidth();
+
+  // Note: For tooltip values to match properly, chart groups must be rendered in the order given as legend data
+  return (
+    <div className="chartOverride" ref={containerRef} style={{ height: getAdjustedContainerHeight() }}>
+      <div style={{ height, width }}>
+        <Chart
+          containerComponent={cloneContainer()}
+          domain={getDomain()}
+          domainPadding={30}
+          events={getEvents()}
+          height={height}
+          legendAllowWrap
+          legendComponent={getLegend()}
+          legendData={getLegendData(series, hiddenSeries)}
+          legendPosition="bottom-left"
+          name={name}
+          padding={padding}
+          theme={ChartTheme}
+          themeColor={ChartThemeColor.multiOrdered}
+          width={width}
+        >
+          {series && series.length > 0 && (
+            <ChartGroup offset={Math.min(11, width * 0.013)}>
+              {series.map((s, index) => getChart(s, index, barWidth))}
+            </ChartGroup>
+          )}
+          <ChartAxis
+            fixLabelOverlap
+            style={styles.xAxis}
+            tickFormat={t => {
+              if (isFloat(t) || isInt(t)) {
+                return t;
               }
-            />
-          ),
-        })
-      : undefined;
-
-    const barWidth = this.getBarWidth();
-
-    // Note: For tooltip values to match properly, chart groups must be rendered in the order given as legend data
-    return (
-      <div className="chartOverride" ref={this.containerRef} style={{ height: this.getAdjustedContainerHeight() }}>
-        <div style={{ height, width }}>
-          <Chart
-            containerComponent={container}
-            domain={this.getDomain(series, hiddenSeries)}
-            domainPadding={30}
-            events={this.getEvents()}
-            height={height}
-            legendAllowWrap
-            legendComponent={this.getLegend()}
-            legendData={getLegendData(series, hiddenSeries)}
-            legendPosition="bottom-left"
-            name={name}
-            padding={padding}
-            theme={ChartTheme}
-            themeColor={ChartThemeColor.multiOrdered}
-            width={width}
-          >
-            {series && series.length > 0 && (
-              <ChartGroup offset={Math.min(11, width * 0.013)}>
-                {series.map((s, index) => this.getChart(s, index, barWidth))}
-              </ChartGroup>
-            )}
-            <ChartAxis
-              fixLabelOverlap
-              style={styles.xAxis}
-              tickFormat={t => {
-                if (isFloat(t) || isInt(t)) {
-                  return t;
-                }
-                return intl.formatDate(`${t}T23:59:59z`, {
-                  month: 'short',
-                  year: 'numeric',
-                });
-              }}
-              tickValues={getTickValues(series)}
-            />
-            <ChartAxis dependentAxis style={styles.yAxis} tickFormat={this.getTickValue} />
-          </Chart>
-        </div>
+              return intl.formatDate(`${t}T23:59:59z`, {
+                month: 'short',
+                year: 'numeric',
+              });
+            }}
+            tickValues={getTickValues(series)}
+          />
+          <ChartAxis dependentAxis style={styles.yAxis} tickFormat={getTickValue} />
+        </Chart>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const BreakdownChart = injectIntl(BreakdownChartBase);
 

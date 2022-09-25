@@ -50,6 +50,8 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
   adjustContainerHeight,
   containerHeight,
   currentData,
+  formatter,
+  formatOptions,
   height,
   intl,
   name,
@@ -61,8 +63,6 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
   },
   thresholdData,
   title,
-  formatter,
-  formatOptions,
 }) => {
   const [containerRef] = useState(React.createRef<HTMLDivElement>());
   const [cursorVoronoiContainer, setCursorVoronoiContainer] = useState<any>();
