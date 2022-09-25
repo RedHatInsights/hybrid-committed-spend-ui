@@ -1,4 +1,3 @@
-import { Report } from 'api/reports/report';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -7,19 +6,21 @@ import { TrendChart } from 'routes/components/charts/trend';
 
 import { chartStyles } from './CommittedSpendTrendChart.styles';
 
-interface CommittedSpendTrendChartOwnProps {
+interface CommittedSpendTrendOverChartOwnProps {
   chartName?: string;
   currentData?: ChartDatum;
-  thresholdData?: Report;
+  previousData?: ChartDatum;
+  thresholdData?: ChartDatum;
 }
 
-export type CommittedSpendTrendChartProps = CommittedSpendTrendChartOwnProps &
+export type CommittedSpendTrendOverChartProps = CommittedSpendTrendOverChartOwnProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const CommittedSpendTrendChartBase: React.FC<CommittedSpendTrendChartProps> = ({
+const CommittedSpendTrendOverChartBase: React.FC<CommittedSpendTrendOverChartProps> = ({
   chartName,
   currentData,
+  previousData,
   thresholdData,
 }) => {
   return (
@@ -29,9 +30,10 @@ const CommittedSpendTrendChartBase: React.FC<CommittedSpendTrendChartProps> = ({
       currentData={currentData}
       height={chartStyles.chartHeight}
       name={chartName}
+      previousData={previousData}
       thresholdData={thresholdData}
     />
   );
 };
 
-export const CommittedSpendTrendChart = injectIntl(withRouter(CommittedSpendTrendChartBase));
+export const CommittedSpendTrendOverChart = injectIntl(withRouter(CommittedSpendTrendOverChartBase));

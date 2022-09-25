@@ -14,7 +14,7 @@ import { FetchStatus } from 'store/common';
 import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 
-import { CommittedSpendTrendChart } from './CommittedSpendTrendChart';
+import { CommittedSpendTrendTransform } from './CommittedSpendTrendTransform';
 import { currentData } from './data/currentData';
 import { previousData } from './data/previousData';
 import { thresholdData } from './data/thresholdData';
@@ -74,9 +74,10 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
       title={widget.title}
     >
       <Perspective currentItem={perspective} onSelected={handleOnPerspectiveSelected} options={perspectiveOptions} />
-      <CommittedSpendTrendChart
+      <CommittedSpendTrendTransform
         chartName={widget.chartName}
         currentReport={currentReport}
+        perspective={perspective}
         previousReport={perspective === PerspectiveType.previous_over_actual ? previousReport : undefined}
         thresholdReport={thresholdData as any}
       />

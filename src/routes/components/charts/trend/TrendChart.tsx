@@ -38,6 +38,7 @@ interface TrendChartOwnProps {
   height?: number;
   name?: string;
   padding?: any;
+  previousData?: any;
   thresholdData?: any;
   title?: string;
   formatter?: Formatter;
@@ -61,6 +62,7 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
     right: 40,
     top: 8,
   },
+  previousData,
   thresholdData,
   title,
 }) => {
@@ -82,8 +84,8 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
               title={datum =>
                 intl.formatMessage(messages.chartTooltipTitle, {
                   value: intl.formatDate(`${datum.key}T23:59:59z`, {
-                    month: 'short',
-                    year: 'numeric',
+                    month: 'long',
+                    ...(!previousData && { year: 'numeric' }),
                   }),
                 })
               }
@@ -222,6 +224,30 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
         },
       });
     }
+    if (previousData && previousData.length) {
+      newSeries.push({
+        childName: 'previous',
+        data: previousData,
+        legendItem: {
+          name: getCostRangeString(
+            previousData,
+            messages.chartPreviousSpendLegendLabel,
+            messages.chartPreviousSpendNoDataLegendLabel
+          ),
+          symbol: {
+            fill: styles.previousColorScale[0],
+            type: 'minus',
+          },
+          tooltip: getCostRangeString(previousData, messages.chartPreviousSpendTooltip),
+        },
+        style: {
+          data: {
+            ...styles.previous,
+            stroke: styles.previousColorScale[0],
+          },
+        },
+      });
+    }
     if (thresholdData && thresholdData.length) {
       newSeries.push({
         childName: 'threshold',
@@ -300,8 +326,8 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
                   return t;
                 }
                 return intl.formatDate(`${t}T23:59:59z`, {
-                  month: 'short',
-                  year: 'numeric',
+                  month: previousData ? 'long' : 'short',
+                  ...(!previousData && { year: 'numeric' }),
                 });
               }}
               tickValues={getTickValues(series)}
