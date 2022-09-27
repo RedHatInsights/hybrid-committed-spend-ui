@@ -22,11 +22,11 @@ export interface ChartDatum {
 }
 
 export interface TransformData {
+  datumType?: DatumType;
   report: Report;
   startDate?: Date;
   endDate?: Date;
   shiftDateByYear?: number; // Shift the year, so we can overlap current and previous months
-  type?: ChartType;
   reportItem?: string;
   reportItemValue?: string; // useful for infrastructure.usage values
 }
@@ -67,17 +67,17 @@ export const enum ComputedReportItemValueType {
 }
 
 // eslint-disable-next-line no-shadow
-export const enum ChartType {
-  rolling,
+export const enum DatumType {
   cumulative,
+  rolling,
 }
 
 export function transformReport({
+  datumType,
   report,
   startDate,
   endDate,
   shiftDateByYear = 0, // Shift the year, so we can overlap current and previous months
-  type,
   reportItem = 'cost',
   reportItemValue = 'total', // useful for infrastructure.usage values
 }: TransformData): ChartDatum[] {
@@ -91,7 +91,7 @@ export function transformReport({
   } as any;
   const computedItems = getComputedReportItems(items);
   let datums;
-  if (type === ChartType.cumulative) {
+  if (datumType === DatumType.cumulative) {
     datums = computedItems.reduce<ChartDatum[]>((acc, d) => {
       const prevValue = acc.length ? acc[acc.length - 1].y : 0;
       const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;

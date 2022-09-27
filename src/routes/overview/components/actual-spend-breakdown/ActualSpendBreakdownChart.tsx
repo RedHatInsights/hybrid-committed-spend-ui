@@ -9,6 +9,7 @@ import {
   ComputedReportItemType,
   ComputedReportItemValueType,
   createReportDatum,
+  DatumType,
 } from 'routes/components/charts/common/chart-datum';
 import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/getComputedReportItems';
 
@@ -17,7 +18,7 @@ import { chartStyles, styles } from './ActualSpendBreakdownChart.styles';
 
 interface ActualSpendBreakdownChartOwnProps {
   chartName?: string;
-  isCumulative?: boolean;
+  datumType?: DatumType;
   perspective?: PerspectiveType;
   report?: Report;
 }
@@ -26,11 +27,7 @@ export type ActualSpendBreakdownChartProps = ActualSpendBreakdownChartOwnProps &
   RouteComponentProps<void> &
   WrappedComponentProps;
 
-const ActualSpendBreakdownChartBase: React.FC<ActualSpendBreakdownChartProps> = ({
-  chartName,
-  isCumulative,
-  report,
-}) => {
+const ActualSpendBreakdownChartBase: React.FC<ActualSpendBreakdownChartProps> = ({ chartName, datumType, report }) => {
   const getChart = () => {
     const startDate = new Date('2021-12-01T23:59:59z');
     const endDate = new Date('2022-12-01T23:59:59z');
@@ -64,7 +61,7 @@ const ActualSpendBreakdownChartBase: React.FC<ActualSpendBreakdownChartProps> = 
         const items = Array.from(computedItem.values());
 
         // Show cumulative
-        if (isCumulative) {
+        if (datumType === DatumType.cumulative) {
           datums = items.reduce<ChartDatum[]>((acc, d) => {
             const prevValue = acc.length ? acc[acc.length - 1].y : 0;
             const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;
