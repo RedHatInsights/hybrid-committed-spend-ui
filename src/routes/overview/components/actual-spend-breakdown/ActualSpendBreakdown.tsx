@@ -5,8 +5,8 @@ import messages from 'locales/messages';
 import React, { useMemo, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { DatumType } from 'routes/components/charts/common/chart-datum';
 import { Perspective } from 'routes/overview/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { RootState } from 'store';
@@ -94,7 +94,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
       <Perspective currentItem={comparison} onSelected={handleOnComparisonSelected} options={dataTypeOptions} />
       <ActualSpendBreakdownChart
         chartName={widget.chartName}
-        isCumulative={comparison === ComparisonType.cumulative}
+        datumType={comparison === ComparisonType.cumulative ? DatumType.cumulative : DatumType.rolling}
         perspective={perspective}
         report={report}
       />
