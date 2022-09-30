@@ -10,7 +10,7 @@ import { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 
-import { styles } from './overview.styles';
+import { styles } from './OverviewHeader.styles';
 
 interface OverviewHeaderOwnProps {
   // TBD...
