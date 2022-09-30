@@ -10,15 +10,15 @@ import { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 
-import { styles } from './OverviewHeader.styles';
+import { styles } from './DetailsHeader.styles';
 
-interface OverviewHeaderOwnProps {
+interface DetailsHeaderOwnProps {
   // TBD...
 }
 
-type OverviewHeaderProps = OverviewHeaderOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type DetailsHeaderProps = DetailsHeaderOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const OverviewHeader: React.FC<OverviewHeaderProps> = ({ intl }) => {
+const DetailsHeader: React.FC<DetailsHeaderProps> = ({ intl }) => {
   const { report, reportFetchStatus } = mapToProps();
 
   let accountName: string | React.ReactNode = <EmptyValueState />;
@@ -39,7 +39,7 @@ const OverviewHeader: React.FC<OverviewHeaderProps> = ({ intl }) => {
   return (
     <PageHeader>
       <div style={styles.headerContent}>
-        <PageHeaderTitle title={intl.formatMessage(messages.overviewTitle)} />
+        <PageHeaderTitle title={intl.formatMessage(messages.detailsTitle)} />
         {reportFetchStatus !== FetchStatus.inProgress && (
           <div>
             <div style={styles.headerContentRight}>
@@ -101,4 +101,4 @@ const mapToProps = () => {
   };
 };
 
-export default injectIntl(withRouter(OverviewHeader));
+export default injectIntl(withRouter(DetailsHeader));
