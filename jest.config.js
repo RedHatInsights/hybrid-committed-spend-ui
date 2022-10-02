@@ -13,6 +13,7 @@ module.exports = {
   },
   roots: ['<rootDir>/src'],
   setupFiles: ['<rootDir>/test/testEnv.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/unleashMock.js'],
   testEnvironment: 'jest-environment-jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
