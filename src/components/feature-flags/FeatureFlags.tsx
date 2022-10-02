@@ -1,8 +1,8 @@
-import { useUnleashClient, useUnleashContext } from '@unleash/proxy-client-react';
+import { /* useUnleashClient, */ useUnleashContext } from '@unleash/proxy-client-react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { featureFlagsActions } from 'store/feature-flags/';
+// import { featureFlagsActions } from 'store/feature-flags/';
 
 interface FeatureFlagsOwnProps {
   children?: React.ReactNode;
@@ -16,19 +16,19 @@ const enum FeatureToggle {
 }
 
 const useFeatureFlags = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const updateContext = useUnleashContext();
-  const client = useUnleashClient();
+  // const client = useUnleashClient();
   const [userId, setUserId] = useState();
 
-  const insights = (window as any).insights;
-  if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
-    insights.chrome.auth.getUser().then(user => {
-      if (user.identity && user.identity.account_number) {
+  useMemo(() => {
+    const insights = (window as any).insights;
+    if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
+      insights.chrome.auth.getUser().then(user => {
         setUserId(user.identity.account_number);
-      }
-    });
-  }
+      });
+    }
+  }, []);
 
   const isMounted = useRef(false);
   useMemo(() => {
@@ -50,13 +50,13 @@ const useFeatureFlags = () => {
     // Wait for the new flags to pull in from the different context
     const fetchFlags = async () => {
       await updateContext({ userId });
-      dispatch(
-        featureFlagsActions.setFeatureFlags({
-          isDetailsFeatureEnabled: client.isEnabled(FeatureToggle.details),
-        })
-      );
-      // eslint-disable-next-line no-console
-      console.log('isDetailsFeatureEnabled', client.isEnabled(FeatureToggle.details));
+      // await updateContext({ userId }).then(() => {
+      //   dispatch(
+      //     featureFlagsActions.setFeatureFlags({
+      //       isDetailsFeatureEnabled: client.isEnabled(FeatureToggle.details),
+      //     })
+      //   );
+      // });
     };
     if (userId && isMounted.current) {
       fetchFlags();
