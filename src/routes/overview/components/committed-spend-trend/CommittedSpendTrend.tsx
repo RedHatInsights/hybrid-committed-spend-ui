@@ -113,9 +113,11 @@ const mapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTr
   );
 
   useMemo(() => {
+    // Todo: Enable via dispatch
     reportActions.fetchReport(widget.reportPathsType, widget.reportType, currentQueryString);
   }, [currentQueryString]);
   useMemo(() => {
+    // Todo: Enable via dispatch
     reportActions.fetchReport(widget.reportPathsType, widget.reportType, previousQueryString);
   }, [previousQueryString]);
 

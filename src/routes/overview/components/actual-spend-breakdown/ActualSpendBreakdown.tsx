@@ -126,6 +126,7 @@ const mapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps): Ac
   );
 
   useMemo(() => {
+    // Todo: Enable via dispatch
     reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
   }, [queryString]);
 
