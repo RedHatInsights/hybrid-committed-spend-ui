@@ -1,52 +1,47 @@
+import { useFlag } from '@unleash/proxy-client-react';
 import { getUserAccessQuery } from 'api/queries/userAccessQuery';
 import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { paths, routes } from 'Routes';
 import { Loading } from 'routes/state';
 import { NotAuthorized, NotAvailable } from 'routes/state';
-import { createMapStateToProps, FetchStatus } from 'store/common';
-import { featureFlagsSelectors } from 'store/feature-flags/';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
 import { hasAllAccess } from 'utils/userAccess';
 
+import { FeatureToggle } from '../feature-flags';
 interface PermissionsOwnProps extends RouteComponentProps<void> {
   children?: React.ReactNode;
 }
 
 interface PermissionsStateProps {
-  isDetailsFeatureEnabled?: boolean;
   userAccess: UserAccess;
   userAccessError: AxiosError;
   userAccessFetchStatus: FetchStatus;
   userAccessQueryString: string;
 }
 
-type PermissionsProps = PermissionsOwnProps & PermissionsStateProps;
+type PermissionsProps = PermissionsOwnProps;
 
-const PermissionsBase: React.FC<PermissionsProps> = ({
-  children = null,
-  isDetailsFeatureEnabled,
-  location,
-  userAccess,
-  userAccessError,
-  userAccessFetchStatus,
-}) => {
+const PermissionsBase: React.FC<PermissionsProps> = ({ children = null, location }) => {
+  const { userAccess, userAccessError, userAccessFetchStatus } = mapToProps();
+
   const getRoutePath = () => {
     const currRoute = routes.find(({ path }) => path === location.pathname);
     return currRoute ? currRoute.path : undefined;
   };
 
   const hasPermissions = () => {
-    const isTest = true;
-    if (userAccessFetchStatus !== FetchStatus.complete && !isTest) {
+    if (userAccessFetchStatus !== FetchStatus.complete) {
       return false;
     }
 
-    const hasAccess = hasAllAccess(userAccess) || isTest;
-    const details = hasAccess && isDetailsFeatureEnabled;
+    const hasAccess = hasAllAccess(userAccess);
+    const details = hasAccess && useFlag(FeatureToggle.details);
     const overview = hasAccess;
 
     switch (getRoutePath()) {
@@ -72,28 +67,26 @@ const PermissionsBase: React.FC<PermissionsProps> = ({
   return result;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<PermissionsOwnProps, PermissionsStateProps>((state, props) => {
-  const isDetailsFeatureEnabled = featureFlagsSelectors.selectIsDetailsFeatureEnabled(state);
-
+const mapToProps = (): PermissionsStateProps => {
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);
-  const userAccess = userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString);
-  const userAccessError = userAccessSelectors.selectUserAccessError(state, UserAccessType.all, userAccessQueryString);
-  const userAccessFetchStatus = userAccessSelectors.selectUserAccessFetchStatus(
-    state,
-    UserAccessType.all,
-    userAccessQueryString
+  const userAccess = useSelector((state: RootState) =>
+    userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString)
+  );
+  const userAccessError = useSelector((state: RootState) =>
+    userAccessSelectors.selectUserAccessError(state, UserAccessType.all, userAccessQueryString)
+  );
+  const userAccessFetchStatus = useSelector((state: RootState) =>
+    userAccessSelectors.selectUserAccessFetchStatus(state, UserAccessType.all, userAccessQueryString)
   );
 
   return {
-    isDetailsFeatureEnabled,
     userAccess,
     userAccessError,
     userAccessFetchStatus,
     userAccessQueryString,
   };
-});
+};
 
-const Permissions = withRouter(connect(mapStateToProps, undefined)(PermissionsBase));
+const Permissions = withRouter(PermissionsBase);
 
 export default Permissions;
