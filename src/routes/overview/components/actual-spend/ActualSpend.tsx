@@ -97,6 +97,7 @@ const mapToProps = ({ widgetId }: ActualSpendOwnProps): ActualSpendStateProps =>
   );
 
   useMemo(() => {
+    // Todo: Enable via dispatch
     reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
   }, [queryString]);
 

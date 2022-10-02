@@ -92,6 +92,7 @@ const mapToProps = () => {
   );
 
   useMemo(() => {
+    // Todo: Enable via dispatch
     reportActions.fetchReport(reportPathsType, reportType, queryString);
   }, [queryString]);
 

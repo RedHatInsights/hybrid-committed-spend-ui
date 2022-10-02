@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { Reducer } from 'redux';
 
 import pckg from '../package.json';
-import { initFeatureFlags } from './components/feature-flags';
+import { useFeatureFlags } from './components/feature-flags';
 import { Routes } from './Routes';
 
 type Unregister = () => void;
@@ -34,7 +34,7 @@ const App = () => {
     };
   }, [chrome]);
 
-  initFeatureFlags();
+  useFeatureFlags();
 
   return (
     <div className="hybrid-committed-spend">

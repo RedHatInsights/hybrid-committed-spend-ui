@@ -3,10 +3,12 @@ import { getUserAccessQuery } from 'api/queries/userAccessQuery';
 import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
 import { PageTitle } from 'components/page-title';
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { createMapStateToProps, FetchStatus } from 'store/common';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { uiActions } from 'store/ui';
 import { userAccessActions, userAccessQuery, userAccessSelectors } from 'store/user-access';
 
@@ -16,11 +18,6 @@ interface PermissionsWrapperOwnProps {
   children?: React.ReactNode;
 }
 
-interface PermissionsWrapperDispatchProps {
-  fetchUserAccess: typeof userAccessActions.fetchUserAccess;
-  resetState: typeof uiActions.resetState;
-}
-
 interface PermissionsWrapperStateProps {
   userAccess: UserAccess;
   userAccessError: AxiosError;
@@ -28,44 +25,41 @@ interface PermissionsWrapperStateProps {
   userAccessQueryString: string;
 }
 
-type PermissionsWrapperProps = PermissionsWrapperOwnProps &
-  PermissionsWrapperDispatchProps &
-  PermissionsWrapperStateProps &
-  WrappedComponentProps;
+type PermissionsWrapperProps = PermissionsWrapperOwnProps & WrappedComponentProps;
 
-class PermissionsWrapperBase extends React.Component<PermissionsWrapperProps> {
-  public componentDidMount() {
-    const { fetchUserAccess, resetState, userAccessQueryString } = this.props;
+const PermissionsWrapperBase: React.FC<PermissionsWrapperProps> = ({ children }) => {
+  const { userAccessFetchStatus } = mapToProps();
 
-    // Clear cached API responses
-    resetState();
-    fetchUserAccess(UserAccessType.all, userAccessQueryString);
-  }
-
-  public render() {
-    const { children, userAccessFetchStatus } = this.props;
-
-    return (
-      <PageTitle>
-        {userAccessFetchStatus === FetchStatus.complete && (
-          <Suspense fallback={<Spinner />}>
-            <Permissions>{children}</Permissions>
-          </Suspense>
-        )}
-      </PageTitle>
-    );
-  }
-}
-
-const mapStateToProps = createMapStateToProps<PermissionsWrapperOwnProps, PermissionsWrapperStateProps>(state => {
-  const userAccessQueryString = getUserAccessQuery(userAccessQuery);
-  const userAccess = userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString);
-  const userAccessError = userAccessSelectors.selectUserAccessError(state, UserAccessType.all, userAccessQueryString);
-  const userAccessFetchStatus = userAccessSelectors.selectUserAccessFetchStatus(
-    state,
-    UserAccessType.all,
-    userAccessQueryString
+  return (
+    <PageTitle>
+      {userAccessFetchStatus === FetchStatus.complete && (
+        <Suspense fallback={<Spinner />}>
+          <Permissions>{children}</Permissions>
+        </Suspense>
+      )}
+    </PageTitle>
   );
+};
+
+const mapToProps = (): PermissionsWrapperStateProps => {
+  const dispatch = useDispatch();
+
+  const userAccessQueryString = getUserAccessQuery(userAccessQuery);
+  const userAccess = useSelector((state: RootState) =>
+    userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString)
+  );
+  const userAccessError = useSelector((state: RootState) =>
+    userAccessSelectors.selectUserAccessError(state, UserAccessType.all, userAccessQueryString)
+  );
+  const userAccessFetchStatus = useSelector((state: RootState) =>
+    userAccessSelectors.selectUserAccessFetchStatus(state, UserAccessType.all, userAccessQueryString)
+  );
+
+  useMemo(() => {
+    // Clear cached API responses
+    dispatch(uiActions.resetState());
+    dispatch(userAccessActions.fetchUserAccess(UserAccessType.all, userAccessQueryString));
+  }, []);
 
   return {
     userAccess,
@@ -73,14 +67,8 @@ const mapStateToProps = createMapStateToProps<PermissionsWrapperOwnProps, Permis
     userAccessFetchStatus,
     userAccessQueryString,
   };
-});
-
-const mapDispatchToProps: PermissionsWrapperDispatchProps = {
-  fetchUserAccess: userAccessActions.fetchUserAccess,
-  resetState: uiActions.resetState,
 };
 
-const PermissionsWrapperConnect = connect(mapStateToProps, mapDispatchToProps)(PermissionsWrapperBase);
-const PermissionsWrapper = injectIntl(PermissionsWrapperConnect);
+const PermissionsWrapper = injectIntl(PermissionsWrapperBase);
 
 export default PermissionsWrapper;
