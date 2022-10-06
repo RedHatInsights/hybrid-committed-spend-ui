@@ -51,6 +51,8 @@ export const ReportTypePaths: Partial<Record<ReportType, string>> = {
   [ReportType.actualSpendBreakdown]: '',
   [ReportType.committedSpend]: '',
   [ReportType.committedSpendTrend]: '',
+
+  [ReportType.summary]: 'reports/hcsSummary',
 };
 
 export function runReport(reportType: ReportType, query: string) {
