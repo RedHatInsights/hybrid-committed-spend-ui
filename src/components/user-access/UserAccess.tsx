@@ -1,4 +1,4 @@
-import { Spinner } from '@patternfly/react-core';
+import { Bullseye, Spinner } from '@patternfly/react-core';
 import React, { lazy, Suspense } from 'react';
 
 const PermissionsWrapper = lazy(() => import('components/user-access/PermissionsWrapper'));
@@ -7,7 +7,13 @@ const PermissionsWrapper = lazy(() => import('components/user-access/Permissions
 export function UserAccess<Props>(Component) {
   const PermissionsComponent: React.FC<Props> = props => {
     return (
-      <Suspense fallback={<Spinner />}>
+      <Suspense
+        fallback={
+          <Bullseye>
+            <Spinner size="lg" />
+          </Bullseye>
+        }
+      >
         <PermissionsWrapper>
           <Component {...props} />
         </PermissionsWrapper>
