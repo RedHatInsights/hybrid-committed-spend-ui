@@ -28,7 +28,9 @@ if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.
 
 // The FeatureFlags component saves feature flags in store for places where Unleash hooks not available
 const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
+  const hasFlags = useSelector((state: RootState) => featureFlagsSelectors.selectHasFeatureFlags(state));
   const updateContext = useUnleashContext();
+  const { flagsReady } = useFlagsStatus();
   const client = useUnleashClient();
   const dispatch = useDispatch();
 
@@ -64,10 +66,7 @@ const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
     }
   }, [userId]);
 
-  if (
-    useFlagsStatus().flagsReady &&
-    useSelector((state: RootState) => featureFlagsSelectors.selectHasFeatureFlags(state))
-  ) {
+  if (flagsReady && hasFlags) {
     return <>{children}</>;
   }
   return (
