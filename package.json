@@ -11,7 +11,7 @@
     "build:prod": "NODE_ENV=production fec build --webpack-config config/dev.webpack.config.js",
     "check:updates": "npx npm-check-updates",
     "check:milestone": "npx npm-check-updates -t newest -f '/^(@patternfly|@redhat-cloud-services)/'",
-    "check:milestone:upgrade": "npx npm-check-updates -t newest -f '/^(@patternfly|@redhat-cloud-services)/' -u",
+    "check:milestone:update": "npx npm-check-updates -t newest -f '/^(@patternfly|@redhat-cloud-services)/' -u",
     "clean": "rimraf dist/",
     "deploy": "npm-run-all build lint test",
     "lint": "npm-run-all lint:*",
@@ -36,13 +36,13 @@
   },
   "dependencies": {
     "@patternfly/patternfly": "4.215.1",
-    "@patternfly/react-charts": "6.94.4",
+    "@patternfly/react-charts": "6.92.0",
     "@patternfly/react-core": "4.239.0",
     "@patternfly/react-icons": "4.90.0",
     "@patternfly/react-tokens": "4.91.0",
     "@redhat-cloud-services/frontend-components": "^3.9.16",
     "@redhat-cloud-services/frontend-components-notifications": "^3.2.12",
-    "@redhat-cloud-services/frontend-components-translations": "^3.2.4",
+    "@redhat-cloud-services/frontend-components-translations": "^3.2.5",
     "@redhat-cloud-services/frontend-components-utilities": "^3.3.1",
     "@unleash/proxy-client-react": "^3.3.1",
     "axios": "^0.27.2",
@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@formatjs/cli": "^5.1.1",
-    "@redhat-cloud-services/eslint-config-redhat-cloud-services": "^1.2.3",
+    "@redhat-cloud-services/eslint-config-redhat-cloud-services": "1.2.3",
     "@redhat-cloud-services/frontend-components-config": "^4.6.21",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
@@ -98,7 +98,8 @@
     "webpack-bundle-analyzer": "^4.6.1"
   },
   "overrides": {
-    "eslint": "8.22.0"
+    "eslint": "8.22.0",
+    "react-intl": "^6.1.2"
   },
   "insights": {
     "appname": "hybrid-committed-spend"

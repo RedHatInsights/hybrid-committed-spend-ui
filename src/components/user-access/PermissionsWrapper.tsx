@@ -1,4 +1,4 @@
-import { Spinner } from '@patternfly/react-core';
+import { Bullseye, Spinner } from '@patternfly/react-core';
 import { getUserAccessQuery } from 'api/queries/userAccessQuery';
 import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
@@ -11,7 +11,6 @@ import { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { uiActions } from 'store/ui';
 import { userAccessActions, userAccessQuery, userAccessSelectors } from 'store/user-access';
-
 const Permissions = lazy(() => import('./Permissions'));
 
 interface PermissionsWrapperOwnProps {
@@ -33,7 +32,13 @@ const PermissionsWrapperBase: React.FC<PermissionsWrapperProps> = ({ children })
   return (
     <PageTitle>
       {userAccessFetchStatus === FetchStatus.complete && (
-        <Suspense fallback={<Spinner />}>
+        <Suspense
+          fallback={
+            <Bullseye>
+              <Spinner size="lg" />
+            </Bullseye>
+          }
+        >
           <Permissions>{children}</Permissions>
         </Suspense>
       )}

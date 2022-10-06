@@ -1,1 +1,1 @@
-export * from './LoadingState';
+export { default as LoadingState } from './LoadingState';

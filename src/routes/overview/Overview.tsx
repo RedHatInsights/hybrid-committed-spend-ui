@@ -6,7 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 const Dashboard = lazy(() => import('routes/overview/components/dashboard/Dashboard'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
-import { Spinner } from '@patternfly/react-core';
+import { Bullseye, Spinner } from '@patternfly/react-core';
 import { connect } from 'react-redux';
 import { createMapStateToProps } from 'store/common';
 import { reportSelectors } from 'store/reports';
@@ -42,7 +42,13 @@ const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors }) => {
         <>
           <OverviewHeader />
           <Main>
-            <Suspense fallback={<Spinner />}>
+            <Suspense
+              fallback={
+                <Bullseye>
+                  <Spinner size="lg" />
+                </Bullseye>
+              }
+            >
               <Dashboard />
             </Suspense>
           </Main>

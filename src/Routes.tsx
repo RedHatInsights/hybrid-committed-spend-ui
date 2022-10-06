@@ -37,7 +37,7 @@ export const Routes = () => (
   <Suspense
     fallback={
       <Bullseye>
-        <Spinner />
+        <Spinner size="lg" />
       </Bullseye>
     }
   >

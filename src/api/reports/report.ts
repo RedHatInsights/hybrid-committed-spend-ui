@@ -73,6 +73,8 @@ export const enum ReportType {
   actualSpendBreakdown = 'actualSpendBreakdown',
   committedSpend = 'committedSpend',
   committedSpendTrend = 'committedSpendTrend',
+
+  summary = 'summary',
 }
 
 // eslint-disable-next-line no-shadow

@@ -1,9 +1,11 @@
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import { ReportPathsType, ReportType } from 'api/reports';
+import { getQuery } from 'api/queries';
+import { Report, ReportPathsType, ReportType } from 'api/reports';
+import { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state';
 import { RootState } from 'store';
@@ -14,6 +16,12 @@ import { styles } from './OverviewHeader.styles';
 
 interface OverviewHeaderOwnProps {
   // TBD...
+}
+
+interface OverviewHeaderStateProps {
+  report?: Report;
+  reportError?: AxiosError;
+  reportFetchStatus?: FetchStatus;
 }
 
 type OverviewHeaderProps = OverviewHeaderOwnProps & RouteComponentProps<void> & WrappedComponentProps;
@@ -72,28 +80,25 @@ const OverviewHeader: React.FC<OverviewHeaderProps> = ({ intl }) => {
   );
 };
 
-const mapToProps = () => {
-  const queryString = ''; // Todo: add query string for API when available
+const mapToProps = (): OverviewHeaderStateProps => {
+  const dispatch = useDispatch();
+
+  const query = {
+    limit: 2,
+  };
+  const queryString = getQuery(query);
+
   const reportPathsType = ReportPathsType.billing;
-  const reportType = ReportType.cost;
-  const report = useSelector((/* state: RootState */) => {
-    // reportSelectors.selectReport(state, reportPathsType, reportType, queryString)
-    return {
-      meta: {
-        total: {
-          value: 0,
-          units: 'USD',
-        },
-      },
-    };
-  });
+  const reportType = ReportType.summary;
+  const report = useSelector((state: RootState) =>
+    reportSelectors.selectReport(state, reportPathsType, reportType, queryString)
+  );
   const reportFetchStatus = useSelector((state: RootState) =>
     reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString)
   );
 
   useMemo(() => {
-    // Todo: Enable via dispatch
-    reportActions.fetchReport(reportPathsType, reportType, queryString);
+    dispatch(reportActions.fetchReport(reportPathsType, reportType, queryString));
   }, [queryString]);
 
   return {

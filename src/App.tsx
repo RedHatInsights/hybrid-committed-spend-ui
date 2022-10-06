@@ -4,17 +4,20 @@ import { useChrome } from '@redhat-cloud-services/frontend-components/useChrome'
 import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
+import { useFlagsStatus } from '@unleash/proxy-client-react';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Reducer } from 'redux';
+import { Loading } from 'routes/state/loading';
 
 import pckg from '../package.json';
-import { useFeatureFlags } from './components/feature-flags';
+import { FeatureFlags } from './components/feature-flags';
 import { Routes } from './Routes';
 
 type Unregister = () => void;
 
 const App = () => {
+  const { flagsReady } = useFlagsStatus();
   const history = useHistory();
   const chrome = useChrome();
 
@@ -34,14 +37,17 @@ const App = () => {
     };
   }, [chrome]);
 
-  useFeatureFlags();
-
-  return (
-    <div className="hybrid-committed-spend">
-      <NotificationsPortal />
-      <Routes />
-    </div>
-  );
+  if (flagsReady) {
+    return (
+      <div className="hybrid-committed-spend">
+        <NotificationsPortal />
+        <FeatureFlags>
+          <Routes />
+        </FeatureFlags>
+      </div>
+    );
+  }
+  return <Loading />;
 };
 
 export default App;

@@ -5,7 +5,7 @@ import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 interface LoadingStateProps extends WrappedComponentProps {
-  icon?: string;
+  // TBD...
 }
 
 // defaultIntl required for testing
@@ -26,4 +26,4 @@ const LoadingStateBase: React.SFC<LoadingStateProps> = ({ intl = defaultIntl }) 
 
 const LoadingState = injectIntl(LoadingStateBase);
 
-export { LoadingState };
+export default LoadingState;

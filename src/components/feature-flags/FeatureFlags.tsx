@@ -1,8 +1,10 @@
-import { /* useUnleashClient, */ useUnleashContext } from '@unleash/proxy-client-react';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { Bullseye, Spinner } from '@patternfly/react-core';
+import { Main } from '@redhat-cloud-services/frontend-components/Main';
+import { useFlagsStatus, useUnleashClient, useUnleashContext } from '@unleash/proxy-client-react';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-// import { featureFlagsActions } from 'store/feature-flags/';
+import { featureFlagsActions } from 'store/feature-flags';
 
 interface FeatureFlagsOwnProps {
   children?: React.ReactNode;
@@ -11,24 +13,24 @@ interface FeatureFlagsOwnProps {
 type FeatureFlagsProps = FeatureFlagsOwnProps & RouteComponentProps<void>;
 
 // eslint-disable-next-line no-shadow
-const enum FeatureToggle {
+export const enum FeatureToggle {
   details = 'hybrid-committed-spend.ui.details',
 }
 
-const useFeatureFlags = () => {
-  // const dispatch = useDispatch();
-  const updateContext = useUnleashContext();
-  // const client = useUnleashClient();
-  const [userId, setUserId] = useState();
+let userId;
+const insights = (window as any).insights;
+if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
+  insights.chrome.auth.getUser().then(user => {
+    userId = user.identity.account_number;
+  });
+}
 
-  useMemo(() => {
-    const insights = (window as any).insights;
-    if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
-      insights.chrome.auth.getUser().then(user => {
-        setUserId(user.identity.account_number);
-      });
-    }
-  }, []);
+// The FeatureFlags component saves feature flags in store for places where Unleash hooks not available
+const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
+  const dispatch = useDispatch();
+  const { flagsReady } = useFlagsStatus();
+  const updateContext = useUnleashContext();
+  const client = useUnleashClient();
 
   const isMounted = useRef(false);
   useMemo(() => {
@@ -36,7 +38,7 @@ const useFeatureFlags = () => {
     return () => {
       isMounted.current = false;
     };
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     if (userId && isMounted.current) {
@@ -49,26 +51,31 @@ const useFeatureFlags = () => {
   useEffect(() => {
     // Wait for the new flags to pull in from the different context
     const fetchFlags = async () => {
-      await updateContext({ userId });
-      // await updateContext({ userId }).then(() => {
-      //   dispatch(
-      //     featureFlagsActions.setFeatureFlags({
-      //       isDetailsFeatureEnabled: client.isEnabled(FeatureToggle.details),
-      //     })
-      //   );
-      // });
+      await updateContext({ userId }).then(() => {
+        dispatch(
+          featureFlagsActions.setFeatureFlags({
+            isDetailsFeatureEnabled: client.isEnabled(FeatureToggle.details),
+          })
+        );
+      });
     };
     if (userId && isMounted.current) {
       fetchFlags();
     }
   }, [userId]);
-};
 
-const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
-  useFeatureFlags();
-  return <>{children}</>;
+  if (flagsReady) {
+    return <>{children}</>;
+  }
+  return (
+    <Main>
+      <Bullseye>
+        <Spinner />
+      </Bullseye>
+    </Main>
+  );
 };
 
 const FeatureFlags = withRouter(FeatureFlagsBase);
 
-export { FeatureFlags, FeatureToggle, useFeatureFlags };
+export default FeatureFlags;
