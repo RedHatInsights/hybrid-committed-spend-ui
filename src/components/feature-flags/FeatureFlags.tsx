@@ -2,9 +2,10 @@ import { Bullseye, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import { useFlagsStatus, useUnleashClient, useUnleashContext } from '@unleash/proxy-client-react';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { featureFlagsActions } from 'store/feature-flags';
+import { RootState } from 'store';
+import { featureFlagsActions, featureFlagsSelectors } from 'store/feature-flags';
 
 interface FeatureFlagsOwnProps {
   children?: React.ReactNode;
@@ -27,10 +28,9 @@ if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.
 
 // The FeatureFlags component saves feature flags in store for places where Unleash hooks not available
 const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
-  const dispatch = useDispatch();
-  const { flagsReady } = useFlagsStatus();
   const updateContext = useUnleashContext();
   const client = useUnleashClient();
+  const dispatch = useDispatch();
 
   const isMounted = useRef(false);
   useMemo(() => {
@@ -64,7 +64,10 @@ const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
     }
   }, [userId]);
 
-  if (flagsReady) {
+  if (
+    useFlagsStatus().flagsReady &&
+    useSelector((state: RootState) => featureFlagsSelectors.selectHasFeatureFlags(state))
+  ) {
     return <>{children}</>;
   }
   return (
