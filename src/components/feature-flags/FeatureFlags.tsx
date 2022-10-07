@@ -40,6 +40,7 @@ const FeatureFlagsBase: React.FC<FeatureFlagsProps> = ({ children = null }) => {
     };
   }, []);
 
+  // Needs to run everytime or flag may be false
   useLayoutEffect(() => {
     if (userId && isMounted.current) {
       updateContext({
