@@ -1,4 +1,3 @@
-import { useFlag } from '@unleash/proxy-client-react';
 import { getUserAccessQuery } from 'api/queries/userAccessQuery';
 import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
@@ -10,15 +9,15 @@ import { Loading } from 'routes/state';
 import { NotAuthorized, NotAvailable } from 'routes/state';
 import { RootState } from 'store';
 import { FetchStatus } from 'store/common';
+import { featureFlagsSelectors } from 'store/feature-flags';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
 import { hasAllAccess } from 'utils/userAccess';
-
-import { FeatureToggle } from '../feature-flags';
 interface PermissionsOwnProps extends RouteComponentProps<void> {
   children?: React.ReactNode;
 }
 
 interface PermissionsStateProps {
+  isDetailsFeatureEnabled?: boolean;
   userAccess: UserAccess;
   userAccessError: AxiosError;
   userAccessFetchStatus: FetchStatus;
@@ -28,7 +27,7 @@ interface PermissionsStateProps {
 type PermissionsProps = PermissionsOwnProps;
 
 const PermissionsBase: React.FC<PermissionsProps> = ({ children = null, location }) => {
-  const { userAccess, userAccessError, userAccessFetchStatus } = mapToProps();
+  const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = mapToProps();
 
   const getRoutePath = () => {
     const currRoute = routes.find(({ path }) => path === location.pathname);
@@ -41,7 +40,7 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null, location
     }
 
     const hasAccess = hasAllAccess(userAccess);
-    const details = hasAccess && useFlag(FeatureToggle.details);
+    const details = hasAccess && isDetailsFeatureEnabled;
     const overview = hasAccess;
 
     switch (getRoutePath()) {
@@ -68,6 +67,10 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null, location
 };
 
 const mapToProps = (): PermissionsStateProps => {
+  const isDetailsFeatureEnabled = useSelector((state: RootState) =>
+    featureFlagsSelectors.selectIsDetailsFeatureEnabled(state)
+  );
+
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);
   const userAccess = useSelector((state: RootState) =>
     userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString)
@@ -80,6 +83,7 @@ const mapToProps = (): PermissionsStateProps => {
   );
 
   return {
+    isDetailsFeatureEnabled,
     userAccess,
     userAccessError,
     userAccessFetchStatus,
