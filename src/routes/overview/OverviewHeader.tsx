@@ -3,7 +3,7 @@ import { getQuery } from 'api/queries';
 import { Report, ReportPathsType, ReportType } from 'api/reports';
 import { AxiosError } from 'axios';
 import messages from 'locales/messages';
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -97,8 +97,10 @@ const mapToProps = (): OverviewHeaderStateProps => {
     reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString)
   );
 
-  useMemo(() => {
-    dispatch(reportActions.fetchReport(reportPathsType, reportType, queryString));
+  useEffect(() => {
+    if (reportFetchStatus !== FetchStatus.inProgress) {
+      dispatch(reportActions.fetchReport(reportPathsType, reportType, queryString));
+    }
   }, [queryString]);
 
   return {

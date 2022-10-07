@@ -3,7 +3,7 @@ import { getUserAccessQuery } from 'api/queries/userAccessQuery';
 import { UserAccess, UserAccessType } from 'api/user-access';
 import { AxiosError } from 'axios';
 import { PageTitle } from 'components/page-title';
-import React, { lazy, Suspense, useMemo } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -60,10 +60,13 @@ const mapToProps = (): PermissionsWrapperStateProps => {
     userAccessSelectors.selectUserAccessFetchStatus(state, UserAccessType.all, userAccessQueryString)
   );
 
-  useMemo(() => {
+  useEffect(() => {
     // Clear cached API responses
     dispatch(uiActions.resetState());
-    dispatch(userAccessActions.fetchUserAccess(UserAccessType.all, userAccessQueryString));
+
+    if (userAccessFetchStatus !== FetchStatus.inProgress) {
+      dispatch(userAccessActions.fetchUserAccess(UserAccessType.all, userAccessQueryString));
+    }
   }, []);
 
   return {
