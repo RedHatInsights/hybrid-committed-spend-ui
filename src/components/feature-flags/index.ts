@@ -1,1 +1,1 @@
-export { default as FeatureFlags, FeatureToggle } from './FeatureFlags';
+export { default as useFeatureFlags, FeatureToggle } from './FeatureFlags';
