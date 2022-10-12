@@ -35,7 +35,7 @@
     "verify": "npm-run-all build lint test"
   },
   "dependencies": {
-    "@patternfly/patternfly": "4.215.1",
+    "@patternfly/patternfly": "4.217.1",
     "@patternfly/react-charts": "6.92.0",
     "@patternfly/react-core": "4.239.0",
     "@patternfly/react-icons": "4.92.6",
