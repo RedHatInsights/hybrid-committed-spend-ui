@@ -31,8 +31,6 @@ export function fetchReport(reportPathsType: ReportPathsType, reportType: Report
     dispatch(fetchReportRequest(meta));
     runReport(reportPathsType, reportType, query)
       .then(res => {
-        // See https://github.com/project-koku/koku-ui/pull/580
-        // const repsonseData = dropCurrentMonthData(res, query);
         dispatch(fetchReportSuccess(res.data, meta));
       })
       .catch(err => {

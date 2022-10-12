@@ -13,6 +13,9 @@ import { uiActions } from 'store/ui';
 import { userAccessActions, userAccessQuery, userAccessSelectors } from 'store/user-access';
 const Permissions = lazy(() => import('./Permissions'));
 
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+
 interface PermissionsWrapperOwnProps {
   children?: React.ReactNode;
 }
@@ -47,7 +50,7 @@ const PermissionsWrapperBase: React.FC<PermissionsWrapperProps> = ({ children })
 };
 
 const mapToProps = (): PermissionsWrapperStateProps => {
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);
   const userAccess = useSelector((state: RootState) =>

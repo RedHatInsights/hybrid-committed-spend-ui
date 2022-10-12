@@ -6,6 +6,8 @@ import React, { useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import { EmptyValueState } from 'routes/components/state';
 import { RootState } from 'store';
 import { FetchStatus } from 'store/common';
@@ -74,7 +76,7 @@ const DetailsHeader: React.FC<DetailsHeaderProps> = ({ intl }) => {
 };
 
 const mapToProps = () => {
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query = {
     limit: 2,
