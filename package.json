@@ -37,7 +37,7 @@
   "dependencies": {
     "@patternfly/patternfly": "4.217.1",
     "@patternfly/react-charts": "6.94.4",
-    "@patternfly/react-core": "4.239.0",
+    "@patternfly/react-core": "4.250.1",
     "@patternfly/react-icons": "4.92.6",
     "@patternfly/react-tokens": "4.93.6",
     "@redhat-cloud-services/frontend-components": "^3.9.18",
