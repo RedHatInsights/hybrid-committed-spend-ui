@@ -27,6 +27,7 @@ export enum DateRangeType {
 export enum GroupByType {
   accounts = 'accounts',
   affiliates = 'affiliates',
+  none = 'none',
   products = 'products',
   sourceOfSpend = 'source_of_spend',
 }
@@ -60,6 +61,14 @@ const groupByOptions = [
   { label: messages.groupBy, value: GroupByType.sourceOfSpend },
 ];
 
+const secondaryGroupByOptions = [
+  { label: messages.groupBy, value: GroupByType.none },
+  { label: messages.groupBy, value: GroupByType.affiliates },
+  { label: messages.groupBy, value: GroupByType.products },
+  { label: messages.groupBy, value: GroupByType.accounts },
+  { label: messages.groupBy, value: GroupByType.sourceOfSpend },
+];
+
 const sourcesOfSpendOptions = [
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.all },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_yearly },
@@ -80,7 +89,7 @@ const DetailsToolbar: React.FC<DetailsToolbarProps> = ({
 }) => {
   const [dateRangeSelection, setDateRangeSelection] = useState(DateRangeType.contractedYtd);
   const [groupBySelection, setGroupBySelection] = useState(GroupByType.affiliates);
-  const [secondaryGroupBySelection, setSecondaryGroupBySelection] = useState(GroupByType.products);
+  const [secondaryGroupBySelection, setSecondaryGroupBySelection] = useState(GroupByType.none);
   const [sourcesOfSpendSelection, setSourcesOfSpendSelection] = useState(SourcesOfSpendType.all);
 
   const handleOnDateRangeSelected = value => {
@@ -135,7 +144,7 @@ const DetailsToolbar: React.FC<DetailsToolbarProps> = ({
         label={messages.secondaryGroupByLabel}
         minWidth={200}
         onSelected={handleOnSecondaryGroupBySelected}
-        options={groupByOptions}
+        options={secondaryGroupByOptions}
       />
       <Perspective
         currentItem={dateRangeSelection}
