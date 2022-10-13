@@ -7,6 +7,7 @@ import { styles } from './Perspective.styles';
 
 interface PerspectiveOwnProps {
   currentItem: string;
+  id?: string;
   isDisabled?: boolean;
   onSelected(value: string);
   options?: {
@@ -47,7 +48,7 @@ class Perspective extends React.Component<PerspectiveProps> {
   };
 
   private getSelect = () => {
-    const { currentItem, isDisabled } = this.props;
+    const { currentItem, id, isDisabled } = this.props;
     const { isSelectOpen } = this.state;
 
     const selectOptions = this.getSelectOptions();
@@ -55,7 +56,7 @@ class Perspective extends React.Component<PerspectiveProps> {
 
     return (
       <Select
-        id="Perspective"
+        id={id}
         isDisabled={isDisabled}
         isOpen={isSelectOpen}
         onSelect={this.handleSelect}
