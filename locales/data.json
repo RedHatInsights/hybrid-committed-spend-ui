@@ -520,6 +520,14 @@
               }
             ]
           },
+          "none": {
+            "value": [
+              {
+                "type": 0,
+                "value": "None"
+              }
+            ]
+          },
           "other": {
             "value": []
           },

@@ -37,7 +37,7 @@
   "excessSpendTitle": "Excess actual spend included",
   "exploreMore": "Explore more",
   "furtherGroupByLabel": "Further grouped by",
-  "groupBy": "{value, select, accounts {Cloud payer accounts} affiliates {Affiliates} products {Products} source_of_spend {Source of spend} other {}}",
+  "groupBy": "{value, select, accounts {Cloud payer accounts} affiliates {Affiliates} none {None} products {Products} source_of_spend {Source of spend} other {}}",
   "groupByLabel": "Grouped by",
   "hcs": "Hybrid Committed Spend",
   "loadingStateDesc": "Searching for your sources. Do not refresh the browser",

@@ -230,6 +230,7 @@ export default defineMessages({
       '{value, select, ' +
       'accounts {Cloud payer accounts} ' +
       'affiliates {Affiliates} ' +
+      'none {None} ' +
       'products {Products} ' +
       'source_of_spend {Source of spend} ' +
       'other {}}',
