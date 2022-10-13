@@ -7,7 +7,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Perspective } from 'routes/overview/components/perspective';
+import { Perspective } from 'routes/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { RootState } from 'store';
 import { FetchStatus } from 'store/common';

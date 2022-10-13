@@ -348,6 +348,71 @@
         "value": "Committed spend trend"
       }
     ],
+    "dateRange": [
+      {
+        "options": {
+          "contracted_last_year": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Past contracted year (dates)"
+              }
+            ]
+          },
+          "contracted_ytd": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Contracted YTD"
+              }
+            ]
+          },
+          "date": {
+            "value": [
+              {
+                "type": 0,
+                "value": "date - date contracted year"
+              }
+            ]
+          },
+          "last_nine_months": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Last 9 months"
+              }
+            ]
+          },
+          "last_six_months": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Last 6 months"
+              }
+            ]
+          },
+          "last_three_months": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Last 3 months"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "dateRangeLabel": [
+      {
+        "type": 0,
+        "value": "Time"
+      }
+    ],
     "detailsTitle": [
       {
         "type": 0,
@@ -430,6 +495,61 @@
         "value": "Explore more"
       }
     ],
+    "furtherGroupByLabel": [
+      {
+        "type": 0,
+        "value": "Further grouped by"
+      }
+    ],
+    "groupBy": [
+      {
+        "options": {
+          "accounts": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cloud payer accounts"
+              }
+            ]
+          },
+          "affiliates": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Affiliates"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "products": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Products"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Source of spend"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "groupByLabel": [
+      {
+        "type": 0,
+        "value": "Grouped by"
+      }
+    ],
     "hcs": [
       {
         "type": 0,
@@ -496,6 +616,101 @@
       {
         "type": 0,
         "value": " %"
+      }
+    ],
+    "secondaryGroupByLabel": [
+      {
+        "type": 0,
+        "value": "Secondary group by"
+      }
+    ],
+    "sourcesOfSpendLabel": [
+      {
+        "type": 0,
+        "value": "View"
+      }
+    ],
+    "sourcesOfSpendValues": [
+      {
+        "options": {
+          "all": {
+            "value": [
+              {
+                "type": 0,
+                "value": "All sources of spend"
+              }
+            ]
+          },
+          "aws": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Amazon Web Services"
+              }
+            ]
+          },
+          "azure": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Microsoft Azure"
+              }
+            ]
+          },
+          "consulting": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Consulting"
+              }
+            ]
+          },
+          "gcp": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Google Cloud Platform"
+              }
+            ]
+          },
+          "marketplace": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Red Hat Marketplace"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "reseller": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Reseller/Distributor"
+              }
+            ]
+          },
+          "subs_ondemand": {
+            "value": [
+              {
+                "type": 0,
+                "value": "On-demand subscriptions"
+              }
+            ]
+          },
+          "subs_yearly": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Yearly subscriptions"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
       }
     ],
     "viewDetails": [
