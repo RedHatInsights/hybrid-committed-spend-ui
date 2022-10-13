@@ -1,5 +1,5 @@
 import { MessageDescriptor } from '@formatjs/intl/src/types';
-import { Select, SelectOption, SelectOptionObject, SelectVariant } from '@patternfly/react-core';
+import { Select, SelectOption, SelectOptionObject, SelectVariant, Title } from '@patternfly/react-core';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
@@ -9,6 +9,8 @@ interface PerspectiveOwnProps {
   currentItem: string;
   id?: string;
   isDisabled?: boolean;
+  label?: MessageDescriptor;
+  minWidth?: number | string;
   onSelected(value: string);
   options?: {
     label: MessageDescriptor;
@@ -87,9 +89,18 @@ class Perspective extends React.Component<PerspectiveProps> {
   };
 
   public render() {
+    const { intl, label, minWidth } = this.props;
+
     return (
       <div style={styles.perspectiveContainer}>
-        <div style={styles.perspective}>{this.getSelect()}</div>
+        <div style={{ minWidth }}>
+          {label && (
+            <Title headingLevel="h3" size="md">
+              {intl.formatMessage(label)}
+            </Title>
+          )}
+          <div style={styles.perspective}>{this.getSelect()}</div>
+        </div>
       </div>
     );
   }
