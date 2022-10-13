@@ -16,12 +16,12 @@ import { reportActions, reportSelectors } from 'store/reports';
 import { styles } from './DetailsHeader.styles';
 
 interface DetailsHeaderOwnProps {
-  // TBD...
+  children?: React.ReactNode;
 }
 
 type DetailsHeaderProps = DetailsHeaderOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const DetailsHeader: React.FC<DetailsHeaderProps> = ({ intl }) => {
+const DetailsHeader: React.FC<DetailsHeaderProps> = ({ children, intl }) => {
   const { report, reportFetchStatus } = mapToProps();
 
   let accountName: string | React.ReactNode = <EmptyValueState />;
@@ -71,6 +71,7 @@ const DetailsHeader: React.FC<DetailsHeaderProps> = ({ intl }) => {
           </div>
         )}
       </div>
+      {children}
     </PageHeader>
   );
 };

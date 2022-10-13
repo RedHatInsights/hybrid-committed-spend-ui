@@ -138,6 +138,24 @@ export default defineMessages({
     description: 'Committed spend trend',
     id: 'dashboardCommitmentSpendTrendTitle',
   },
+  dateRange: {
+    defaultMessage:
+      '{value, select, ' +
+      'contracted_ytd {Contracted YTD} ' +
+      'contracted_last_year {Past contracted year (dates)} ' +
+      'date {date - date contracted year} ' +
+      'last_nine_months {Last 9 months} ' +
+      'last_six_months {Last 6 months} ' +
+      'last_three_months {Last 3 months} ' +
+      'other {}}',
+    description: 'Date range for details table',
+    id: 'dateRange',
+  },
+  dateRangeLabel: {
+    defaultMessage: 'Time',
+    description: 'Date range dropdown label',
+    id: 'dateRangeLabel',
+  },
   detailsTitle: {
     defaultMessage: 'Committed Spend details',
     description: 'Committed Spend details',
@@ -197,11 +215,31 @@ export default defineMessages({
     description: 'Excess actual spend included',
     id: 'excessSpendTitle',
   },
-
   exploreMore: {
     defaultMessage: 'Explore more',
     description: 'Explore more',
     id: 'exploreMore',
+  },
+  furtherGroupByLabel: {
+    defaultMessage: 'Further grouped by',
+    description: 'Further grouped by dropdown label',
+    id: 'furtherGroupByLabel',
+  },
+  groupBy: {
+    defaultMessage:
+      '{value, select, ' +
+      'accounts {Cloud payer accounts} ' +
+      'affiliates {Affiliates} ' +
+      'products {Products} ' +
+      'source_of_spend {Source of spend} ' +
+      'other {}}',
+    description: 'Group by options for details table',
+    id: 'groupBy',
+  },
+  groupByLabel: {
+    defaultMessage: 'Grouped by',
+    description: 'Grouped by dropdown label',
+    id: 'groupByLabel',
   },
   hcs: {
     defaultMessage: 'Hybrid Committed Spend',
@@ -252,6 +290,32 @@ export default defineMessages({
     defaultMessage: '{value} %',
     description: 'Percent value',
     id: 'percent',
+  },
+  secondaryGroupByLabel: {
+    defaultMessage: 'Secondary group by',
+    description: 'Secondary group by dropdown label',
+    id: 'secondaryGroupByLabel',
+  },
+  sourcesOfSpendLabel: {
+    defaultMessage: 'View',
+    description: 'Sources of spend dropdown label',
+    id: 'sourcesOfSpendLabel',
+  },
+  sourcesOfSpendValues: {
+    defaultMessage:
+      '{value, select, ' +
+      'all {All sources of spend} ' +
+      'aws {Amazon Web Services} ' +
+      'azure {Microsoft Azure} ' +
+      'consulting {Consulting} ' +
+      'gcp {Google Cloud Platform} ' +
+      'marketplace {Red Hat Marketplace} ' +
+      'reseller {Reseller/Distributor} ' +
+      'subs_ondemand {On-demand subscriptions} ' +
+      'subs_yearly {Yearly subscriptions} ' +
+      'other {}}',
+    description: 'All sources of spend',
+    id: 'sourcesOfSpendValues',
   },
   viewDetails: {
     defaultMessage: 'View details',

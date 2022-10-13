@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { createMapStateToProps } from 'store/common';
 import { reportSelectors } from 'store/reports';
 
+import DetailsToolbar from './DetailsToolbar';
 import { DetailsHeader } from './index';
 
 interface DetailsOwnProps {
@@ -31,15 +32,43 @@ type DetailsProps = DetailsOwnProps &
   WrappedComponentProps;
 
 const DetailsBase: React.FC<DetailsProps> = ({ hasReportErrors }) => {
+  const handleOnDateRangeSelected = value => {
+    // eslint-disable-next-line no-console
+    console.log('handleOnDateRangeSelected', handleOnDateRangeSelected);
+  };
+
+  const handleOnGroupBySelected = value => {
+    // eslint-disable-next-line no-console
+    console.log('handleOnGroupBySelected', handleOnGroupBySelected);
+  };
+
+  const handleOnSecondaryGroupBySelected = value => {
+    // eslint-disable-next-line no-console
+    console.log('handleOnSecondaryGroupBySelected', handleOnSecondaryGroupBySelected);
+  };
+
+  const handleOnSourcesOfSpendSelected = value => {
+    // eslint-disable-next-line no-console
+    console.log('handleOnSourcesOfSpendSelected', handleOnSourcesOfSpendSelected);
+  };
+
   // Todo: Remove when APIs are available
   const isTest = true;
+
   return (
     <React.Fragment>
       {!isTest && hasReportErrors ? (
         <NotAvailable />
       ) : (
         <>
-          <DetailsHeader />
+          <DetailsHeader>
+            <DetailsToolbar
+              onDateRangeSelected={handleOnDateRangeSelected}
+              onGroupBySelected={handleOnGroupBySelected}
+              onSecondaryGroupBySelected={handleOnSecondaryGroupBySelected}
+              onSourcesOfSpendSelected={handleOnSourcesOfSpendSelected}
+            />
+          </DetailsHeader>
           <Main>
             <Suspense
               fallback={
