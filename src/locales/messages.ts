@@ -27,6 +27,11 @@ export default defineMessages({
     description: 'Actual spend breakdown perspective values',
     id: 'actualSpendBreakdownPerspectiveValues',
   },
+  cancel: {
+    defaultMessage: 'Cancel',
+    description: 'Cancel',
+    id: 'cancel',
+  },
   chartCurrentSpendLegendLabel: {
     defaultMessage: 'Actual spend YTD ({dateRange})',
     description: 'Actual spend YTD ({dateRange})',
@@ -220,6 +225,107 @@ export default defineMessages({
     description: 'Explore more',
     id: 'exploreMore',
   },
+  exportAggregateType: {
+    defaultMessage: 'Aggregate type',
+    description: 'Aggregate type',
+    id: 'exportAggregateType',
+  },
+  exportAll: {
+    defaultMessage: 'Export all',
+    description: 'Export all',
+    id: 'exportAll',
+  },
+  exportDataType: {
+    defaultMessage: '{value, select, json {Data shown in table} raw {Raw (unfiltered) data} other {}}',
+    description: 'Export data type',
+    id: 'exportDataType',
+  },
+  exportDataTypeTitle: {
+    defaultMessage: 'Data type',
+    description: 'Data type',
+    id: 'exportDataTypeTitle',
+  },
+  exportError: {
+    defaultMessage: 'Something went wrong, please try again',
+    description: 'Export error',
+    id: 'exportError',
+  },
+  exportFileName: {
+    defaultMessage:
+      '{groupBy, select, ' +
+      'account {{resolution, select, daily {{provider}_cloud_payer_accounts_{startDate}_{endDate}} monthly {{provider}_cloud_payer_accounts_{startDate}_{endDate}} other {}}} ' +
+      'affiliate {{resolution, select, daily {{provider}_affiliates_{startDate}_{endDate}} monthly {{provider}_affiliates_{startDate}_{endDate}} other {}}} ' +
+      'product {{resolution, select, daily {{provider}_product_{startDate}_{endDate}} monthly {{provider}_product_{startDate}_{endDate}} other {}}} ' +
+      'source_of_spend {{resolution, select, daily {{provider}_source_of_spend_{startDate}_{endDate}} monthly {{provider}_source_of_spend_{startDate}_{endDate}} other {}}} ' +
+      'other {}}',
+    description: 'Export file name',
+    id: 'exportFileName',
+  },
+  exportGenerate: {
+    defaultMessage: 'Generate export',
+    description: 'Export export',
+    id: 'exportGenerate',
+  },
+  exportHeading: {
+    defaultMessage:
+      '{groupBy, select, ' +
+      'account {Aggregates of the following cloud payer accounts will be exported to a .csv file.} ' +
+      'affiliate {Aggregates of the following affiliates will be exported to a .csv file.} ' +
+      'product {Aggregates of the following products will be exported to a .csv file.} ' +
+      'source_of_spend {Aggregates of the following source of spend will be exported to a .csv file.} ' +
+      'other {}}',
+    description: 'Export heading',
+    id: 'exportHeading',
+  },
+  exportTitle: {
+    defaultMessage: 'Export',
+    description: 'Export title',
+    id: 'exportTitle',
+  },
+  filterByButtonAriaLabel: {
+    defaultMessage:
+      '{value, select, ' +
+      'account {Filter button for cloud payer accounts} ' +
+      'affiliate {Filter button for affiliates} ' +
+      'product {Filter button for products} ' +
+      'source_of_spend {Filter button for source of spend} ' +
+      'other {}}',
+    description: 'Filter button for "value" name',
+    id: 'filterByButtonAriaLabel',
+  },
+  filterByInputAriaLabel: {
+    defaultMessage:
+      '{value, select, ' +
+      'account {Filter input for cloud payer accounts} ' +
+      'affiliate {Filter input for affiliates} ' +
+      'product {Filter input for products} ' +
+      'source_of_spend {Filter input for source of spend} ' +
+      'other {}}',
+    description: 'Filter input for "value" name',
+    id: 'filterByInputAriaLabel',
+  },
+  filterByPlaceholder: {
+    defaultMessage:
+      '{value, select, ' +
+      'account {Filter by account name} ' +
+      'affiliate {Filter by affiliate name} ' +
+      'product {Filter by product name} ' +
+      'source_of_spend {Filter by source of spend} ' +
+      'other {}}',
+    description: 'Filter by "value" placeholder',
+    id: 'filterByPlaceholder',
+  },
+  filterByValues: {
+    defaultMessage:
+      '{value, select, ' +
+      'account {Cloud payer account} ' +
+      'affiliate {Affiliate} ' +
+      'product {Project} ' +
+      'source_of_spend {Source of spend} ' +
+      'other {}}',
+    description: 'Filter by values',
+    id: 'filterByValues',
+  },
   furtherGroupByLabel: {
     defaultMessage: 'Further grouped by',
     description: 'Further grouped by dropdown label',
@@ -228,10 +334,10 @@ export default defineMessages({
   groupBy: {
     defaultMessage:
       '{value, select, ' +
-      'accounts {Cloud payer accounts} ' +
-      'affiliates {Affiliates} ' +
+      'account {Cloud payer accounts} ' +
+      'affiliate {Affiliates} ' +
       'none {None} ' +
-      'products {Products} ' +
+      'product {Products} ' +
       'source_of_spend {Source of spend} ' +
       'other {}}',
     description: 'Group by options for details table',
@@ -256,6 +362,16 @@ export default defineMessages({
     defaultMessage: 'Looking for sources...',
     description: 'Looking for sources',
     id: 'loadingStateTitle',
+  },
+  names: {
+    defaultMessage: '{count, plural, one {Name} other {Names}}',
+    description: 'Name plural or singular',
+    id: 'names',
+  },
+  noResultsFound: {
+    defaultMessage: 'No results found',
+    description: 'No results found',
+    id: 'noResultsFound',
   },
   outOf: {
     defaultMessage: 'out of {value}',
@@ -287,6 +403,15 @@ export default defineMessages({
     description: 'Overview - Hybrid Committed Spend | Red Hat Business Services',
     id: 'pageTitleOverview',
   },
+  paginationTitle: {
+    defaultMessage:
+      '{placement, select, ' +
+      'top {{title} top pagination} ' +
+      'bottom {{title} bottom pagination} ' +
+      'other {{title} pagination}}',
+    description: 'title for pagination aria',
+    id: 'paginationTitle',
+  },
   percent: {
     defaultMessage: '{value} %',
     description: 'Percent value',
@@ -296,6 +421,11 @@ export default defineMessages({
     defaultMessage: 'Secondary group by',
     description: 'Secondary group by dropdown label',
     id: 'secondaryGroupByLabel',
+  },
+  selected: {
+    defaultMessage: '{value} selected',
+    description: '{value} selected',
+    id: 'selected',
   },
   sourcesOfSpendLabel: {
     defaultMessage: 'View',
@@ -312,11 +442,41 @@ export default defineMessages({
       'gcp {Google Cloud Platform} ' +
       'marketplace {Red Hat Marketplace} ' +
       'reseller {Reseller/Distributor} ' +
-      'subs_ondemand {On-demand subscriptions} ' +
+      'subs_on_demand {On-demand subscriptions} ' +
       'subs_yearly {Yearly subscriptions} ' +
       'other {}}',
     description: 'All sources of spend',
     id: 'sourcesOfSpendValues',
+  },
+  suggestions: {
+    defaultMessage: 'Suggestions',
+    description: 'Suggestions',
+    id: 'suggestions',
+  },
+  toolBarBulkSelectAll: {
+    defaultMessage: 'Select all ({value} items)',
+    description: 'Select all ({value} items)',
+    id: 'toolBarBulkSelectAll',
+  },
+  toolBarBulkSelectAriaDeselect: {
+    defaultMessage: 'Deselect all items',
+    description: 'Deselect all items',
+    id: 'toolBarBulkSelectAriaDeselect',
+  },
+  toolBarBulkSelectAriaSelect: {
+    defaultMessage: 'Select all items',
+    description: 'Select all items',
+    id: 'toolBarBulkSelectAriaSelect',
+  },
+  toolBarBulkSelectNone: {
+    defaultMessage: 'Select none (0 items)',
+    description: 'Select none (0 items)',
+    id: 'toolBarBulkSelectNone',
+  },
+  toolBarBulkSelectPage: {
+    defaultMessage: 'Select page ({value} items)',
+    description: 'Select page ({value} items)',
+    id: 'toolBarBulkSelectPage',
   },
   viewDetails: {
     defaultMessage: 'View details',
