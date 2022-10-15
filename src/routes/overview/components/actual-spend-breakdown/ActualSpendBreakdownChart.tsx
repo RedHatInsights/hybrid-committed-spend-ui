@@ -11,7 +11,7 @@ import {
   createReportDatum,
   DatumType,
 } from 'routes/components/charts/common/chart-datum';
-import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/getComputedReportItems';
+import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 
 import { PerspectiveType } from './ActualSpendBreakdown';
 import { chartStyles, styles } from './ActualSpendBreakdownChart.styles';
