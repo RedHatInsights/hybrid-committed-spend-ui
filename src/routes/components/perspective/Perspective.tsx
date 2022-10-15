@@ -9,7 +9,7 @@ interface PerspectiveOwnProps {
   currentItem: string;
   id?: string;
   isDisabled?: boolean;
-  label?: MessageDescriptor;
+  label?: string;
   minWidth?: number | string;
   onSelected(value: string);
   options?: {
@@ -89,14 +89,14 @@ class Perspective extends React.Component<PerspectiveProps> {
   };
 
   public render() {
-    const { intl, label, minWidth } = this.props;
+    const { label, minWidth } = this.props;
 
     return (
       <div style={styles.perspectiveContainer}>
         <div style={{ minWidth }}>
           {label && (
             <Title headingLevel="h3" size="md">
-              {intl.formatMessage(label)}
+              {label}
             </Title>
           )}
           <div style={styles.perspective}>{this.getSelect()}</div>

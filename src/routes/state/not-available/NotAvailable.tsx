@@ -1,23 +1,21 @@
-import { MessageDescriptor } from '@formatjs/intl/src/types';
 import Main from '@redhat-cloud-services/frontend-components/Main';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Unavailable from '@redhat-cloud-services/frontend-components/Unavailable';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 interface NotAvailablePropsOwnProps {
-  title?: MessageDescriptor;
+  title?: string;
 }
 
-type NotAvailableProps = NotAvailablePropsOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type NotAvailableProps = NotAvailablePropsOwnProps & RouteComponentProps<void>;
 
-const NotAvailableBase = ({ intl, title }: NotAvailableProps) => {
+const NotAvailable = ({ title }: NotAvailableProps) => {
   return (
     <>
       {title && (
         <PageHeader>
-          <PageHeaderTitle title={intl.formatMessage(title)} />
+          <PageHeaderTitle title={title} />
         </PageHeader>
       )}
       <Main>
@@ -27,5 +25,4 @@ const NotAvailableBase = ({ intl, title }: NotAvailableProps) => {
   );
 };
 
-const NotAvailable = withRouter(NotAvailableBase);
-export default injectIntl(NotAvailable);
+export default withRouter(NotAvailable);
