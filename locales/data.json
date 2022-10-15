@@ -82,6 +82,12 @@
         "value": "value"
       }
     ],
+    "cancel": [
+      {
+        "type": 0,
+        "value": "Cancel"
+      }
+    ],
     "chartCurrentSpendLegendLabel": [
       {
         "type": 0,
@@ -495,6 +501,539 @@
         "value": "Explore more"
       }
     ],
+    "exportAggregateType": [
+      {
+        "type": 0,
+        "value": "Aggregate type"
+      }
+    ],
+    "exportAll": [
+      {
+        "type": 0,
+        "value": "Export all"
+      }
+    ],
+    "exportDataType": [
+      {
+        "options": {
+          "json": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Data shown in table"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "raw": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Raw (unfiltered) data"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "exportDataTypeTitle": [
+      {
+        "type": 0,
+        "value": "Data type"
+      }
+    ],
+    "exportError": [
+      {
+        "type": 0,
+        "value": "Something went wrong, please try again"
+      }
+    ],
+    "exportFileName": [
+      {
+        "options": {
+          "account": {
+            "value": [
+              {
+                "options": {
+                  "daily": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_cloud_payer_accounts_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "monthly": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_cloud_payer_accounts_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": []
+                  }
+                },
+                "type": 5,
+                "value": "resolution"
+              }
+            ]
+          },
+          "affiliate": {
+            "value": [
+              {
+                "options": {
+                  "daily": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_affiliates_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "monthly": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_affiliates_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": []
+                  }
+                },
+                "type": 5,
+                "value": "resolution"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "options": {
+                  "daily": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_product_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "monthly": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_product_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": []
+                  }
+                },
+                "type": 5,
+                "value": "resolution"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "options": {
+                  "daily": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_source_of_spend_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "monthly": {
+                    "value": [
+                      {
+                        "type": 1,
+                        "value": "provider"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_source_of_spend_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "other": {
+                    "value": []
+                  }
+                },
+                "type": 5,
+                "value": "resolution"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "groupBy"
+      }
+    ],
+    "exportGenerate": [
+      {
+        "type": 0,
+        "value": "Generate export"
+      }
+    ],
+    "exportHeading": [
+      {
+        "options": {
+          "account": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Aggregates of the following cloud payer accounts will be exported to a .csv file."
+              }
+            ]
+          },
+          "affiliate": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Aggregates of the following affiliates will be exported to a .csv file."
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Aggregates of the following products will be exported to a .csv file."
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Aggregates of the following source of spend will be exported to a .csv file."
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "groupBy"
+      }
+    ],
+    "exportTitle": [
+      {
+        "type": 0,
+        "value": "Export"
+      }
+    ],
+    "filterByButtonAriaLabel": [
+      {
+        "options": {
+          "account": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter button for cloud payer accounts"
+              }
+            ]
+          },
+          "affiliate": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter button for affiliates"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter button for products"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter button for source of spend"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "filterByInputAriaLabel": [
+      {
+        "options": {
+          "account": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter input for cloud payer accounts"
+              }
+            ]
+          },
+          "affiliate": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter input for affiliates"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter input for products"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter input for source of spend"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "filterByPlaceholder": [
+      {
+        "options": {
+          "account": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter by account name"
+              }
+            ]
+          },
+          "affiliate": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter by affiliate name"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter by product name"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Filter by source of spend"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "filterByValues": [
+      {
+        "options": {
+          "account": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cloud payer account"
+              }
+            ]
+          },
+          "affiliate": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Affiliate"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Project"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Source of spend"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
     "furtherGroupByLabel": [
       {
         "type": 0,
@@ -504,7 +1043,7 @@
     "groupBy": [
       {
         "options": {
-          "accounts": {
+          "account": {
             "value": [
               {
                 "type": 0,
@@ -512,7 +1051,7 @@
               }
             ]
           },
-          "affiliates": {
+          "affiliate": {
             "value": [
               {
                 "type": 0,
@@ -531,7 +1070,7 @@
           "other": {
             "value": []
           },
-          "products": {
+          "product": {
             "value": [
               {
                 "type": 0,
@@ -576,6 +1115,38 @@
         "value": "Looking for sources..."
       }
     ],
+    "names": [
+      {
+        "offset": 0,
+        "options": {
+          "one": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Name"
+              }
+            ]
+          },
+          "other": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Names"
+              }
+            ]
+          }
+        },
+        "pluralType": "cardinal",
+        "type": 6,
+        "value": "count"
+      }
+    ],
+    "noResultsFound": [
+      {
+        "type": 0,
+        "value": "No results found"
+      }
+    ],
     "outOf": [
       {
         "type": 0,
@@ -616,6 +1187,50 @@
         "value": "Overview - Hybrid Committed Spend | Red Hat Business Services"
       }
     ],
+    "paginationTitle": [
+      {
+        "options": {
+          "bottom": {
+            "value": [
+              {
+                "type": 1,
+                "value": "title"
+              },
+              {
+                "type": 0,
+                "value": " bottom pagination"
+              }
+            ]
+          },
+          "other": {
+            "value": [
+              {
+                "type": 1,
+                "value": "title"
+              },
+              {
+                "type": 0,
+                "value": " pagination"
+              }
+            ]
+          },
+          "top": {
+            "value": [
+              {
+                "type": 1,
+                "value": "title"
+              },
+              {
+                "type": 0,
+                "value": " top pagination"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "placement"
+      }
+    ],
     "percent": [
       {
         "type": 1,
@@ -630,6 +1245,16 @@
       {
         "type": 0,
         "value": "Secondary group by"
+      }
+    ],
+    "selected": [
+      {
+        "type": 1,
+        "value": "value"
+      },
+      {
+        "type": 0,
+        "value": " selected"
       }
     ],
     "sourcesOfSpendLabel": [
@@ -700,7 +1325,7 @@
               }
             ]
           },
-          "subs_ondemand": {
+          "subs_on_demand": {
             "value": [
               {
                 "type": 0,
@@ -719,6 +1344,58 @@
         },
         "type": 5,
         "value": "value"
+      }
+    ],
+    "suggestions": [
+      {
+        "type": 0,
+        "value": "Suggestions"
+      }
+    ],
+    "toolBarBulkSelectAll": [
+      {
+        "type": 0,
+        "value": "Select all ("
+      },
+      {
+        "type": 1,
+        "value": "value"
+      },
+      {
+        "type": 0,
+        "value": " items)"
+      }
+    ],
+    "toolBarBulkSelectAriaDeselect": [
+      {
+        "type": 0,
+        "value": "Deselect all items"
+      }
+    ],
+    "toolBarBulkSelectAriaSelect": [
+      {
+        "type": 0,
+        "value": "Select all items"
+      }
+    ],
+    "toolBarBulkSelectNone": [
+      {
+        "type": 0,
+        "value": "Select none (0 items)"
+      }
+    ],
+    "toolBarBulkSelectPage": [
+      {
+        "type": 0,
+        "value": "Select page ("
+      },
+      {
+        "type": 1,
+        "value": "value"
+      },
+      {
+        "type": 0,
+        "value": " items)"
       }
     ],
     "viewDetails": [

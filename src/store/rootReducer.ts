@@ -1,6 +1,7 @@
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { combineReducers } from 'redux';
 import { dashboardReducer, dashboardStateKey } from 'store/dashboard';
+import { exportReducer, exportStateKey } from 'store/export';
 import { reportReducer, reportStateKey } from 'store/reports';
 import { userAccessReducer, userAccessStateKey } from 'store/user-access';
 import { StateType } from 'typesafe-actions';
@@ -10,6 +11,7 @@ export type RootState = StateType<typeof rootReducer>;
 
 export const rootReducer = combineReducers({
   [dashboardStateKey]: dashboardReducer,
+  [exportStateKey]: exportReducer,
   [featureFlagsStateKey]: featureFlagsReducer,
   [reportStateKey]: reportReducer,
   [userAccessStateKey]: userAccessReducer,

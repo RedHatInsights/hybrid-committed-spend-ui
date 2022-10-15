@@ -14,19 +14,30 @@ export interface Filters {
 }
 
 export interface Query {
-  cost_type?: any;
-  currency?: any;
-  dateRange?: any;
-  end_date?: any;
+  // cost_type?: any;
+  // currency?: any;
+  // dateRange?: any;
+
+  // filter?: any;
+  // filter_by?: any;
+  // group_by?: any;
+  // key_only?: boolean;
+  // limit?: number;
+  // order_by?: any;
+  // perspective?: any;
+  // search?: any;
+
+  account?: any;
+  affiliate?: any;
+  // end_date?: any;
+  product?: any;
+  source_of_spend?: any;
   filter?: any;
   filter_by?: any;
   group_by?: any;
-  key_only?: boolean;
   limit?: number;
   order_by?: any;
-  perspective?: any;
-  search?: any;
-  start_date?: any;
+  // start_date?: any;
 }
 
 // Converts filter_by props to filter props

@@ -1,49 +1,23 @@
 import messages from 'locales/messages';
-import React, { useState } from 'react';
+import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
 
+import { DateRangeType, GroupByType, SourcesOfSpendType } from './utils';
+
 interface DetailsToolbarOwnProps {
+  dateRange?: string;
+  groupBy?: string;
   onDateRangeSelected(value: string);
   onGroupBySelected(value: string);
   onSecondaryGroupBySelected(value: string);
   onSourcesOfSpendSelected(value: string);
+  secondaryGroupBy?: string;
+  sourcesOfSpend?: string;
 }
 
 export type DetailsToolbarProps = DetailsToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
-
-// eslint-disable-next-line no-shadow
-export enum DateRangeType {
-  contractedYtd = 'contracted_ytd',
-  contractedLastYear = 'contracted_last_year',
-  date = 'date',
-  lastNineMonths = 'last_nine_months',
-  lastSixMonths = 'last_six_months',
-  lastThreeMonths = 'last_three_months',
-}
-
-// eslint-disable-next-line no-shadow
-export enum GroupByType {
-  accounts = 'accounts',
-  affiliates = 'affiliates',
-  none = 'none',
-  products = 'products',
-  sourceOfSpend = 'source_of_spend',
-}
-
-// eslint-disable-next-line no-shadow
-export enum SourcesOfSpendType {
-  all = 'all',
-  aws = 'aws',
-  azure = 'azure',
-  consulting = 'consulting',
-  gcp = 'gcp',
-  marketplace = 'marketplace',
-  reseller = 'reseller',
-  subs_ondemand = 'subs_ondemand',
-  subs_yearly = 'subs_yearly',
-}
 
 const dateRangeOptions = [
   { label: messages.dateRange, value: DateRangeType.contractedYtd },
@@ -55,24 +29,24 @@ const dateRangeOptions = [
 ];
 
 const groupByOptions = [
-  { label: messages.groupBy, value: GroupByType.affiliates },
-  { label: messages.groupBy, value: GroupByType.products },
-  { label: messages.groupBy, value: GroupByType.accounts },
+  { label: messages.groupBy, value: GroupByType.affiliate },
+  { label: messages.groupBy, value: GroupByType.product },
+  { label: messages.groupBy, value: GroupByType.account },
   { label: messages.groupBy, value: GroupByType.sourceOfSpend },
 ];
 
 const secondaryGroupByOptions = [
   { label: messages.groupBy, value: GroupByType.none },
-  { label: messages.groupBy, value: GroupByType.affiliates },
-  { label: messages.groupBy, value: GroupByType.products },
-  { label: messages.groupBy, value: GroupByType.accounts },
+  { label: messages.groupBy, value: GroupByType.affiliate },
+  { label: messages.groupBy, value: GroupByType.product },
+  { label: messages.groupBy, value: GroupByType.account },
   { label: messages.groupBy, value: GroupByType.sourceOfSpend },
 ];
 
 const sourcesOfSpendOptions = [
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.all },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_yearly },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_ondemand },
+  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_on_demand },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.reseller },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.marketplace },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.aws },
@@ -81,75 +55,71 @@ const sourcesOfSpendOptions = [
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.consulting },
 ];
 
-const DetailsToolbar: React.FC<DetailsToolbarProps> = ({
+const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
+  dateRange,
+  groupBy,
+  intl,
   onDateRangeSelected,
   onGroupBySelected,
   onSecondaryGroupBySelected,
   onSourcesOfSpendSelected,
+  secondaryGroupBy,
+  sourcesOfSpend,
 }) => {
-  const [dateRangeSelection, setDateRangeSelection] = useState(DateRangeType.contractedYtd);
-  const [groupBySelection, setGroupBySelection] = useState(GroupByType.affiliates);
-  const [secondaryGroupBySelection, setSecondaryGroupBySelection] = useState(GroupByType.none);
-  const [sourcesOfSpendSelection, setSourcesOfSpendSelection] = useState(SourcesOfSpendType.all);
-
   const handleOnDateRangeSelected = value => {
     if (onDateRangeSelected) {
       onDateRangeSelected(value);
     }
-    setDateRangeSelection(value);
   };
 
   const handleOnGroupBySelected = value => {
     if (onGroupBySelected) {
       onGroupBySelected(value);
     }
-    setGroupBySelection(value);
   };
 
   const handleOnSecondaryGroupBySelected = value => {
     if (onSecondaryGroupBySelected) {
       onSecondaryGroupBySelected(value);
     }
-    setSecondaryGroupBySelection(value);
   };
 
   const handleOnSourcesOfSpendSelected = value => {
     if (onSourcesOfSpendSelected) {
       onSourcesOfSpendSelected(value);
     }
-    setSourcesOfSpendSelection(value);
   };
 
   return (
     <div>
       <Perspective
-        currentItem={sourcesOfSpendSelection}
+        currentItem={sourcesOfSpend}
         id="sourcesOfSpend"
-        label={messages.sourcesOfSpendLabel}
+        label={intl.formatMessage(messages.sourcesOfSpendLabel)}
         minWidth={200}
         onSelected={handleOnSourcesOfSpendSelected}
         options={sourcesOfSpendOptions}
       />
       <Perspective
-        currentItem={groupBySelection}
+        currentItem={groupBy}
         id="groupBy"
-        label={messages.groupByLabel}
+        label={intl.formatMessage(messages.groupByLabel)}
         minWidth={200}
         onSelected={handleOnGroupBySelected}
         options={groupByOptions}
       />
       <Perspective
-        currentItem={secondaryGroupBySelection}
+        currentItem={secondaryGroupBy}
         id="secondaryGroupBy"
-        label={messages.secondaryGroupByLabel}
+        label={intl.formatMessage(messages.secondaryGroupByLabel)}
         minWidth={200}
         onSelected={handleOnSecondaryGroupBySelected}
         options={secondaryGroupByOptions}
       />
       <Perspective
-        currentItem={dateRangeSelection}
+        currentItem={dateRange}
         id="dateRange"
-        label={messages.dateRangeLabel}
+        label={intl.formatMessage(messages.dateRangeLabel)}
         minWidth={200}
         onSelected={handleOnDateRangeSelected}
         options={dateRangeOptions}
@@ -158,4 +128,6 @@ const DetailsToolbar: React.FC<DetailsToolbarProps> = ({
   );
 };
 
-export default injectIntl(withRouter(DetailsToolbar));
+const DetailsHeaderToolbar = injectIntl(withRouter(DetailsHeaderToolbarBase));
+
+export { DetailsHeaderToolbar };
