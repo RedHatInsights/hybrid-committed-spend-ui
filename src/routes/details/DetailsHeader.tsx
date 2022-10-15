@@ -21,7 +21,7 @@ interface DetailsHeaderOwnProps {
 
 type DetailsHeaderProps = DetailsHeaderOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const DetailsHeader: React.FC<DetailsHeaderProps> = ({ children, intl }) => {
+const DetailsHeaderBase: React.FC<DetailsHeaderProps> = ({ children, intl }) => {
   const { report, reportFetchStatus } = mapToProps();
 
   let accountName: string | React.ReactNode = <EmptyValueState />;
@@ -105,4 +105,6 @@ const mapToProps = () => {
   };
 };
 
-export default injectIntl(withRouter(DetailsHeader));
+const DetailsHeader = injectIntl(withRouter(DetailsHeaderBase));
+
+export { DetailsHeader };
