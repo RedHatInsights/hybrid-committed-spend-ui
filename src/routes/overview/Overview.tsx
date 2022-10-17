@@ -3,9 +3,9 @@ import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import messages from 'locales/messages';
 import React, { lazy, Suspense } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { createMapStateToProps } from 'store/common';
+import { RootState } from 'store';
 import { reportSelectors } from 'store/reports';
 
 import { OverviewHeader } from './index';
@@ -21,17 +21,11 @@ interface OverviewStateProps {
   hasReportErrors: boolean;
 }
 
-interface OverviewDispatchProps {
-  // TBD...
-}
+type OverviewProps = OverviewOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-type OverviewProps = OverviewOwnProps &
-  OverviewStateProps &
-  OverviewDispatchProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+const Overview: React.FC<OverviewProps> = ({ intl }) => {
+  const { hasReportErrors } = mapToProps({});
 
-const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors, intl }) => {
   // Todo: Remove when APIs are available
   const isTest = true;
 
@@ -58,12 +52,13 @@ const OverviewBase: React.FC<OverviewProps> = ({ hasReportErrors, intl }) => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<OverviewOwnProps, OverviewStateProps>((state, props) => {
-  return {
-    hasReportErrors: reportSelectors.selectHasErrors(state),
-  };
-});
+// eslint-disable-next-line no-empty-pattern
+const mapToProps = ({}: OverviewOwnProps): OverviewStateProps => {
+  const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
 
-const Overview = withRouter(OverviewBase);
-export default injectIntl(connect(mapStateToProps, {})(Overview));
+  return {
+    hasReportErrors,
+  };
+};
+
+export default injectIntl(withRouter(Overview));
