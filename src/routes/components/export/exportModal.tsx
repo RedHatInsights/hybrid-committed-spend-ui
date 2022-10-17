@@ -9,7 +9,6 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
 import { createMapStateToProps } from 'store/common';
 import { exportActions } from 'store/export';
-import { ComputedReportItem } from 'utils/computedReport/getComputedReportItems';
 
 import { styles } from './exportModal.styles';
 import { ExportSubmit } from './exportSubmit';
@@ -18,7 +17,6 @@ export interface ExportModalOwnProps {
   endDate?: string;
   groupBy?: string;
   isOpen: boolean;
-  items?: ComputedReportItem[];
   onClose(isOpen: boolean);
   query?: Query;
   queryString?: string;
@@ -78,7 +76,7 @@ export class ExportModalBase extends React.Component<ExportModalProps, ExportMod
   };
 
   public render() {
-    const { endDate, groupBy, intl, items, query, reportPathsType, startDate } = this.props;
+    const { endDate, groupBy, intl, query, reportPathsType, startDate } = this.props;
     const { error, dataType } = this.state;
 
     return (
@@ -93,7 +91,6 @@ export class ExportModalBase extends React.Component<ExportModalProps, ExportMod
             dataType={dataType}
             endDate={endDate}
             groupBy={groupBy}
-            items={items}
             key="confirm"
             onClose={this.handleClose}
             onError={this.handleError}

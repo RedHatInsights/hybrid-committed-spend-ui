@@ -5,29 +5,26 @@ import { ReportPathsType, ReportType } from 'api/reports/report';
 import { AxiosError } from 'axios';
 import fileDownload from 'js-file-download';
 import messages from 'locales/messages';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
-import { createMapStateToProps, FetchStatus } from 'store/common';
+import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from 'store';
+import { FetchStatus } from 'store/common';
 import { exportActions, exportSelectors } from 'store/export';
-import { ComputedReportItem } from 'utils/computedReport/getComputedReportItems';
 
 export interface ExportSubmitOwnProps {
   disabled?: boolean;
-  dataType: 'json' | 'raw';
+  dataType?: 'json' | 'raw';
   endDate?: string;
   groupBy?: string;
-  items?: ComputedReportItem[];
-  onClose(isOpen: boolean);
-  onError(error: AxiosError);
+  onClose?: (isOpen: boolean) => void;
+  onError?: (error: AxiosError) => void;
   name?: string;
   query?: Query;
-  reportPathsType: ReportPathsType;
+  reportPathsType?: ReportPathsType;
   startDate?: string;
-}
-
-interface ExportSubmitDispatchProps {
-  exportReport?: typeof exportActions.exportReport;
 }
 
 interface ExportSubmitStateProps {
@@ -37,51 +34,33 @@ interface ExportSubmitStateProps {
   reportFetchStatus?: FetchStatus;
 }
 
-interface ExportSubmitState {
-  fetchReportClicked: boolean;
-}
-
-type ExportSubmitProps = ExportSubmitOwnProps &
-  ExportSubmitDispatchProps &
-  ExportSubmitStateProps &
-  WrappedComponentProps;
+type ExportSubmitProps = ExportSubmitOwnProps & WrappedComponentProps;
 
 const reportType = ReportType.cost;
 
-export class ExportSubmitBase extends React.Component<ExportSubmitProps> {
-  protected defaultState: ExportSubmitState = {
-    fetchReportClicked: false,
-  };
-  public state: ExportSubmitState = { ...this.defaultState };
+const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
+  disabled,
+  dataType,
+  endDate,
+  groupBy,
+  intl,
+  onClose,
+  onError,
+  query,
+  reportPathsType,
+  startDate,
+}) => {
+  const { queryString, report, reportFetchStatus } = mapToProps({ dataType, onError, query, reportPathsType });
+  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  constructor(stateProps, dispatchProps) {
-    super(stateProps, dispatchProps);
-  }
-
-  public componentDidUpdate(prevProps: ExportSubmitProps) {
-    const { report, reportError } = this.props;
-    const { fetchReportClicked } = this.state;
-
-    if (prevProps.report !== report && fetchReportClicked) {
-      this.getExport();
-    }
-    if (reportError) {
-      this.props.onError(reportError);
-    }
-  }
-
-  private getExport = () => {
-    const { report, reportFetchStatus } = this.props;
-
+  const getExport = () => {
     if (report && reportFetchStatus === FetchStatus.complete) {
-      fileDownload(report.data, this.getFileName(), 'text/csv');
-      this.handleClose();
+      fileDownload(report.data, getFileName(), 'text/csv');
+      handleClose();
     }
   };
 
-  private getFileName = () => {
-    const { endDate, groupBy, intl, reportPathsType, startDate } = this.props;
-
+  const getFileName = () => {
     // defaultMessage: '<provider>_<groupBy>_<resolution>_<start-date>_<end-date>',
     const fileName = intl.formatMessage(messages.exportFileName, {
       endDate,
@@ -93,51 +72,33 @@ export class ExportSubmitBase extends React.Component<ExportSubmitProps> {
     return `${fileName}.csv`;
   };
 
-  private handleClose = () => {
-    const { reportError } = this.props;
-
-    this.setState({ ...this.defaultState }, () => {
-      if (!reportError) {
-        this.props.onClose(false);
-      }
-    });
+  const handleClose = () => {
+    if (onClose) {
+      onClose(false);
+    }
   };
 
-  private handleFetchReport = () => {
-    const { exportReport, queryString, reportPathsType } = this.props;
-
-    exportReport(reportPathsType, reportType, queryString);
-
-    this.setState(
-      {
-        fetchReportClicked: true,
-      },
-      () => {
-        this.getExport();
-      }
-    );
+  const handleFetchReport = () => {
+    dispatch(exportActions.exportReport(reportPathsType, reportType, queryString));
   };
 
-  public render() {
-    const { disabled, intl, reportFetchStatus } = this.props;
+  useEffect(() => {
+    getExport();
+  }, [report]);
 
-    return (
-      <Button
-        isDisabled={disabled || reportFetchStatus === FetchStatus.inProgress}
-        key="confirm"
-        onClick={this.handleFetchReport}
-        variant={ButtonVariant.primary}
-      >
-        {intl.formatMessage(messages.exportGenerate)}
-      </Button>
-    );
-  }
-}
+  return (
+    <Button
+      isDisabled={disabled || reportFetchStatus === FetchStatus.inProgress}
+      key="confirm"
+      onClick={handleFetchReport}
+      variant={ButtonVariant.primary}
+    >
+      {intl.formatMessage(messages.exportGenerate)}
+    </Button>
+  );
+};
 
-const mapStateToProps = createMapStateToProps<ExportSubmitOwnProps, ExportSubmitStateProps>((state, props) => {
-  const { query, reportPathsType } = props;
-
-  // Todo: Add name and format type for "all exports" feature
+const mapToProps = ({ onError, query, reportPathsType }: ExportSubmitOwnProps): ExportSubmitStateProps => {
   const getQueryString = () => {
     const newQuery: Query = {
       ...JSON.parse(JSON.stringify(query)),
@@ -153,7 +114,7 @@ const mapStateToProps = createMapStateToProps<ExportSubmitOwnProps, ExportSubmit
       delta: undefined,
     };
 
-    // Store filter_by as an array so we can add to it below
+    // Store filter_by as an array, so we can add to it below
     if (query.filter_by) {
       for (const key of Object.keys(query.filter_by)) {
         if (newQuery.filter_by[key] === undefined) {
@@ -166,9 +127,21 @@ const mapStateToProps = createMapStateToProps<ExportSubmitOwnProps, ExportSubmit
   };
 
   const queryString = getQueryString();
-  const report = exportSelectors.selectExport(state, reportPathsType, reportType, queryString);
-  const reportError = exportSelectors.selectExportError(state, reportPathsType, reportType, queryString);
-  const reportFetchStatus = exportSelectors.selectExportFetchStatus(state, reportPathsType, reportType, queryString);
+  const report = useSelector((state: RootState) =>
+    exportSelectors.selectExport(state, reportPathsType, reportType, queryString)
+  );
+  const reportError = useSelector((state: RootState) =>
+    exportSelectors.selectExportError(state, reportPathsType, reportType, queryString)
+  );
+  const reportFetchStatus = useSelector((state: RootState) =>
+    exportSelectors.selectExportFetchStatus(state, reportPathsType, reportType, queryString)
+  );
+
+  useEffect(() => {
+    if (onError) {
+      onError(reportError);
+    }
+  }, [reportError]);
 
   return {
     queryString,
@@ -176,13 +149,8 @@ const mapStateToProps = createMapStateToProps<ExportSubmitOwnProps, ExportSubmit
     reportError,
     reportFetchStatus,
   };
-});
-
-const mapDispatchToProps: ExportSubmitDispatchProps = {
-  exportReport: exportActions.exportReport,
 };
 
-const ExportSubmitConnect = connect(mapStateToProps, mapDispatchToProps)(ExportSubmitBase);
-const ExportSubmit = injectIntl(ExportSubmitConnect);
+const ExportSubmit = injectIntl(ExportSubmitBase);
 
-export { ExportSubmit, ExportSubmitProps };
+export { ExportSubmit };
