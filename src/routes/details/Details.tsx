@@ -21,8 +21,8 @@ import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 import { getIdKeyForGroupBy } from 'utils/computedReport/getComputedDetailsReportItems';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
+import { useStateCallback } from 'utils/hooks';
 
-import { useStateCallback } from '../../utils/hooks';
 import { styles } from './Details.styles';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
