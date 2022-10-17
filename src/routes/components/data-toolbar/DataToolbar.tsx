@@ -18,10 +18,11 @@ import { FilterIcon } from '@patternfly/react-icons/dist/esm/icons/filter-icon';
 import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { Query } from 'api/queries/query';
 import messages from 'locales/messages';
+import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Filter } from 'routes/utils/filter';
-import { usePrevious } from 'utils/hooks';
+import { usePrevious, useStateCallback } from 'utils/hooks';
 
 import { styles } from './DataToolbar.styles';
 
@@ -58,7 +59,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
 }) => {
   const [categoryInput, setCategoryInput] = useState('');
   const [currentCategory, setCurrentCategory] = useState('');
-  const [filters, setFilters] = useState<Filters>({});
+  const [filters, setFilters] = useStateCallback({});
 
   const prevCategoryOptions = usePrevious(categoryOptions);
   const prevGroupBy = usePrevious(groupBy);
@@ -105,10 +106,10 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
     return categoryOptions[0].key;
   };
 
-  const getChips = (filtersForCategory: Filter[]): string[] => {
+  const getChips = (_filters: Filter[]): string[] => {
     const chips = [];
-    if (filtersForCategory) {
-      filtersForCategory.forEach(item => {
+    if (_filters) {
+      _filters.forEach(item => {
         chips.push({
           key: item.value,
           node: item.value,
@@ -126,18 +127,17 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
       const id = chip && chip.key ? chip.key : chip;
       let filter;
       if (filters[_type]) {
-        filter = (filters[_type] as Filter[]).find(item => item.value === id);
-        filters[_type] = (filters[_type] as Filter[]).filter(item => item.value !== id);
-        setFilters(filters);
-      }
-      if (onFilterRemoved) {
-        onFilterRemoved(filter);
+        const newFilters = cloneDeep(filters);
+        filter = (newFilters[_type] as Filter[]).find(item => item.value === id);
+        newFilters[_type] = (newFilters[_type] as Filter[]).filter(item => item.value !== id);
+        setFilters(newFilters, () => {
+          onFilterRemoved(filter);
+        });
       }
     } else {
-      setFilters({});
-      if (onFilterRemoved) {
+      setFilters({}, () => {
         onFilterRemoved(null); // Clear all
-      }
+      });
     }
   };
 
@@ -204,12 +204,11 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
           ? [...(prevItems as Filter[]), filter]
           : [filter],
     };
-    setFilters(newFilters);
-    setCategoryInput('');
 
-    if (onFilterAdded) {
+    setCategoryInput('');
+    setFilters(newFilters, () => {
       onFilterAdded(filter);
-    }
+    });
   };
 
   // Export button
