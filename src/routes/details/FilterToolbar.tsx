@@ -8,7 +8,7 @@ import { Filter } from 'routes/utils/filter';
 
 import { GroupByType } from './utils';
 
-interface TableToolbarOwnProps {
+interface FilterToolbarOwnProps {
   groupBy: string;
   isExportDisabled?: boolean;
   onExportClicked();
@@ -17,9 +17,9 @@ interface TableToolbarOwnProps {
   pagination?: React.ReactNode;
 }
 
-type TableToolbarProps = TableToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type FilterToolbarProps = FilterToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const TableToolbarBase: React.FC<TableToolbarProps> = ({
+const FilterToolbarBase: React.FC<FilterToolbarProps> = ({
   groupBy,
   intl,
   isExportDisabled,
@@ -64,6 +64,6 @@ const TableToolbarBase: React.FC<TableToolbarProps> = ({
   );
 };
 
-const TableToolbar = injectIntl(withRouter(TableToolbarBase));
+const FilterToolbar = injectIntl(withRouter(FilterToolbarBase));
 
-export { TableToolbar };
+export { FilterToolbar };

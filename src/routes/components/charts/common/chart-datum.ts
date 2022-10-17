@@ -4,7 +4,7 @@ import { intl } from 'components/i18n';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
 import { ComputedReportItem, getComputedReportItems } from 'utils/computedReport/getComputedReportItems';
-import { getToday, getYear } from 'utils/dateRange';
+import { getToday, getYear } from 'utils/dates';
 import { formatCurrency, FormatOptions } from 'utils/format';
 import { SortDirection } from 'utils/sort';
 

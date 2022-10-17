@@ -24,7 +24,7 @@ import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputed
 import { styles } from './Details.styles';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
-import { TableToolbar } from './TableToolbar';
+import { FilterToolbar } from './FilterToolbar';
 import {
   DateRangeType,
   getDateRangeType,
@@ -91,11 +91,11 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     return computedItems;
   };
 
-  const getDataToolbar = () => {
+  const getFilterToolbar = () => {
     const computedItems = getComputedItems();
 
     return (
-      <TableToolbar
+      <FilterToolbar
         groupBy={groupBy}
         isExportDisabled={computedItems.length !== 0}
         onExportClicked={handleOnExportModalOpen}
@@ -202,7 +202,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
             </Bullseye>
           }
         >
-          {getDataToolbar()}
+          {getFilterToolbar()}
           {getExportModal()}
           {reportFetchStatus === FetchStatus.inProgress ? (
             <Loading />
