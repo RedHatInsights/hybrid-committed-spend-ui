@@ -1,4 +1,5 @@
 import { ToolbarChipGroup } from '@patternfly/react-core';
+import { Query } from 'api/queries';
 import messages from 'locales/messages';
 import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
@@ -6,15 +7,14 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { DataToolbar } from 'routes/components/data-toolbar';
 import { Filter } from 'routes/utils/filter';
 
-import { GroupByType } from './utils';
-
 interface FilterToolbarOwnProps {
-  groupBy: string;
-  isExportDisabled?: boolean;
+  groupBy: string; // Options for category menu
+  isExportDisabled?: boolean; // Sync category selection with groupBy value
   onExportClicked();
   onFilterAdded(filter: Filter);
   onFilterRemoved(filter: Filter);
-  pagination?: React.ReactNode;
+  pagination?: React.ReactNode; // Optional pagination controls to display in toolbar
+  query?: Query; // Query containing filter_by params used to restore state upon page refresh
 }
 
 type FilterToolbarProps = FilterToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
@@ -27,39 +27,27 @@ const FilterToolbarBase: React.FC<FilterToolbarProps> = ({
   onFilterAdded,
   onFilterRemoved,
   pagination,
+  query,
 }) => {
   const getCategoryOptions = (): ToolbarChipGroup[] => {
-    const options = [];
-
-    switch (groupBy) {
-      case GroupByType.account:
-        options.push({ name: intl.formatMessage(messages.filterByValues, { value: 'account' }), key: 'account' });
-        break;
-      case GroupByType.affiliate:
-        options.push({ name: intl.formatMessage(messages.filterByValues, { value: 'affiliate' }), key: 'affiliate' });
-        break;
-      case GroupByType.sourceOfSpend:
-        options.push({
-          name: intl.formatMessage(messages.filterByValues, { value: 'source_of_spend' }),
-          key: 'source_of_spend',
-        });
-        break;
-      case GroupByType.product:
-      default:
-        options.push({ name: intl.formatMessage(messages.filterByValues, { value: 'product' }), key: 'product' });
-        break;
-    }
-    return options;
+    return [
+      { name: intl.formatMessage(messages.filterByValues, { value: 'account' }), key: 'account' },
+      { name: intl.formatMessage(messages.filterByValues, { value: 'affiliate' }), key: 'affiliate' },
+      { name: intl.formatMessage(messages.filterByValues, { value: 'source_of_spend' }), key: 'source_of_spend' },
+      { name: intl.formatMessage(messages.filterByValues, { value: 'product' }), key: 'product' },
+    ];
   };
 
   return (
     <DataToolbar
       categoryOptions={getCategoryOptions()}
+      groupBy={groupBy}
       isExportDisabled={isExportDisabled}
       onExportClicked={onExportClicked}
       onFilterAdded={onFilterAdded}
       onFilterRemoved={onFilterRemoved}
       pagination={pagination}
+      query={query}
     />
   );
 };
