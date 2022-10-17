@@ -50,15 +50,7 @@ interface DetailsStateProps {
   reportFetchStatus: FetchStatus;
 }
 
-interface DetailsDispatchProps {
-  // TBD...
-}
-
-type DetailsProps = DetailsOwnProps &
-  DetailsStateProps &
-  DetailsDispatchProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+type DetailsProps = DetailsOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 export const baseQuery: Query = {
   filter: {
