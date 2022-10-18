@@ -1,48 +1,51 @@
 import { Grid, GridItem } from '@patternfly/react-core';
 import React from 'react';
-import { connect } from 'react-redux';
-import { createMapStateToProps } from 'store/common';
-import { dashboardSelectors, DashboardSize } from 'store/dashboard';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RootState } from 'store';
+import { dashboardSelectors, DashboardSize, DashboardWidget } from 'store/dashboard';
 
 interface DashboardOwnProps {
   // TBD...
 }
 
 interface DashboardStateProps {
-  widgets: number[];
+  currentWidgets: number[];
+  selectWidgets: Record<number, DashboardWidget>;
 }
 
-interface DashboardDispatchProps {
-  selectWidgets?: () => void;
-}
+type DashboardProps = DashboardOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-type DashboardProps = DashboardOwnProps & DashboardStateProps & DashboardDispatchProps;
+const Dashboard: React.FC<DashboardProps> = () => {
+  const { selectWidgets, currentWidgets } = mapToProps();
 
-const DashboardBase: React.FC<DashboardProps> = ({ selectWidgets, widgets }) => (
-  <Grid hasGutter>
-    {widgets.map(widgetId => {
-      const widget = selectWidgets[widgetId];
-      return widget.size === DashboardSize.half ? (
-        <GridItem lg={12} xl2={6} key={widgetId}>
-          <widget.component widgetId={widgetId} />
-        </GridItem>
-      ) : (
-        <GridItem sm={12} key={widgetId}>
-          <widget.component widgetId={widgetId} />
-        </GridItem>
-      );
-    })}
-  </Grid>
-);
+  return (
+    <Grid hasGutter>
+      {currentWidgets.map(widgetId => {
+        const widget: any = selectWidgets[widgetId];
+        return widget.size === DashboardSize.half ? (
+          <GridItem lg={12} xl2={6} key={widgetId}>
+            <widget.component widgetId={widgetId} />
+          </GridItem>
+        ) : (
+          <GridItem sm={12} key={widgetId}>
+            <widget.component widgetId={widgetId} />
+          </GridItem>
+        );
+      })}
+    </Grid>
+  );
+};
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<DashboardOwnProps, DashboardStateProps>((state, props) => {
+const mapToProps = (): DashboardStateProps => {
+  const selectWidgets = useSelector((state: RootState) => dashboardSelectors.selectWidgets(state));
+  const currentWidgets = useSelector((state: RootState) => dashboardSelectors.selectCurrentWidgets(state));
+
   return {
-    selectWidgets: dashboardSelectors.selectWidgets(state),
-    widgets: dashboardSelectors.selectCurrentWidgets(state),
+    currentWidgets,
+    selectWidgets,
   };
-});
+};
 
-const Dashboard = connect(mapStateToProps, {})(DashboardBase);
-
-export default Dashboard;
+export default injectIntl(withRouter(Dashboard));

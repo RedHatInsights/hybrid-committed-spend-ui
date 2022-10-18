@@ -1,6 +1,6 @@
 import { Bullseye, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
-import { getQuery, Query } from 'api/queries';
+import { getQuery, parseQuery, Query } from 'api/queries';
 import { Report, ReportPathsType, ReportType } from 'api/reports';
 import { AxiosError } from 'axios';
 import messages from 'locales/messages';
@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import {
+  getRouteForQuery,
   handleOnFilterAdded,
   handleOnFilterRemoved,
   handleOnPerPageSelect,
@@ -20,11 +21,12 @@ import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 import { getIdKeyForGroupBy } from 'utils/computedReport/getComputedDetailsReportItems';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
+import { useStateCallback } from 'utils/hooks';
 
 import { styles } from './Details.styles';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
-import { TableToolbar } from './TableToolbar';
+import { FilterToolbar } from './FilterToolbar';
 import {
   DateRangeType,
   getDateRangeType,
@@ -50,15 +52,7 @@ interface DetailsStateProps {
   reportFetchStatus: FetchStatus;
 }
 
-interface DetailsDispatchProps {
-  // TBD...
-}
-
-type DetailsProps = DetailsOwnProps &
-  DetailsStateProps &
-  DetailsDispatchProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+type DetailsProps = DetailsOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 export const baseQuery: Query = {
   filter: {
@@ -66,21 +60,25 @@ export const baseQuery: Query = {
     offset: 0,
   },
   filter_by: {},
+  group_by: {
+    product: '*',
+  },
   order_by: {
     cost: 'desc',
   },
 };
 
+const reportPathsType = ReportPathsType.billing;
+const reportType = ReportType.cost;
+
 const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [dateRange, setDateRange] = useState(getDateRangeType(DateRangeType.contractedYtd));
-  const [groupBy, setGroupBy] = useState(getGroupByType(GroupByType.product));
+  const [groupBy, setGroupBy] = useStateCallback(getGroupByType(GroupByType.product));
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
   const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.all));
 
-  const { hasReportErrors, query, report, reportFetchStatus } = mapToProps({
-    groupBy,
-  });
+  const { hasReportErrors, query, report, reportFetchStatus } = mapToProps({ groupBy });
 
   const getComputedItems = () => {
     const computedItems = getUnsortedComputedReportItems({
@@ -91,17 +89,18 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     return computedItems;
   };
 
-  const getDataToolbar = () => {
+  const getFilterToolbar = () => {
     const computedItems = getComputedItems();
 
     return (
-      <TableToolbar
+      <FilterToolbar
         groupBy={groupBy}
         isExportDisabled={computedItems.length !== 0}
         onExportClicked={handleOnExportModalOpen}
         onFilterAdded={filter => handleOnFilterAdded(history, query, filter)}
         onFilterRemoved={filter => handleOnFilterRemoved(history, query, filter)}
         pagination={getPagination()}
+        query={query}
       />
     );
   };
@@ -161,7 +160,18 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   };
 
   const handleOnGroupBySelected = value => {
-    setGroupBy(value);
+    setGroupBy(value, () => {
+      const groupByKey: keyof Query['group_by'] = value as any;
+      const newQuery = {
+        ...JSON.parse(JSON.stringify(query)),
+        // filter_by: undefined, // Preserve filter -- see https://issues.redhat.com/browse/COST-1090
+        group_by: {
+          [groupByKey]: '*',
+        },
+        order_by: { cost: 'desc' },
+      };
+      history.replace(getRouteForQuery(history, newQuery, true));
+    });
   };
 
   const handleOnSecondaryGroupBySelected = value => {
@@ -202,7 +212,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
             </Bullseye>
           }
         >
-          {getDataToolbar()}
+          {getFilterToolbar()}
           {getExportModal()}
           {reportFetchStatus === FetchStatus.inProgress ? (
             <Loading />
@@ -219,11 +229,14 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
 };
 
 const mapToProps = ({ groupBy }: DetailsOwnProps): DetailsStateProps => {
-  const reportPathsType = ReportPathsType.billing;
-  const reportType = ReportType.cost;
-
+  const queryFromRoute = parseQuery<Query>(location.search);
   const query = {
-    group_by: groupBy,
+    filter: {
+      limit: baseQuery.filter.limit,
+      offset: baseQuery.filter.offset,
+    },
+    filter_by: queryFromRoute.filter_by || baseQuery.filter_by,
+    group_by: groupBy || baseQuery.group_by,
   };
   const queryString = getQuery(query);
 
