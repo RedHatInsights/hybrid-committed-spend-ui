@@ -1,4 +1,4 @@
-import './dataToolbar.scss';
+import './DataToolbar.scss';
 
 import {
   Button,
