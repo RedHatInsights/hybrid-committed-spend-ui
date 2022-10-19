@@ -1,12 +1,4 @@
-// eslint-disable-next-line no-shadow
-export enum DateRangeType {
-  contractedYtd = 'contracted_ytd',
-  contractedLastYear = 'contracted_last_year',
-  date = 'date',
-  lastNineMonths = 'last_nine_months',
-  lastSixMonths = 'last_six_months',
-  lastThreeMonths = 'last_three_months',
-}
+import { DateRangeType } from 'routes/utils/dateRange';
 
 // eslint-disable-next-line no-shadow
 export enum GroupByType {
