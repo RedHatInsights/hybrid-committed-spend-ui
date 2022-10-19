@@ -419,10 +419,34 @@
         "value": "Time"
       }
     ],
+    "detailsEmptyState": [
+      {
+        "type": 0,
+        "value": "No data available"
+      }
+    ],
+    "detailsTableAriaLabel": [
+      {
+        "type": 0,
+        "value": "Details table"
+      }
+    ],
     "detailsTitle": [
       {
         "type": 0,
         "value": "Committed Spend details"
+      }
+    ],
+    "emptyFilterStateSubtitle": [
+      {
+        "type": 0,
+        "value": "Sorry, no data with the given filter was found."
+      }
+    ],
+    "emptyFilterStateTitle": [
+      {
+        "type": 0,
+        "value": "No match found"
       }
     ],
     "errorStateNotAuthorizedDesc": [
@@ -1095,6 +1119,49 @@
       {
         "type": 0,
         "value": "Grouped by"
+      }
+    ],
+    "groupByValueNames": [
+      {
+        "options": {
+          "account": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Cloud payer accounts names"
+              }
+            ]
+          },
+          "affiliate": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Affiliate names"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Product names"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Source of spend names"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "groupBy"
       }
     ],
     "hcs": [

@@ -9,37 +9,35 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
+import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import {
   getRouteForQuery,
   handleOnFilterAdded,
   handleOnFilterRemoved,
   handleOnPerPageSelect,
   handleOnSetPage,
+  handleOnSort,
 } from 'routes/utils/history';
 import { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
-import { getIdKeyForGroupBy } from 'utils/computedReport/getComputedDetailsReportItems';
-import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { useStateCallback } from 'utils/hooks';
 
+import { accountData } from './data/accountData';
+import { affiliateData } from './data/affiliateData';
+import { productData } from './data/productData';
+import { sourceData } from './data/sourceData';
 import { styles } from './Details.styles';
 import { DetailsHeader } from './DetailsHeader';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
+import { DetailsTable } from './DetailsTable';
 import { FilterToolbar } from './FilterToolbar';
-import {
-  DateRangeType,
-  getDateRangeType,
-  getGroupByType,
-  getSourcesOfSpendType,
-  GroupByType,
-  SourcesOfSpendType,
-} from './utils';
-
+import { getDateRangeType, getGroupByType, getSourcesOfSpendType, GroupByType, SourcesOfSpendType } from './utils';
 const Loading = lazy(() => import('routes/state/loading/Loading'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
 interface DetailsOwnProps {
+  dateRange?: string;
   groupBy?: string;
 }
 
@@ -78,24 +76,13 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
   const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.all));
 
-  const { hasReportErrors, query, report, reportFetchStatus } = mapToProps({ groupBy });
-
-  const getComputedItems = () => {
-    const computedItems = getUnsortedComputedReportItems({
-      report,
-      idKey: getIdKeyForGroupBy(query.group_by),
-      isDateMap: false, // Don't use isDateMap here, so we can use a flattened data structure with row selection
-    });
-    return computedItems;
-  };
+  const { hasReportErrors, query, report, reportFetchStatus } = mapToProps({ dateRange, groupBy });
 
   const getFilterToolbar = () => {
-    const computedItems = getComputedItems();
-
     return (
       <FilterToolbar
         groupBy={groupBy}
-        isExportDisabled={computedItems.length !== 0}
+        isExportDisabled={report && report.meta && report.meta.count !== 0}
         onExportClicked={handleOnExportModalOpen}
         onFilterAdded={filter => handleOnFilterAdded(history, query, filter)}
         onFilterRemoved={filter => handleOnFilterRemoved(history, query, filter)}
@@ -106,11 +93,9 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   };
 
   const getExportModal = () => {
-    const groupById = getGroupByType(query.group_by);
-
     return (
       <ExportModal
-        groupBy={groupById}
+        groupBy={groupBy}
         isOpen={isExportModalOpen}
         onClose={handleOnExportModalClose}
         query={query}
@@ -125,7 +110,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
       report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 0;
     const offset =
       report && report.meta && report.meta.filter && report.meta.filter.offset ? report.meta.filter.offset : 0;
-    const page = offset > 0 ? offset / limit + 1 : 0;
+    const page = offset > 0 ? offset / limit + 1 : 1;
 
     return (
       <Pagination
@@ -143,6 +128,21 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         }}
         variant={isBottom ? PaginationVariant.bottom : PaginationVariant.top}
         widgetId={`pagination${isBottom ? '-bottom' : ''}`}
+      />
+    );
+  };
+
+  const getTable = () => {
+    return (
+      <DetailsTable
+        dateRange={dateRange}
+        groupBy={groupBy}
+        isLoading={reportFetchStatus === FetchStatus.inProgress}
+        onSort={(sortType, isSortAscending, date: string) =>
+          handleOnSort(history, query, sortType, isSortAscending, date)
+        }
+        query={query}
+        report={report}
       />
     );
   };
@@ -218,7 +218,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
             <Loading />
           ) : (
             <React.Fragment>
-              <div>Table placeholder</div>
+              <div>{getTable()}</div>
               <div style={styles.pagination}>{getPagination(true)}</div>
             </React.Fragment>
           )}
@@ -228,30 +228,60 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   );
 };
 
-const mapToProps = ({ groupBy }: DetailsOwnProps): DetailsStateProps => {
+const mapToProps = ({ dateRange, groupBy = baseQuery.group_by }: DetailsOwnProps): DetailsStateProps => {
   const queryFromRoute = parseQuery<Query>(location.search);
+  const { start_date, end_date } = getDateRange(dateRange);
+
   const query = {
     filter: {
-      limit: baseQuery.filter.limit,
-      offset: baseQuery.filter.offset,
+      ...baseQuery.filter,
+      ...queryFromRoute.filter,
     },
     filter_by: queryFromRoute.filter_by || baseQuery.filter_by,
-    group_by: groupBy || baseQuery.group_by,
+    group_by: groupBy,
+    order_by: queryFromRoute.order_by,
   };
-  const queryString = getQuery(query);
+  const queryString = getQuery({
+    ...query,
+    dateRange: undefined,
+    end_date,
+    start_date,
+  });
 
   const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
 
   const report = useSelector((/* state: RootState */) => {
     // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
-    return {
-      meta: {
-        total: {
-          value: 0,
-          units: 'USD',
-        },
-      },
-    } as any;
+
+    let result;
+    switch (groupBy) {
+      case GroupByType.affiliate:
+        result = affiliateData;
+        break;
+      case GroupByType.account:
+        result = accountData;
+        break;
+      case GroupByType.sourceOfSpend:
+        result = sourceData;
+        break;
+      case GroupByType.product:
+      default:
+        result = productData;
+        break;
+    }
+
+    const startDate = new Date(start_date + 'T23:59:59z');
+    const endDate = new Date(end_date + 'T23:59:59z');
+    endDate.setMonth(endDate.getMonth() + 1);
+
+    result.data = result.data.filter(item => {
+      const currentDate = new Date(item.date + 'T23:59:59z');
+      if (currentDate >= startDate && currentDate <= endDate) {
+        return item;
+      }
+    });
+
+    return result;
   });
   const reportFetchStatus = useSelector((state: RootState) =>
     reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString)

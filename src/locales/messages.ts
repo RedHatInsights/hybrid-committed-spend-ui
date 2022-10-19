@@ -161,10 +161,30 @@ export default defineMessages({
     description: 'Date range dropdown label',
     id: 'dateRangeLabel',
   },
+  detailsEmptyState: {
+    defaultMessage: 'No data available',
+    description: 'No data available',
+    id: 'detailsEmptyState',
+  },
+  detailsTableAriaLabel: {
+    defaultMessage: 'Details table',
+    description: 'Details table',
+    id: 'detailsTableAriaLabel',
+  },
   detailsTitle: {
     defaultMessage: 'Committed Spend details',
     description: 'Committed Spend details',
     id: 'detailsTitle',
+  },
+  emptyFilterStateSubtitle: {
+    defaultMessage: 'Sorry, no data with the given filter was found.',
+    description: 'Sorry, no data with the given filter was found.',
+    id: 'emptyFilterStateSubtitle',
+  },
+  emptyFilterStateTitle: {
+    defaultMessage: 'No match found',
+    description: 'No match found',
+    id: 'emptyFilterStateTitle',
   },
   errorStateNotAuthorizedDesc: {
     defaultMessage: 'Contact the cost management administrator to provide access to this application',
@@ -347,6 +367,17 @@ export default defineMessages({
     defaultMessage: 'Grouped by',
     description: 'Grouped by dropdown label',
     id: 'groupByLabel',
+  },
+  groupByValueNames: {
+    defaultMessage:
+      '{groupBy, select, ' +
+      'account {Cloud payer accounts names} ' +
+      'affiliate {Affiliate names} ' +
+      'product {Product names} ' +
+      'source_of_spend {Source of spend names} ' +
+      'other {}}',
+    description: 'Selected items for export',
+    id: 'groupByValueNames',
   },
   hcs: {
     defaultMessage: 'Hybrid Committed Spend',

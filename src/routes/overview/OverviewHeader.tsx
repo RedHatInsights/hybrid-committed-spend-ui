@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { EmptyValueState } from 'routes/components/state';
+import { EmptyValueState } from 'routes/components/state/empty-value';
 import { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';

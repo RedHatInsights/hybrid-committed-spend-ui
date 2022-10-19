@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { EmptyValueState } from 'routes/components/state';
+import { EmptyValueState } from 'routes/components/state/empty-value';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import { RootState } from 'store';
 import { FetchStatus } from 'store/common';

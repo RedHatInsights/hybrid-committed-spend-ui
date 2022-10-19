@@ -3,8 +3,9 @@ import React from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
+import { DateRangeType } from 'routes/utils/dateRange';
 
-import { DateRangeType, GroupByType, SourcesOfSpendType } from './utils';
+import { GroupByType, SourcesOfSpendType } from './utils';
 
 interface DetailsToolbarOwnProps {
   dateRange?: string;

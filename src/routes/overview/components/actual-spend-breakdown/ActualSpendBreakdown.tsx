@@ -15,9 +15,9 @@ import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 
 import { ActualSpendBreakdownChart } from './ActualSpendBreakdownChart';
-import { affiliatesData } from './data/affiliatesData';
-import { productsData } from './data/productsData';
-import { sourcesData } from './data/sourcesData';
+import { affiliateData } from './data/affiliateData';
+import { productData } from './data/productData';
+import { sourceData } from './data/sourceData';
 
 interface ActualSpendBreakdownOwnProps {
   perspective?: PerspectiveType;
@@ -110,12 +110,12 @@ const mapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps): Ac
     // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
     switch (perspective) {
       case PerspectiveType.affiliates: // affiliates
-        return affiliatesData;
+        return affiliateData;
       case PerspectiveType.products: // product
-        return productsData as any;
+        return productData as any;
       case PerspectiveType.sources: // sources
       default:
-        return sourcesData;
+        return sourceData;
     }
   });
   const reportFetchStatus = useSelector((state: RootState) =>
