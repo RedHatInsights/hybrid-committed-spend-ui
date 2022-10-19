@@ -100,6 +100,7 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
 
 const mapToProps = ({ onError, query, reportPathsType }: ExportSubmitOwnProps): ExportSubmitStateProps => {
   const getQueryString = () => {
+    // Todo: Add start and end dates below
     const newQuery: Query = {
       ...JSON.parse(JSON.stringify(query)),
       filter: {
