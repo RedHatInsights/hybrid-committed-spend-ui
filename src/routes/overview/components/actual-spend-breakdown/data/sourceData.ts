@@ -1,6 +1,6 @@
 // https://console.stage.redhat.com/api/cost-management/v1/reports/openshift/costs/?filter[limit]=3&group_by[project]=*&start_date=2022-06-23&end_date=2022-09-21&filter[resolution]=monthly
 
-export const sourcesData = {
+export const sourceData = {
   meta: {
     count: 4,
     others: 22,
