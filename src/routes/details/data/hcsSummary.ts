@@ -1,12 +1,12 @@
-// https://billing.dev.api.redhat.com/v1/reports/hcsSummary?limit=2
+// https://billing.dev.api.redhat.com/v1/reports/hcsSummary
 
 export const hcsSummary = {
   meta: { count: '1' },
   links: {
-    first: '/v1/reports/hcsSummary/?limit=2&offset=0',
+    first: '/v1/reports/hcsSummary/?limit=10&offset=0',
     next: null,
     previous: null,
-    last: '/v1/reports/hcsSummary/?limit=2&offset=0',
+    last: '/v1/reports/hcsSummary/?limit=10&offset=0',
   },
   data: [
     {

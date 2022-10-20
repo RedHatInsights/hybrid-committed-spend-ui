@@ -86,7 +86,7 @@ const mapToProps = (): OverviewHeaderStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query = {
-    limit: 2,
+    // TBD...
   };
   const queryString = getQuery(query);
 
