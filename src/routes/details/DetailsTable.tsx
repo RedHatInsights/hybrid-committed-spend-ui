@@ -3,17 +3,16 @@ import './DetailsTable.scss';
 import { Bullseye, EmptyState, EmptyStateBody, EmptyStateIcon, Spinner } from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
 import { nowrap, sortable, SortByDirection, Table, TableBody, TableHeader } from '@patternfly/react-table';
-import { getQuery, parseQuery, Query } from 'api/queries/query';
+import { parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ComputedReportItemType, ComputedReportItemValueType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
 import { getDateRange, getDateRangeDefault } from 'routes/utils/dateRange';
-import { createMapStateToProps } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { formatCurrency } from 'utils/format';
 
@@ -21,11 +20,11 @@ import { styles } from './DetailsTable.styles';
 
 interface DetailsTableOwnProps {
   dateRange?: string;
-  groupBy: string;
+  groupBy?: string;
   isLoading?: boolean;
-  onSort(value: string, isSortAscending: boolean, date: string);
-  query: Query;
-  report: Report;
+  onSort?: (value: string, isSortAscending: boolean, date: string) => void;
+  query?: Query;
+  report?: Report;
 }
 
 interface DetailsTableStateProps {
@@ -33,61 +32,36 @@ interface DetailsTableStateProps {
   start_date?: string;
 }
 
-interface DetailsTableDispatchProps {
-  // TBD...
-}
+type DetailsTableProps = DetailsTableOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-interface DetailsTableState {
-  columns?: any[];
-  loadingRows?: any[];
-  rows?: any[];
-}
+const DetailsTableBase: React.FC<DetailsTableProps> = ({
+  dateRange,
+  groupBy,
+  isLoading,
+  intl,
+  onSort,
+  query,
+  report,
+}) => {
+  const [columns, setColumns] = useState([]);
+  const [loadingRows, setLoadingRows] = useState([]);
+  const [rows, setRows] = useState([]);
 
-type DetailsTableProps = DetailsTableOwnProps & DetailsTableStateProps & WrappedComponentProps;
+  const { end_date, start_date } = mapToProps({ dateRange });
 
-class DetailsTableBase extends React.Component<DetailsTableProps> {
-  public state: DetailsTableState = {
-    columns: [],
-    rows: [],
-  };
-
-  constructor(props: DetailsTableProps) {
-    super(props);
-    this.handleOnSort = this.handleOnSort.bind(this);
-  }
-
-  public componentDidMount() {
-    this.initDatum();
-  }
-
-  public componentDidUpdate(prevProps: DetailsTableProps) {
-    const { dateRange, query, report } = this.props;
-    const currentReport = report && report.data ? JSON.stringify(report.data) : '';
-    const previousReport = prevProps.report && prevProps.report.data ? JSON.stringify(prevProps.report.data) : '';
-
-    if (
-      getQuery(prevProps.query) !== getQuery(query) ||
-      previousReport !== currentReport ||
-      prevProps.dateRange !== dateRange
-    ) {
-      this.initDatum();
-    }
-  }
-
-  private initDatum = () => {
-    const { end_date, groupBy, query, report, start_date, intl } = this.props;
+  const initDatum = () => {
     if (!query || !report) {
       return;
     }
 
-    const rows = [];
+    const newRows = [];
     const computedItems = getUnsortedComputedReportItems({
       report,
       idKey: groupBy,
       isDateMap: true,
     });
 
-    const columns = [
+    const newColumns = [
       {
         cellTransforms: [nowrap],
         date: undefined,
@@ -118,7 +92,7 @@ class DetailsTableBase extends React.Component<DetailsTableProps> {
 
       // Add column headings
       const mapIdDate = new Date(mapId + 'T23:59:59z');
-      columns.push({
+      newColumns.push({
         cellTransforms: [nowrap],
         title: intl.formatDate(mapIdDate, { month: 'long' }),
         ...(isSortable && {
@@ -175,12 +149,12 @@ class DetailsTableBase extends React.Component<DetailsTableProps> {
         ),
       });
 
-      rows.push({
+      newRows.push({
         cells,
       });
     });
 
-    const loadingRows = [
+    const newLoadingRows = [
       {
         heightAuto: true,
         cells: [
@@ -198,17 +172,12 @@ class DetailsTableBase extends React.Component<DetailsTableProps> {
       },
     ];
 
-    this.setState({
-      columns,
-      loadingRows,
-      rows,
-      sortBy: {},
-    });
+    setColumns(newColumns);
+    setLoadingRows(newLoadingRows);
+    setRows(newRows);
   };
 
-  private getEmptyState = () => {
-    const { query, intl } = this.props;
-
+  const getEmptyState = () => {
     for (const val of Object.values(query.filter_by)) {
       if (val !== '*') {
         return <EmptyFilterState filter={val as string} showMargin={false} />;
@@ -222,10 +191,7 @@ class DetailsTableBase extends React.Component<DetailsTableProps> {
     );
   };
 
-  public getSortBy = () => {
-    const { query } = this.props;
-    const { columns } = this.state;
-
+  const getSortBy = () => {
     let index = -1;
     let direction: any = SortByDirection.asc;
 
@@ -249,10 +215,7 @@ class DetailsTableBase extends React.Component<DetailsTableProps> {
     return index > -1 ? { index, direction } : {};
   };
 
-  private handleOnSort = (event, index, direction) => {
-    const { onSort } = this.props;
-    const { columns } = this.state;
-
+  const handleOnSort = (event, index, direction) => {
     if (onSort) {
       const column = columns[index];
       const isSortAscending = direction === SortByDirection.asc;
@@ -260,32 +223,30 @@ class DetailsTableBase extends React.Component<DetailsTableProps> {
     }
   };
 
-  public render() {
-    const { intl, isLoading } = this.props;
-    const { columns, loadingRows, rows } = this.state;
+  useEffect(() => {
+    initDatum();
+  }, [dateRange, query, report]);
 
-    return (
-      <div style={styles.tableContainer}>
-        <Table
-          aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
-          canSelectAll={false}
-          cells={columns}
-          className="DetailsTableOverride"
-          rows={isLoading ? loadingRows : rows}
-          sortBy={this.getSortBy()}
-          onSort={this.handleOnSort}
-        >
-          <TableHeader />
-          <TableBody />
-        </Table>
-        {Boolean(rows.length === 0) && <div style={styles.emptyState}>{this.getEmptyState()}</div>}
-      </div>
-    );
-  }
-}
+  return (
+    <div style={styles.tableContainer}>
+      <Table
+        aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
+        canSelectAll={false}
+        cells={columns}
+        className="DetailsTableOverride"
+        rows={isLoading ? loadingRows : rows}
+        sortBy={getSortBy()}
+        onSort={handleOnSort}
+      >
+        <TableHeader />
+        <TableBody />
+      </Table>
+      {Boolean(rows.length === 0) && <div style={styles.emptyState}>{getEmptyState()}</div>}
+    </div>
+  );
+};
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const mapStateToProps = createMapStateToProps<DetailsTableOwnProps, DetailsTableStateProps>((state, { dateRange }) => {
+const mapToProps = ({ dateRange }: DetailsTableOwnProps): DetailsTableStateProps => {
   const queryFromRoute = parseQuery<Query>(location.search);
   const _dateRange = dateRange || getDateRangeDefault(queryFromRoute);
   const { end_date, start_date } = getDateRange(_dateRange);
@@ -294,11 +255,8 @@ const mapStateToProps = createMapStateToProps<DetailsTableOwnProps, DetailsTable
     end_date,
     start_date,
   };
-});
+};
 
-const mapDispatchToProps: DetailsTableDispatchProps = {};
-
-const DetailsTableConnect = connect(mapStateToProps, mapDispatchToProps)(DetailsTableBase);
-const DetailsTable = injectIntl(DetailsTableConnect);
+const DetailsTable = injectIntl(withRouter(DetailsTableBase));
 
 export { DetailsTable };
