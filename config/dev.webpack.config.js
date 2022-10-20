@@ -46,7 +46,7 @@ function createAppUrl(appUrl) {
 
 const appUrl = createAppUrl(fecConfig.appUrl);
 
-const { plugins: externalPlugins, routes, ...externalConfig } = fecConfig;
+const { plugins: externalPlugins, routes, stats, ...externalConfig } = fecConfig;
 
 const { config: webpackConfig, plugins } = config({
   ...externalConfig,
@@ -69,7 +69,7 @@ plugins.push(
     /**
      * There is a know issue with apps using yarn to build their applications that the router package is not properly shared
      * Same issue was encountered in application services
-     * Package can be re-enabled for sharing once chrome starts providing global routing pakcage to all applications
+     * Package can be re-enabled for sharing once chrome starts providing global routing package to all applications
      */
     exclude: ['react-router-dom'],
     exposes: {
@@ -86,4 +86,12 @@ plugins.push(
 module.exports = {
   ...webpackConfig,
   plugins,
+  stats,
 };
+
+/* eslint-disable no-console */
+console.log('~~~Custom webpack variables~~~');
+console.log(`isProduction: ${isProduction}`);
+console.log(`isBeta: ${isBeta}`);
+console.log(`Clouddot ENV: ${process.env.CLOUDOT_ENV}`);
+console.log('~~~~~~~~~~~~~~~~~~~~~');
