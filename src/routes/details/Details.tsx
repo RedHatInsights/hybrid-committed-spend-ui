@@ -110,7 +110,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
       report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 0;
     const offset =
       report && report.meta && report.meta.filter && report.meta.filter.offset ? report.meta.filter.offset : 0;
-    const page = offset > 0 ? offset / limit + 1 : 1;
+    const page = offset / limit + 1;
 
     return (
       <Pagination
