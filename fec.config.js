@@ -32,6 +32,7 @@ module.exports = {
   debug: true,
   proxyVerbose: true,
   stats,
+  // useCache: true,
   useProxy: true,
   /**
    * Change to false after your app is registered in configuration files
