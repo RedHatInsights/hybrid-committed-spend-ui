@@ -57,6 +57,7 @@ node_modules/
 
 public/
 dist/
+.cache
 .DS_Store
 .idea
 /build/
