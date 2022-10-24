@@ -2,4 +2,5 @@ import { DashboardSize, dashboardStateKey, DashboardWidget } from './dashboardCo
 import { dashboardReducer } from './dashboardReducer';
 import * as dashboardSelectors from './dashboardSelectors';
 
-export { dashboardStateKey, dashboardReducer, dashboardSelectors, DashboardSize, DashboardWidget };
+export { dashboardStateKey, dashboardReducer, dashboardSelectors, DashboardSize };
+export type { DashboardWidget };

@@ -440,4 +440,4 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
 
 const BreakdownChart = injectIntl(BreakdownChartBase);
 
-export { BreakdownChart, BreakdownChartProps };
+export { BreakdownChart };

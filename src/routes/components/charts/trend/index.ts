@@ -1,1 +1,1 @@
-export { TrendChart, TrendChartProps } from './TrendChart';
+export { TrendChart } from './TrendChart';

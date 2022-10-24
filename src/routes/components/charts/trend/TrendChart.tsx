@@ -342,4 +342,4 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
 
 const TrendChart = injectIntl(TrendChartBase);
 
-export { TrendChart, TrendChartProps };
+export { TrendChart };
