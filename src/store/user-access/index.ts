@@ -5,12 +5,5 @@ import { stateKey as userAccessStateKey } from './userAccessCommon';
 import { UserAccessAction, userAccessReducer, UserAccessState } from './userAccessReducer';
 import * as userAccessSelectors from './userAccessSelectors';
 
-export {
-  userAccessQuery,
-  UserAccessAction,
-  userAccessActions,
-  userAccessReducer,
-  userAccessSelectors,
-  UserAccessState,
-  userAccessStateKey,
-};
+export { userAccessQuery, userAccessActions, userAccessReducer, userAccessSelectors, userAccessStateKey };
+export type { UserAccessAction, UserAccessState };

@@ -1,2 +1,2 @@
-export { RootState } from './rootReducer';
+export type { RootState } from './rootReducer';
 export { configureStore } from './store';

@@ -1,1 +1,1 @@
-export { BreakdownChart, BreakdownChartProps } from './BreakdownChart';
+export { BreakdownChart } from './BreakdownChart';

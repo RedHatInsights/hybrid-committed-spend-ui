@@ -1,1 +1,1 @@
-export { ChartDatum } from './chart-datum';
+export type { ChartDatum } from './chart-datum';

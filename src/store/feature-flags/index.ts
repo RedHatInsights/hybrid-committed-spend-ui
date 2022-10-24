@@ -7,11 +7,5 @@ import {
 } from './featureFlagsReducer';
 import * as featureFlagsSelectors from './featureFlagsSelectors';
 
-export {
-  FeatureFlagsAction,
-  featureFlagsActions,
-  featureFlagsReducer,
-  featureFlagsSelectors,
-  FeatureFlagsState,
-  featureFlagsStateKey,
-};
+export { featureFlagsActions, featureFlagsReducer, featureFlagsSelectors, featureFlagsStateKey };
+export type { FeatureFlagsAction, FeatureFlagsState };
