@@ -1,8 +1,18 @@
-import './DetailsTable.scss';
-
 import { Bullseye, EmptyState, EmptyStateBody, EmptyStateIcon, Spinner } from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
-import { nowrap, sortable, SortByDirection, Table, TableBody, TableHeader } from '@patternfly/react-table';
+import {
+  InnerScrollContainer,
+  SortByDirection,
+  TableComposable,
+  Tbody,
+  Td,
+  TdProps,
+  Th,
+  Thead,
+  ThProps,
+  Tr,
+  TreeRowWrapper,
+} from '@patternfly/react-table';
 import { parseQuery, Query } from 'api/queries/query';
 import { Report } from 'api/reports/report';
 import { format } from 'date-fns';
@@ -32,7 +42,22 @@ interface DetailsTableStateProps {
   start_date?: string;
 }
 
+interface DetailsTableColumn {
+  date?: string;
+  isSortable?: boolean;
+  name?: string;
+  orderBy?: string;
+}
+
+interface DetailsTableCell {
+  children?: React.ReactNode;
+  value?: string;
+}
+
 type DetailsTableProps = DetailsTableOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+
+const reportItem = ComputedReportItemType.cost;
+const reportItemValue = ComputedReportItemValueType.total;
 
 const DetailsTableBase: React.FC<DetailsTableProps> = ({
   dateRange,
@@ -43,8 +68,10 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   query,
   report,
 }) => {
+  const [activeSortIndex, setActiveSortIndex] = useState<number | null>(null);
+  const [activeSortDirection, setActiveSortDirection] = useState<'asc' | 'desc' | null>(null);
   const [columns, setColumns] = useState([]);
-  const [loadingRows, setLoadingRows] = useState([]);
+  const [expandedNames, setExpandedNames] = useState<string[]>([]);
   const [rows, setRows] = useState([]);
 
   const { end_date, start_date } = mapToProps({ dateRange });
@@ -54,20 +81,17 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
       return;
     }
 
-    const newRows = [];
     const computedItems = getUnsortedComputedReportItems({
       report,
       idKey: groupBy,
       isDateMap: true,
     });
 
-    const newColumns = [
+    const newColumns: DetailsTableColumn[] = [
       {
-        cellTransforms: [nowrap],
-        date: undefined,
+        isSortable: true,
+        name: intl.formatMessage(messages.groupByValueNames, { groupBy }),
         orderBy: groupBy,
-        title: intl.formatMessage(messages.groupByValueNames, { groupBy }),
-        ...(computedItems.length && { transforms: [sortable] }),
       },
     ];
 
@@ -93,24 +117,18 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
       // Add column headings
       const mapIdDate = new Date(mapId + 'T23:59:59z');
       newColumns.push({
-        cellTransforms: [nowrap],
-        title: intl.formatDate(mapIdDate, { month: 'long' }),
-        ...(isSortable && {
-          date: mapId,
-          orderBy: 'cost',
-          transforms: [sortable],
-        }),
+        name: intl.formatDate(mapIdDate, { month: 'long' }),
+        date: mapId,
+        isSortable,
+        orderBy: 'cost', // Todo: update when APIs are available
       });
     }
 
-    const reportItem = ComputedReportItemType.cost;
-    const reportItemValue = ComputedReportItemValueType.total;
-
-    // Sort by date and fill in missing cells
+    // Sort by date and fill in missing row cells
+    const newComputedItems = [];
     computedItems.map(rowItem => {
-      const cells = [];
-      let desc; // First column description (i.e., show ID if different than label)
-      let name; // For first column resource name
+      const cells: DetailsTableCell[] = [];
+      let value; // For first column resource name
 
       const items: any = Array.from(rowItem.values()).sort((a: any, b: any) => {
         if (new Date(a.date) > new Date(b.date)) {
@@ -123,16 +141,13 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
       });
 
       items.map(item => {
-        if (!name) {
-          name = item && item.label && item.label !== null ? item.label : null;
-        }
-        if (!desc) {
-          desc = item.id && item.id !== item.label ? <div style={styles.infoDescription}>{item.id}</div> : null;
+        if (!value) {
+          value = item && item.label && item.label !== null ? item.label : null;
         }
 
         // Add row cells
         cells.push({
-          title:
+          value:
             item[reportItem] && item[reportItem][reportItemValue]
               ? formatCurrency(item[reportItem][reportItemValue].value, item[reportItem][reportItemValue].units)
               : intl.formatMessage(messages.chartNoData),
@@ -140,41 +155,12 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
       });
 
       // Add first row cell (i.e., name)
-      cells.unshift({
-        title: (
-          <div>
-            {name}
-            {desc}
-          </div>
-        ),
-      });
-
-      newRows.push({
-        cells,
-      });
+      cells.unshift({ children: null, value });
+      newComputedItems.push(cells);
     });
 
-    const newLoadingRows = [
-      {
-        heightAuto: true,
-        cells: [
-          {
-            props: { colSpan: 5 },
-            title: (
-              <Bullseye>
-                <div style={{ textAlign: 'center' }}>
-                  <Spinner size="xl" />
-                </div>
-              </Bullseye>
-            ),
-          },
-        ],
-      },
-    ];
-
     setColumns(newColumns);
-    setLoadingRows(newLoadingRows);
-    setRows(newRows);
+    setRows(renderRows({ computedItems: newComputedItems }));
   };
 
   const getEmptyState = () => {
@@ -191,31 +177,20 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     );
   };
 
-  const getSortBy = () => {
-    let index = -1;
-    let direction: any = SortByDirection.asc;
-
-    if (query && query.order_by) {
-      for (const key of Object.keys(query.order_by)) {
-        let c = 0;
-        for (const column of columns) {
-          if (column.orderBy === key && !column.date) {
-            direction = query.order_by[key] === 'asc' ? SortByDirection.asc : SortByDirection.desc;
-            index = c;
-            break;
-          } else if (column.date === query.order_by[key]) {
-            direction = query.order_by.cost === 'asc' ? SortByDirection.asc : SortByDirection.desc;
-            index = c;
-            break;
-          }
-          c++;
-        }
-      }
-    }
-    return index > -1 ? { index, direction } : {};
-  };
+  const getSortParams = (columnIndex: number): ThProps['sort'] => ({
+    sortBy: {
+      index: activeSortIndex,
+      direction: activeSortDirection,
+      defaultDirection: 'asc',
+    },
+    onSort: handleOnSort,
+    columnIndex,
+  });
 
   const handleOnSort = (event, index, direction) => {
+    setActiveSortDirection(direction);
+    setActiveSortIndex(index);
+
     if (onSort) {
       const column = columns[index];
       const isSortAscending = direction === SortByDirection.asc;
@@ -223,24 +198,119 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     }
   };
 
+  const renderRows = ({
+    computedItems,
+    isHidden = false,
+    level = 1,
+    posinset = 1,
+    rowIndex = 0,
+  }): React.ReactNode[] => {
+    const [rowItems, ...remainingComputedItems] = computedItems;
+    if (!rowItems) {
+      return [];
+    }
+
+    const firstItem = rowItems[0];
+    const isExpanded = expandedNames.includes(firstItem.name);
+
+    const treeRow: TdProps['treeRow'] = {
+      onCollapse: () =>
+        setExpandedNames(prevExpanded => {
+          const otherExpandedNames = prevExpanded.filter(expName => expName !== firstItem.name);
+          return isExpanded ? otherExpandedNames : [...otherExpandedNames, firstItem.name];
+        }),
+      rowIndex,
+      props: {
+        isExpanded,
+        isHidden,
+        'aria-level': level,
+        'aria-posinset': posinset,
+        'aria-setsize': firstItem.children ? firstItem.children.length : 0,
+      },
+    };
+
+    const childRows =
+      firstItem.children && firstItem.children.length
+        ? renderRows({
+            computedItems: firstItem.children,
+            isHidden: !isExpanded || isHidden,
+            level: level + 1,
+            posinset: 1,
+            rowIndex: rowIndex + 1,
+          })
+        : [];
+
+    return [
+      <TreeRowWrapper key={`${rowIndex}-${firstItem.value}`} row={{ props: treeRow.props }}>
+        {rowItems.map((item, index) => (
+          <Td
+            dataLabel={columns[index]}
+            key={`${rowIndex}-${index}-${columns[index]}`}
+            modifier={index === 0 ? 'truncate' : 'nowrap'}
+            treeRow={treeRow}
+          >
+            {item.value}
+          </Td>
+        ))}
+      </TreeRowWrapper>,
+      ...childRows,
+      ...renderRows({
+        computedItems: remainingComputedItems,
+        isHidden,
+        level,
+        posinset: posinset + 1,
+        rowIndex: rowIndex + 1 + childRows.length,
+      }),
+    ];
+  };
+
   useEffect(() => {
     initDatum();
   }, [dateRange, query, report]);
 
   return (
-    <div style={styles.tableContainer}>
-      <Table
-        aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
-        canSelectAll={false}
-        cells={columns}
-        className="DetailsTableOverride"
-        rows={isLoading ? loadingRows : rows}
-        sortBy={getSortBy()}
-        onSort={handleOnSort}
-      >
-        <TableHeader />
-        <TableBody />
-      </Table>
+    <div>
+      <InnerScrollContainer>
+        <TableComposable aria-label="Tree table" gridBreakPoint="" isTreeTable>
+          <Thead>
+            <Tr>
+              {columns.map((col, index) =>
+                index === 0 ? (
+                  <Th
+                    isStickyColumn
+                    hasRightBorder
+                    key={`col-${index}-${col.name}`}
+                    modifier="truncate"
+                    sort={col.isSortable ? getSortParams(index) : undefined}
+                    stickyMinWidth="350px"
+                  >
+                    {col.name}
+                  </Th>
+                ) : (
+                  <Th
+                    key={`col-${index}-${col.value}`}
+                    modifier="nowrap"
+                    sort={col.isSortable ? getSortParams(index) : undefined}
+                  >
+                    {col.name}
+                  </Th>
+                )
+              )}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {isLoading ? (
+              <Bullseye>
+                <div style={{ textAlign: 'center' }}>
+                  <Spinner size="xl" />
+                </div>
+              </Bullseye>
+            ) : (
+              rows.map(row => row)
+            )}
+          </Tbody>
+        </TableComposable>
+      </InnerScrollContainer>
       {Boolean(rows.length === 0) && <div style={styles.emptyState}>{getEmptyState()}</div>}
     </div>
   );
