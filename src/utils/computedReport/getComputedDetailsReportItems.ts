@@ -1,8 +1,8 @@
-import { Query } from 'api/queries/query';
-import { DetailsReportItem } from 'api/reports/detailsReports';
-import { Report } from 'api/reports/report';
+import type { Query } from 'api/queries/query';
+import type { DetailsReportItem } from 'api/reports/detailsReports';
+import type { Report } from 'api/reports/report';
 
-import { ComputedReportItemsParams } from './getComputedReportItems';
+import type { ComputedReportItemsParams } from './getComputedReportItems';
 
 export interface ComputedExplorerReportItemsParams extends ComputedReportItemsParams<Report, DetailsReportItem> {}
 

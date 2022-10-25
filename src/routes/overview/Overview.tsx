@@ -2,10 +2,12 @@ import { Bullseye, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import messages from 'locales/messages';
 import React, { lazy, Suspense } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { RootState } from 'store';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import type { RootState } from 'store';
 import { reportSelectors } from 'store/reports';
 
 import { OverviewHeader } from './index';

@@ -1,7 +1,9 @@
-import { Report } from 'api/reports/report';
+import type { Report } from 'api/reports/report';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { transformReport } from 'routes/components/charts/common/chart-datum';
 
 import { PerspectiveType } from './CommittedSpendTrend';

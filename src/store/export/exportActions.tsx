@@ -1,11 +1,12 @@
-import { Export, runExport } from 'api/export';
-import { ReportPathsType, ReportType } from 'api/reports/report';
-import { AxiosError } from 'axios';
-import { ThunkAction } from 'redux-thunk';
+import type { Export } from 'api/export';
+import { runExport } from 'api/export';
+import type { ReportPathsType, ReportType } from 'api/reports/report';
+import type { AxiosError } from 'axios';
+import type { ThunkAction } from 'redux-thunk';
 import { FetchStatus } from 'store/common';
 import { getExportId } from 'store/export/exportCommon';
 import { selectExport, selectExportFetchStatus } from 'store/export/exportSelectors';
-import { RootState } from 'store/rootReducer';
+import type { RootState } from 'store/rootReducer';
 import { createAction } from 'typesafe-actions';
 
 const expirationMS = 30 * 60 * 1000; // 30 minutes

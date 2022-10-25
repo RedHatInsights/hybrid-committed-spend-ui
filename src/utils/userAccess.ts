@@ -1,4 +1,5 @@
-import { UserAccess, UserAccessType } from 'api/user-access';
+import type { UserAccess } from 'api/user-access';
+import { UserAccessType } from 'api/user-access';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const hasAccess = (userAccess: UserAccess, userAccessType = UserAccessType.all) => {

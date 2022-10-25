@@ -1,10 +1,13 @@
 import { Grid, GridItem } from '@patternfly/react-core';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { RootState } from 'store';
-import { dashboardSelectors, DashboardSize, DashboardWidget } from 'store/dashboard';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import type { RootState } from 'store';
+import type { DashboardWidget } from 'store/dashboard';
+import { dashboardSelectors, DashboardSize } from 'store/dashboard';
 
 interface DashboardOwnProps {
   // TBD...

@@ -1,25 +1,27 @@
 import { Bullseye, EmptyState, EmptyStateBody, EmptyStateIcon, Spinner } from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
+import type { TdProps, ThProps } from '@patternfly/react-table';
 import {
   InnerScrollContainer,
   SortByDirection,
   TableComposable,
   Tbody,
   Td,
-  TdProps,
   Th,
   Thead,
-  ThProps,
   Tr,
   TreeRowWrapper,
 } from '@patternfly/react-table';
-import { parseQuery, Query } from 'api/queries/query';
-import { Report } from 'api/reports/report';
+import type { Query } from 'api/queries/query';
+import { parseQuery } from 'api/queries/query';
+import type { Report } from 'api/reports/report';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useEffect, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { ComputedReportItemType, ComputedReportItemValueType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
 import { getDateRange, getDateRangeDefault } from 'routes/utils/dateRange';

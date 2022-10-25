@@ -1,4 +1,4 @@
-import { ReportItem } from './report';
+import type { ReportItem } from './report';
 
 export interface DetailsReportItem extends ReportItem {
   account?: string;

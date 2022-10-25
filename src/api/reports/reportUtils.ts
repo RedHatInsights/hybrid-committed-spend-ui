@@ -1,5 +1,6 @@
 import { runReport as runBillingReport } from './billingReports';
-import { ReportPathsType, ReportType } from './report';
+import type { ReportType } from './report';
+import { ReportPathsType } from './report';
 
 export function runReport(reportPathsType: ReportPathsType, reportType: ReportType, query: string) {
   let report;

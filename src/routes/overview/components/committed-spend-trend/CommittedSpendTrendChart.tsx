@@ -1,8 +1,10 @@
-import { Report } from 'api/reports/report';
+import type { Report } from 'api/reports/report';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { ChartDatum } from 'routes/components/charts/common';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import type { ChartDatum } from 'routes/components/charts/common';
 import { TrendChart } from 'routes/components/charts/trend';
 
 import { chartStyles } from './CommittedSpendTrendChart.styles';

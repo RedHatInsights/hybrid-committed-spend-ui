@@ -1,7 +1,8 @@
-import { MessageDescriptor } from '@formatjs/intl/src/types';
-import { BillingFilters, BillingQuery, getBillingQuery } from 'api/queries';
-import { ReportPathsType, ReportType } from 'api/reports';
-import React from 'react';
+import type { MessageDescriptor } from '@formatjs/intl/src/types';
+import type { BillingFilters, BillingQuery } from 'api/queries';
+import { getBillingQuery } from 'api/queries';
+import type { ReportPathsType, ReportType } from 'api/reports';
+import type React from 'react';
 
 export const dashboardStateKey = 'dashboard';
 export const dashboardDefaultFilters: BillingFilters = {

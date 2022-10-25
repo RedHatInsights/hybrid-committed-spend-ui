@@ -1,12 +1,12 @@
 import './DataToolbar.scss';
 
+import type { ToolbarChipGroup } from '@patternfly/react-core';
 import {
   Button,
   ButtonVariant,
   InputGroup,
   TextInput,
   Toolbar,
-  ToolbarChipGroup,
   ToolbarContent,
   ToolbarFilter,
   ToolbarGroup,
@@ -16,12 +16,13 @@ import {
 import { ExportIcon } from '@patternfly/react-icons/dist/esm/icons/export-icon';
 import { FilterIcon } from '@patternfly/react-icons/dist/esm/icons/filter-icon';
 import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
-import { Query } from 'api/queries/query';
+import type { Query } from 'api/queries/query';
 import messages from 'locales/messages';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { Filter } from 'routes/utils/filter';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
+import type { Filter } from 'routes/utils/filter';
 import { usePrevious, useStateCallback } from 'utils/hooks';
 
 import { styles } from './DataToolbar.styles';

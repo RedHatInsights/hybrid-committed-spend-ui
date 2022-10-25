@@ -1,13 +1,17 @@
 import { Bullseye, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
-import { getQuery, parseQuery, Query } from 'api/queries';
-import { Report, ReportPathsType, ReportType } from 'api/reports';
-import { AxiosError } from 'axios';
+import type { Query } from 'api/queries';
+import { getQuery, parseQuery } from 'api/queries';
+import type { Report } from 'api/reports';
+import { ReportPathsType, ReportType } from 'api/reports';
+import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { lazy, Suspense, useMemo, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import {
@@ -18,7 +22,7 @@ import {
   handleOnSetPage,
   handleOnSort,
 } from 'routes/utils/history';
-import { RootState } from 'store';
+import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 import { useStateCallback } from 'utils/hooks';

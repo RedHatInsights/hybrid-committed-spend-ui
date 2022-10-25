@@ -1,11 +1,13 @@
-import { ToolbarChipGroup } from '@patternfly/react-core';
-import { Query } from 'api/queries';
+import type { ToolbarChipGroup } from '@patternfly/react-core';
+import type { Query } from 'api/queries';
 import messages from 'locales/messages';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { DataToolbar } from 'routes/components/data-toolbar';
-import { Filter } from 'routes/utils/filter';
+import type { Filter } from 'routes/utils/filter';
 
 interface FilterToolbarOwnProps {
   groupBy: string; // Options for category menu

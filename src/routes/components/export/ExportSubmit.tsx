@@ -1,16 +1,19 @@
 import { Button, ButtonVariant } from '@patternfly/react-core';
-import { Export } from 'api/export/export';
-import { getQuery, Query } from 'api/queries/query';
-import { ReportPathsType, ReportType } from 'api/reports/report';
-import { AxiosError } from 'axios';
+import type { Export } from 'api/export/export';
+import type { Query } from 'api/queries/query';
+import { getQuery } from 'api/queries/query';
+import type { ReportPathsType } from 'api/reports/report';
+import { ReportType } from 'api/reports/report';
+import type { AxiosError } from 'axios';
 import fileDownload from 'js-file-download';
 import messages from 'locales/messages';
 import React, { useEffect } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { RootState } from 'store';
+import type { AnyAction } from 'redux';
+import type { ThunkDispatch } from 'redux-thunk';
+import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { exportActions, exportSelectors } from 'store/export';
 

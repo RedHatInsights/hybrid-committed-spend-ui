@@ -3,7 +3,8 @@ import messages from 'locales/messages';
 import { lazy } from 'react';
 import { paths } from 'Routes';
 
-import { DashboardSize, DashboardWidget } from './dashboardCommon';
+import type { DashboardWidget } from './dashboardCommon';
+import { DashboardSize } from './dashboardCommon';
 
 const ActualSpend = lazy(() => import('routes/overview/components/actual-spend/ActualSpend'));
 const ActualSpendBreakdown = lazy(

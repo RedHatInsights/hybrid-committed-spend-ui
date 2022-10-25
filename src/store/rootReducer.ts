@@ -4,7 +4,7 @@ import { dashboardReducer, dashboardStateKey } from 'store/dashboard';
 import { exportReducer, exportStateKey } from 'store/export';
 import { reportReducer, reportStateKey } from 'store/reports';
 import { userAccessReducer, userAccessStateKey } from 'store/user-access';
-import { StateType } from 'typesafe-actions';
+import type { StateType } from 'typesafe-actions';
 
 import { featureFlagsReducer, featureFlagsStateKey } from './feature-flags';
 export type RootState = StateType<typeof rootReducer>;

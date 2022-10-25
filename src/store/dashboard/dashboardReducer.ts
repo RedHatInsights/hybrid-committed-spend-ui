@@ -1,6 +1,6 @@
-import { ActionType } from 'typesafe-actions';
+import type { ActionType } from 'typesafe-actions';
 
-import { DashboardWidget } from './dashboardCommon';
+import type { DashboardWidget } from './dashboardCommon';
 import {
   actualSpendBreakdownWidget,
   actualSpendWidget,
