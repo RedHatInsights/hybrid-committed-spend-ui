@@ -1,6 +1,6 @@
 import { chart_color_blue_300 } from '@patternfly/react-tokens/dist/js/chart_color_blue_300';
 import { global_spacer_md } from '@patternfly/react-tokens/dist/js/global_spacer_md';
-import React from 'react';
+import type React from 'react';
 
 export const styles = {
   infoContainer: {

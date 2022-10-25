@@ -1,16 +1,19 @@
 import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
-import { Report } from 'api/reports';
-import { AxiosError } from 'axios';
+import type { Report } from 'api/reports';
+import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { EmptyValueState } from 'routes/components/state/empty-value';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { RootState } from 'store';
-import { FetchStatus } from 'store/common';
-import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
+import type { RootState } from 'store';
+import type { FetchStatus } from 'store/common';
+import type { DashboardWidget } from 'store/dashboard';
+import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency, formatPercentage } from 'utils/format';
 

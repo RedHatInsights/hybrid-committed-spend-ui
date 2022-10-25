@@ -1,5 +1,5 @@
 import global_FontSize_3xl from '@patternfly/react-tokens/dist/js/global_FontSize_3xl';
-import React from 'react';
+import type React from 'react';
 
 export const styles = {
   body: {

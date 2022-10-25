@@ -1,20 +1,22 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
 import { getUserAccessQuery } from 'api/queries/userAccessQuery';
-import { UserAccess, UserAccessType } from 'api/user-access';
-import { AxiosError } from 'axios';
+import type { UserAccess } from 'api/user-access';
+import { UserAccessType } from 'api/user-access';
+import type { AxiosError } from 'axios';
 import { PageTitle } from 'components/page-title';
 import React, { lazy, Suspense, useEffect } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { RootState } from 'store';
+import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { uiActions } from 'store/ui';
 import { userAccessActions, userAccessQuery, userAccessSelectors } from 'store/user-access';
 const Permissions = lazy(() => import('./Permissions'));
 
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+import type { AnyAction } from 'redux';
+import type { ThunkDispatch } from 'redux-thunk';
 
 interface PermissionsWrapperOwnProps {
   children?: React.ReactNode;

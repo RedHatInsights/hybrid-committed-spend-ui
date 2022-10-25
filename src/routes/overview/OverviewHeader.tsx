@@ -1,16 +1,19 @@
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { getQuery } from 'api/queries';
-import { Report, ReportPathsType, ReportType } from 'api/reports';
-import { AxiosError } from 'axios';
+import type { Report } from 'api/reports';
+import { ReportPathsType, ReportType } from 'api/reports';
+import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useEffect } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import type { AnyAction } from 'redux';
+import type { ThunkDispatch } from 'redux-thunk';
 import { EmptyValueState } from 'routes/components/state/empty-value';
-import { RootState } from 'store';
+import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 

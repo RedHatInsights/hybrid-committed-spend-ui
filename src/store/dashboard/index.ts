@@ -1,4 +1,5 @@
-import { DashboardSize, dashboardStateKey, DashboardWidget } from './dashboardCommon';
+import type { DashboardWidget } from './dashboardCommon';
+import { DashboardSize, dashboardStateKey } from './dashboardCommon';
 import { dashboardReducer } from './dashboardReducer';
 import * as dashboardSelectors from './dashboardSelectors';
 

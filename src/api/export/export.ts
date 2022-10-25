@@ -1,4 +1,4 @@
-import { ReportPathsType, ReportType } from 'api/reports';
+import type { ReportPathsType, ReportType } from 'api/reports';
 import axios from 'axios';
 
 export interface Export {

@@ -1,8 +1,9 @@
-import { Report, ReportPathsType, ReportType } from 'api/reports/report';
+import type { Report, ReportPathsType, ReportType } from 'api/reports/report';
 import { runReport } from 'api/reports/reportUtils';
-import { AxiosError } from 'axios';
-import { FetchStatus, ThunkAction } from 'store/common';
-import { RootState } from 'store/rootReducer';
+import type { AxiosError } from 'axios';
+import type { ThunkAction } from 'store/common';
+import { FetchStatus } from 'store/common';
+import type { RootState } from 'store/rootReducer';
 import { createAction } from 'typesafe-actions';
 
 import { getReportId } from './reportCommon';

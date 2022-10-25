@@ -6,7 +6,7 @@ import { notificationsReducer } from '@redhat-cloud-services/frontend-components
 import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Reducer } from 'redux';
+import type { Reducer } from 'redux';
 
 import pckg from '../package.json';
 import { useFeatureFlags } from './components/feature-flags';

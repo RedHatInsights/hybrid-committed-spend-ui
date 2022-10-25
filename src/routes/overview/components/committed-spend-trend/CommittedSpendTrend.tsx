@@ -1,17 +1,20 @@
 import { getQuery } from 'api/queries/query';
-import { Report } from 'api/reports';
-import { AxiosError } from 'axios';
+import type { Report } from 'api/reports';
+import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo, useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { RootState } from 'store';
-import { FetchStatus } from 'store/common';
-import { dashboardSelectors, DashboardWidget } from 'store/dashboard';
+import type { RootState } from 'store';
+import type { FetchStatus } from 'store/common';
+import type { DashboardWidget } from 'store/dashboard';
+import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
 
 import { CommittedSpendTrendTransform } from './CommittedSpendTrendTransform';

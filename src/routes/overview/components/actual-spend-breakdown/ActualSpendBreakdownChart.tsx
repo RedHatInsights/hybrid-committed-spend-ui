@@ -1,19 +1,22 @@
-import { Report } from 'api/reports/report';
+import type { Report } from 'api/reports/report';
 import { format } from 'date-fns';
 import React from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
+import type { RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { BreakdownChart } from 'routes/components/charts/breakdown';
+import type { ChartDatum } from 'routes/components/charts/common/chart-datum';
 import {
-  ChartDatum,
   ComputedReportItemType,
   ComputedReportItemValueType,
   createReportDatum,
   DatumType,
 } from 'routes/components/charts/common/chart-datum';
-import { ComputedReportItem, getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
+import type { ComputedReportItem } from 'utils/computedReport/getComputedReportItems';
+import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 
-import { PerspectiveType } from './ActualSpendBreakdown';
+import type { PerspectiveType } from './ActualSpendBreakdown';
 import { chartStyles, styles } from './ActualSpendBreakdownChart.styles';
 
 interface ActualSpendBreakdownChartOwnProps {

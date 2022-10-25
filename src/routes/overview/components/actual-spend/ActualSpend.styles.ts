@@ -1,7 +1,7 @@
 import global_FontSize_3xl from '@patternfly/react-tokens/dist/js/global_FontSize_3xl';
 import global_spacer_2xl from '@patternfly/react-tokens/dist/js/global_spacer_2xl';
 import global_spacer_sm from '@patternfly/react-tokens/dist/js/global_spacer_sm';
-import React from 'react';
+import type React from 'react';
 
 export const styles = {
   arrowIcon: {

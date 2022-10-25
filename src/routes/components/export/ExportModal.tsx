@@ -1,11 +1,12 @@
-import { MessageDescriptor } from '@formatjs/intl/src/types';
+import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Alert, Button, ButtonVariant, Form, FormGroup, Grid, GridItem, Modal, Radio } from '@patternfly/react-core';
-import { Query } from 'api/queries/query';
-import { ReportPathsType } from 'api/reports/report';
-import { AxiosError } from 'axios';
+import type { Query } from 'api/queries/query';
+import type { ReportPathsType } from 'api/reports/report';
+import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useState } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import type { WrappedComponentProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import { styles } from './exportModal.styles';
 import { ExportSubmit } from './ExportSubmit';

@@ -1,7 +1,7 @@
+import type { UserAccess, UserAccessType } from 'api/user-access';
 import { fetchUserAccess as apiGetUserAccess } from 'api/user-access';
-import { UserAccess, UserAccessType } from 'api/user-access';
-import { AxiosError } from 'axios';
-import { ThunkAction } from 'store/common';
+import type { AxiosError } from 'axios';
+import type { ThunkAction } from 'store/common';
 import { createAction } from 'typesafe-actions';
 
 import { getReportId } from './userAccessCommon';

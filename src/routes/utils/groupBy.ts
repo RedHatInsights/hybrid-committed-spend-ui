@@ -1,4 +1,4 @@
-import { Query } from 'api/queries/query';
+import type { Query } from 'api/queries/query';
 
 export const getGroupById = (query: Query) => {
   const groupBys = query && query.group_by ? Object.keys(query.group_by) : [];
