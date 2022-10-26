@@ -74,6 +74,7 @@ export const enum ReportType {
   committedSpend = 'committedSpend',
   committedSpendTrend = 'committedSpendTrend',
 
+  detailsFilter = 'detailsFilter',
   summary = 'summary',
 }
 
