@@ -52,6 +52,7 @@ export const ReportTypePaths: Partial<Record<ReportType, string>> = {
   [ReportType.committedSpend]: '',
   [ReportType.committedSpendTrend]: '',
 
+  [ReportType.detailsFilter]: 'reports/detailsFilter',
   [ReportType.summary]: 'reports/hcsSummary',
 };
 
