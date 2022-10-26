@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "npm run build:prod",
-    "build:prod": "NODE_ENV=production fec build --webpack-config config/dev.webpack.config.js",
+    "build:prod": "fec build",
     "check:updates": "npx npm-check-updates",
     "check:milestone": "npx npm-check-updates -t newest -f '/^(@patternfly|@redhat-cloud-services)/'",
     "check:milestone:update": "npx npm-check-updates -t newest -f '/^(@patternfly|@redhat-cloud-services)/' -u",
@@ -20,7 +20,7 @@
     "lint:ts:fix": "eslint src --fix",
     "lint:sass": "stylelint 'src/**/*.scss' --config .stylelintrc.json",
     "patch:hosts": "fec patch-etc-hosts",
-    "start": "fec dev --webpack-config config/dev.webpack.config.js",
+    "start": "fec dev",
     "start:csc": "CLOUD_SERVICES_CONFIG_PORT=8889 npm start",
     "test": "jest --no-cache",
     "test:clean": "jest --clearCache",
@@ -64,7 +64,7 @@
   "devDependencies": {
     "@formatjs/cli": "^5.1.3",
     "@redhat-cloud-services/eslint-config-redhat-cloud-services": "^1.2.6",
-    "@redhat-cloud-services/frontend-components-config": "^4.6.25",
+    "@redhat-cloud-services/frontend-components-config": "^4.6.28",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@types/react": "17.0.48",
@@ -75,7 +75,7 @@
     "@typescript-eslint/parser": "^5.41.0",
     "aphrodite": "^2.4.0",
     "copy-webpack-plugin": "^11.0.0",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-plugin-formatjs": "^4.3.4",
     "eslint-plugin-jest-dom": "^4.0.2",
     "eslint-plugin-jsdoc": "^39.3.25",
@@ -98,7 +98,7 @@
     "webpack-bundle-analyzer": "^4.7.0"
   },
   "overrides": {
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "eslint-plugin-rulesdir": "^0.2.1",
     "react-intl": "^6.1.2"
   },
