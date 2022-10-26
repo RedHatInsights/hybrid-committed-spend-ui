@@ -1,3 +1,5 @@
+import './DetailsTable.scss';
+
 import { Bullseye, EmptyState, EmptyStateBody, EmptyStateIcon, Spinner } from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
 import type { TdProps, ThProps } from '@patternfly/react-table';
@@ -271,9 +273,9 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   }, [dateRange, query, report]);
 
   return (
-    <div>
+    <React.Fragment>
       <InnerScrollContainer>
-        <TableComposable aria-label="Tree table" gridBreakPoint="" isTreeTable>
+        <TableComposable aria-label="Tree table" className="tableOverride" gridBreakPoint="" isTreeTable>
           <Thead>
             <Tr>
               {columns.map((col, index) =>
@@ -314,7 +316,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
         </TableComposable>
       </InnerScrollContainer>
       {Boolean(rows.length === 0) && <div style={styles.emptyState}>{getEmptyState()}</div>}
-    </div>
+    </React.Fragment>
   );
 };
 
