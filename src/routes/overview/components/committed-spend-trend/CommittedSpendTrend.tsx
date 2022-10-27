@@ -1,5 +1,5 @@
 import { getQuery } from 'api/queries/query';
-import type { Report } from 'api/reports';
+import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo, useState } from 'react';

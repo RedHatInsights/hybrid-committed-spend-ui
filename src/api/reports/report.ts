@@ -2,9 +2,10 @@ import type { PagedMetaData, PagedResponse } from 'api/api';
 
 export interface ReportValue {
   units?: string;
-  value?: number;
+  value?: string | number; // Todo: supports test data
 }
 
+// Todo: supports test data
 export interface ReportItemValue {
   markup?: ReportValue;
   raw?: ReportValue;
@@ -12,6 +13,7 @@ export interface ReportItemValue {
   usage: ReportValue;
 }
 
+// Todo: supports test data
 export interface ReportItem {
   cost?: ReportItemValue;
   date?: string;
@@ -22,20 +24,13 @@ export interface ReportItem {
   supplementary?: ReportItemValue;
 }
 
-export interface ReportSampleItem extends ReportItem {
-  account?: string;
-  account_alias?: string;
-  region?: string;
-  service?: string;
-}
-
 export interface ReportData {
   date?: string;
-  values?: ReportSampleItem[];
+  values?: any[];
 }
 
 export interface ReportMeta extends PagedMetaData {
-  count: number;
+  count?: string | number; // Todo: supports test data
   delta?: {
     percent: number;
     value: number;
@@ -66,19 +61,19 @@ export interface Report extends PagedResponse<ReportData, ReportMeta> {}
 
 // eslint-disable-next-line no-shadow
 export const enum ReportType {
-  cost = 'cost',
+  billing = 'billing',
+  cost = 'cost', // Todo: supports test data
+}
+
+// eslint-disable-next-line no-shadow
+export const enum ReportPathsType {
+  accountSummary = 'accountSummary',
+  details = 'details', // Todo: placeholder for upcoming API
+  detailsFilter = 'detailsFilter',
 
   // Todo: for testing
   actualSpend = 'actualSpend',
   actualSpendBreakdown = 'actualSpendBreakdown',
   committedSpend = 'committedSpend',
   committedSpendTrend = 'committedSpendTrend',
-
-  detailsFilter = 'detailsFilter',
-  summary = 'summary',
-}
-
-// eslint-disable-next-line no-shadow
-export const enum ReportPathsType {
-  billing = 'billing',
 }

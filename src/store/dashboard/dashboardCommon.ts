@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import type { BillingFilters, BillingQuery } from 'api/queries';
 import { getBillingQuery } from 'api/queries';
-import type { ReportPathsType, ReportType } from 'api/reports';
+import type { ReportPathsType, ReportType } from 'api/reports/report';
 import type React from 'react';
 
 export const dashboardStateKey = 'dashboard';
