@@ -1,20 +1,24 @@
 import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
-import type { Report } from 'api/reports/report';
+import { getQuery } from 'api/queries';
+import type { AccountSummaryReport } from 'api/reports/accountSummaryReports';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import type { AnyAction } from 'redux';
+import type { ThunkDispatch } from 'redux-thunk';
 import { EmptyValueState } from 'routes/components/state/empty-value';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import type { RootState } from 'store';
-import type { FetchStatus } from 'store/common';
+import { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
+import { getToday } from 'utils/dates';
 import { formatCurrency, formatPercentage } from 'utils/format';
 
 import { styles } from './ActualSpend.styles';
@@ -24,7 +28,7 @@ interface ActualSpendOwnProps {
 }
 
 interface ActualSpendStateProps {
-  report?: Report;
+  report?: AccountSummaryReport;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
@@ -35,19 +39,34 @@ export type ActualSpendProps = ActualSpendOwnProps & RouteComponentProps<void> &
 const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   const { report, reportFetchStatus, widget } = mapToProps({ widgetId });
 
-  let actualSpend: string | React.ReactNode = <EmptyValueState />;
+  const hasData = report && report.data && report.data.length;
+  const values = hasData && report.data[0];
+
+  // Todo: replace with actual spend
+  const actualSpend: string | React.ReactNode =
+    values && values.committed_spend && values.committed_spend.value ? (
+      formatCurrency(Number(values.committed_spend.value), values.committed_spend.units || 'USD')
+    ) : (
+      <EmptyValueState />
+    );
+  const excessActualSpend: string | React.ReactNode =
+    values && values.excess_committed_spend && values.excess_committed_spend.value ? (
+      formatCurrency(Number(values.excess_committed_spend.value), values.excess_committed_spend.units || 'USD')
+    ) : (
+      <EmptyValueState />
+    );
+  const percent: string | React.ReactNode =
+    values && values.delta && values.delta.percent ? (
+      formatPercentage(Number(values.delta.percent))
+    ) : (
+      <EmptyValueState />
+    );
+
   let dateRange: string | React.ReactNode = <EmptyValueState />;
-  let percent: string | React.ReactNode = <EmptyValueState />;
-
-  const isTest = true;
-  const hasTotal = report && report.meta && report.meta.total;
-
-  if (isTest || hasTotal) {
-    actualSpend = formatCurrency(817945.1, 'USD');
-    percent = formatPercentage(10);
-
-    const startDate = new Date('2021-12-01T23:59:59z');
-    const endDate = new Date('2022-08-01T23:59:59z');
+  if (values && values.contract_start_date) {
+    const startDate = new Date(values.contract_start_date + 'T23:59:59z');
+    const endDate = getToday();
+    endDate.setMonth(endDate.getMonth() - 1);
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
       month: 'long',
@@ -59,7 +78,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
     <ReportSummary
       bodyStyle={styles.body}
       fetchStatus={reportFetchStatus}
-      excessActualSpend={98321.34}
+      excessActualSpend={excessActualSpend}
       title={widget.title}
     >
       <div>{dateRange}</div>
@@ -78,20 +97,17 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
 };
 
 const mapToProps = ({ widgetId }: ActualSpendOwnProps): ActualSpendStateProps => {
-  const queryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
+  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const report = useSelector((/* state: RootState */) => {
-    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
-    return {
-      meta: {
-        total: {
-          value: 0,
-          units: 'USD',
-        },
-      },
-    } as any;
-  });
+  const query = {
+    // TBD...
+  };
+  const queryString = getQuery(query);
+
+  const report = useSelector((state: RootState) =>
+    reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
+  );
   const reportFetchStatus = useSelector((state: RootState) =>
     reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, queryString)
   );
@@ -99,9 +115,10 @@ const mapToProps = ({ widgetId }: ActualSpendOwnProps): ActualSpendStateProps =>
     reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString)
   );
 
-  useMemo(() => {
-    // Todo: Enable via dispatch
-    reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
+  useEffect(() => {
+    if (reportFetchStatus !== FetchStatus.inProgress) {
+      dispatch(reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString));
+    }
   }, [queryString]);
 
   return {

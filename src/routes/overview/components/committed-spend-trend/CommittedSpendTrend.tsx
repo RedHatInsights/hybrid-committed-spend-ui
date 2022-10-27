@@ -16,6 +16,7 @@ import type { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
+import { formatCurrency } from 'utils/format';
 
 import { CommittedSpendTrendTransform } from './CommittedSpendTrendTransform';
 import { currentData } from './data/currentData';
@@ -72,7 +73,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
   return (
     <ReportSummary
       detailsLink={getDetailsLink()}
-      excessActualSpend={98321.34}
+      excessActualSpend={formatCurrency(98321.34, 'USD')}
       fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
       title={widget.title}
     >

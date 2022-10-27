@@ -21,7 +21,7 @@ export const actualSpendWidget: DashboardWidget = {
   chartName: 'actualSpend',
   id: getId(),
   title: messages.dashboardActualSpendTitle,
-  reportPathsType: ReportPathsType.actualSpend,
+  reportPathsType: ReportPathsType.accountSummary,
   reportType: ReportType.billing,
   size: DashboardSize.half,
 };

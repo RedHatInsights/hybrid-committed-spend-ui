@@ -13,8 +13,8 @@ interface ReportSummaryOwnProps {
   bodyStyle?: React.CSSProperties;
   children?: React.ReactNode;
   detailsLink?: React.ReactNode;
-  excessActualSpend?: number;
-  excessActualSpendBreakdown?: number;
+  excessActualSpend?: string | React.ReactNode;
+  excessActualSpendBreakdown?: string | React.ReactNode;
   fetchStatus: number | number[];
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;

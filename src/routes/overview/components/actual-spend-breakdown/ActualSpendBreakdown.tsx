@@ -16,6 +16,7 @@ import type { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
+import { formatCurrency } from 'utils/format';
 
 import { ActualSpendBreakdownChart } from './ActualSpendBreakdownChart';
 import { affiliateData } from './data/affiliateData';
@@ -89,7 +90,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
   return (
     <ReportSummary
       detailsLink={getDetailsLink()}
-      excessActualSpendBreakdown={98321.34}
+      excessActualSpendBreakdown={formatCurrency(98321.34, 'USD')}
       fetchStatus={reportFetchStatus}
       title={widget.title}
     >
