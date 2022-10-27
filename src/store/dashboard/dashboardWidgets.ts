@@ -21,8 +21,8 @@ export const actualSpendWidget: DashboardWidget = {
   chartName: 'actualSpend',
   id: getId(),
   title: messages.dashboardActualSpendTitle,
-  reportPathsType: ReportPathsType.billing,
-  reportType: ReportType.actualSpend,
+  reportPathsType: ReportPathsType.actualSpend,
+  reportType: ReportType.billing,
   size: DashboardSize.half,
 };
 
@@ -31,8 +31,8 @@ export const actualSpendBreakdownWidget: DashboardWidget = {
   chartName: 'actualSpendBreakdown',
   id: getId(),
   title: messages.dashboardActualSpendBreakdownTitle,
-  reportPathsType: ReportPathsType.billing,
-  reportType: ReportType.actualSpendBreakdown,
+  reportPathsType: ReportPathsType.actualSpendBreakdown,
+  reportType: ReportType.billing,
   viewAllPath: paths.details,
 };
 
@@ -41,8 +41,8 @@ export const committedSpendWidget: DashboardWidget = {
   chartName: 'committedSpend',
   id: getId(),
   title: messages.dashboardCommitmentSpendTitle,
-  reportPathsType: ReportPathsType.billing,
-  reportType: ReportType.committedSpend,
+  reportPathsType: ReportPathsType.committedSpendTrend,
+  reportType: ReportType.billing,
   size: DashboardSize.half,
 };
 
@@ -51,7 +51,7 @@ export const committedSpendTrendWidget: DashboardWidget = {
   chartName: 'committedSpendTrend',
   id: getId(),
   title: messages.dashboardCommitmentSpendTrendTitle,
-  reportPathsType: ReportPathsType.billing,
-  reportType: ReportType.committedSpendTrend,
+  reportPathsType: ReportPathsType.committedSpendTrend,
+  reportType: ReportType.billing,
   viewAllPath: paths.details,
 };

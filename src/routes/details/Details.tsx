@@ -2,8 +2,8 @@ import { Bullseye, Pagination, PaginationVariant, Spinner } from '@patternfly/re
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import type { Query } from 'api/queries';
 import { getQuery, parseQuery } from 'api/queries';
-import type { Report } from 'api/reports';
-import { ReportPathsType, ReportType } from 'api/reports';
+import type { Report } from 'api/reports/report';
+import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { lazy, Suspense, useMemo, useState } from 'react';
@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
+import { PageHeading } from 'routes/components/page-heading';
 import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import {
   getRouteForQuery,
@@ -32,7 +33,6 @@ import { affiliateData } from './data/affiliateData';
 import { productData } from './data/productData';
 import { sourceData } from './data/sourceData';
 import { styles } from './Details.styles';
-import { DetailsHeader } from './DetailsHeader';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
 import { DetailsTable } from './DetailsTable';
 import { FilterToolbar } from './FilterToolbar';
@@ -70,7 +70,7 @@ export const baseQuery: Query = {
   },
 };
 
-const reportPathsType = ReportPathsType.billing;
+const reportPathsType = ReportPathsType.details; // Todo: temporary placeholder for upcoming API
 const reportType = ReportType.cost;
 
 const Details: React.FC<DetailsProps> = ({ history, intl }) => {
@@ -103,7 +103,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         isOpen={isExportModalOpen}
         onClose={handleOnExportModalClose}
         query={query}
-        reportPathsType={ReportPathsType.billing}
+        reportPathsType={ReportPathsType.accountSummary}
       />
     );
   };
@@ -119,7 +119,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     return (
       <Pagination
         isCompact={!isBottom}
-        itemCount={count}
+        itemCount={count as number}
         onPerPageSelect={(event, perPage) => handleOnPerPageSelect(history, query, perPage)}
         onSetPage={(event, pageNumber) => handleOnSetPage(history, query, report, pageNumber)}
         page={page}
@@ -196,7 +196,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
 
   return (
     <React.Fragment>
-      <DetailsHeader>
+      <PageHeading>
         <DetailsHeaderToolbar
           dateRange={dateRange}
           groupBy={groupBy}
@@ -207,7 +207,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
           secondaryGroupBy={secondaryGroupBy}
           sourcesOfSpend={sourcesOfSpend}
         />
-      </DetailsHeader>
+      </PageHeading>
       <Main>
         <Suspense
           fallback={
