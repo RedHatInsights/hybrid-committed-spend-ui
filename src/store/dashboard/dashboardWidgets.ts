@@ -41,7 +41,7 @@ export const committedSpendWidget: DashboardWidget = {
   chartName: 'committedSpend',
   id: getId(),
   title: messages.dashboardCommitmentSpendTitle,
-  reportPathsType: ReportPathsType.committedSpendTrend,
+  reportPathsType: ReportPathsType.accountSummary,
   reportType: ReportType.billing,
   size: DashboardSize.half,
 };
