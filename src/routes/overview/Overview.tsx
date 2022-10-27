@@ -7,10 +7,9 @@ import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import { PageHeading } from 'routes/components/page-heading';
 import type { RootState } from 'store';
 import { reportSelectors } from 'store/reports';
-
-import { OverviewHeader } from './index';
 
 const Dashboard = lazy(() => import('routes/overview/components/dashboard/Dashboard'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
@@ -38,7 +37,7 @@ const Overview: React.FC<OverviewProps> = ({ intl }) => {
 
   return (
     <React.Fragment>
-      <OverviewHeader />
+      <PageHeading />
       <Main>
         <Suspense
           fallback={
