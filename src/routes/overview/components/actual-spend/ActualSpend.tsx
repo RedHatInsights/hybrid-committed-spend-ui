@@ -1,5 +1,5 @@
 import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
-import type { Report } from 'api/reports';
+import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo } from 'react';
