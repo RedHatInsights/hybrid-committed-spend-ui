@@ -4,14 +4,12 @@ import messages from 'locales/messages';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { formatCurrency } from 'utils/format';
 
 import { styles } from './ExcessActualSpend.styles';
 
 interface ExcessActualSpendOwnProps {
-  excessActualSpend?: number;
-  excessActualSpendBreakdown?: number;
-  units?: string;
+  excessActualSpend?: string | React.ReactNode;
+  excessActualSpendBreakdown?: string | React.ReactNode;
 }
 
 type ExcessActualSpendProps = ExcessActualSpendOwnProps & WrappedComponentProps;
@@ -20,7 +18,6 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
   excessActualSpend,
   excessActualSpendBreakdown,
   intl,
-  units = 'USD',
 }) => {
   return (
     <span style={styles.infoIcon}>
@@ -34,14 +31,14 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
             {excessActualSpend !== undefined && (
               <p>
                 {intl.formatMessage(messages.excessActualSpendDesc, {
-                  value: <b>{formatCurrency(excessActualSpend, units)}</b>,
+                  value: <b>{excessActualSpend}</b>,
                 })}
               </p>
             )}
             {excessActualSpendBreakdown !== undefined && (
               <p>
                 {intl.formatMessage(messages.excessActualSpendBreakdownDesc, {
-                  value: <b>{formatCurrency(excessActualSpendBreakdown, units)}</b>,
+                  value: <b>{excessActualSpendBreakdown}</b>,
                 })}
               </p>
             )}

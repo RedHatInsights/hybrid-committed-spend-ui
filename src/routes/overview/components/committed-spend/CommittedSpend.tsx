@@ -1,19 +1,23 @@
-import type { Report } from 'api/reports/report';
+import { getQuery } from 'api/queries';
+import type { AccountSummaryReport } from 'api/reports/accountSummaryReports';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
-import React, { useMemo } from 'react';
+import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import type { AnyAction } from 'redux';
+import type { ThunkDispatch } from 'redux-thunk';
 import { EmptyValueState } from 'routes/components/state/empty-value';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import type { RootState } from 'store';
-import type { FetchStatus } from 'store/common';
+import { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
+import { getToday } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
 import { styles } from './CommittedSpend.styles';
@@ -23,7 +27,7 @@ interface CommittedSpendOwnProps {
 }
 
 interface CommittedSpendStateProps {
-  report?: Report;
+  report?: AccountSummaryReport;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
   widget: DashboardWidget;
@@ -34,19 +38,26 @@ export type CommittedSpendProps = CommittedSpendOwnProps & RouteComponentProps<v
 const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
   const { report, reportFetchStatus, widget } = mapToProps({ widgetId });
 
-  let balance: string | React.ReactNode = <EmptyValueState />;
-  let committedSpend: string | React.ReactNode = <EmptyValueState />;
+  const hasData = report && report.data && report.data.length;
+  const values = hasData && report.data[0];
+
+  const committedSpend: string | React.ReactNode =
+    values && values.committed_spend && values.committed_spend.value ? (
+      formatCurrency(Number(values.committed_spend.value), values.committed_spend.units)
+    ) : (
+      <EmptyValueState />
+    );
+  const remainingCommittedSpend: string | React.ReactNode =
+    values && values.remaining_committed_spend && values.remaining_committed_spend.value ? (
+      formatCurrency(Number(values.remaining_committed_spend.value), values.remaining_committed_spend.units)
+    ) : (
+      <EmptyValueState />
+    );
+
   let dateRange: string | React.ReactNode = <EmptyValueState />;
-
-  const isTest = true;
-  const hasTotal = report && report.meta && report.meta.total;
-
-  if (isTest || hasTotal) {
-    balance = formatCurrency(182054.9, 'USD');
-    committedSpend = formatCurrency(1000000.0, 'USD');
-
-    const startDate = new Date('2022-09-01T23:59:59z');
-    const endDate = new Date('2022-11-01T23:59:59z');
+  if (values && values.contract_end_date) {
+    const startDate = getToday();
+    const endDate = new Date(values.contract_end_date + 'T23:59:59z');
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
       month: 'long',
@@ -59,7 +70,7 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
       <div>{dateRange}</div>
       <div style={styles.valueContainer}>
         <div>
-          <div style={styles.value}>{balance}</div>
+          <div style={styles.value}>{remainingCommittedSpend}</div>
           <div style={styles.committedSpend}>
             <div>{intl.formatMessage(messages.outOf, { value: committedSpend })}</div>
           </div>
@@ -70,20 +81,17 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
 };
 
 const mapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStateProps => {
-  const queryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
+  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const report = useSelector((/* state: RootState */) => {
-    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
-    return {
-      meta: {
-        total: {
-          value: 0,
-          units: 'USD',
-        },
-      },
-    } as any;
-  });
+  const query = {
+    // TBD...
+  };
+  const queryString = getQuery(query);
+
+  const report = useSelector((state: RootState) =>
+    reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
+  );
   const reportFetchStatus = useSelector((state: RootState) =>
     reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, queryString)
   );
@@ -91,9 +99,10 @@ const mapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStatePr
     reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString)
   );
 
-  useMemo(() => {
-    // Todo: Enable via dispatch
-    reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
+  useEffect(() => {
+    if (reportFetchStatus !== FetchStatus.inProgress) {
+      dispatch(reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString));
+    }
   }, [queryString]);
 
   return {

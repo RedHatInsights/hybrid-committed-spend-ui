@@ -2,15 +2,21 @@ import type { PagedMetaData, PagedResponse } from 'api/api';
 
 export interface ReportValue {
   units?: string;
-  value?: string | number; // Todo: supports test data
+  value?: string;
+}
+
+// Todo: supports test data
+export interface _ReportValue {
+  units?: string;
+  value?: number;
 }
 
 // Todo: supports test data
 export interface ReportItemValue {
-  markup?: ReportValue;
-  raw?: ReportValue;
-  total?: ReportValue;
-  usage: ReportValue;
+  markup?: _ReportValue;
+  raw?: _ReportValue;
+  total?: _ReportValue;
+  usage: _ReportValue;
 }
 
 // Todo: supports test data
