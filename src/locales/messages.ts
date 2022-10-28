@@ -129,8 +129,8 @@ export default defineMessages({
     id: 'dashboardActualSpendBreakdownTitle',
   },
   dashboardActualSpendTitle: {
-    defaultMessage: 'Actual spend of included products YTD',
-    description: 'Actual spend of included products YTD',
+    defaultMessage: 'Actual spend contract YTD',
+    description: 'Actual spend contract YTD',
     id: 'dashboardActualSpendTitle',
   },
   dashboardCommitmentSpendTitle: {

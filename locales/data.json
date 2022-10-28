@@ -339,7 +339,7 @@
     "dashboardActualSpendTitle": [
       {
         "type": 0,
-        "value": "Actual spend of included products YTD"
+        "value": "Actual spend contract YTD"
       }
     ],
     "dashboardCommitmentSpendTitle": [
