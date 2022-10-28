@@ -830,7 +830,6 @@ export const accountData = {
         },
       ],
     },
-
     {
       date: '2022-01',
       accounts: [
@@ -2791,6 +2790,498 @@ export const accountData = {
                 },
                 total: {
                   value: 25755.951524760065,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      date: '2022-09',
+      accounts: [
+        {
+          account: 'OpenShift Container Platform',
+          values: [
+            {
+              date: '2022-09',
+              account: 'OpenShift Container Platform',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 23392.2000140326872,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 23392.2000140326872,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 27136,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 27136,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 23392.2000140326872,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 27136,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 2210528.200014032687,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          account: 'Insights for RHEL',
+          values: [
+            {
+              date: '2022-09',
+              account: 'Insights for RHEL',
+              source_uuid: [
+                '1899fc34-7096-47d6-82d8-e371268530b1',
+                '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
+                'a99443de-af6d-4b4b-a1d9-fdeea529606d',
+                'ae7cd5c5-b6b8-4059-966d-0548287cb609',
+              ],
+              clusters: [
+                'OpenShift on AWS - Nise Populator',
+                'OpenShift on Azure - Nise Populator',
+                'OpenShift on GCP - Nise Populator',
+                'OpenShift on OpenStack - Nise Populator',
+              ],
+              infrastructure: {
+                raw: {
+                  value: 2797.1670545550679,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 22293.9787,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 23091.145754555068,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 22064.61,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 2394.13103598871703,
+                  units: 'USD',
+                },
+                total: {
+                  value: 22458.741035988717,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 2797.1670545550679,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 24358.5887,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 2394.13103598871703,
+                  units: 'USD',
+                },
+                total: {
+                  value: 25549.886790543785,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          account: 'Ansible Engine',
+          values: [
+            {
+              date: '2022-09',
+              account: 'Ansible Engine',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 221619.181524760065,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 221619.181524760065,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 24136.77,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 24136.77,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 221619.181524760065,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 24136.77,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 25755.951524760065,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      date: '2022-10',
+      accounts: [
+        {
+          account: 'OpenShift Container Platform',
+          values: [
+            {
+              date: '2022-10',
+              account: 'OpenShift Container Platform',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 2939.9514813845437,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 2939.9514813845437,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 28944,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 22944,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 2939.9514813845437,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 28944,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 23883.9514813845435,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          account: 'Insights for RHEL',
+          values: [
+            {
+              date: '2022-10',
+              account: 'Insights for RHEL',
+              source_uuid: [
+                '1899fc34-7096-47d6-82d8-e371268530b1',
+                '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
+                'a99443de-af6d-4b4b-a1d9-fdeea529606d',
+                'ae7cd5c5-b6b8-4059-966d-0548287cb609',
+              ],
+              clusters: [
+                'OpenShift on AWS - Nise Populator',
+                'OpenShift on Azure - Nise Populator',
+                'OpenShift on GCP - Nise Populator',
+                'OpenShift on OpenStack - Nise Populator',
+              ],
+              infrastructure: {
+                raw: {
+                  value: 256.11350541913017,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 221546.3948,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 221596.50830541913,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 221436.54,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 221436.54,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 256.11350541913017,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 22382.9348,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 22433.04830541913,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          account: 'Ansible Engine',
+          values: [
+            {
+              date: '2022-10',
+              account: 'Ansible Engine',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 22179.70350866113299,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 22179.70350866113299,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 22312.64,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 22312.64,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 22179.70350866113299,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 22312.64,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 22432.343508661133,
                   units: 'USD',
                 },
               },

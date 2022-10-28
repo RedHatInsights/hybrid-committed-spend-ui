@@ -830,7 +830,6 @@ export const affiliateData = {
         },
       ],
     },
-
     {
       date: '2022-01',
       affiliates: [
@@ -2791,6 +2790,498 @@ export const affiliateData = {
                 },
                 total: {
                   value: 15755.951524760065,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      date: '2022-09',
+      affiliates: [
+        {
+          affiliate: 'ACME - Anvils',
+          values: [
+            {
+              date: '2022-09',
+              affiliate: 'ACME - Anvils',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 13392.2000140326872,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 13392.2000140326872,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 17136,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 17136,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 13392.2000140326872,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 17136,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 110528.200014032687,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          affiliate: 'ACME - Fireworks',
+          values: [
+            {
+              date: '2022-09',
+              affiliate: 'ACME - Fireworks',
+              source_uuid: [
+                '1899fc34-7096-47d6-82d8-e371268530b1',
+                '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
+                'a99443de-af6d-4b4b-a1d9-fdeea529606d',
+                'ae7cd5c5-b6b8-4059-966d-0548287cb609',
+              ],
+              clusters: [
+                'OpenShift on AWS - Nise Populator',
+                'OpenShift on Azure - Nise Populator',
+                'OpenShift on GCP - Nise Populator',
+                'OpenShift on OpenStack - Nise Populator',
+              ],
+              infrastructure: {
+                raw: {
+                  value: 1797.1670545550679,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 12293.9787,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 13091.145754555068,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 12064.61,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 1394.13103598871703,
+                  units: 'USD',
+                },
+                total: {
+                  value: 12458.741035988717,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 1797.1670545550679,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 14358.5887,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 1394.13103598871703,
+                  units: 'USD',
+                },
+                total: {
+                  value: 15549.886790543785,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          affiliate: 'ACME - Tunnels',
+          values: [
+            {
+              date: '2022-09',
+              affiliate: 'ACME - Tunnels',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 11619.181524760065,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 11619.181524760065,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 14136.77,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 14136.77,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 11619.181524760065,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 14136.77,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 15755.951524760065,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      date: '2022-10',
+      affiliates: [
+        {
+          affiliate: 'ACME - Anvils',
+          values: [
+            {
+              date: '2022-10',
+              affiliate: 'ACME - Anvils',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 1939.9514813845437,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 1939.9514813845437,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 18944,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 12944,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 1939.9514813845437,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 18944,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 13883.9514813845435,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          affiliate: 'ACME - Fireworks',
+          values: [
+            {
+              date: '2022-10',
+              affiliate: 'ACME - Fireworks',
+              source_uuid: [
+                '1899fc34-7096-47d6-82d8-e371268530b1',
+                '7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c',
+                'a99443de-af6d-4b4b-a1d9-fdeea529606d',
+                'ae7cd5c5-b6b8-4059-966d-0548287cb609',
+              ],
+              clusters: [
+                'OpenShift on AWS - Nise Populator',
+                'OpenShift on Azure - Nise Populator',
+                'OpenShift on GCP - Nise Populator',
+                'OpenShift on OpenStack - Nise Populator',
+              ],
+              infrastructure: {
+                raw: {
+                  value: 156.11350541913017,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 11546.3948,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 11596.50830541913,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 11436.54,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 11436.54,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 156.11350541913017,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 12382.9348,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 12433.04830541913,
+                  units: 'USD',
+                },
+              },
+            },
+          ],
+        },
+        {
+          affiliate: 'ACME - Tunnels',
+          values: [
+            {
+              date: '2022-10',
+              affiliate: 'ACME - Tunnels',
+              source_uuid: ['7b2cf7da-d494-4f4d-b640-f9fa57a0fe1c', 'a99443de-af6d-4b4b-a1d9-fdeea529606d'],
+              clusters: ['OpenShift on AWS - Nise Populator', 'OpenShift on GCP - Nise Populator'],
+              infrastructure: {
+                raw: {
+                  value: 1179.70350866113299,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 0,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 1179.70350866113299,
+                  units: 'USD',
+                },
+              },
+              supplementary: {
+                raw: {
+                  value: 0,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 12312.64,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 12312.64,
+                  units: 'USD',
+                },
+              },
+              cost: {
+                raw: {
+                  value: 1179.70350866113299,
+                  units: 'USD',
+                },
+                markup: {
+                  value: 0,
+                  units: 'USD',
+                },
+                usage: {
+                  value: 12312.64,
+                  units: 'USD',
+                },
+                distributed: {
+                  value: 0,
+                  units: 'USD',
+                },
+                total: {
+                  value: 12432.343508661133,
                   units: 'USD',
                 },
               },
