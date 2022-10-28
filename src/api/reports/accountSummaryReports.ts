@@ -6,7 +6,6 @@ import { ReportType } from './report';
 export interface AccountSummaryReportData extends ReportData {
   account_name?: string;
   account_number?: string;
-  actualSpend?: ReportValue; // Todo: for testing
   contract_start_date?: string;
   contract_end_date?: string;
   consumption_date?: string;
