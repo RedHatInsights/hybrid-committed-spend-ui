@@ -117,7 +117,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
         label={intl.formatMessage(messages.secondaryGroupByLabel)}
         minWidth={200}
         onSelected={handleOnSecondaryGroupBySelected}
-        options={secondaryGroupByOptions}
+        options={secondaryGroupByOptions.filter(option => option.value !== groupBy)}
       />
       <Perspective
         currentItem={dateRange}
