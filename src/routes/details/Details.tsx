@@ -6,6 +6,7 @@ import type { Report } from 'api/reports/report';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
+import { cloneDeep } from 'lodash';
 import React, { lazy, Suspense, useMemo, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
@@ -147,6 +148,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         }
         query={query}
         report={report}
+        secondaryGroupBy={secondaryGroupBy}
       />
     );
   };
@@ -260,17 +262,17 @@ const mapToProps = ({ dateRange, groupBy = baseQuery.group_by }: DetailsOwnProps
     let result;
     switch (groupBy) {
       case GroupByType.affiliate:
-        result = affiliateData;
+        result = cloneDeep(affiliateData);
         break;
       case GroupByType.account:
-        result = accountData;
+        result = cloneDeep(accountData);
         break;
       case GroupByType.sourceOfSpend:
-        result = sourceData;
+        result = cloneDeep(sourceData);
         break;
       case GroupByType.product:
       default:
-        result = productData;
+        result = cloneDeep(productData);
         break;
     }
 
