@@ -2,7 +2,7 @@ import './DetailsTable.scss';
 
 import { Bullseye, EmptyState, EmptyStateBody, EmptyStateIcon, Spinner } from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
-import type { TdProps, ThProps } from '@patternfly/react-table';
+import type { ThProps } from '@patternfly/react-table';
 import {
   InnerScrollContainer,
   SortByDirection,
@@ -12,7 +12,6 @@ import {
   Th,
   Thead,
   Tr,
-  TreeRowWrapper,
 } from '@patternfly/react-table';
 import type { Query } from 'api/queries/query';
 import { parseQuery } from 'api/queries/query';
@@ -31,6 +30,8 @@ import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputed
 import { formatCurrency } from 'utils/format';
 
 import { styles } from './DetailsTable.styles';
+import { DetailsTableExpand } from './DetailsTableExpand';
+import { GroupByType } from './utils';
 
 interface DetailsTableOwnProps {
   dateRange?: string;
@@ -39,6 +40,7 @@ interface DetailsTableOwnProps {
   onSort?: (value: string, isSortAscending: boolean, date: string) => void;
   query?: Query;
   report?: Report;
+  secondaryGroupBy?: string;
 }
 
 interface DetailsTableStateProps {
@@ -46,22 +48,21 @@ interface DetailsTableStateProps {
   start_date?: string;
 }
 
-interface DetailsTableColumn {
+export interface DetailsTableColumn {
   date?: string;
   isSortable?: boolean;
   name?: string;
   orderBy?: string;
 }
 
-interface DetailsTableCell {
-  children?: React.ReactNode;
+export interface DetailsTableCell {
   value?: string;
 }
 
 type DetailsTableProps = DetailsTableOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const reportItem = ComputedReportItemType.cost;
-const reportItemValue = ComputedReportItemValueType.total;
+export const reportItem = ComputedReportItemType.cost;
+export const reportItemValue = ComputedReportItemValueType.total;
 
 const DetailsTableBase: React.FC<DetailsTableProps> = ({
   dateRange,
@@ -71,17 +72,27 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   onSort,
   query,
   report,
+  secondaryGroupBy,
 }) => {
   const [activeSortIndex, setActiveSortIndex] = useState<number | null>(null);
   const [activeSortDirection, setActiveSortDirection] = useState<'asc' | 'desc' | null>(null);
   const [columns, setColumns] = useState([]);
-  const [expandedNames, setExpandedNames] = useState<string[]>([]);
+  const [expandedRows, setExpandedRows] = useState(new Set());
   const [rows, setRows] = useState([]);
 
   const { end_date, start_date } = mapToProps({ dateRange });
 
+  const isRowExpanded = id => expandedRows.has(id);
+  const initExpandedRows = id => {
+    const result = new Set(expandedRows);
+    if (!result.delete(id)) {
+      result.add(id);
+    }
+    setExpandedRows(result);
+  };
+
   const initDatum = () => {
-    if (!query || !report) {
+    if (!report) {
       return;
     }
 
@@ -129,7 +140,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     }
 
     // Sort by date and fill in missing row cells
-    const newComputedItems = [];
+    const newRows = [];
     computedItems.map(rowItem => {
       const cells: DetailsTableCell[] = [];
       let value; // For first column resource name
@@ -159,12 +170,12 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
       });
 
       // Add first row cell (i.e., name)
-      cells.unshift({ children: null, value });
-      newComputedItems.push(cells);
+      cells.unshift({ value });
+      newRows.push(cells);
     });
 
     setColumns(newColumns);
-    setRows(renderRows({ computedItems: newComputedItems }));
+    setRows(newRows);
   };
 
   const getEmptyState = () => {
@@ -202,80 +213,14 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     }
   };
 
-  const renderRows = ({
-    computedItems,
-    isHidden = false,
-    level = 1,
-    posinset = 1,
-    rowIndex = 0,
-  }): React.ReactNode[] => {
-    const [rowItems, ...remainingComputedItems] = computedItems;
-    if (!rowItems) {
-      return [];
-    }
-
-    const firstItem = rowItems[0];
-    const isExpanded = expandedNames.includes(firstItem.name);
-
-    const treeRow: TdProps['treeRow'] = {
-      onCollapse: () =>
-        setExpandedNames(prevExpanded => {
-          const otherExpandedNames = prevExpanded.filter(expName => expName !== firstItem.name);
-          return isExpanded ? otherExpandedNames : [...otherExpandedNames, firstItem.name];
-        }),
-      rowIndex,
-      props: {
-        isExpanded,
-        isHidden,
-        'aria-level': level,
-        'aria-posinset': posinset,
-        'aria-setsize': firstItem.children ? firstItem.children.length : 0,
-      },
-    };
-
-    const childRows =
-      firstItem.children && firstItem.children.length
-        ? renderRows({
-            computedItems: firstItem.children,
-            isHidden: !isExpanded || isHidden,
-            level: level + 1,
-            posinset: 1,
-            rowIndex: rowIndex + 1,
-          })
-        : [];
-
-    return [
-      <TreeRowWrapper key={`${rowIndex}-${firstItem.value}`} row={{ props: treeRow.props }}>
-        {rowItems.map((item, index) => (
-          <Td
-            dataLabel={columns[index]}
-            key={`${rowIndex}-${index}-${columns[index]}`}
-            modifier={index === 0 ? 'truncate' : 'nowrap'}
-            treeRow={treeRow}
-          >
-            {item.value}
-          </Td>
-        ))}
-      </TreeRowWrapper>,
-      ...childRows,
-      ...renderRows({
-        computedItems: remainingComputedItems,
-        isHidden,
-        level,
-        posinset: posinset + 1,
-        rowIndex: rowIndex + 1 + childRows.length,
-      }),
-    ];
-  };
-
   useEffect(() => {
     initDatum();
-  }, [dateRange, query, report]);
+  }, [report]);
 
   return (
     <React.Fragment>
       <InnerScrollContainer>
-        <TableComposable aria-label="Tree table" className="tableOverride" gridBreakPoint="" isTreeTable>
+        <TableComposable aria-label="Committed spend details table" className="tableOverride" gridBreakPoint="">
           <Thead>
             <Tr>
               {columns.map((col, index) =>
@@ -304,13 +249,55 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
           </Thead>
           <Tbody>
             {isLoading ? (
-              <Bullseye>
-                <div style={{ textAlign: 'center' }}>
-                  <Spinner size="xl" />
-                </div>
-              </Bullseye>
+              <Tr>
+                <Td colSpan={100}>
+                  <Bullseye>
+                    <div style={{ textAlign: 'center' }}>
+                      <Spinner size="xl" />
+                    </div>
+                  </Bullseye>
+                </Td>
+              </Tr>
             ) : (
-              rows.map(row => row)
+              rows.map((cells, rowIndex) => (
+                <React.Fragment key={`row-${rowIndex}`}>
+                  <Tr>
+                    {cells.map((item, cellIndex) =>
+                      cellIndex === 0 ? (
+                        <Th
+                          dataLabel={columns[cellIndex]}
+                          expand={
+                            secondaryGroupBy && secondaryGroupBy !== GroupByType.none
+                              ? {
+                                  areAllExpanded: !isRowExpanded(`row-${rowIndex}`),
+                                  collapseAllAriaLabel: '', // Not using collapse all feature
+                                  onToggle: () => initExpandedRows(`row-${rowIndex}`),
+                                }
+                              : undefined
+                          }
+                          key={`cell-${cellIndex}-${rowIndex}`}
+                          hasRightBorder
+                          isStickyColumn
+                        >
+                          {item.value}
+                        </Th>
+                      ) : (
+                        <Td dataLabel={columns[cellIndex]} key={`cell-${rowIndex}-${cellIndex}`}>
+                          {item.value}
+                        </Td>
+                      )
+                    )}
+                  </Tr>
+                  <DetailsTableExpand
+                    columns={columns}
+                    dateRange={dateRange}
+                    groupBy={groupBy}
+                    groupByValue={cells[0].value}
+                    isExpanded={isRowExpanded(`row-${rowIndex}`)}
+                    secondaryGroupBy={secondaryGroupBy}
+                  />
+                </React.Fragment>
+              ))
             )}
           </Tbody>
         </TableComposable>
