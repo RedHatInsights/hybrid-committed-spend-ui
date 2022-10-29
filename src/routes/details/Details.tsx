@@ -34,9 +34,9 @@ import { affiliateData } from './data/affiliateData';
 import { productData } from './data/productData';
 import { sourceData } from './data/sourceData';
 import { styles } from './Details.styles';
+import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
 import { DetailsTable } from './DetailsTable';
-import { FilterToolbar } from './FilterToolbar';
 import { getDateRangeType, getGroupByType, getSourcesOfSpendType, GroupByType, SourcesOfSpendType } from './utils';
 const Loading = lazy(() => import('routes/state/loading/Loading'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
@@ -85,7 +85,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
 
   const getFilterToolbar = () => {
     return (
-      <FilterToolbar
+      <DetailsFilterToolbar
         groupBy={groupBy}
         isExportDisabled={report && report.meta && report.meta.count !== 0}
         onExportClicked={handleOnExportModalOpen}

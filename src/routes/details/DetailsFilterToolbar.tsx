@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { DataToolbar } from 'routes/components/data-toolbar';
 import type { Filter } from 'routes/utils/filter';
 
-interface FilterToolbarOwnProps {
+interface DetailsFilterToolbarOwnProps {
   groupBy: string; // Options for category menu
   isExportDisabled?: boolean; // Sync category selection with groupBy value
   onExportClicked();
@@ -19,9 +19,9 @@ interface FilterToolbarOwnProps {
   query?: Query; // Query containing filter_by params used to restore state upon page refresh
 }
 
-type FilterToolbarProps = FilterToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type DetailsFilterToolbarProps = DetailsFilterToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const FilterToolbarBase: React.FC<FilterToolbarProps> = ({
+const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
   groupBy,
   intl,
   isExportDisabled,
@@ -54,6 +54,6 @@ const FilterToolbarBase: React.FC<FilterToolbarProps> = ({
   );
 };
 
-const FilterToolbar = injectIntl(withRouter(FilterToolbarBase));
+const DetailsFilterToolbar = injectIntl(withRouter(DetailsFilterToolbarBase));
 
-export { FilterToolbar };
+export { DetailsFilterToolbar };
