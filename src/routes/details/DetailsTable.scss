@@ -8,5 +8,14 @@
         padding-left: 0;
       }
     }
+    .pf-c-table__expandable-row {
+      --pf-c-table--cell--PaddingTop: var(--pf-c-table--tbody--cell--PaddingTop);
+      --pf-c-table--cell--PaddingBottom: var(--pf-c-table--tbody--cell--PaddingBottom);
+      &.pf-m-expanded > :first-child {
+        --pf-c-table--cell--PaddingLeft: 72px;
+        --pf-c-table__expandable-row--after--BorderLeftWidth: 0;
+      }
+    }
   }
 }
+
