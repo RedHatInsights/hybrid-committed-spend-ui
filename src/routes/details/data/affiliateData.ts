@@ -3044,6 +3044,7 @@ export const affiliateData = {
         },
       ],
     },
+    /*
     {
       date: '2022-10',
       affiliates: [
@@ -3290,5 +3291,7 @@ export const affiliateData = {
         },
       ],
     },
+
+     */
   ],
 };
