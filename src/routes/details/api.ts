@@ -15,9 +15,9 @@ import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 
 import { affiliateData } from './data/affiliateData';
-import { productData } from './data/productData';
+import { emptyData } from './data/emptyData';
 import { sourceData } from './data/sourceData';
-import { GroupByType } from './types';
+import { GroupByType, SourcesOfSpendType } from './types';
 
 interface DetailsOwnProps {
   dateRange?: string;
@@ -25,6 +25,7 @@ interface DetailsOwnProps {
   groupByValue?: string;
   isExpanded?: boolean;
   secondaryGroupBy?: string;
+  sourcesOfSpend?: string;
 }
 
 interface DetailsStateProps {
@@ -57,6 +58,7 @@ export const detailsMapToProps = ({
   groupByValue,
   isExpanded,
   secondaryGroupBy,
+  sourcesOfSpend = SourcesOfSpendType.all,
 }: DetailsOwnProps): DetailsStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
@@ -97,16 +99,19 @@ export const detailsMapToProps = ({
     // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
 
     let result;
-    switch (secondaryGroupBy) {
+    switch (secondaryGroupBy || groupBy) {
       case GroupByType.affiliate:
         result = cloneDeep(affiliateData);
+        break;
+      case GroupByType.product:
+        result = cloneDeep(productData);
         break;
       case GroupByType.sourceOfSpend:
         result = cloneDeep(sourceData);
         break;
-      case GroupByType.product:
+      case GroupByType.none:
       default:
-        result = cloneDeep(productData);
+        result = cloneDeep(emptyData);
         break;
     }
 
@@ -119,6 +124,22 @@ export const detailsMapToProps = ({
         return item;
       }
     });
+
+    if (
+      sourcesOfSpend !== SourcesOfSpendType.all &&
+      secondaryGroupBy !== GroupByType.none &&
+      groupBy === GroupByType.product
+    ) {
+      result.data.map(item => {
+        for (const key in item) {
+          if (item[key] instanceof Array) {
+            item[key].map(dataPoint => {
+              dataPoint.values = dataPoint.values.filter(val => val.source_of_spend === sourcesOfSpend);
+            });
+          }
+        }
+      });
+    }
 
     return result;
   });

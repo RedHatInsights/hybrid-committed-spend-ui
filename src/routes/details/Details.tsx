@@ -3,7 +3,7 @@ import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import type { Query } from 'api/queries';
 import { ReportPathsType } from 'api/reports/report';
 import messages from 'locales/messages';
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -64,9 +64,9 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [groupBy, setGroupBy] = useStateCallback(getGroupByType(GroupByType.product));
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
-  const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.all));
+  const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.marketplace));
 
-  const { query, report, reportFetchStatus } = detailsMapToProps({ dateRange, groupBy });
+  const { query, report, reportFetchStatus } = detailsMapToProps({ dateRange, groupBy, sourcesOfSpend });
   const { hasReportErrors } = mapToProps();
 
   const getFilterToolbar = () => {
@@ -135,6 +135,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         query={query}
         report={report}
         secondaryGroupBy={secondaryGroupBy}
+        sourcesOfSpend={sourcesOfSpend}
       />
     );
   };
@@ -181,6 +182,10 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
+
+  useEffect(() => {
+    setSecondaryGroupBy(GroupByType.none);
+  }, [groupBy, sourcesOfSpend]);
 
   return (
     <React.Fragment>

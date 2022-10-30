@@ -43,6 +43,7 @@ interface DetailsTableOwnProps {
   query?: Query;
   report?: Report;
   secondaryGroupBy?: string;
+  sourcesOfSpend?: string;
 }
 
 interface DetailsTableStateProps {
@@ -75,6 +76,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   query,
   report,
   secondaryGroupBy,
+  sourcesOfSpend,
 }) => {
   const [activeSortIndex, setActiveSortIndex] = useState<number | null>(null);
   const [activeSortDirection, setActiveSortDirection] = useState<'asc' | 'desc' | null>(null);
@@ -222,6 +224,10 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   useEffect(() => {
     initDatum();
   }, [report]);
+
+  useEffect(() => {
+    setExpandedRows(new Set());
+  }, [groupBy, secondaryGroupBy, sourcesOfSpend]);
 
   return (
     <React.Fragment>
