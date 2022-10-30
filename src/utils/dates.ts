@@ -19,11 +19,9 @@ export const getYear = offset => {
   return today;
 };
 
-export function getContractedYtd() {
+export function getContractedYtd(startDate: Date = new Date()) {
   const endDate = new Date();
-  const startDate = new Date();
-
-  startDate.setMonth(0);
+  endDate.setDate(1); // Workaround to set month properly
   endDate.setMonth(endDate.getMonth() - 1);
 
   return {
@@ -32,8 +30,22 @@ export function getContractedYtd() {
   };
 }
 
-export function getContractedLastYear() {
-  return getLastMonthsDate(12);
+export function getContractedLastYear(startDate: Date = new Date(), isFormatted = true) {
+  const endDate = new Date(startDate.getTime());
+  endDate.setDate(1); // Workaround to set month properly
+  endDate.setMonth(endDate.getMonth() - 1);
+
+  startDate.setFullYear(startDate.getFullYear() - 1);
+
+  return isFormatted
+    ? {
+        end_date: format(endDate, 'yyyy-MM'),
+        start_date: format(startDate, 'yyyy-MM'),
+      }
+    : {
+        end_date: endDate,
+        start_date: startDate,
+      };
 }
 
 // Returns 9 months, including today's date
@@ -55,6 +67,10 @@ export function getLastThreeMonthsDate() {
 export function getLastMonthsDate(offset: number) {
   const endDate = new Date();
   const startDate = new Date();
+
+  // Workaround to set month properly
+  endDate.setDate(1);
+  startDate.setDate(1);
 
   startDate.setMonth(startDate.getMonth() - offset);
   endDate.setMonth(endDate.getMonth() - 1);
