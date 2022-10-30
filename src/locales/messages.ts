@@ -147,7 +147,7 @@ export default defineMessages({
     defaultMessage:
       '{value, select, ' +
       'contracted_ytd {Contracted YTD} ' +
-      'contracted_last_year {Past contracted year (dates)} ' +
+      'contracted_last_year {Past contracted year ({dateRange})} ' +
       'date {date - date contracted year} ' +
       'last_nine_months {Last 9 months} ' +
       'last_six_months {Last 6 months} ' +
