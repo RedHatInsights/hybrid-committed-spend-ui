@@ -7,6 +7,19 @@ import { injectIntl } from 'react-intl';
 
 import { styles } from './Perspective.styles';
 
+export interface PerspectiveOption {
+  dateRange?: string;
+  isDisabled?: boolean;
+  label: MessageDescriptor;
+  value: string;
+}
+
+interface PerspectiveOptionExt extends SelectOptionObject {
+  isDisabled?: boolean;
+  toString(): string; // label
+  value?: string;
+}
+
 interface PerspectiveOwnProps {
   currentItem: string;
   id?: string;
@@ -14,19 +27,11 @@ interface PerspectiveOwnProps {
   label?: string;
   minWidth?: number | string;
   onSelected(value: string);
-  options?: {
-    label: MessageDescriptor;
-    value: string;
-  }[];
+  options?: PerspectiveOption[];
 }
 
 interface PerspectiveState {
   isSelectOpen: boolean;
-}
-
-interface PerspectiveOption extends SelectOptionObject {
-  toString(): string; // label
-  value?: string;
 }
 
 type PerspectiveProps = PerspectiveOwnProps & WrappedComponentProps;
@@ -37,14 +42,15 @@ class Perspective extends React.Component<PerspectiveProps> {
   };
   public state: PerspectiveState = { ...this.defaultState };
 
-  private getSelectOptions = (): PerspectiveOption[] => {
+  private getSelectOptions = (): PerspectiveOptionExt[] => {
     const { intl, options } = this.props;
 
-    const selections: PerspectiveOption[] = [];
+    const selections: PerspectiveOptionExt[] = [];
 
     options.map(option => {
       selections.push({
-        toString: () => intl.formatMessage(option.label, { value: option.value }),
+        isDisabled: option.isDisabled,
+        toString: () => intl.formatMessage(option.label, { value: option.value, dateRange: option.dateRange }),
         value: option.value,
       });
     });
@@ -69,7 +75,7 @@ class Perspective extends React.Component<PerspectiveProps> {
         variant={SelectVariant.single}
       >
         {selectOptions.map(option => (
-          <SelectOption key={option.value} value={option} />
+          <SelectOption key={option.value} value={option} isDisabled={option.isDisabled} />
         ))}
       </Select>
     );
