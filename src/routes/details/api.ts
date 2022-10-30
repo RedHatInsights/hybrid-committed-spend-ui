@@ -14,7 +14,6 @@ import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 
-import { accountData } from './data/accountData';
 import { affiliateData } from './data/affiliateData';
 import { productData } from './data/productData';
 import { sourceData } from './data/sourceData';
@@ -101,9 +100,6 @@ export const detailsMapToProps = ({
     switch (secondaryGroupBy) {
       case GroupByType.affiliate:
         result = cloneDeep(affiliateData);
-        break;
-      case GroupByType.account:
-        result = cloneDeep(accountData);
         break;
       case GroupByType.sourceOfSpend:
         result = cloneDeep(sourceData);
