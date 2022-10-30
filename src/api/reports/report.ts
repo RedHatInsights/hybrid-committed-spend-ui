@@ -68,7 +68,6 @@ export interface Report extends PagedResponse<ReportData, ReportMeta> {}
 // eslint-disable-next-line no-shadow
 export const enum ReportType {
   billing = 'billing',
-  cost = 'cost', // Todo: supports test data
 }
 
 // eslint-disable-next-line no-shadow

@@ -43,9 +43,9 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   const values = hasData && report.data[0];
 
   // Todo: replace with actual spend
-  const actualSpend: string | React.ReactNode =
-    values && values.committed_spend && values.committed_spend.value ? (
-      formatCurrency(Number(values.committed_spend.value), values.committed_spend.units || 'USD')
+  const actualCommittedSpend: string | React.ReactNode =
+    values && values.actual_committed_spend && values.actual_committed_spend.value ? (
+      formatCurrency(Number(values.actual_committed_spend.value), values.actual_committed_spend.units || 'USD')
     ) : (
       <EmptyValueState />
     );
@@ -83,7 +83,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
     >
       <div>{dateRange}</div>
       <div style={styles.valueContainer}>
-        <div style={styles.value}>{actualSpend}</div>
+        <div style={styles.value}>{actualCommittedSpend}</div>
         <div>
           <div style={styles.percentContainer}>
             <ArrowUpIcon style={styles.arrowIcon} />

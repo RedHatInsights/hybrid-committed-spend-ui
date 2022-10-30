@@ -39,7 +39,7 @@ interface ExportSubmitStateProps {
 
 type ExportSubmitProps = ExportSubmitOwnProps & WrappedComponentProps;
 
-const reportType = ReportType.cost;
+const reportType = ReportType.billing;
 
 const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   disabled,

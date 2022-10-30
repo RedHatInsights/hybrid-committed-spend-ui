@@ -8,6 +8,12 @@
         padding-left: 0;
       }
     }
+    tbody th, tbody td {
+      white-space: nowrap;
+    }
+    tbody tr > :first-child {
+      padding-right: 20px;
+    }
     .pf-c-table__expandable-row {
       --pf-c-table--cell--PaddingTop: var(--pf-c-table--tbody--cell--PaddingTop);
       --pf-c-table--cell--PaddingBottom: var(--pf-c-table--tbody--cell--PaddingBottom);
@@ -15,6 +21,9 @@
         --pf-c-table--cell--PaddingLeft: 72px;
         --pf-c-table__expandable-row--after--BorderLeftWidth: 0;
       }
+    }
+    .pf-c-table__sticky-column {
+      z-index: 199;
     }
   }
 }

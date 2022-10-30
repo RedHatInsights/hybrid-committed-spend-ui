@@ -18,12 +18,12 @@ export const enum DateRangeType {
   lastThreeMonths = 'last_three_months', // Last 30 days (Dec 18 - Jan 17)
 }
 
-export const getDateRange = (dateRangeType: string) => {
+export const getDateRange = (dateRangeType: string, contractStartDate: Date = undefined, isFormatted = true) => {
   let dateRange;
 
   switch (dateRangeType) {
     case DateRangeType.contractedLastYear:
-      dateRange = getContractedLastYear();
+      dateRange = getContractedLastYear(contractStartDate, isFormatted);
       break;
     case DateRangeType.lastNineMonths:
       dateRange = getLastNineMonthsDate();
@@ -36,7 +36,7 @@ export const getDateRange = (dateRangeType: string) => {
       break;
     case DateRangeType.contractedYtd:
     default:
-      dateRange = getContractedYtd();
+      dateRange = getContractedYtd(contractStartDate);
       break;
   }
   return dateRange;

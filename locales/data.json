@@ -361,7 +361,15 @@
             "value": [
               {
                 "type": 0,
-                "value": "Past contracted year (dates)"
+                "value": "Past contracted year ("
+              },
+              {
+                "type": 1,
+                "value": "dateRange"
+              },
+              {
+                "type": 0,
+                "value": ")"
               }
             ]
           },

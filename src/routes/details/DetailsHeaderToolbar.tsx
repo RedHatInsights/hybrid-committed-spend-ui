@@ -5,9 +5,11 @@ import { injectIntl } from 'react-intl';
 import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
-import { DateRangeType } from 'routes/utils/dateRange';
+import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
+import { accountSummaryMapToProps } from 'routes/utils/api';
+import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 
-import { GroupByType, SourcesOfSpendType } from './utils';
+import { GroupByType, SourcesOfSpendType } from './types';
 
 interface DetailsToolbarOwnProps {
   dateRange?: string;
@@ -22,40 +24,40 @@ interface DetailsToolbarOwnProps {
 
 export type DetailsToolbarProps = DetailsToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const dateRangeOptions = [
+const dateRangeOptions: PerspectiveOption[] = [
   { label: messages.dateRange, value: DateRangeType.contractedYtd },
   { label: messages.dateRange, value: DateRangeType.lastThreeMonths },
   { label: messages.dateRange, value: DateRangeType.lastSixMonths },
   { label: messages.dateRange, value: DateRangeType.lastNineMonths },
   { label: messages.dateRange, value: DateRangeType.contractedLastYear },
-  { label: messages.dateRange, value: DateRangeType.date },
+  { label: messages.dateRange, value: DateRangeType.date, isDisabled: true },
 ];
 
-const groupByOptions = [
+const groupByOptions: PerspectiveOption[] = [
   { label: messages.groupBy, value: GroupByType.affiliate },
   { label: messages.groupBy, value: GroupByType.product },
-  { label: messages.groupBy, value: GroupByType.account },
+  { label: messages.groupBy, value: GroupByType.account, isDisabled: true },
   { label: messages.groupBy, value: GroupByType.sourceOfSpend },
 ];
 
-const secondaryGroupByOptions = [
+const secondaryGroupByOptions: PerspectiveOption[] = [
   { label: messages.groupBy, value: GroupByType.none },
   { label: messages.groupBy, value: GroupByType.affiliate },
   { label: messages.groupBy, value: GroupByType.product },
-  { label: messages.groupBy, value: GroupByType.account },
+  { label: messages.groupBy, value: GroupByType.account, isDisabled: true },
   { label: messages.groupBy, value: GroupByType.sourceOfSpend },
 ];
 
-const sourcesOfSpendOptions = [
+const sourcesOfSpendOptions: PerspectiveOption[] = [
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.all },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_yearly },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_on_demand },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.reseller },
+  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_on_demand, isDisabled: true },
+  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.reseller, isDisabled: true },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.marketplace },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.aws },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.azure },
   { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.gcp },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.consulting },
+  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.consulting, isDisabled: true },
 ];
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
@@ -69,6 +71,19 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   secondaryGroupBy,
   sourcesOfSpend,
 }) => {
+  const { summary } = accountSummaryMapToProps();
+  const values = summary && summary.data && summary.data.length && summary.data[0];
+  const contractStartDate =
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
+  const { end_date, start_date } = getDateRange(DateRangeType.contractedLastYear, contractStartDate, false);
+
+  const clyOption = dateRangeOptions.find(option => option.value === DateRangeType.contractedLastYear);
+  const clydateRange = intl.formatDateTimeRange(start_date, end_date, {
+    month: 'long',
+    year: 'numeric',
+  });
+  clyOption.dateRange = clydateRange;
+
   const handleOnDateRangeSelected = value => {
     if (onDateRangeSelected) {
       onDateRangeSelected(value);
