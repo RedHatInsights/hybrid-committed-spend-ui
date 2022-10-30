@@ -8,6 +8,12 @@
         padding-left: 0;
       }
     }
+    th, td {
+      white-space: nowrap;
+    }
+    tbody tr > :first-child {
+      padding-right: 20px;
+    }
     .pf-c-table__expandable-row {
       --pf-c-table--cell--PaddingTop: var(--pf-c-table--tbody--cell--PaddingTop);
       --pf-c-table--cell--PaddingBottom: var(--pf-c-table--tbody--cell--PaddingBottom);

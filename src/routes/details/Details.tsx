@@ -1,13 +1,9 @@
 import { Bullseye, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import type { Query } from 'api/queries';
-import { getQuery, parseQuery } from 'api/queries';
-import type { Report } from 'api/reports/report';
-import { ReportPathsType, ReportType } from 'api/reports/report';
-import type { AxiosError } from 'axios';
+import { ReportPathsType } from 'api/reports/report';
 import messages from 'locales/messages';
-import { cloneDeep } from 'lodash';
-import React, { lazy, Suspense, useMemo, useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -15,7 +11,7 @@ import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import { PageHeading } from 'routes/components/page-heading';
-import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
+import { DateRangeType } from 'routes/utils/dateRange';
 import {
   getRouteForQuery,
   handleOnFilterAdded,
@@ -26,18 +22,15 @@ import {
 } from 'routes/utils/history';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
-import { reportActions, reportSelectors } from 'store/reports';
+import { reportSelectors } from 'store/reports';
 import { useStateCallback } from 'utils/hooks';
 
-import { accountData } from './data/accountData';
-import { affiliateData } from './data/affiliateData';
-import { productData } from './data/productData';
-import { sourceData } from './data/sourceData';
+import { detailsMapToProps } from './api';
 import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
 import { DetailsTable } from './DetailsTable';
-import { getDateRangeType, getGroupByType, getSourcesOfSpendType, GroupByType, SourcesOfSpendType } from './utils';
+import { getDateRangeType, getGroupByType, getSourcesOfSpendType, GroupByType, SourcesOfSpendType } from './types';
 const Loading = lazy(() => import('routes/state/loading/Loading'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
@@ -48,11 +41,6 @@ interface DetailsOwnProps {
 
 interface DetailsStateProps {
   hasReportErrors: boolean;
-  query: Query;
-  queryString: string;
-  report: Report;
-  reportError: AxiosError;
-  reportFetchStatus: FetchStatus;
 }
 
 type DetailsProps = DetailsOwnProps & RouteComponentProps<void> & WrappedComponentProps;
@@ -71,9 +59,6 @@ export const baseQuery: Query = {
   },
 };
 
-const reportPathsType = ReportPathsType.details; // Todo: temporary placeholder for upcoming API
-const reportType = ReportType.cost;
-
 const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [dateRange, setDateRange] = useState(getDateRangeType(DateRangeType.contractedYtd));
   const [groupBy, setGroupBy] = useStateCallback(getGroupByType(GroupByType.product));
@@ -81,7 +66,8 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
   const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.all));
 
-  const { hasReportErrors, query, report, reportFetchStatus } = mapToProps({ dateRange, groupBy });
+  const { query, report, reportFetchStatus } = detailsMapToProps({ dateRange, groupBy });
+  const { hasReportErrors } = mapToProps();
 
   const getFilterToolbar = () => {
     return (
@@ -234,80 +220,11 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   );
 };
 
-const mapToProps = ({ dateRange, groupBy = baseQuery.group_by }: DetailsOwnProps): DetailsStateProps => {
-  const queryFromRoute = parseQuery<Query>(location.search);
-  const { start_date, end_date } = getDateRange(dateRange);
-
-  const query = {
-    filter: {
-      ...baseQuery.filter,
-      ...queryFromRoute.filter,
-    },
-    filter_by: queryFromRoute.filter_by || baseQuery.filter_by,
-    group_by: groupBy,
-    order_by: queryFromRoute.order_by,
-  };
-  const queryString = getQuery({
-    ...query,
-    dateRange: undefined,
-    end_date,
-    start_date,
-  });
-
+const mapToProps = (): DetailsStateProps => {
   const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
-
-  const report = useSelector((/* state: RootState */) => {
-    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
-
-    let result;
-    switch (groupBy) {
-      case GroupByType.affiliate:
-        result = cloneDeep(affiliateData);
-        break;
-      case GroupByType.account:
-        result = cloneDeep(accountData);
-        break;
-      case GroupByType.sourceOfSpend:
-        result = cloneDeep(sourceData);
-        break;
-      case GroupByType.product:
-      default:
-        result = cloneDeep(productData);
-        break;
-    }
-
-    const startDate = new Date(start_date + 'T23:59:59z');
-    const endDate = new Date(end_date + 'T23:59:59z');
-    endDate.setMonth(endDate.getMonth() + 1);
-
-    result.data = result.data.filter(item => {
-      const currentDate = new Date(item.date + 'T23:59:59z');
-      if (currentDate >= startDate && currentDate <= endDate) {
-        return item;
-      }
-    });
-
-    return result;
-  });
-  const reportFetchStatus = useSelector((state: RootState) =>
-    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString)
-  );
-  const reportError = useSelector((state: RootState) =>
-    reportSelectors.selectReportError(state, reportPathsType, reportType, queryString)
-  );
-
-  useMemo(() => {
-    // Todo: Enable via dispatch
-    reportActions.fetchReport(reportPathsType, reportType, queryString);
-  }, [queryString]);
 
   return {
     hasReportErrors,
-    query,
-    queryString,
-    report,
-    reportFetchStatus,
-    reportError,
   };
 };
 

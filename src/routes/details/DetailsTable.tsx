@@ -25,15 +25,17 @@ import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { ComputedReportItemType, ComputedReportItemValueType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
+import { accountSummaryMapToProps } from 'routes/utils/api';
 import { getDateRange, getDateRangeDefault } from 'routes/utils/dateRange';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { formatCurrency } from 'utils/format';
 
 import { styles } from './DetailsTable.styles';
 import { DetailsTableExpand } from './DetailsTableExpand';
-import { GroupByType } from './utils';
+import { GroupByType } from './types';
 
 interface DetailsTableOwnProps {
+  contractStartDate?: Date;
   dateRange?: string;
   groupBy?: string;
   isLoading?: boolean;
@@ -80,7 +82,11 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   const [expandedRows, setExpandedRows] = useState(new Set());
   const [rows, setRows] = useState([]);
 
-  const { end_date, start_date } = mapToProps({ dateRange });
+  const { summary } = accountSummaryMapToProps();
+  const values = summary && summary.data && summary.data.length && summary.data[0];
+  const contractStartDate =
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
+  const { end_date, start_date } = mapToProps({ dateRange, contractStartDate });
 
   const isRowExpanded = id => expandedRows.has(id);
   const initExpandedRows = id => {
@@ -231,7 +237,6 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                     key={`col-${index}-${col.name}`}
                     modifier="truncate"
                     sort={col.isSortable ? getSortParams(index) : undefined}
-                    stickyMinWidth="350px"
                   >
                     {col.name}
                   </Th>
@@ -307,10 +312,10 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   );
 };
 
-const mapToProps = ({ dateRange }: DetailsTableOwnProps): DetailsTableStateProps => {
+const mapToProps = ({ contractStartDate, dateRange }: DetailsTableOwnProps): DetailsTableStateProps => {
   const queryFromRoute = parseQuery<Query>(location.search);
   const _dateRange = dateRange || getDateRangeDefault(queryFromRoute);
-  const { end_date, start_date } = getDateRange(_dateRange);
+  const { end_date, start_date } = getDateRange(_dateRange, contractStartDate);
 
   return {
     end_date,
