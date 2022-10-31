@@ -1,4 +1,3 @@
-import type { Query } from 'api/queries/query';
 import {
   getContractedLastYear,
   getContractedYtd,
@@ -18,7 +17,7 @@ export const enum DateRangeType {
   lastThreeMonths = 'last_three_months', // Last 30 days (Dec 18 - Jan 17)
 }
 
-export const getDateRange = (dateRangeType: string, contractStartDate: Date = undefined, isFormatted = true) => {
+export const getDateRange = (dateRangeType: string, contractStartDate: Date = undefined, isFormatted = false) => {
   let dateRange;
 
   switch (dateRangeType) {
@@ -26,22 +25,18 @@ export const getDateRange = (dateRangeType: string, contractStartDate: Date = un
       dateRange = getContractedLastYear(contractStartDate, isFormatted);
       break;
     case DateRangeType.lastNineMonths:
-      dateRange = getLastNineMonthsDate();
+      dateRange = getLastNineMonthsDate(isFormatted);
       break;
     case DateRangeType.lastSixMonths:
-      dateRange = getLastSixMonthsDate();
+      dateRange = getLastSixMonthsDate(isFormatted);
       break;
     case DateRangeType.lastThreeMonths:
-      dateRange = getLastThreeMonthsDate();
+      dateRange = getLastThreeMonthsDate(isFormatted);
       break;
     case DateRangeType.contractedYtd:
     default:
-      dateRange = getContractedYtd(contractStartDate);
+      dateRange = getContractedYtd(contractStartDate, isFormatted);
       break;
   }
   return dateRange;
-};
-
-export const getDateRangeDefault = (queryFromRoute: Query) => {
-  return queryFromRoute.dateRange || DateRangeType.contractedYtd;
 };
