@@ -6,13 +6,13 @@ import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
-import { accountSummaryMapToProps } from 'routes/utils/api';
-import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
+import { DateRangeType } from 'routes/utils/dateRange';
 
 import { GroupByType, SourcesOfSpendType } from './types';
 
 interface DetailsToolbarOwnProps {
   dateRange?: string;
+  endDate?: Date;
   groupBy?: string;
   onDateRangeSelected(value: string);
   onGroupBySelected(value: string);
@@ -20,6 +20,7 @@ interface DetailsToolbarOwnProps {
   onSourcesOfSpendSelected(value: string);
   secondaryGroupBy?: string;
   sourcesOfSpend?: string;
+  startDate?: Date;
 }
 
 export type DetailsToolbarProps = DetailsToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
@@ -62,6 +63,7 @@ const sourcesOfSpendOptions: PerspectiveOption[] = [
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   dateRange,
+  endDate,
   groupBy,
   intl,
   onDateRangeSelected,
@@ -70,18 +72,16 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   onSourcesOfSpendSelected,
   secondaryGroupBy,
   sourcesOfSpend,
+  startDate,
 }) => {
-  const { summary } = accountSummaryMapToProps();
-  const values = summary && summary.data && summary.data.length && summary.data[0];
-  const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
-  const { end_date, start_date } = getDateRange(DateRangeType.contractedLastYear, contractStartDate, false);
-
   const clyOption = dateRangeOptions.find(option => option.value === DateRangeType.contractedLastYear);
-  const clydateRange = intl.formatDateTimeRange(start_date, end_date, {
-    month: 'long',
-    year: 'numeric',
-  });
+  const clydateRange =
+    startDate && endDate
+      ? intl.formatDateTimeRange(startDate, endDate, {
+          month: 'long',
+          year: 'numeric',
+        })
+      : undefined;
   clyOption.dateRange = clydateRange;
 
   const handleOnDateRangeSelected = value => {
