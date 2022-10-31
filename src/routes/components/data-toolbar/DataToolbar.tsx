@@ -245,7 +245,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
       setCurrentCategory(getDefaultCategory());
     }
     setFilters(getActiveFilters());
-  }, [categoryOptions, groupBy, query]);
+  }, [groupBy]);
 
   return (
     <Toolbar clearAllFilters={onDelete as any} collapseListedFiltersBreakpoint="xl">
