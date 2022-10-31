@@ -33,7 +33,7 @@ const dateRangeOptions: PerspectiveOption[] = [
   { label: messages.dateRange, value: DateRangeType.lastSixMonths },
   { label: messages.dateRange, value: DateRangeType.lastNineMonths },
   { label: messages.dateRange, value: DateRangeType.contractedLastYear },
-  { label: messages.dateRange, value: DateRangeType.contractedYear, isDisabled: true },
+  { label: messages.dateRange, value: DateRangeType.contractedYear },
 ];
 
 const groupByOptions: PerspectiveOption[] = [
@@ -64,7 +64,7 @@ const sourcesOfSpendOptions: PerspectiveOption[] = [
 ];
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
-  contractStartDate,
+  contractStartDate = new Date(),
   dateRange,
   groupBy,
   intl,
@@ -84,6 +84,11 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
 
   const getContractedLastYearDateRange = () => {
     const { endDate, startDate } = getDateRange(DateRangeType.contractedLastYear, contractStartDate);
+    return formatDateRange(startDate, endDate);
+  };
+
+  const getContractedYearDateRange = () => {
+    const { endDate, startDate } = getDateRange(DateRangeType.contractedYear, contractStartDate);
     return formatDateRange(startDate, endDate);
   };
 
@@ -114,6 +119,9 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
       switch (option.value) {
         case DateRangeType.contractedLastYear:
           option.description = getContractedLastYearDateRange();
+          break;
+        case DateRangeType.contractedYear:
+          option.description = getContractedYearDateRange();
           break;
         case DateRangeType.contractedYtd:
           option.description = getContractedYtdDateRange();

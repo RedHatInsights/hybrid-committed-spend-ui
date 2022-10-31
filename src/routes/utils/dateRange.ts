@@ -1,5 +1,6 @@
 import {
   getContractedLastYear,
+  getContractedYear,
   getContractedYtd,
   getLastNineMonthsDate,
   getLastSixMonthsDate,
@@ -24,6 +25,12 @@ export const getDateRange = (dateRangeType: string, contractStartDate: Date = un
     case DateRangeType.contractedLastYear:
       dateRange = getContractedLastYear(contractStartDate, isFormatted);
       break;
+    case DateRangeType.contractedYear:
+      dateRange = getContractedYear(contractStartDate, isFormatted);
+      break;
+    case DateRangeType.contractedYtd:
+      dateRange = getContractedYtd(contractStartDate, isFormatted);
+      break;
     case DateRangeType.lastNineMonths:
       dateRange = getLastNineMonthsDate(isFormatted);
       break;
@@ -33,9 +40,8 @@ export const getDateRange = (dateRangeType: string, contractStartDate: Date = un
     case DateRangeType.lastThreeMonths:
       dateRange = getLastThreeMonthsDate(isFormatted);
       break;
-    case DateRangeType.contractedYtd:
     default:
-      dateRange = getContractedYtd(contractStartDate, isFormatted);
+      dateRange = undefined;
       break;
   }
   return dateRange;

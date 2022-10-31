@@ -52,14 +52,6 @@ export const formatDate = (startDate, endDate, isFormatted = true) => {
       };
 };
 
-export const getContractedYtd = (startDate, isFormatted) => {
-  const endDate = new Date();
-  endDate.setDate(1); // Workaround to compare month properly
-  endDate.setMonth(endDate.getMonth() - 1);
-
-  return formatDate(startDate, endDate, isFormatted);
-};
-
 export const getContractedLastYear = (startDate: Date = new Date(), isFormatted) => {
   const endDate = new Date(startDate.getTime());
   endDate.setDate(1); // Workaround to compare month properly
@@ -69,6 +61,22 @@ export const getContractedLastYear = (startDate: Date = new Date(), isFormatted)
   _startDate.setFullYear(_startDate.getFullYear() - 1);
 
   return formatDate(_startDate, endDate, isFormatted);
+};
+
+export const getContractedYear = (startDate, isFormatted) => {
+  const endDate = new Date(startDate.getTime());
+  endDate.setDate(1); // Workaround to compare month properly
+  endDate.setMonth(endDate.getMonth() + 11);
+
+  return formatDate(startDate, endDate, isFormatted);
+};
+
+export const getContractedYtd = (startDate, isFormatted) => {
+  const endDate = new Date();
+  endDate.setDate(1); // Workaround to compare month properly
+  endDate.setMonth(endDate.getMonth() - 1);
+
+  return formatDate(startDate, endDate, isFormatted);
 };
 
 // Returns 9 months, including today's date
