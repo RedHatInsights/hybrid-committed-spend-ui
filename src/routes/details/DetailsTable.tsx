@@ -14,7 +14,6 @@ import {
   Tr,
 } from '@patternfly/react-table';
 import type { Query } from 'api/queries/query';
-import { parseQuery } from 'api/queries/query';
 import type { Report } from 'api/reports/report';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
@@ -25,9 +24,8 @@ import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { ComputedReportItemType, ComputedReportItemValueType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
-import { accountSummaryMapToProps } from 'routes/utils/api';
-import { getDateRange, getDateRangeDefault } from 'routes/utils/dateRange';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
+import { compareDateYearAndMonth } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
 import { styles } from './DetailsTable.styles';
@@ -35,8 +33,7 @@ import { DetailsTableExpand } from './DetailsTableExpand';
 import { GroupByType } from './types';
 
 interface DetailsTableOwnProps {
-  contractStartDate?: Date;
-  dateRange?: string;
+  endDate?: Date;
   groupBy?: string;
   isLoading?: boolean;
   onSort?: (value: string, isSortAscending: boolean, date: string) => void;
@@ -44,11 +41,7 @@ interface DetailsTableOwnProps {
   report?: Report;
   secondaryGroupBy?: string;
   sourcesOfSpend?: string;
-}
-
-interface DetailsTableStateProps {
-  end_date?: string;
-  start_date?: string;
+  startDate?: Date;
 }
 
 export interface DetailsTableColumn {
@@ -68,7 +61,7 @@ export const reportItem = ComputedReportItemType.cost;
 export const reportItemValue = ComputedReportItemValueType.total;
 
 const DetailsTableBase: React.FC<DetailsTableProps> = ({
-  dateRange,
+  endDate,
   groupBy,
   isLoading,
   intl,
@@ -77,18 +70,13 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   report,
   secondaryGroupBy,
   sourcesOfSpend,
+  startDate,
 }) => {
   const [activeSortIndex, setActiveSortIndex] = useState<number | null>(null);
   const [activeSortDirection, setActiveSortDirection] = useState<'asc' | 'desc' | null>(null);
   const [columns, setColumns] = useState([]);
   const [expandedRows, setExpandedRows] = useState(new Set());
   const [rows, setRows] = useState([]);
-
-  const { summary } = accountSummaryMapToProps();
-  const values = summary && summary.data && summary.data.length && summary.data[0];
-  const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
-  const { end_date, start_date } = mapToProps({ dateRange, contractStartDate });
 
   const isRowExpanded = id => expandedRows.has(id);
   const initExpandedRows = id => {
@@ -100,7 +88,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   };
 
   const initDatum = () => {
-    if (!report) {
+    if (!report || !startDate || !endDate) {
       return;
     }
 
@@ -119,11 +107,9 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     ];
 
     // Fill in missing columns
-    for (
-      let currentDate = new Date(start_date + 'T23:59:59z');
-      currentDate <= new Date(end_date + 'T23:59:59z');
-      currentDate.setMonth(currentDate.getMonth() + 1)
-    ) {
+    const currentDate = new Date(startDate.getTime());
+    currentDate.setDate(1); // Workaround to compare month properly
+    for (; compareDateYearAndMonth(currentDate, endDate) <= 0; currentDate.setMonth(currentDate.getMonth() + 1)) {
       const mapId = format(currentDate, 'yyyy-MM');
 
       let isSortable = computedItems.length > 0;
@@ -138,9 +124,8 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
       });
 
       // Add column headings
-      const mapIdDate = new Date(mapId + 'T23:59:59z');
       newColumns.push({
-        name: intl.formatDate(mapIdDate, { month: 'long' }),
+        name: intl.formatDate(currentDate, { month: 'long' }),
         date: mapId,
         isSortable,
         orderBy: 'cost', // Todo: update when APIs are available
@@ -223,7 +208,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
 
   useEffect(() => {
     initDatum();
-  }, [report]);
+  }, [JSON.stringify(report)]);
 
   useEffect(() => {
     setExpandedRows(new Set());
@@ -301,11 +286,12 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                   </Tr>
                   <DetailsTableExpand
                     columns={columns}
-                    dateRange={dateRange}
+                    endDate={endDate}
                     groupBy={groupBy}
                     groupByValue={cells[0].value}
                     isExpanded={isRowExpanded(`row-${rowIndex}`)}
                     secondaryGroupBy={secondaryGroupBy}
+                    startDate={startDate}
                   />
                 </React.Fragment>
               ))
@@ -316,17 +302,6 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
       {Boolean(rows.length === 0) && <div style={styles.emptyState}>{getEmptyState()}</div>}
     </React.Fragment>
   );
-};
-
-const mapToProps = ({ contractStartDate, dateRange }: DetailsTableOwnProps): DetailsTableStateProps => {
-  const queryFromRoute = parseQuery<Query>(location.search);
-  const _dateRange = dateRange || getDateRangeDefault(queryFromRoute);
-  const { end_date, start_date } = getDateRange(_dateRange, contractStartDate);
-
-  return {
-    end_date,
-    start_date,
-  };
 };
 
 const DetailsTable = injectIntl(withRouter(DetailsTableBase));
