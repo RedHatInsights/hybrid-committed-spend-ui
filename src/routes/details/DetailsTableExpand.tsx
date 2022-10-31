@@ -1,6 +1,9 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
 import { Td, Th, Tr } from '@patternfly/react-table';
 import type { Query } from 'api/queries';
+import type { Report } from 'api/reports/report';
+import type { AxiosError } from 'axios';
+import { format } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useEffect, useRef, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
@@ -9,6 +12,7 @@ import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { FetchStatus } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
+import { compareDateYearAndMonth } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
 import { detailsMapToProps } from './api';
@@ -17,11 +21,18 @@ import { reportItem, reportItemValue } from './DetailsTable';
 
 interface DetailsTableExpandOwnProps {
   columns?: any[];
-  dateRange?: string;
+  endDate?: Date;
   groupBy?: string;
   groupByValue?: string;
   isExpanded?: boolean;
   secondaryGroupBy?: string;
+  startDate?: Date;
+}
+
+interface DetailsTableExpandStateProps {
+  report?: Report;
+  reportError?: AxiosError;
+  reportFetchStatus?: FetchStatus;
 }
 
 type DetailsTableExpandProps = DetailsTableExpandOwnProps & RouteComponentProps<void> & WrappedComponentProps;
@@ -42,20 +53,22 @@ export const baseQuery: Query = {
 
 const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
   columns,
-  dateRange,
+  endDate,
   groupBy,
   groupByValue,
   intl,
   isExpanded,
   secondaryGroupBy,
+  startDate,
 }) => {
   const [rows, setRows] = useState([]);
-  const { report, reportFetchStatus } = detailsMapToProps({
-    dateRange,
+  const { report, reportFetchStatus } = mapToProps({
+    endDate,
     groupBy,
     groupByValue,
     isExpanded,
     secondaryGroupBy,
+    startDate,
   });
 
   const isMounted = useRef(false);
@@ -67,7 +80,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
   }, []);
 
   const initDatum = () => {
-    if (!report) {
+    if (!report || !startDate || !endDate) {
       return;
     }
 
@@ -76,6 +89,21 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
       idKey: secondaryGroupBy,
       isDateMap: true,
     });
+
+    // Fill in missing columns
+    const currentDate = new Date(startDate.getTime());
+    currentDate.setDate(1); // Workaround to compare month properly
+    for (; compareDateYearAndMonth(currentDate, endDate) <= 0; currentDate.setMonth(currentDate.getMonth() + 1)) {
+      const mapId = format(currentDate, 'yyyy-MM');
+      computedItems.map(rowItem => {
+        const item = rowItem.get(mapId);
+        if (!item) {
+          rowItem.set(mapId, {
+            date: mapId,
+          });
+        }
+      });
+    }
 
     // Sort by date and fill in missing row cells
     const newRows = [];
@@ -119,7 +147,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
     if (isMounted.current) {
       initDatum();
     }
-  }, [dateRange, secondaryGroupBy]);
+  }, [JSON.stringify(report)]);
 
   return (
     <React.Fragment>
@@ -157,6 +185,29 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
       )}
     </React.Fragment>
   );
+};
+
+const mapToProps = ({
+  endDate,
+  groupBy,
+  groupByValue,
+  isExpanded,
+  secondaryGroupBy,
+  startDate,
+}: DetailsTableExpandOwnProps): DetailsTableExpandStateProps => {
+  const { report, reportFetchStatus } = detailsMapToProps({
+    endDate,
+    groupBy,
+    groupByValue,
+    isExpanded,
+    secondaryGroupBy,
+    startDate,
+  });
+
+  return {
+    report,
+    reportFetchStatus,
+  };
 };
 
 const DetailsTableExpand = injectIntl(withRouter(DetailsTableExpandBase));
