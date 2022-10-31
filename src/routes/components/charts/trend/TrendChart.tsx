@@ -85,7 +85,7 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
               legendData={getLegendData(series, hiddenSeries, true)}
               title={datum =>
                 intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(`${datum.key}T23:59:59z`, {
+                  value: intl.formatDate(`${datum.key}T00:00:00`, {
                     month: 'long',
                     ...(!previousData && { year: 'numeric' }),
                   }),
@@ -327,7 +327,7 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
                 if (isFloat(t) || isInt(t)) {
                   return t;
                 }
-                return intl.formatDate(`${t}T23:59:59z`, {
+                return intl.formatDate(`${t}T00:00:00`, {
                   month: previousData ? 'long' : 'short',
                   ...(!previousData && { year: 'numeric' }),
                 });

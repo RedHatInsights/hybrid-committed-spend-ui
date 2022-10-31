@@ -123,7 +123,7 @@ export function createReportDatum<T extends ComputedReportItem>({
   value,
 }: ReportData<T>): ChartDatum {
   const getDate = () => {
-    return new Date(`${computedItem.date}T23:59:59z`);
+    return new Date(`${computedItem.date}T00:00:00`);
   };
   const getXVal = () => {
     if (idKey === 'date' || shiftDateByYear > 0) {
@@ -201,8 +201,8 @@ export function getDateRange(datums: ChartDatum[]): [Date, Date] {
     }
   }
 
-  const start = new Date(`${datums[firstMonth].key}T23:59:59z`);
-  const end = new Date(`${datums[lastMonth].key}T23:59:59z`);
+  const start = new Date(`${datums[firstMonth].key}T00:00:00`);
+  const end = new Date(`${datums[lastMonth].key}T00:00:00`);
   return [start, end];
 }
 

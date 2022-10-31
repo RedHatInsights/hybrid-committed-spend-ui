@@ -18,7 +18,7 @@ export const compareDateYearAndMonth = (a: Date, b: Date) => {
 
 export const getDate = () => {
   const today = format(new Date(), 'yyyy-MM');
-  return new Date(`${today}T23:59:59z`);
+  return new Date(`${today}T00:00:00`);
 };
 
 export const getToday = (hrs: number = 0, min: number = 0, sec: number = 0) => {

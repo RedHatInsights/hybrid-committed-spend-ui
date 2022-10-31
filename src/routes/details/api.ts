@@ -177,7 +177,7 @@ export const detailsMapToProps = ({
 
     if (startDate && endDate) {
       result.data = result.data.filter(item => {
-        const currentDate = new Date(item.date + 'T23:59:59z');
+        const currentDate = new Date(item.date + 'T00:00:00');
         if (
           compareDateYearAndMonth(currentDate, startDate) >= 0 &&
           compareDateYearAndMonth(currentDate, endDate) <= 0

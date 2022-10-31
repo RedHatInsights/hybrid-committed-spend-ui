@@ -64,7 +64,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
   if (values && values.contract_start_date) {
-    const startDate = new Date(values.contract_start_date + 'T23:59:59z');
+    const startDate = new Date(values.contract_start_date + 'T00:00:00');
     const endDate = getToday();
     endDate.setMonth(endDate.getMonth() - 1);
 
