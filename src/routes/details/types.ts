@@ -28,15 +28,16 @@ export function getDateRangeType(dateRange: DateRangeType): string {
       return 'contracted_ytd';
     case DateRangeType.contractedLastYear:
       return 'contracted_last_year';
+    case DateRangeType.contractedYear:
+      return 'contracted_year';
     case DateRangeType.lastNineMonths:
       return 'last_nine_months';
     case DateRangeType.lastSixMonths:
       return 'last_six_months';
     case DateRangeType.lastThreeMonths:
       return 'last_three_months';
-    case DateRangeType.date:
     default:
-      return 'date';
+      return undefined;
   }
 }
 

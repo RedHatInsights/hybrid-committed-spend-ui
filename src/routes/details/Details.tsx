@@ -43,6 +43,7 @@ interface DetailsOwnProps {
 }
 
 interface DetailsStateProps {
+  contractStartDate?: Date;
   endDate?: Date;
   hasReportErrors?: boolean;
   query?: Query;
@@ -62,7 +63,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
   const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.marketplace));
 
-  const { endDate, hasReportErrors, query, report, reportFetchStatus, startDate } = mapToProps({
+  const { contractStartDate, endDate, hasReportErrors, query, report, reportFetchStatus, startDate } = mapToProps({
     dateRange,
     groupBy,
     sourcesOfSpend,
@@ -191,6 +192,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     <React.Fragment>
       <PageHeading>
         <DetailsHeaderToolbar
+          contractStartDate={contractStartDate}
           dateRange={dateRange}
           endDate={endDate}
           groupBy={groupBy}
@@ -243,6 +245,7 @@ const mapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps): De
   });
 
   return {
+    contractStartDate,
     endDate,
     hasReportErrors,
     query,

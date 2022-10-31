@@ -361,15 +361,15 @@
             "value": [
               {
                 "type": 0,
-                "value": "Past contracted year ("
-              },
-              {
-                "type": 1,
-                "value": "dateRange"
-              },
+                "value": "Past contracted year"
+              }
+            ]
+          },
+          "contracted_year": {
+            "value": [
               {
                 "type": 0,
-                "value": ")"
+                "value": "Contracted year"
               }
             ]
           },
@@ -378,14 +378,6 @@
               {
                 "type": 0,
                 "value": "Contracted YTD"
-              }
-            ]
-          },
-          "date": {
-            "value": [
-              {
-                "type": 0,
-                "value": "date - date contracted year"
               }
             ]
           },
