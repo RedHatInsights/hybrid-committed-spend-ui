@@ -2296,7 +2296,7 @@ export const productData = {
                   units: 'USD',
                 },
                 total: {
-                  value: 25755951524760065,
+                  value: 257559.51524760065,
                   units: 'USD',
                 },
               },
