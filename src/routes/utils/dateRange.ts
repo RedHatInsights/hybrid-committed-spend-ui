@@ -1,6 +1,5 @@
 import {
   getContractedLastYear,
-  getContractedYear,
   getContractedYtd,
   getLastNineMonthsDate,
   getLastSixMonthsDate,
@@ -12,7 +11,6 @@ import {
 export const enum DateRangeType {
   contractedYtd = 'contracted_ytd', // Current month (Jan 1 - Dec 31)
   contractedLastYear = 'contracted_last_year', // Previous and current month (Dec 1 - Jan 18)
-  contractedYear = 'contracted_year', // Contracted year
   lastNineMonths = 'last_nine_months', // Last 90 days
   lastSixMonths = 'last_six_months', // Last 60 days (Nov 18 - Jan 17)
   lastThreeMonths = 'last_three_months', // Last 30 days (Dec 18 - Jan 17)
@@ -24,9 +22,6 @@ export const getDateRange = (dateRangeType: string, contractStartDate: Date = un
   switch (dateRangeType) {
     case DateRangeType.contractedLastYear:
       dateRange = getContractedLastYear(contractStartDate, isFormatted);
-      break;
-    case DateRangeType.contractedYear:
-      dateRange = getContractedYear(contractStartDate, isFormatted);
       break;
     case DateRangeType.contractedYtd:
       dateRange = getContractedYtd(contractStartDate, isFormatted);

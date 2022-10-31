@@ -63,14 +63,6 @@ export const getContractedLastYear = (startDate: Date = new Date(), isFormatted)
   return formatDate(_startDate, endDate, isFormatted);
 };
 
-export const getContractedYear = (startDate, isFormatted) => {
-  const endDate = new Date(startDate.getTime());
-  endDate.setDate(1); // Workaround to compare month properly
-  endDate.setMonth(endDate.getMonth() + 11);
-
-  return formatDate(startDate, endDate, isFormatted);
-};
-
 export const getContractedYtd = (startDate, isFormatted) => {
   const endDate = new Date();
   endDate.setDate(1); // Workaround to compare month properly
