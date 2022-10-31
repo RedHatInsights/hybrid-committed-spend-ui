@@ -1,7 +1,9 @@
 import { Bullseye, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import type { Query } from 'api/queries';
+import type { Report } from 'api/reports/report';
 import { ReportPathsType } from 'api/reports/report';
+import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
@@ -25,7 +27,7 @@ import { FetchStatus } from 'store/common';
 import { reportSelectors } from 'store/reports';
 import { useStateCallback } from 'utils/hooks';
 
-import { detailsMapToProps } from './api';
+import { accountSummaryMapToProps, detailsMapDateRangeToProps } from './api';
 import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
@@ -37,27 +39,22 @@ const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'
 interface DetailsOwnProps {
   dateRange?: string;
   groupBy?: string;
+  sourcesOfSpend?: string;
 }
 
 interface DetailsStateProps {
-  hasReportErrors: boolean;
+  contractStartDate?: Date;
+  endDate?: Date;
+  hasReportErrors?: boolean;
+  query?: Query;
+  queryString?: string;
+  report?: Report;
+  reportError?: AxiosError;
+  reportFetchStatus?: FetchStatus;
+  startDate?: Date;
 }
 
 type DetailsProps = DetailsOwnProps & RouteComponentProps<void> & WrappedComponentProps;
-
-export const baseQuery: Query = {
-  filter: {
-    limit: 10,
-    offset: 0,
-  },
-  filter_by: {},
-  group_by: {
-    product: '*',
-  },
-  order_by: {
-    cost: 'desc',
-  },
-};
 
 const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [dateRange, setDateRange] = useState(getDateRangeType(DateRangeType.contractedYtd));
@@ -66,8 +63,11 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
   const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.marketplace));
 
-  const { query, report, reportFetchStatus } = detailsMapToProps({ dateRange, groupBy, sourcesOfSpend });
-  const { hasReportErrors } = mapToProps();
+  const { contractStartDate, endDate, hasReportErrors, query, report, reportFetchStatus, startDate } = mapToProps({
+    dateRange,
+    groupBy,
+    sourcesOfSpend,
+  });
 
   const getFilterToolbar = () => {
     return (
@@ -126,7 +126,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const getTable = () => {
     return (
       <DetailsTable
-        dateRange={dateRange}
+        endDate={endDate}
         groupBy={groupBy}
         isLoading={reportFetchStatus === FetchStatus.inProgress}
         onSort={(sortType, isSortAscending, date: string) =>
@@ -136,6 +136,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         report={report}
         secondaryGroupBy={secondaryGroupBy}
         sourcesOfSpend={sourcesOfSpend}
+        startDate={startDate}
       />
     );
   };
@@ -191,7 +192,9 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     <React.Fragment>
       <PageHeading>
         <DetailsHeaderToolbar
+          contractStartDate={contractStartDate}
           dateRange={dateRange}
+          endDate={endDate}
           groupBy={groupBy}
           onDateRangeSelected={handleOnDateRangeSelected}
           onGroupBySelected={handleOnGroupBySelected}
@@ -199,6 +202,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
           onSourcesOfSpendSelected={handleOnSourcesOfSpendSelected}
           secondaryGroupBy={secondaryGroupBy}
           sourcesOfSpend={sourcesOfSpend}
+          startDate={startDate}
         />
       </PageHeading>
       <Main>
@@ -225,11 +229,29 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   );
 };
 
-const mapToProps = (): DetailsStateProps => {
+const mapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps): DetailsStateProps => {
   const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
 
+  const { summary } = accountSummaryMapToProps();
+  const values = summary && summary.data && summary.data.length && summary.data[0];
+  const contractStartDate =
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
+
+  const { endDate, query, report, reportFetchStatus, startDate } = detailsMapDateRangeToProps({
+    contractStartDate,
+    dateRange,
+    groupBy,
+    sourcesOfSpend,
+  });
+
   return {
+    contractStartDate,
+    endDate,
     hasReportErrors,
+    query,
+    report,
+    reportFetchStatus,
+    startDate,
   };
 };
 

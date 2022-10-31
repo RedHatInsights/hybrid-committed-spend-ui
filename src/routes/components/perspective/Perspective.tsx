@@ -8,20 +8,21 @@ import { injectIntl } from 'react-intl';
 import { styles } from './Perspective.styles';
 
 export interface PerspectiveOption {
-  dateRange?: string;
+  description?: string;
   isDisabled?: boolean;
   label: MessageDescriptor;
   value: string;
 }
 
 interface PerspectiveOptionExt extends SelectOptionObject {
+  description?: string;
   isDisabled?: boolean;
   toString(): string; // label
   value?: string;
 }
 
 interface PerspectiveOwnProps {
-  currentItem: string;
+  currentItem?: string;
   id?: string;
   isDisabled?: boolean;
   label?: string;
@@ -45,16 +46,17 @@ class Perspective extends React.Component<PerspectiveProps> {
   private getSelectOptions = (): PerspectiveOptionExt[] => {
     const { intl, options } = this.props;
 
-    const selections: PerspectiveOptionExt[] = [];
+    const selectOptions: PerspectiveOptionExt[] = [];
 
     options.map(option => {
-      selections.push({
+      selectOptions.push({
+        description: option.description,
         isDisabled: option.isDisabled,
-        toString: () => intl.formatMessage(option.label, { value: option.value, dateRange: option.dateRange }),
+        toString: () => intl.formatMessage(option.label, { value: option.value }),
         value: option.value,
       });
     });
-    return selections;
+    return selectOptions;
   };
 
   private getSelect = () => {
@@ -75,7 +77,12 @@ class Perspective extends React.Component<PerspectiveProps> {
         variant={SelectVariant.single}
       >
         {selectOptions.map(option => (
-          <SelectOption key={option.value} value={option} isDisabled={option.isDisabled} />
+          <SelectOption
+            key={option.value}
+            description={option.description}
+            value={option}
+            isDisabled={option.isDisabled}
+          />
         ))}
       </Select>
     );

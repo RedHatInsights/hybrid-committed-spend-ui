@@ -1,5 +1,6 @@
 import type { Query } from 'api/queries';
 import { getQuery, parseQuery } from 'api/queries';
+import type { AccountSummaryReport } from 'api/reports/accountSummaryReports';
 import type { Report } from 'api/reports/report';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
@@ -8,34 +9,45 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
-import { accountSummaryMapToProps } from 'routes/utils/api';
-import { getDateRange, getDateRangeDefault } from 'routes/utils/dateRange';
+import { getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
+import { compareDateYearAndMonth } from 'utils/dates';
 
 import { affiliateData } from './data/affiliateData';
 import { emptyData } from './data/emptyData';
+import { productData } from './data/productData';
 import { sourceData } from './data/sourceData';
 import { GroupByType, SourcesOfSpendType } from './types';
 
+interface AccountSummaryStateProps {
+  summary?: AccountSummaryReport;
+  summaryError?: AxiosError;
+  summaryFetchStatus?: FetchStatus;
+  summaryQueryString?: string;
+}
+
 interface DetailsOwnProps {
+  contractStartDate?: Date;
   dateRange?: string;
+  endDate?: Date;
   groupBy?: string;
   groupByValue?: string;
   isExpanded?: boolean;
   secondaryGroupBy?: string;
   sourcesOfSpend?: string;
+  startDate?: Date;
 }
 
 interface DetailsStateProps {
-  end_date?: string;
+  endDate?: Date;
   query: Query;
   queryString: string;
   report: Report;
   reportError: AxiosError;
   reportFetchStatus: FetchStatus;
-  start_date?: string;
+  startDate?: Date;
 }
 
 export const baseQuery: Query = {
@@ -52,25 +64,73 @@ export const baseQuery: Query = {
   },
 };
 
-export const detailsMapToProps = ({
+export const accountSummaryMapToProps = (deps = []): AccountSummaryStateProps => {
+  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
+
+  const query = {
+    // TBD...
+  };
+  const summaryQueryString = getQuery(query);
+
+  const reportPathsType = ReportPathsType.accountSummary;
+  const reportType = ReportType.billing;
+
+  const summary: AccountSummaryReport = useSelector((state: RootState) =>
+    reportSelectors.selectReport(state, reportPathsType, reportType, summaryQueryString)
+  );
+  const summaryError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, reportPathsType, reportType, summaryQueryString)
+  );
+  const summaryFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, summaryQueryString)
+  );
+
+  useEffect(() => {
+    if (summaryFetchStatus !== FetchStatus.inProgress) {
+      dispatch(reportActions.fetchReport(reportPathsType, reportType, summaryQueryString));
+    }
+  }, deps);
+
+  return {
+    summary,
+    summaryError,
+    summaryFetchStatus,
+    summaryQueryString,
+  };
+};
+
+export const detailsMapDateRangeToProps = ({
+  contractStartDate,
   dateRange,
+  groupBy,
+  groupByValue,
+  secondaryGroupBy,
+  sourcesOfSpend,
+}: DetailsOwnProps): DetailsStateProps => {
+  const { endDate, startDate } = getDateRange(dateRange, contractStartDate);
+
+  return detailsMapToProps({
+    endDate,
+    groupBy,
+    groupByValue,
+    secondaryGroupBy,
+    sourcesOfSpend,
+    startDate,
+  });
+};
+
+export const detailsMapToProps = ({
+  endDate,
   groupBy,
   groupByValue,
   isExpanded,
   secondaryGroupBy,
   sourcesOfSpend = SourcesOfSpendType.all,
+  startDate,
 }: DetailsOwnProps): DetailsStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const { summary } = accountSummaryMapToProps();
-  const values = summary && summary.data && summary.data.length && summary.data[0];
-  const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
-
   const queryFromRoute = parseQuery<Query>(location.search);
-  const _dateRange = dateRange || getDateRangeDefault(queryFromRoute);
-  const { end_date, start_date } = getDateRange(_dateRange, contractStartDate);
-
   const query = {
     filter: {
       ...(secondaryGroupBy
@@ -87,8 +147,8 @@ export const detailsMapToProps = ({
   const queryString = getQuery({
     ...query,
     dateRange: undefined,
-    end_date,
-    start_date,
+    end_date: endDate,
+    start_date: startDate,
   });
 
   // Todo: temporary placeholder for upcoming API
@@ -115,32 +175,33 @@ export const detailsMapToProps = ({
         break;
     }
 
-    const startDate = new Date(start_date + 'T23:59:59z');
-    const endDate = new Date(end_date + 'T23:59:59z');
-
-    result.data = result.data.filter(item => {
-      const currentDate = new Date(item.date + 'T23:59:59z');
-      if (currentDate >= startDate && currentDate <= endDate) {
-        return item;
-      }
-    });
-
-    if (
-      sourcesOfSpend !== SourcesOfSpendType.all &&
-      secondaryGroupBy !== GroupByType.none &&
-      groupBy === GroupByType.product
-    ) {
-      result.data.map(item => {
-        for (const key in item) {
-          if (item[key] instanceof Array) {
-            item[key].map(dataPoint => {
-              dataPoint.values = dataPoint.values.filter(val => val.source_of_spend === sourcesOfSpend);
-            });
-          }
+    if (startDate && endDate) {
+      result.data = result.data.filter(item => {
+        const currentDate = new Date(item.date + 'T23:59:59z');
+        if (
+          compareDateYearAndMonth(currentDate, startDate) >= 0 &&
+          compareDateYearAndMonth(currentDate, endDate) <= 0
+        ) {
+          return item;
         }
       });
-    }
 
+      if (
+        sourcesOfSpend !== SourcesOfSpendType.all &&
+        secondaryGroupBy !== GroupByType.none &&
+        groupBy === GroupByType.product
+      ) {
+        result.data.map(item => {
+          for (const key in item) {
+            if (item[key] instanceof Array) {
+              item[key].map(dataPoint => {
+                dataPoint.values = dataPoint.values.filter(val => val.source_of_spend === sourcesOfSpend);
+              });
+            }
+          }
+        });
+      }
+    }
     return result;
   });
   const reportFetchStatus = useSelector((state: RootState) =>
@@ -154,15 +215,15 @@ export const detailsMapToProps = ({
     if (reportFetchStatus !== FetchStatus.inProgress && isExpanded) {
       dispatch(reportActions.fetchReport(reportPathsType, reportType, queryString));
     }
-  }, [dateRange, isExpanded, secondaryGroupBy, summary]);
+  }, [isExpanded, secondaryGroupBy]);
 
   return {
-    end_date,
+    endDate,
     query,
     queryString,
     report,
     reportFetchStatus,
     reportError,
-    start_date,
+    startDate,
   };
 };
