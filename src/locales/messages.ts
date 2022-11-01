@@ -339,7 +339,7 @@ export default defineMessages({
       '{value, select, ' +
       'account {Cloud payer account} ' +
       'affiliate {Affiliate} ' +
-      'product {Project} ' +
+      'product {Product} ' +
       'source_of_spend {Source of spend} ' +
       'other {}}',
     description: 'Filter by values',

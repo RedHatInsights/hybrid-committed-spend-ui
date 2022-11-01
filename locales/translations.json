@@ -53,7 +53,7 @@
   "filterByButtonAriaLabel": "{value, select, account {Filter button for cloud payer accounts} affiliate {Filter button for affiliates} product {Filter button for products} source_of_spend {Filter button for source of spend} other {}}",
   "filterByInputAriaLabel": "{value, select, account {Filter input for cloud payer accounts} affiliate {Filter input for affiliates} product {Filter input for products} source_of_spend {Filter input for source of spend} other {}}",
   "filterByPlaceholder": "{value, select, account {Filter by account name} affiliate {Filter by affiliate name} product {Filter by product name} source_of_spend {Filter by source of spend} other {}}",
-  "filterByValues": "{value, select, account {Cloud payer account} affiliate {Affiliate} product {Project} source_of_spend {Source of spend} other {}}",
+  "filterByValues": "{value, select, account {Cloud payer account} affiliate {Affiliate} product {Product} source_of_spend {Source of spend} other {}}",
   "furtherGroupByLabel": "Further grouped by",
   "groupBy": "{value, select, account {Cloud payer accounts} affiliate {Affiliates} none {None} product {Products} source_of_spend {Source of spend} other {}}",
   "groupByLabel": "Grouped by",
