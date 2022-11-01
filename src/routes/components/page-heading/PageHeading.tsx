@@ -46,11 +46,11 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
   const accountName: string | React.ReactNode = values && values.account_name ? values.account_name : emptyValue;
   const accountNumber: string | React.ReactNode = values && values.account_number ? values.account_number : emptyValue;
   const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
   const contractEndDate =
-    values && values.contract_end_date ? new Date(values.contract_end_date + 'T23:59:59z') : undefined;
+    values && values.contract_end_date ? new Date(values.contract_end_date + 'T00:00:00') : undefined;
   const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T23:59:59z') : undefined;
+    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
   return (
     <PageHeader>

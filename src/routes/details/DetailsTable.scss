@@ -19,7 +19,7 @@
       --pf-c-table--cell--PaddingBottom: var(--pf-c-table--tbody--cell--PaddingBottom);
       &.pf-m-expanded > :first-child {
         --pf-c-table--cell--PaddingLeft: 72px;
-        --pf-c-table__expandable-row--after--BorderLeftWidth: 0;
+        // --pf-c-table__expandable-row--after--BorderLeftWidth: 0; // Left blue line for expanded rows
       }
     }
     .pf-c-table__sticky-column {

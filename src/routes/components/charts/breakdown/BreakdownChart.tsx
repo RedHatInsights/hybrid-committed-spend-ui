@@ -91,7 +91,7 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
               legendData={getLegendData(series, hiddenSeries, true)}
               title={datum =>
                 intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(`${datum.x}T23:59:59z`, {
+                  value: intl.formatDate(`${datum.x}T00:00:00`, {
                     month: 'long',
                     year: 'numeric',
                   }),
@@ -426,7 +426,7 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
               if (isFloat(t) || isInt(t)) {
                 return t;
               }
-              return intl.formatDate(`${t}T23:59:59z`, {
+              return intl.formatDate(`${t}T00:00:00`, {
                 month: 'short',
                 year: 'numeric',
               });

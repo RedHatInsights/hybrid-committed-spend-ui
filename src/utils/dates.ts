@@ -18,7 +18,7 @@ export const compareDateYearAndMonth = (a: Date, b: Date) => {
 
 export const getDate = () => {
   const today = format(new Date(), 'yyyy-MM');
-  return new Date(`${today}T23:59:59z`);
+  return new Date(`${today}T00:00:00`);
 };
 
 export const getToday = (hrs: number = 0, min: number = 0, sec: number = 0) => {
@@ -61,14 +61,6 @@ export const getContractedLastYear = (startDate: Date = new Date(), isFormatted)
   _startDate.setFullYear(_startDate.getFullYear() - 1);
 
   return formatDate(_startDate, endDate, isFormatted);
-};
-
-export const getContractedYear = (startDate, isFormatted) => {
-  const endDate = new Date(startDate.getTime());
-  endDate.setDate(1); // Workaround to compare month properly
-  endDate.setMonth(endDate.getMonth() + 11);
-
-  return formatDate(startDate, endDate, isFormatted);
 };
 
 export const getContractedYtd = (startDate, isFormatted) => {

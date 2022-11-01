@@ -31,8 +31,8 @@ const CommittedSpendTrendTransformBase: React.FC<CommittedSpendTrendTransformPro
   thresholdReport,
 }) => {
   const getData = () => {
-    const startDate = new Date('2021-12-01T23:59:59z');
-    const endDate = new Date('2022-12-01T23:59:59z');
+    const startDate = new Date('2021-12-01T00:00:00');
+    const endDate = new Date('2022-12-01T00:00:00');
 
     const current = currentReport ? transformReport({ report: currentReport, startDate, endDate }) : undefined;
     const threshold = thresholdReport ? transformReport({ report: thresholdReport, startDate, endDate }) : undefined;

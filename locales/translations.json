@@ -24,7 +24,7 @@
   "dashboardActualSpendTitle": "Actual spend contract YTD",
   "dashboardCommitmentSpendTitle": "Remaining commitment balance",
   "dashboardCommitmentSpendTrendTitle": "Committed spend trend",
-  "dateRange": "{value, select, contracted_ytd {Contracted YTD} contracted_last_year {Past contracted year} contracted_year {Contracted year} last_nine_months {Last 9 months} last_six_months {Last 6 months} last_three_months {Last 3 months} other {}}",
+  "dateRange": "{value, select, contracted_ytd {Contracted YTD} contracted_last_year {Past contracted year} last_nine_months {Last 9 months} last_six_months {Last 6 months} last_three_months {Last 3 months} other {}}",
   "dateRangeLabel": "Time",
   "detailsEmptyState": "No data available",
   "detailsTableAriaLabel": "Details table",

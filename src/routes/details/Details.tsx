@@ -235,7 +235,7 @@ const mapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps): De
   const { summary } = accountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
   const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T23:59:59z') : undefined;
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
 
   const { endDate, query, report, reportFetchStatus, startDate } = detailsMapDateRangeToProps({
     contractStartDate,
