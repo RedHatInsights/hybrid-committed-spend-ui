@@ -40,7 +40,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   const { report, reportFetchStatus, widget } = mapToProps({ widgetId });
 
   const hasData = report && report.data && report.data.length;
-  const values = hasData && report.data[0];
+  const values = hasData && report.data[report.data.length - 1];
 
   // Todo: replace with actual spend
   const actualCommittedSpend: string | React.ReactNode =
