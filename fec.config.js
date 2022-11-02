@@ -39,7 +39,11 @@ module.exports = {
   stats,
   useCache: true,
   useProxy: true,
-  ...(process.env.HMR && { _unstableHotReload: process.env.HMR === 'true' }),
+  /**
+   * Temporarily disabled HMR -- see https://issues.redhat.com/browse/COST-3224
+   *
+   ...(process.env.HMR && { _unstableHotReload: process.env.HMR === 'true' }),
+   */
   /**
    * Config for federated modules
    */
