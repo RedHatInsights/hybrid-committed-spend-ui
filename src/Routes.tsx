@@ -7,12 +7,12 @@ const Details = lazy(() => import(/* webpackChunkName: "Details" */ 'routes/deta
 const Overview = lazy(() => import(/* webpackChunkName: "Overview" */ 'routes/overview/Overview'));
 
 // For syncing with permissions
-export const paths = {
+const paths = {
   details: '/details',
   overview: '/',
 };
 
-export const routes = [
+const routes = [
   {
     component: UserAccess(Details),
     exact: true,
@@ -33,7 +33,7 @@ export const routes = [
  *      path - https://prod.foo.redhat.com:1337/insights/advisor/rules
  *      component - component to be rendered when a route has been chosen.
  */
-export const Routes = () => (
+const Routes = () => (
   <Suspense
     fallback={
       <Bullseye>
@@ -52,3 +52,5 @@ export const Routes = () => (
     </Switch>
   </Suspense>
 );
+
+export { paths, Routes, routes };
