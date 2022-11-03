@@ -21,7 +21,7 @@ interface DashboardStateProps {
 type DashboardProps = DashboardOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const Dashboard: React.FC<DashboardProps> = () => {
-  const { selectWidgets, currentWidgets } = mapToProps();
+  const { selectWidgets, currentWidgets } = useMapToProps();
 
   return (
     <Grid hasGutter>
@@ -41,7 +41,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   );
 };
 
-const mapToProps = (): DashboardStateProps => {
+const useMapToProps = (): DashboardStateProps => {
   const selectWidgets = useSelector((state: RootState) => dashboardSelectors.selectWidgets(state));
   const currentWidgets = useSelector((state: RootState) => dashboardSelectors.selectCurrentWidgets(state));
 

@@ -27,7 +27,7 @@ import { FetchStatus } from 'store/common';
 import { reportSelectors } from 'store/reports';
 import { useStateCallback } from 'utils/hooks';
 
-import { accountSummaryMapToProps, detailsMapDateRangeToProps } from './api';
+import { detailsMapDateRangeToProps, useAccountSummaryMapToProps } from './api';
 import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
@@ -63,7 +63,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
   const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.marketplace));
 
-  const { contractStartDate, endDate, hasReportErrors, query, report, reportFetchStatus, startDate } = mapToProps({
+  const { contractStartDate, endDate, hasReportErrors, query, report, reportFetchStatus, startDate } = useMapToProps({
     dateRange,
     groupBy,
     sourcesOfSpend,
@@ -229,10 +229,10 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   );
 };
 
-const mapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps): DetailsStateProps => {
+const useMapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps): DetailsStateProps => {
   const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
 
-  const { summary } = accountSummaryMapToProps();
+  const { summary } = useAccountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;

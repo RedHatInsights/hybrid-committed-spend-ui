@@ -7,8 +7,7 @@ import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import type { RootState } from 'store';
@@ -52,7 +51,7 @@ const perspectiveOptions = [
 
 const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetId }) => {
   const [perspective, setPerspective] = useState(PerspectiveType.previous_over_actual);
-  const { currentReport, currentReportFetchStatus, previousReport, previousReportFetchStatus, widget } = mapToProps({
+  const { currentReport, currentReportFetchStatus, previousReport, previousReportFetchStatus, widget } = useMapToProps({
     widgetId,
   });
 
@@ -89,7 +88,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
   );
 };
 
-const mapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTrendStateProps => {
+const useMapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTrendStateProps => {
   const currentQueryString = ''; // Todo: add query string for API when available
   const previousQueryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));

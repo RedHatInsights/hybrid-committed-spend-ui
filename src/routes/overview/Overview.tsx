@@ -25,7 +25,7 @@ interface OverviewStateProps {
 type OverviewProps = OverviewOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const Overview: React.FC<OverviewProps> = ({ intl }) => {
-  const { hasReportErrors } = mapToProps({});
+  const { hasReportErrors } = useMapToProps({});
 
   // Todo: Remove when APIs are available
   const isTest = true;
@@ -54,7 +54,7 @@ const Overview: React.FC<OverviewProps> = ({ intl }) => {
 };
 
 // eslint-disable-next-line no-empty-pattern
-const mapToProps = ({}: OverviewOwnProps): OverviewStateProps => {
+const useMapToProps = ({}: OverviewOwnProps): OverviewStateProps => {
   const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
 
   return {

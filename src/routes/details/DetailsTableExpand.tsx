@@ -15,7 +15,7 @@ import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputed
 import { compareDateYearAndMonth } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
-import { detailsMapToProps } from './api';
+import { useDetailsMapToProps } from './api';
 import type { DetailsTableCell } from './DetailsTable';
 import { reportItem, reportItemValue } from './DetailsTable';
 
@@ -62,7 +62,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
   startDate,
 }) => {
   const [rows, setRows] = useState([]);
-  const { report, reportFetchStatus } = mapToProps({
+  const { report, reportFetchStatus } = useMapToProps({
     endDate,
     groupBy,
     groupByValue,
@@ -187,7 +187,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
   );
 };
 
-const mapToProps = ({
+const useMapToProps = ({
   endDate,
   groupBy,
   groupByValue,
@@ -195,7 +195,7 @@ const mapToProps = ({
   secondaryGroupBy,
   startDate,
 }: DetailsTableExpandOwnProps): DetailsTableExpandStateProps => {
-  const { report, reportFetchStatus } = detailsMapToProps({
+  const { report, reportFetchStatus } = useDetailsMapToProps({
     endDate,
     groupBy,
     groupByValue,

@@ -32,7 +32,7 @@ interface PageHeadingStateProps {
 type PageHeadingProps = PageHeadingOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
-  const { report, reportFetchStatus } = mapToProps();
+  const { report, reportFetchStatus } = useMapToProps();
 
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[report.data.length - 1];
@@ -94,7 +94,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
   );
 };
 
-const mapToProps = (): PageHeadingStateProps => {
+const useMapToProps = (): PageHeadingStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query = {

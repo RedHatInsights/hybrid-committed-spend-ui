@@ -217,7 +217,7 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
 
   const getTruncatedString = (str: string) => {
     const maxChars = 20;
-    return str.length > maxChars ? str.substr(0, maxChars - 1) + '...' : str;
+    return str.length > maxChars ? str.substring(0, maxChars - 1) + '...' : str;
   };
 
   const getTickValue = (t: number) => {

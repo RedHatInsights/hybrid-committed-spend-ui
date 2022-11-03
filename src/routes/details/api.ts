@@ -64,7 +64,7 @@ export const baseQuery: Query = {
   },
 };
 
-export const accountSummaryMapToProps = (deps = []): AccountSummaryStateProps => {
+export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query = {
@@ -109,7 +109,7 @@ export const detailsMapDateRangeToProps = ({
 }: DetailsOwnProps): DetailsStateProps => {
   const { endDate, startDate } = getDateRange(dateRange, contractStartDate);
 
-  return detailsMapToProps({
+  return useDetailsMapToProps({
     endDate,
     groupBy,
     groupByValue,
@@ -119,7 +119,7 @@ export const detailsMapDateRangeToProps = ({
   });
 };
 
-export const detailsMapToProps = ({
+export const useDetailsMapToProps = ({
   endDate,
   groupBy,
   groupByValue,
