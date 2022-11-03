@@ -53,7 +53,7 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   reportPathsType,
   startDate,
 }) => {
-  const { queryString, report, reportFetchStatus } = mapToProps({ dataType, onError, query, reportPathsType });
+  const { queryString, report, reportFetchStatus } = useMapToProps({ dataType, onError, query, reportPathsType });
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const getExport = () => {
@@ -101,7 +101,7 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   );
 };
 
-const mapToProps = ({ onError, query, reportPathsType }: ExportSubmitOwnProps): ExportSubmitStateProps => {
+const useMapToProps = ({ onError, query, reportPathsType }: ExportSubmitOwnProps): ExportSubmitStateProps => {
   const getQueryString = () => {
     // Todo: Add start and end dates below
     const newQuery: Query = {

@@ -67,7 +67,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
   const [comparison, setComparison] = useState(ComparisonType.monthly);
   const [perspective, setPerspective] = useState(PerspectiveType.sources);
 
-  const { report, reportFetchStatus, widget } = mapToProps({ perspective, widgetId });
+  const { report, reportFetchStatus, widget } = useMapToProps({ perspective, widgetId });
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -106,7 +106,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
   );
 };
 
-const mapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps): ActualSpendBreakdownStateProps => {
+const useMapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps): ActualSpendBreakdownStateProps => {
   const queryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 

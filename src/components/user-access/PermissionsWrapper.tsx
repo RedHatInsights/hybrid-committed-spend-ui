@@ -7,8 +7,7 @@ import { PageTitle } from 'components/page-title';
 import React, { lazy, Suspense, useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { uiActions } from 'store/ui';
@@ -32,7 +31,7 @@ interface PermissionsWrapperStateProps {
 type PermissionsWrapperProps = PermissionsWrapperOwnProps & WrappedComponentProps;
 
 const PermissionsWrapperBase: React.FC<PermissionsWrapperProps> = ({ children }) => {
-  const { userAccessFetchStatus } = mapToProps();
+  const { userAccessFetchStatus } = useMapToProps();
 
   return (
     <PageTitle>
@@ -51,7 +50,7 @@ const PermissionsWrapperBase: React.FC<PermissionsWrapperProps> = ({ children })
   );
 };
 
-const mapToProps = (): PermissionsWrapperStateProps => {
+const useMapToProps = (): PermissionsWrapperStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);

@@ -36,7 +36,7 @@ interface CommittedSpendStateProps {
 export type CommittedSpendProps = CommittedSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
-  const { report, reportFetchStatus, widget } = mapToProps({ widgetId });
+  const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
 
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[report.data.length - 1];
@@ -80,7 +80,7 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
   );
 };
 
-const mapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStateProps => {
+const useMapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStateProps => {
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 

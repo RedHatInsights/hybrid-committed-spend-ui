@@ -37,7 +37,7 @@ interface ActualSpendStateProps {
 export type ActualSpendProps = ActualSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
-  const { report, reportFetchStatus, widget } = mapToProps({ widgetId });
+  const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
 
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[report.data.length - 1];
@@ -96,7 +96,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   );
 };
 
-const mapToProps = ({ widgetId }: ActualSpendOwnProps): ActualSpendStateProps => {
+const useMapToProps = ({ widgetId }: ActualSpendOwnProps): ActualSpendStateProps => {
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 

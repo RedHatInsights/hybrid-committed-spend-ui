@@ -7,8 +7,7 @@ import { useSelector } from 'react-redux';
 import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { paths, routes } from 'Routes';
-import { Loading } from 'routes/state';
-import { NotAuthorized, NotAvailable } from 'routes/state';
+import { Loading, NotAuthorized, NotAvailable } from 'routes/state';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { featureFlagsSelectors } from 'store/feature-flags';
@@ -29,7 +28,7 @@ interface PermissionsStateProps {
 type PermissionsProps = PermissionsOwnProps;
 
 const PermissionsBase: React.FC<PermissionsProps> = ({ children = null, location }) => {
-  const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = mapToProps();
+  const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
 
   const getRoutePath = () => {
     const currRoute = routes.find(({ path }) => path === location.pathname);
@@ -68,7 +67,7 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null, location
   return result;
 };
 
-const mapToProps = (): PermissionsStateProps => {
+const useMapToProps = (): PermissionsStateProps => {
   const isDetailsFeatureEnabled = useSelector((state: RootState) =>
     featureFlagsSelectors.selectIsDetailsFeatureEnabled(state)
   );
