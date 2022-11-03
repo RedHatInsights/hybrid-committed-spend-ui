@@ -217,7 +217,11 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   return (
     <React.Fragment>
       <InnerScrollContainer>
-        <TableComposable aria-label="Committed spend details table" className="tableOverride" gridBreakPoint="">
+        <TableComposable
+          aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
+          className="tableOverride"
+          gridBreakPoint=""
+        >
           <Thead>
             <Tr>
               {columns.map((col, index) =>
