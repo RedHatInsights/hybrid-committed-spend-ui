@@ -270,7 +270,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                             secondaryGroupBy && secondaryGroupBy !== GroupByType.none
                               ? {
                                   areAllExpanded: !isRowExpanded(`row-${rowIndex}`),
-                                  collapseAllAriaLabel: '', // Not using collapse all feature
+                                  collapseAllAriaLabel: intl.formatMessage(messages.detailsTableSelectAriaLabel) as '', // Todo: Workaround for https://github.com/patternfly/patternfly-react/issues/8330
                                   onToggle: () => initExpandedRows(`row-${rowIndex}`),
                                 }
                               : undefined

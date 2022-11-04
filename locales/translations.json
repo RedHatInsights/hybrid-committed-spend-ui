@@ -28,6 +28,7 @@
   "dateRangeLabel": "Time",
   "detailsEmptyState": "No data available",
   "detailsTableAriaLabel": "Details table",
+  "detailsTableSelectAriaLabel": "Details table row select",
   "detailsTitle": "Committed Spend details",
   "emptyFilterStateSubtitle": "Sorry, no data with the given filter was found.",
   "emptyFilterStateTitle": "No match found",

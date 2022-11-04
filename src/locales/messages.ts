@@ -170,6 +170,11 @@ export default defineMessages({
     description: 'Details table',
     id: 'detailsTableAriaLabel',
   },
+  detailsTableSelectAriaLabel: {
+    defaultMessage: 'Details table row select',
+    description: 'Details table row select',
+    id: 'detailsTableSelectAriaLabel',
+  },
   detailsTitle: {
     defaultMessage: 'Committed Spend details',
     description: 'Committed Spend details',
