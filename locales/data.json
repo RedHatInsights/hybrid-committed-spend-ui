@@ -423,6 +423,12 @@
         "value": "Details table"
       }
     ],
+    "detailsTableSelectAriaLabel": [
+      {
+        "type": 0,
+        "value": "Details table row select"
+      }
+    ],
     "detailsTitle": [
       {
         "type": 0,
