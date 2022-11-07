@@ -39,7 +39,7 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
   const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
 
   const hasData = report && report.data && report.data.length;
-  const values = hasData && report.data[report.data.length - 1];
+  const values = hasData && report.data[0];
 
   const committedSpend: string | React.ReactNode =
     values && values.committed_spend && values.committed_spend.value ? (

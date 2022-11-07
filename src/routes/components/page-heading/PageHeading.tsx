@@ -35,7 +35,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
   const { report, reportFetchStatus } = useMapToProps();
 
   const hasData = report && report.data && report.data.length;
-  const values = hasData && report.data[report.data.length - 1];
+  const values = hasData && report.data[0];
 
   const emptyValue = (
     <div style={styles.emptyValue}>

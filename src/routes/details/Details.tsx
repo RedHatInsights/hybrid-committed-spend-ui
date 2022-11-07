@@ -158,7 +158,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
       const groupByKey: keyof Query['group_by'] = value as any;
       const newQuery = {
         ...JSON.parse(JSON.stringify(query)),
-        // filter_by: undefined, // Preserve filter -- see https://issues.redhat.com/browse/COST-1090
+        filter_by: undefined, // Reset filter
         group_by: {
           [groupByKey]: '*',
         },
