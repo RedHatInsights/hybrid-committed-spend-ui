@@ -241,10 +241,12 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
 
   useEffect(() => {
     if (prevCategoryOptions !== categoryOptions || prevGroupBy !== groupBy) {
-      setCategoryInput('');
       setCurrentCategory(getDefaultCategory());
+      setCategoryInput('');
+      setFilters({});
+    } else {
+      setFilters(getActiveFilters());
     }
-    setFilters(getActiveFilters());
   }, [groupBy]);
 
   return (
