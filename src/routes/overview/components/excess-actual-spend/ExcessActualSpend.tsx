@@ -19,6 +19,7 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
   excessActualSpendBreakdown,
   intl,
 }) => {
+  const showExcessActualSpendBreakdown = excessActualSpendBreakdown && !excessActualSpend;
   return (
     <span style={styles.infoIcon}>
       <Popover
@@ -26,19 +27,22 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
         enableFlip
         bodyContent={
           <>
-            <p style={styles.infoTitle}>{intl.formatMessage(messages.excessSpendTitle)}</p>
+            <p style={styles.infoTitle}>
+              {intl.formatMessage(
+                showExcessActualSpendBreakdown ? messages.excessActualSpendExcluded : messages.excessActualSpendIncluded
+              )}
+            </p>
             <br />
-            {excessActualSpend !== undefined && (
-              <p>
-                {intl.formatMessage(messages.excessActualSpendDesc, {
-                  value: <b>{excessActualSpend}</b>,
-                })}
-              </p>
-            )}
-            {excessActualSpendBreakdown !== undefined && (
+            {showExcessActualSpendBreakdown ? (
               <p>
                 {intl.formatMessage(messages.excessActualSpendBreakdownDesc, {
                   value: <b>{excessActualSpendBreakdown}</b>,
+                })}
+              </p>
+            ) : (
+              <p>
+                {intl.formatMessage(messages.excessActualSpendDesc, {
+                  value: <b>{excessActualSpend}</b>,
                 })}
               </p>
             )}
@@ -51,7 +55,11 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
         >
           <span style={styles.infoContainer}>
             <InfoCircleIcon />
-            <span style={styles.infoLabel}>{intl.formatMessage(messages.excessActualSpendLabel)}</span>
+            <span style={styles.infoLabel}>
+              {intl.formatMessage(
+                showExcessActualSpendBreakdown ? messages.excessActualSpendExcluded : messages.excessActualSpendIncluded
+              )}
+            </span>
           </span>
         </Button>
       </Popover>
