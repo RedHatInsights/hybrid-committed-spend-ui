@@ -505,13 +505,13 @@
         "value": ". That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals."
       }
     ],
-    "excessActualSpendLabel": [
+    "excessActualSpendExcluded": [
       {
         "type": 0,
-        "value": "Excess actual spend included"
+        "value": "Excess actual spend excluded"
       }
     ],
-    "excessSpendTitle": [
+    "excessActualSpendIncluded": [
       {
         "type": 0,
         "value": "Excess actual spend included"

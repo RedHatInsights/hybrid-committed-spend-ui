@@ -229,20 +229,20 @@ export default defineMessages({
       "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
     id: 'excessActualSpendDesc',
   },
-  excessActualSpendLabel: {
+  excessActualSpendExcluded: {
+    defaultMessage: 'Excess actual spend excluded',
+    description: 'Excess actual spend excluded',
+    id: 'excessActualSpendExcluded',
+  },
+  excessActualSpendIncluded: {
     defaultMessage: 'Excess actual spend included',
     description: 'Excess actual spend included',
-    id: 'excessActualSpendLabel',
+    id: 'excessActualSpendIncluded',
   },
   excessActualSpendPopoverAriaLabel: {
     defaultMessage: 'A description of actual spend roll over',
     description: 'A description of actual spend roll over',
     id: 'excessActualSpendAriaLabel',
-  },
-  excessSpendTitle: {
-    defaultMessage: 'Excess actual spend included',
-    description: 'Excess actual spend included',
-    id: 'excessSpendTitle',
   },
   exploreMore: {
     defaultMessage: 'Explore more',
