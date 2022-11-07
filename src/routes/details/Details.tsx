@@ -73,7 +73,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     return (
       <DetailsFilterToolbar
         groupBy={groupBy}
-        isExportDisabled={report && report.meta && report.meta.count !== 0}
+        isExportDisabled={!(report && report.meta) || report.meta.count === 0}
         onExportClicked={handleOnExportModalOpen}
         onFilterAdded={filter => handleOnFilterAdded(history, query, filter)}
         onFilterRemoved={filter => handleOnFilterRemoved(history, query, filter)}
