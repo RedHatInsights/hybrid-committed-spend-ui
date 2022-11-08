@@ -10,14 +10,14 @@ export const hcsSummary = {
   },
   data: [
     {
-      account_name: null,
+      account_name: 'SAP SE',
       account_number: '1290557',
       contract_start_date: '2022-03-31',
       contract_end_date: '2032-03-31',
       consumption_date: '2022-01-12',
       committed_spend: { value: '9.753001971E7', units: 'EUR' },
       actual_committed_spend: { value: '6626413.14', units: 'EUR' },
-      excess_committed_spend: { value: null, units: null },
+      excess_committed_spend: { value: '-1.004020082E7', units: 'EUR' },
       remaining_committed_spend: { value: '1.004020082E7', units: 'EUR' },
       delta: { value: null, percent: null },
     },
