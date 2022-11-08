@@ -22,7 +22,7 @@ objects:
         - title: 'Hybrid Committed Spend'
           expandable: true
           routes:
-            - appId: 'hybrid-committed-spend'
+            - appId: 'hcs'
               title: 'Overview'
               href: '/business-services/hybrid-committed-spend'
             - appId: 'hybrid-committed-spend'
