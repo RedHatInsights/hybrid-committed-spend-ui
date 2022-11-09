@@ -12,10 +12,12 @@ import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
+import { paths } from 'Routes';
 import { EmptyValueState } from 'routes/components/state/empty-value';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
+import { getPath } from 'utils/paths';
 
 import { styles } from './PageHeading.styles';
 
@@ -31,7 +33,7 @@ interface PageHeadingStateProps {
 
 type PageHeadingProps = PageHeadingOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
-const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
+const PageHeading: React.FC<PageHeadingProps> = ({ children, intl, location }) => {
   const { report, reportFetchStatus } = useMapToProps();
 
   const hasData = report && report.data && report.data.length;
@@ -52,10 +54,20 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
   const consumptionDate =
     values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
+  const getPageTitle = () => {
+    switch (getPath(location)) {
+      case paths.details:
+        return messages.detailsTitle;
+      case paths.overview:
+      default:
+        return messages.overviewTitle;
+    }
+  };
+
   return (
     <PageHeader>
       <div style={styles.headingContent}>
-        <PageHeaderTitle title={intl.formatMessage(messages.detailsTitle)} />
+        <PageHeaderTitle title={intl.formatMessage(getPageTitle())} />
         {reportFetchStatus !== FetchStatus.inProgress && (
           <div>
             <div style={styles.headingContentRight}>
