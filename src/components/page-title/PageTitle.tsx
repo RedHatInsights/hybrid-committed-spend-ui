@@ -4,7 +4,8 @@ import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import type { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router';
-import { paths, routes } from 'Routes';
+import { paths } from 'Routes';
+import { getPath } from 'utils/paths';
 
 interface PageTitleOwnProps {
   children?: React.ReactNode;
@@ -13,13 +14,8 @@ interface PageTitleOwnProps {
 type PageTitleProps = PageTitleOwnProps & RouteComponentProps<void> & WrappedComponentProps;
 
 const PageTitleBase: React.FC<PageTitleProps> = ({ children = null, intl, location }) => {
-  const getPath = () => {
-    const currRoute = routes.find(({ path }) => path === location.pathname);
-    return currRoute ? currRoute.path : undefined;
-  };
-
   const getPageTitle = () => {
-    switch (getPath()) {
+    switch (getPath(location)) {
       case paths.details:
         return messages.pageTitleDetails;
       case paths.overview:
