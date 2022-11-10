@@ -26,8 +26,8 @@ objects:
               title: 'Overview'
               href: '/business-services/hybrid-committed-spend'
             - appId: 'hybrid-committed-spend'
-              title: 'Explorer'
-              href: '/business-services/hybrid-committed-spend/explorer'
+              title: 'Details'
+              href: '/business-services/hybrid-committed-spend/details'
       module:
         manifestLocation: "/apps/hybrid-committed-spend/fed-mods.json"
         modules:
