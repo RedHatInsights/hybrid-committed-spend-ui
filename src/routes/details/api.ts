@@ -99,7 +99,7 @@ export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps
   };
 };
 
-export const detailsMapDateRangeToProps = ({
+export const useDetailsMapDateRangeToProps = ({
   contractStartDate,
   dateRange,
   groupBy,

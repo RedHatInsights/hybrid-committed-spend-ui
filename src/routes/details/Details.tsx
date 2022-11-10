@@ -27,7 +27,7 @@ import { FetchStatus } from 'store/common';
 import { reportSelectors } from 'store/reports';
 import { useStateCallback } from 'utils/hooks';
 
-import { detailsMapDateRangeToProps, useAccountSummaryMapToProps } from './api';
+import { useAccountSummaryMapToProps, useDetailsMapDateRangeToProps } from './api';
 import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
@@ -176,6 +176,10 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     setSourcesOfSpend(value);
   };
 
+  useEffect(() => {
+    setSecondaryGroupBy(GroupByType.none);
+  }, [groupBy, sourcesOfSpend]);
+
   // Todo: Remove when APIs are available
   const isTest = true;
 
@@ -183,10 +187,6 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
-
-  useEffect(() => {
-    setSecondaryGroupBy(GroupByType.none);
-  }, [groupBy, sourcesOfSpend]);
 
   return (
     <React.Fragment>
@@ -237,7 +237,7 @@ const useMapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps):
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
 
-  const { endDate, query, report, reportFetchStatus, startDate } = detailsMapDateRangeToProps({
+  const { endDate, query, report, reportFetchStatus, startDate } = useDetailsMapDateRangeToProps({
     contractStartDate,
     dateRange,
     groupBy,
