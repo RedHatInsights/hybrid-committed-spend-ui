@@ -10,6 +10,7 @@ objects:
     spec:
       envName: ${ENV_NAME}
       title: 'Hybrid Committed Spend'
+      routePrefix: business-services
       deploymentRepo: https://github.com/RedHatInsights/hybrid-committed-spend-ui
       API:
         versions:
