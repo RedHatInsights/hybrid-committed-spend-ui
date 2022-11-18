@@ -32,29 +32,33 @@ test('default state', async () => {
 });
 
 test('fetch userAccess success', async () => {
-  const query = getUserAccessQuery(billingUserAccessQuery);
+  const userAccessQueryString = getUserAccessQuery(billingUserAccessQuery);
   const store = createProdvidersStore();
-  store.dispatch(actions.fetchUserAccess(UserAccessType.all, query));
+  store.dispatch(actions.fetchUserAccess(UserAccessType.all, userAccessQueryString));
   expect(fetchUserAccessMock).toBeCalled();
-  expect(selectors.selectUserAccessFetchStatus(store.getState(), UserAccessType.all, query)).toBe(
+  expect(selectors.selectUserAccessFetchStatus(store.getState(), UserAccessType.all, userAccessQueryString)).toBe(
     FetchStatus.inProgress
   );
   await waitFor(() => expect(selectors.selectUserAccessFetchStatus).toHaveBeenCalled());
   const finishedState = store.getState();
-  expect(selectors.selectUserAccessFetchStatus(finishedState, UserAccessType.all, query)).toBe(FetchStatus.complete);
+  expect(selectors.selectUserAccessFetchStatus(finishedState, UserAccessType.all, userAccessQueryString)).toBe(
+    FetchStatus.complete
+  );
 });
 
 test('fetch userAccess failure', async () => {
-  const query = getUserAccessQuery(billingUserAccessQuery);
+  const userAccessQueryString = getUserAccessQuery(billingUserAccessQuery);
   const store = createProdvidersStore();
   const error = Symbol('getUserAccess error');
   fetchUserAccessMock.mockReturnValueOnce(Promise.reject(error));
-  store.dispatch(actions.fetchUserAccess(UserAccessType.all, query));
+  store.dispatch(actions.fetchUserAccess(UserAccessType.all, userAccessQueryString));
   expect(fetchUserAccessMock).toBeCalled();
-  expect(selectors.selectUserAccessFetchStatus(store.getState(), UserAccessType.all, query)).toBe(
+  expect(selectors.selectUserAccessFetchStatus(store.getState(), UserAccessType.all, userAccessQueryString)).toBe(
     FetchStatus.inProgress
   );
   await waitFor(() => expect(selectors.selectUserAccessFetchStatus).toHaveBeenCalled());
   const finishedState = store.getState();
-  expect(selectors.selectUserAccessFetchStatus(finishedState, UserAccessType.all, query)).toBe(FetchStatus.complete);
+  expect(selectors.selectUserAccessFetchStatus(finishedState, UserAccessType.all, userAccessQueryString)).toBe(
+    FetchStatus.complete
+  );
 });

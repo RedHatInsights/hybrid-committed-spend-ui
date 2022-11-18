@@ -29,6 +29,7 @@ interface PageHeadingStateProps {
   report?: AccountSummaryReport;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
+  reportQueryString?: string;
 }
 
 type PageHeadingProps = PageHeadingOwnProps & RouteComponentProps<void> & WrappedComponentProps;
@@ -112,26 +113,27 @@ const useMapToProps = (): PageHeadingStateProps => {
   const query = {
     // TBD...
   };
-  const queryString = getQuery(query);
 
+  const reportQueryString = getQuery(query);
   const reportPathsType = ReportPathsType.accountSummary;
   const reportType = ReportType.billing;
   const report = useSelector((state: RootState) =>
-    reportSelectors.selectReport(state, reportPathsType, reportType, queryString)
+    reportSelectors.selectReport(state, reportPathsType, reportType, reportQueryString)
   );
   const reportFetchStatus = useSelector((state: RootState) =>
-    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString)
+    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, reportQueryString)
   );
 
   useEffect(() => {
     if (reportFetchStatus !== FetchStatus.inProgress) {
-      dispatch(reportActions.fetchReport(reportPathsType, reportType, queryString));
+      dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
     }
-  }, [queryString]);
+  }, [reportQueryString]);
 
   return {
     report,
     reportFetchStatus,
+    reportQueryString,
   };
 };
 

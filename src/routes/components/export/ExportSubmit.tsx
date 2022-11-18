@@ -1,7 +1,7 @@
 import { Button, ButtonVariant } from '@patternfly/react-core';
 import type { Export } from 'api/export/export';
 import type { Query } from 'api/queries/query';
-import { getQuery } from 'api/queries/query';
+import { getQuery, parseQuery } from 'api/queries/query';
 import type { ReportPathsType } from 'api/reports/report';
 import { ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
@@ -25,16 +25,16 @@ export interface ExportSubmitOwnProps {
   onClose?: (isOpen: boolean) => void;
   onError?: (error: AxiosError) => void;
   name?: string;
-  query?: Query;
   reportPathsType?: ReportPathsType;
+  reportQueryString: string;
   startDate?: string;
 }
 
 interface ExportSubmitStateProps {
-  queryString: string;
-  report: Export;
-  reportError: AxiosError;
-  reportFetchStatus?: FetchStatus;
+  exportReport: Export;
+  exportError: AxiosError;
+  exportFetchStatus?: FetchStatus;
+  exportQueryString: string;
 }
 
 type ExportSubmitProps = ExportSubmitOwnProps & WrappedComponentProps;
@@ -49,16 +49,21 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   intl,
   onClose,
   onError,
-  query,
   reportPathsType,
+  reportQueryString,
   startDate,
 }) => {
-  const { queryString, report, reportFetchStatus } = useMapToProps({ dataType, onError, query, reportPathsType });
+  const { exportReport, exportFetchStatus, exportQueryString } = useMapToProps({
+    dataType,
+    onError,
+    reportPathsType,
+    reportQueryString,
+  });
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const getExport = () => {
-    if (report && reportFetchStatus === FetchStatus.complete) {
-      fileDownload(report.data, getFileName(), 'text/csv');
+    if (exportReport && exportFetchStatus === FetchStatus.complete) {
+      fileDownload(exportReport.data, getFileName(), 'text/csv');
       handleClose();
     }
   };
@@ -82,16 +87,16 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   };
 
   const handleFetchReport = () => {
-    dispatch(exportActions.exportReport(reportPathsType, reportType, queryString));
+    dispatch(exportActions.exportReport(reportPathsType, reportType, exportQueryString));
   };
 
   useEffect(() => {
     getExport();
-  }, [report]);
+  }, [exportReport]);
 
   return (
     <Button
-      isDisabled={disabled || reportFetchStatus === FetchStatus.inProgress}
+      isDisabled={disabled || exportFetchStatus === FetchStatus.inProgress}
       key="confirm"
       onClick={handleFetchReport}
       variant={ButtonVariant.primary}
@@ -101,57 +106,60 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   );
 };
 
-const useMapToProps = ({ onError, query, reportPathsType }: ExportSubmitOwnProps): ExportSubmitStateProps => {
+const useMapToProps = ({
+  onError,
+  reportPathsType,
+  reportQueryString,
+}: ExportSubmitOwnProps): ExportSubmitStateProps => {
+  const queryFromRoute = parseQuery<Query>(location.search);
+
   const getQueryString = () => {
-    // Todo: Add start and end dates below
+    const reportQuery = parseQuery(reportQueryString);
     const newQuery: Query = {
-      ...JSON.parse(JSON.stringify(query)),
+      ...reportQuery,
       filter: {
-        limit: undefined,
-        offset: undefined,
+        limit: undefined, // Don't want paginated data
+        offset: undefined, // Don't want a page
       },
-      filter_by: {},
-      limit: 0,
-      order_by: undefined,
-      perspective: undefined,
-      dateRange: undefined,
-      delta: undefined,
+      filter_by: {}, // Don't want page filter, selected items will be filtered below
+      limit: 0, // No limit to number of items returned
+      order_by: undefined, // Don't want items sorted by cost
     };
 
     // Store filter_by as an array, so we can add to it below
-    if (query.filter_by) {
-      for (const key of Object.keys(query.filter_by)) {
+    if (queryFromRoute.filter_by) {
+      for (const key of Object.keys(queryFromRoute.filter_by)) {
         if (newQuery.filter_by[key] === undefined) {
           newQuery.filter_by[key] = [];
         }
-        newQuery.filter_by[key].push(query.filter_by[key]);
+        newQuery.filter_by[key].push(queryFromRoute.filter_by[key]);
       }
     }
     return getQuery(newQuery);
   };
 
-  const queryString = getQueryString();
-  const report = useSelector((state: RootState) =>
-    exportSelectors.selectExport(state, reportPathsType, reportType, queryString)
+  const exportQueryString = getQueryString();
+  const exportReport = useSelector((state: RootState) =>
+    exportSelectors.selectExport(state, reportPathsType, reportType, exportQueryString)
   );
-  const reportError = useSelector((state: RootState) =>
-    exportSelectors.selectExportError(state, reportPathsType, reportType, queryString)
+  const exportError = useSelector((state: RootState) =>
+    exportSelectors.selectExportError(state, reportPathsType, reportType, exportQueryString)
   );
-  const reportFetchStatus = useSelector((state: RootState) =>
-    exportSelectors.selectExportFetchStatus(state, reportPathsType, reportType, queryString)
+  const exportFetchStatus = useSelector((state: RootState) =>
+    exportSelectors.selectExportFetchStatus(state, reportPathsType, reportType, exportQueryString)
   );
 
   useEffect(() => {
     if (onError) {
-      onError(reportError);
+      onError(exportError);
     }
-  }, [reportError]);
+  }, [exportError]);
 
   return {
-    queryString,
-    report,
-    reportError,
-    reportFetchStatus,
+    exportReport,
+    exportError,
+    exportFetchStatus,
+    exportQueryString,
   };
 };
 

@@ -32,6 +32,7 @@ interface ActualSpendBreakdownStateProps {
   report?: Report;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
+  reportQueryString?: string;
   widget: DashboardWidget;
 }
 
@@ -107,11 +108,11 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, w
 };
 
 const useMapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps): ActualSpendBreakdownStateProps => {
-  const queryString = ''; // Todo: add query string for API when available
+  const reportQueryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
   const report = useSelector((/* state: RootState */) => {
-    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, reportQueryString)
     switch (perspective) {
       case PerspectiveType.affiliates: // affiliates
         return affiliateData;
@@ -123,21 +124,22 @@ const useMapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps):
     }
   });
   const reportFetchStatus = useSelector((state: RootState) =>
-    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, queryString)
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, reportQueryString)
   );
   const reportError = useSelector((state: RootState) =>
-    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString)
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, reportQueryString)
   );
 
   useMemo(() => {
     // Todo: Enable via dispatch
-    reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString);
-  }, [queryString]);
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, reportQueryString);
+  }, [reportQueryString]);
 
   return {
     report,
     reportFetchStatus,
     reportError,
+    reportQueryString,
     widget,
   };
 };

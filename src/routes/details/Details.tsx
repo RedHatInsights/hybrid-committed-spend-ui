@@ -47,10 +47,10 @@ interface DetailsStateProps {
   endDate?: Date;
   hasReportErrors?: boolean;
   query?: Query;
-  queryString?: string;
   report?: Report;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
+  reportQueryString?: string;
   startDate?: Date;
 }
 
@@ -63,7 +63,16 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
   const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
   const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.marketplace));
 
-  const { contractStartDate, endDate, hasReportErrors, query, report, reportFetchStatus, startDate } = useMapToProps({
+  const {
+    contractStartDate,
+    endDate,
+    hasReportErrors,
+    query,
+    report,
+    reportFetchStatus,
+    reportQueryString,
+    startDate,
+  } = useMapToProps({
     dateRange,
     groupBy,
     sourcesOfSpend,
@@ -89,8 +98,8 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         groupBy={groupBy}
         isOpen={isExportModalOpen}
         onClose={handleOnExportModalClose}
-        query={query}
         reportPathsType={ReportPathsType.accountSummary}
+        reportQueryString={reportQueryString}
       />
     );
   };
@@ -237,7 +246,7 @@ const useMapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps):
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
 
-  const { endDate, query, report, reportFetchStatus, startDate } = useDetailsMapDateRangeToProps({
+  const { endDate, query, report, reportFetchStatus, reportQueryString, startDate } = useDetailsMapDateRangeToProps({
     contractStartDate,
     dateRange,
     groupBy,
@@ -251,6 +260,7 @@ const useMapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps):
     query,
     report,
     reportFetchStatus,
+    reportQueryString,
     startDate,
   };
 };
