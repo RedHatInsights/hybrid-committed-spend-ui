@@ -4,25 +4,25 @@ import type { AxiosError } from 'axios';
 import type { ThunkAction } from 'store/common';
 import { createAction } from 'typesafe-actions';
 
-import { getReportId } from './userAccessCommon';
+import { getFetchId } from './userAccessCommon';
 
 interface UserAccessActionMeta {
-  reportId: string;
+  fetchId: string;
 }
 
 export const fetchUserAccessRequest = createAction('userAccess/fetch/request')<UserAccessActionMeta>();
 export const fetchUserAccessSuccess = createAction('userAccess/fetch/success')<UserAccess, UserAccessActionMeta>();
 export const fetchUserAccessFailure = createAction('userAccess/fetch/failure')<AxiosError, UserAccessActionMeta>();
 
-export function fetchUserAccess(reportType: UserAccessType, query: string): ThunkAction {
+export function fetchUserAccess(userAccessType: UserAccessType, userAccessQueryString: string): ThunkAction {
   return dispatch => {
     const meta: UserAccessActionMeta = {
-      reportId: getReportId(reportType, query),
+      fetchId: getFetchId(userAccessType, userAccessQueryString),
     };
 
     dispatch(fetchUserAccessRequest(meta));
 
-    return apiGetUserAccess(query)
+    return apiGetUserAccess(userAccessQueryString)
       .then(res => {
         dispatch(fetchUserAccessSuccess(res.data, meta));
       })

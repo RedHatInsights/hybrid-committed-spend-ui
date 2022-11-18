@@ -30,6 +30,7 @@ interface CommittedSpendStateProps {
   report?: AccountSummaryReport;
   reportError?: AxiosError;
   reportFetchStatus?: FetchStatus;
+  reportQueryString?: string;
   widget: DashboardWidget;
 }
 
@@ -87,28 +88,29 @@ const useMapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStat
   const query = {
     // TBD...
   };
-  const queryString = getQuery(query);
 
+  const reportQueryString = getQuery(query);
   const report = useSelector((state: RootState) =>
-    reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
+    reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, reportQueryString)
   );
   const reportFetchStatus = useSelector((state: RootState) =>
-    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, queryString)
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, reportQueryString)
   );
   const reportError = useSelector((state: RootState) =>
-    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, queryString)
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, reportQueryString)
   );
 
   useEffect(() => {
     if (reportFetchStatus !== FetchStatus.inProgress) {
-      dispatch(reportActions.fetchReport(widget.reportPathsType, widget.reportType, queryString));
+      dispatch(reportActions.fetchReport(widget.reportPathsType, widget.reportType, reportQueryString));
     }
-  }, [queryString]);
+  }, [reportQueryString]);
 
   return {
     report,
     reportFetchStatus,
     reportError,
+    reportQueryString,
     widget,
   };
 };

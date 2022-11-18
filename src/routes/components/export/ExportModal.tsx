@@ -1,6 +1,5 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Alert, Button, ButtonVariant, Form, FormGroup, Grid, GridItem, Modal, Radio } from '@patternfly/react-core';
-import type { Query } from 'api/queries/query';
 import type { ReportPathsType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
@@ -16,8 +15,8 @@ export interface ExportModalOwnProps {
   groupBy?: string;
   isOpen: boolean;
   onClose(isOpen: boolean);
-  query?: Query;
   reportPathsType: ReportPathsType;
+  reportQueryString?: string;
   startDate?: string;
 }
 
@@ -37,8 +36,8 @@ const ExportModal: React.FC<ExportModalProps> = ({
   intl,
   isOpen,
   onClose,
-  query,
   reportPathsType,
+  reportQueryString,
   startDate,
 }) => {
   const [dataType, setDataType] = useState<'json' | 'raw'>('json');
@@ -74,8 +73,8 @@ const ExportModal: React.FC<ExportModalProps> = ({
           key="confirm"
           onClose={handleOnClose}
           onError={handleOnError}
-          query={query}
           reportPathsType={reportPathsType}
+          reportQueryString={reportQueryString}
           startDate={startDate}
         />,
         <Button key="cancel" onClick={handleOnClose} variant={ButtonVariant.link}>

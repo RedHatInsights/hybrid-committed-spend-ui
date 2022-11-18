@@ -43,10 +43,10 @@ interface DetailsOwnProps {
 interface DetailsStateProps {
   endDate?: Date;
   query: Query;
-  queryString: string;
   report: Report;
   reportError: AxiosError;
   reportFetchStatus: FetchStatus;
+  reportQueryString: string;
   startDate?: Date;
 }
 
@@ -144,19 +144,19 @@ export const useDetailsMapToProps = ({
     group_by: secondaryGroupBy ? secondaryGroupBy : groupBy,
     order_by: queryFromRoute.order_by,
   };
-  const queryString = getQuery({
-    ...query,
-    dateRange: undefined,
-    end_date: endDate,
-    start_date: startDate,
-  });
 
   // Todo: temporary placeholder for upcoming API
   const reportPathsType = ReportPathsType.details;
   const reportType = ReportType.billing;
 
+  const reportQueryString = getQuery({
+    ...query,
+    dateRange: undefined,
+    end_date: endDate,
+    start_date: startDate,
+  });
   const report = useSelector((/* state: RootState */) => {
-    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, queryString)
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, reportQueryString)
 
     let result;
     switch (secondaryGroupBy || groupBy) {
@@ -205,25 +205,25 @@ export const useDetailsMapToProps = ({
     return result;
   });
   const reportFetchStatus = useSelector((state: RootState) =>
-    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, queryString)
+    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, reportQueryString)
   );
   const reportError = useSelector((state: RootState) =>
-    reportSelectors.selectReportError(state, reportPathsType, reportType, queryString)
+    reportSelectors.selectReportError(state, reportPathsType, reportType, reportQueryString)
   );
 
   useEffect(() => {
     if (reportFetchStatus !== FetchStatus.inProgress && isExpanded) {
-      dispatch(reportActions.fetchReport(reportPathsType, reportType, queryString));
+      dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
     }
   }, [isExpanded, secondaryGroupBy]);
 
   return {
     endDate,
     query,
-    queryString,
     report,
     reportFetchStatus,
     reportError,
+    reportQueryString,
     startDate,
   };
 };
