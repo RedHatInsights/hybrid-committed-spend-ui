@@ -1,7 +1,7 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
 import { UserAccess } from 'components/user-access';
 import React, { lazy, Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Route, Routes as Switch } from 'react-router-dom';
 
 const Details = lazy(() => import(/* webpackChunkName: "Details" */ 'routes/details/Details'));
 const Overview = lazy(() => import(/* webpackChunkName: "Overview" */ 'routes/overview/Overview'));
@@ -14,25 +14,15 @@ const paths = {
 
 const routes = [
   {
-    component: UserAccess(Details),
-    exact: true,
+    element: UserAccess(Details),
     path: paths.details,
   },
   {
-    component: UserAccess(Overview),
-    exact: true,
+    element: UserAccess(Overview),
     path: paths.overview,
   },
 ];
 
-/**
- * the Switch component changes routes depending on the path.
- *
- * Route properties:
- *      exact - path must match exactly,
- *      path - https://prod.foo.redhat.com:1337/insights/advisor/rules
- *      component - component to be rendered when a route has been chosen.
- */
 const Routes = () => (
   <Suspense
     fallback={
@@ -43,12 +33,10 @@ const Routes = () => (
   >
     <Switch>
       {routes.map(route => (
-        <Route key={route.path} {...route} />
+        <Route key={route.path} path={route.path} element={<route.element />} />
       ))}
       {/* Finally, catch all unmatched routes */}
-      <Route>
-        <Redirect to="/" />
-      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Switch>
   </Suspense>
 );

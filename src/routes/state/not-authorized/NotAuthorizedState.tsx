@@ -3,15 +3,13 @@ import messages from 'locales/messages';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { paths } from 'Routes';
 
 interface NotAuthorizedStateOwnProps {
   pathname?: string;
 }
 
-type NotAuthorizedStateProps = NotAuthorizedStateOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type NotAuthorizedStateProps = NotAuthorizedStateOwnProps & WrappedComponentProps;
 
 class NotAuthorizedStateBase extends React.Component<NotAuthorizedStateProps> {
   public render() {
@@ -30,6 +28,6 @@ class NotAuthorizedStateBase extends React.Component<NotAuthorizedStateProps> {
   }
 }
 
-const NotAuthorizedState = injectIntl(withRouter(NotAuthorizedStateBase));
+const NotAuthorizedState = injectIntl(NotAuthorizedStateBase);
 
 export { NotAuthorizedState };

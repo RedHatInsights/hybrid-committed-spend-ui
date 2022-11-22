@@ -20,8 +20,6 @@ import messages from 'locales/messages';
 import React, { useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { ComputedReportItemType, ComputedReportItemValueType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
@@ -55,7 +53,7 @@ export interface DetailsTableCell {
   value?: string;
 }
 
-type DetailsTableProps = DetailsTableOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type DetailsTableProps = DetailsTableOwnProps & WrappedComponentProps;
 
 export const reportItem = ComputedReportItemType.cost;
 export const reportItemValue = ComputedReportItemValueType.total;
@@ -308,6 +306,6 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   );
 };
 
-const DetailsTable = injectIntl(withRouter(DetailsTableBase));
+const DetailsTable = injectIntl(DetailsTableBase);
 
 export { DetailsTable };

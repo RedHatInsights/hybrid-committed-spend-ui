@@ -6,8 +6,7 @@ import React, { useMemo, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DatumType } from 'routes/components/charts/common/chart-datum';
 import { Perspective } from 'routes/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
@@ -36,9 +35,7 @@ interface ActualSpendBreakdownStateProps {
   widget: DashboardWidget;
 }
 
-export type ActualSpendBreakdownProps = ActualSpendBreakdownOwnProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+export type ActualSpendBreakdownProps = ActualSpendBreakdownOwnProps & WrappedComponentProps;
 
 // eslint-disable-next-line no-shadow
 export enum ComparisonType {
@@ -144,4 +141,4 @@ const useMapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps):
   };
 };
 
-export default injectIntl(withRouter(ActualSpendBreakdownBase));
+export default injectIntl(ActualSpendBreakdownBase);

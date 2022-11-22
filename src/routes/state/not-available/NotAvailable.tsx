@@ -2,14 +2,12 @@ import Main from '@redhat-cloud-services/frontend-components/Main';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Unavailable from '@redhat-cloud-services/frontend-components/Unavailable';
 import React from 'react';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 
 interface NotAvailablePropsOwnProps {
   title?: string;
 }
 
-type NotAvailableProps = NotAvailablePropsOwnProps & RouteComponentProps<void>;
+type NotAvailableProps = NotAvailablePropsOwnProps;
 
 const NotAvailable = ({ title }: NotAvailableProps) => {
   return (
@@ -26,4 +24,4 @@ const NotAvailable = ({ title }: NotAvailableProps) => {
   );
 };
 
-export default withRouter(NotAvailable);
+export default NotAvailable;

@@ -8,8 +8,6 @@ import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { paths } from 'Routes';
@@ -20,6 +18,7 @@ import { reportActions, reportSelectors } from 'store/reports';
 import { getPath } from 'utils/paths';
 
 import { styles } from './PageHeading.styles';
+import { useLocation } from 'react-router-dom';
 
 interface PageHeadingOwnProps {
   children?: React.ReactNode;
@@ -32,10 +31,11 @@ interface PageHeadingStateProps {
   reportQueryString?: string;
 }
 
-type PageHeadingProps = PageHeadingOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type PageHeadingProps = PageHeadingOwnProps & WrappedComponentProps;
 
-const PageHeading: React.FC<PageHeadingProps> = ({ children, intl, location }) => {
+const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
   const { report, reportFetchStatus } = useMapToProps();
+  const location = useLocation();
 
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[0];
@@ -137,4 +137,4 @@ const useMapToProps = (): PageHeadingStateProps => {
   };
 };
 
-export default injectIntl(withRouter(PageHeading));
+export default injectIntl(PageHeading);

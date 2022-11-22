@@ -6,8 +6,6 @@ import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { EmptyValueState } from 'routes/components/state/empty-value';
@@ -34,7 +32,7 @@ interface CommittedSpendStateProps {
   widget: DashboardWidget;
 }
 
-export type CommittedSpendProps = CommittedSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+export type CommittedSpendProps = CommittedSpendOwnProps & WrappedComponentProps;
 
 const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
   const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
@@ -115,4 +113,4 @@ const useMapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStat
   };
 };
 
-export default injectIntl(withRouter(CommittedSpend));
+export default injectIntl(CommittedSpend);

@@ -4,8 +4,7 @@ import { UserAccessType } from 'api/user-access';
 import type { AxiosError } from 'axios';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { paths, routes } from 'Routes';
 import { Loading, NotAuthorized, NotAvailable } from 'routes/state';
 import type { RootState } from 'store';
@@ -13,7 +12,8 @@ import { FetchStatus } from 'store/common';
 import { featureFlagsSelectors } from 'store/feature-flags';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
 import { hasAllAccess } from 'utils/userAccess';
-interface PermissionsOwnProps extends RouteComponentProps<void> {
+
+interface PermissionsOwnProps {
   children?: React.ReactNode;
 }
 
@@ -27,8 +27,9 @@ interface PermissionsStateProps {
 
 type PermissionsProps = PermissionsOwnProps;
 
-const PermissionsBase: React.FC<PermissionsProps> = ({ children = null, location }) => {
+const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
   const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
+  const location = useLocation();
 
   const getRoutePath = () => {
     const currRoute = routes.find(({ path }) => path === location.pathname);
@@ -92,6 +93,6 @@ const useMapToProps = (): PermissionsStateProps => {
   };
 };
 
-const Permissions = withRouter(PermissionsBase);
+const Permissions = PermissionsBase;
 
 export default Permissions;

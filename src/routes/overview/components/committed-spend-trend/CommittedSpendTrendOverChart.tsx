@@ -1,8 +1,6 @@
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import type { ChartDatum } from 'routes/components/charts/common';
 import { TrendChart } from 'routes/components/charts/trend';
 
@@ -15,9 +13,7 @@ interface CommittedSpendTrendOverChartOwnProps {
   thresholdData?: ChartDatum;
 }
 
-export type CommittedSpendTrendOverChartProps = CommittedSpendTrendOverChartOwnProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+export type CommittedSpendTrendOverChartProps = CommittedSpendTrendOverChartOwnProps & WrappedComponentProps;
 
 const CommittedSpendTrendOverChartBase: React.FC<CommittedSpendTrendOverChartProps> = ({
   chartName,
@@ -38,4 +34,4 @@ const CommittedSpendTrendOverChartBase: React.FC<CommittedSpendTrendOverChartPro
   );
 };
 
-export const CommittedSpendTrendOverChart = injectIntl(withRouter(CommittedSpendTrendOverChartBase));
+export const CommittedSpendTrendOverChart = injectIntl(CommittedSpendTrendOverChartBase);

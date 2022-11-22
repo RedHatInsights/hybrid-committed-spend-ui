@@ -6,8 +6,7 @@ import React, { useMemo, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
 import { ReportSummary } from 'routes/overview/components/report-summary';
 import type { RootState } from 'store';
@@ -36,7 +35,7 @@ interface CommittedSpendTrendStateProps {
   widget: DashboardWidget;
 }
 
-export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps & WrappedComponentProps;
 
 // eslint-disable-next-line no-shadow
 export enum PerspectiveType {
@@ -135,4 +134,4 @@ const useMapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpen
   };
 };
 
-export default injectIntl(withRouter(CommittedSpendTrend));
+export default injectIntl(CommittedSpendTrend);

@@ -4,7 +4,7 @@ import { getQueryRoute } from 'api/queries/query';
 import type { Filter } from './filter';
 import { addFilterToQuery, removeFilterFromQuery } from './filter';
 
-export const getRouteForQuery = (history, query: Query, reset: boolean = false) => {
+export const getRouteForQuery = (location, query: Query, reset: boolean = false) => {
   // Reset pagination
   if (reset) {
     query.filter = {
@@ -12,30 +12,30 @@ export const getRouteForQuery = (history, query: Query, reset: boolean = false) 
       offset: 0,
     };
   }
-  return `${history.location.pathname}?${getQueryRoute(query)}`;
+  return `${location.pathname}?${getQueryRoute(query)}`;
 };
 
-export const handleOnFilterAdded = (history, query: Query, filter: Filter) => {
+export const handleOnFilterAdded = (navigate, location, query: Query, filter: Filter) => {
   const filteredQuery = addFilterToQuery(query, filter);
-  history.replace(getRouteForQuery(history, filteredQuery, true));
+  navigate(getRouteForQuery(location, filteredQuery, true), { replace: true });
 };
 
-export const handleOnFilterRemoved = (history, query: Query, filter: Filter) => {
+export const handleOnFilterRemoved = (navigate, location, query: Query, filter: Filter) => {
   const filteredQuery = removeFilterFromQuery(query, filter);
-  history.replace(getRouteForQuery(history, filteredQuery, true));
+  navigate(getRouteForQuery(location, filteredQuery, true), { replace: true });
 };
 
-export const handleOnPerPageSelect = (history, query: Query, perPage: number) => {
+export const handleOnPerPageSelect = (navigate, location, query: Query, perPage: number) => {
   const newQuery = { ...JSON.parse(JSON.stringify(query)) };
   newQuery.filter = {
     ...query.filter,
     limit: perPage,
   };
-  const filteredQuery = getRouteForQuery(history, newQuery, true);
-  history.replace(filteredQuery);
+  const filteredQuery = getRouteForQuery(location, newQuery, true);
+  navigate(filteredQuery, { replace: true });
 };
 
-export const handleOnSetPage = (history, query: Query, report, pageNumber) => {
+export const handleOnSetPage = (navigate, location, query: Query, report, pageNumber) => {
   const limit = report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 10;
   const offset = pageNumber * limit - limit;
 
@@ -44,8 +44,8 @@ export const handleOnSetPage = (history, query: Query, report, pageNumber) => {
     ...query.filter,
     offset,
   };
-  const filteredQuery = getRouteForQuery(history, newQuery);
-  history.replace(filteredQuery);
+  const filteredQuery = getRouteForQuery(location, newQuery);
+  navigate(filteredQuery, { replace: true });
 };
 
 export const handleOnSort = (

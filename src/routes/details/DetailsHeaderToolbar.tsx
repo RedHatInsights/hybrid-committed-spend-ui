@@ -3,8 +3,6 @@ import { cloneDeep } from 'lodash';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
 import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
@@ -25,7 +23,7 @@ interface DetailsToolbarOwnProps {
   startDate?: Date;
 }
 
-export type DetailsToolbarProps = DetailsToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+export type DetailsToolbarProps = DetailsToolbarOwnProps & WrappedComponentProps;
 
 const dateRangeOptions: PerspectiveOption[] = [
   { label: messages.dateRange, value: DateRangeType.contractedYtd },
@@ -196,6 +194,6 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   );
 };
 
-const DetailsHeaderToolbar = injectIntl(withRouter(DetailsHeaderToolbarBase));
+const DetailsHeaderToolbar = injectIntl(DetailsHeaderToolbarBase);
 
 export { DetailsHeaderToolbar };

@@ -4,8 +4,6 @@ import messages from 'locales/messages';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { DataToolbar } from 'routes/components/data-toolbar';
 import type { Filter } from 'routes/utils/filter';
 
@@ -19,7 +17,7 @@ interface DetailsFilterToolbarOwnProps {
   query?: Query; // Query containing filter_by params used to restore state upon page refresh
 }
 
-type DetailsFilterToolbarProps = DetailsFilterToolbarOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type DetailsFilterToolbarProps = DetailsFilterToolbarOwnProps & WrappedComponentProps;
 
 const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
   groupBy,
@@ -54,6 +52,6 @@ const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
   );
 };
 
-const DetailsFilterToolbar = injectIntl(withRouter(DetailsFilterToolbarBase));
+const DetailsFilterToolbar = injectIntl(DetailsFilterToolbarBase);
 
 export { DetailsFilterToolbar };

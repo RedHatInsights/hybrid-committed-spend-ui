@@ -9,8 +9,6 @@ import React, { lazy, Suspense, useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import { PageHeading } from 'routes/components/page-heading';
 import { DateRangeType } from 'routes/utils/dateRange';
@@ -33,6 +31,7 @@ import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
 import { DetailsTable } from './DetailsTable';
 import { getDateRangeType, getGroupByType, getSourcesOfSpendType, GroupByType, SourcesOfSpendType } from './types';
+import { useLocation, useNavigate } from 'react-router-dom';
 const Loading = lazy(() => import('routes/state/loading/Loading'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
@@ -54,9 +53,11 @@ interface DetailsStateProps {
   startDate?: Date;
 }
 
-type DetailsProps = DetailsOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type DetailsProps = DetailsOwnProps & WrappedComponentProps;
 
-const Details: React.FC<DetailsProps> = ({ history, intl }) => {
+const Details: React.FC<DetailsProps> = ({ intl }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [dateRange, setDateRange] = useState(getDateRangeType(DateRangeType.contractedYtd));
   const [groupBy, setGroupBy] = useStateCallback(getGroupByType(GroupByType.product));
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -84,8 +85,8 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         groupBy={groupBy}
         isExportDisabled={!(report && report.meta) || report.meta.count === 0}
         onExportClicked={handleOnExportModalOpen}
-        onFilterAdded={filter => handleOnFilterAdded(history, query, filter)}
-        onFilterRemoved={filter => handleOnFilterRemoved(history, query, filter)}
+        onFilterAdded={filter => handleOnFilterAdded(navigate, location, query, filter)}
+        onFilterRemoved={filter => handleOnFilterRemoved(navigate, location, query, filter)}
         pagination={getPagination()}
         query={query}
       />
@@ -116,8 +117,8 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
       <Pagination
         isCompact={!isBottom}
         itemCount={count as number}
-        onPerPageSelect={(event, perPage) => handleOnPerPageSelect(history, query, perPage)}
-        onSetPage={(event, pageNumber) => handleOnSetPage(history, query, report, pageNumber)}
+        onPerPageSelect={(event, perPage) => handleOnPerPageSelect(history, location, query, perPage)}
+        onSetPage={(event, pageNumber) => handleOnSetPage(history, location, query, report, pageNumber)}
         page={page}
         perPage={limit}
         titles={{
@@ -173,7 +174,7 @@ const Details: React.FC<DetailsProps> = ({ history, intl }) => {
         },
         order_by: { cost: 'desc' },
       };
-      history.replace(getRouteForQuery(history, newQuery, true));
+      navigate(getRouteForQuery(location, newQuery, true), { replace: true });
     });
   };
 
@@ -265,4 +266,4 @@ const useMapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps):
   };
 };
 
-export default injectIntl(withRouter(Details));
+export default injectIntl(Details);
