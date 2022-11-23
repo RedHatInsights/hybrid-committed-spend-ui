@@ -8,6 +8,7 @@ import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { paths } from 'Routes';
@@ -18,7 +19,6 @@ import { reportActions, reportSelectors } from 'store/reports';
 import { getPath } from 'utils/paths';
 
 import { styles } from './PageHeading.styles';
-import { useLocation } from 'react-router-dom';
 
 interface PageHeadingOwnProps {
   children?: React.ReactNode;

@@ -2,9 +2,9 @@ import messages from 'locales/messages';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 import { paths } from 'Routes';
 import { getPath } from 'utils/paths';
-import { useLocation } from 'react-router-dom';
 
 interface PageTitleOwnProps {
   children?: React.ReactNode;
