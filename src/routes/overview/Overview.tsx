@@ -5,8 +5,6 @@ import React, { lazy, Suspense } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { PageHeading } from 'routes/components/page-heading';
 import type { RootState } from 'store';
 import { reportSelectors } from 'store/reports';
@@ -22,7 +20,7 @@ interface OverviewStateProps {
   hasReportErrors: boolean;
 }
 
-type OverviewProps = OverviewOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type OverviewProps = OverviewOwnProps & WrappedComponentProps;
 
 const Overview: React.FC<OverviewProps> = ({ intl }) => {
   const { hasReportErrors } = useMapToProps({});
@@ -62,4 +60,4 @@ const useMapToProps = ({}: OverviewOwnProps): OverviewStateProps => {
   };
 };
 
-export default injectIntl(withRouter(Overview));
+export default injectIntl(Overview);

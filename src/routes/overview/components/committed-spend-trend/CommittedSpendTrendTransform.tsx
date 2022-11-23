@@ -2,8 +2,6 @@ import type { Report } from 'api/reports/report';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { transformReport } from 'routes/components/charts/common/chart-datum';
 
 import { PerspectiveType } from './CommittedSpendTrend';
@@ -19,9 +17,7 @@ interface CommittedSpendTrendTransformOwnProps {
   thresholdReport?: Report;
 }
 
-export type CommittedSpendTrendTransformProps = CommittedSpendTrendTransformOwnProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+export type CommittedSpendTrendTransformProps = CommittedSpendTrendTransformOwnProps & WrappedComponentProps;
 
 const CommittedSpendTrendTransformBase: React.FC<CommittedSpendTrendTransformProps> = ({
   chartName,
@@ -80,4 +76,4 @@ const CommittedSpendTrendTransformBase: React.FC<CommittedSpendTrendTransformPro
   return <div style={styles.chartContainer}>{getChart()}</div>;
 };
 
-export const CommittedSpendTrendTransform = injectIntl(withRouter(CommittedSpendTrendTransformBase));
+export const CommittedSpendTrendTransform = injectIntl(CommittedSpendTrendTransformBase);

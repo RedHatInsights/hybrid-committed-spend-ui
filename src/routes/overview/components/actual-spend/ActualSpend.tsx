@@ -7,8 +7,6 @@ import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { EmptyValueState } from 'routes/components/state/empty-value';
@@ -35,7 +33,7 @@ interface ActualSpendStateProps {
   widget: DashboardWidget;
 }
 
-export type ActualSpendProps = ActualSpendOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+export type ActualSpendProps = ActualSpendOwnProps & WrappedComponentProps;
 
 const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
@@ -131,4 +129,4 @@ const useMapToProps = ({ widgetId }: ActualSpendOwnProps): ActualSpendStateProps
   };
 };
 
-export default injectIntl(withRouter(ActualSpend));
+export default injectIntl(ActualSpend);

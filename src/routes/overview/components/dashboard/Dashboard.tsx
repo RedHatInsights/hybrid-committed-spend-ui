@@ -3,8 +3,6 @@ import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import type { RootState } from 'store';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors, DashboardSize } from 'store/dashboard';
@@ -18,7 +16,7 @@ interface DashboardStateProps {
   selectWidgets: Record<number, DashboardWidget>;
 }
 
-type DashboardProps = DashboardOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type DashboardProps = DashboardOwnProps & WrappedComponentProps;
 
 const Dashboard: React.FC<DashboardProps> = () => {
   const { selectWidgets, currentWidgets } = useMapToProps();
@@ -51,4 +49,4 @@ const useMapToProps = (): DashboardStateProps => {
   };
 };
 
-export default injectIntl(withRouter(Dashboard));
+export default injectIntl(Dashboard);

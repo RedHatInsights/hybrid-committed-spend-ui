@@ -2,8 +2,6 @@ import type { Report } from 'api/reports/report';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import type { ChartDatum } from 'routes/components/charts/common';
 import { TrendChart } from 'routes/components/charts/trend';
 
@@ -15,9 +13,7 @@ interface CommittedSpendTrendChartOwnProps {
   thresholdData?: Report;
 }
 
-export type CommittedSpendTrendChartProps = CommittedSpendTrendChartOwnProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+export type CommittedSpendTrendChartProps = CommittedSpendTrendChartOwnProps & WrappedComponentProps;
 
 const CommittedSpendTrendChartBase: React.FC<CommittedSpendTrendChartProps> = ({
   chartName,
@@ -36,4 +32,4 @@ const CommittedSpendTrendChartBase: React.FC<CommittedSpendTrendChartProps> = ({
   );
 };
 
-export const CommittedSpendTrendChart = injectIntl(withRouter(CommittedSpendTrendChartBase));
+export const CommittedSpendTrendChart = injectIntl(CommittedSpendTrendChartBase);

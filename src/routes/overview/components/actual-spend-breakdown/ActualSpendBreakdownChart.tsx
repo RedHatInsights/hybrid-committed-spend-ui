@@ -3,8 +3,6 @@ import { format } from 'date-fns';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { BreakdownChart } from 'routes/components/charts/breakdown';
 import type { ChartDatum } from 'routes/components/charts/common/chart-datum';
 import {
@@ -26,9 +24,7 @@ interface ActualSpendBreakdownChartOwnProps {
   report?: Report;
 }
 
-export type ActualSpendBreakdownChartProps = ActualSpendBreakdownChartOwnProps &
-  RouteComponentProps<void> &
-  WrappedComponentProps;
+export type ActualSpendBreakdownChartProps = ActualSpendBreakdownChartOwnProps & WrappedComponentProps;
 
 const ActualSpendBreakdownChartBase: React.FC<ActualSpendBreakdownChartProps> = ({ chartName, datumType, report }) => {
   const getChart = () => {
@@ -126,4 +122,4 @@ const ActualSpendBreakdownChartBase: React.FC<ActualSpendBreakdownChartProps> = 
   return <div style={styles.chartContainer}>{getChart()}</div>;
 };
 
-export const ActualSpendBreakdownChart = injectIntl(withRouter(ActualSpendBreakdownChartBase));
+export const ActualSpendBreakdownChart = injectIntl(ActualSpendBreakdownChartBase);

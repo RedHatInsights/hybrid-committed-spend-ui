@@ -8,8 +8,6 @@ import messages from 'locales/messages';
 import React, { useEffect, useRef, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import type { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { FetchStatus } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { compareDateYearAndMonth } from 'utils/dates';
@@ -35,7 +33,7 @@ interface DetailsTableExpandStateProps {
   reportFetchStatus?: FetchStatus;
 }
 
-type DetailsTableExpandProps = DetailsTableExpandOwnProps & RouteComponentProps<void> & WrappedComponentProps;
+type DetailsTableExpandProps = DetailsTableExpandOwnProps & WrappedComponentProps;
 
 export const baseQuery: Query = {
   filter: {
@@ -210,6 +208,6 @@ const useMapToProps = ({
   };
 };
 
-const DetailsTableExpand = injectIntl(withRouter(DetailsTableExpandBase));
+const DetailsTableExpand = injectIntl(DetailsTableExpandBase);
 
 export { DetailsTableExpand };
