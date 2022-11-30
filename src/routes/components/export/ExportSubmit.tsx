@@ -11,6 +11,7 @@ import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import type { RootState } from 'store';
@@ -111,6 +112,7 @@ const useMapToProps = ({
   reportPathsType,
   reportQueryString,
 }: ExportSubmitOwnProps): ExportSubmitStateProps => {
+  const location = useLocation();
   const queryFromRoute = parseQuery<Query>(location.search);
 
   const getQueryString = () => {

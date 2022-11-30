@@ -7,6 +7,7 @@ import type { AxiosError } from 'axios';
 import { cloneDeep } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { getDateRange } from 'routes/utils/dateRange';
@@ -129,6 +130,7 @@ export const useDetailsMapToProps = ({
   startDate,
 }: DetailsOwnProps): DetailsStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
+  const location = useLocation();
 
   const queryFromRoute = parseQuery<Query>(location.search);
   const query = {
