@@ -8,6 +8,7 @@ import messages from 'locales/messages';
 import React, { useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 
 import { styles } from './EmptyFilterState.styles';
 
@@ -29,6 +30,8 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
   subTitle = messages.emptyFilterStateSubtitle,
   title = messages.emptyFilterStateTitle,
 }) => {
+  const location = useLocation();
+
   const ImgScroll = () => {
     const imgs = [styles.icon2, styles.icon3, styles.icon4, styles.icon5, styles.icon6];
     const [index, setIndex] = useState(imgs.length - 1);
