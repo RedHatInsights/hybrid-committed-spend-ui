@@ -54,9 +54,9 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
     );
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
-  if (values && values.contract_end_date) {
+  if (values && values.contract_line_end_date) {
     const startDate = getToday();
-    const endDate = new Date(values.contract_end_date + 'T00:00:00');
+    const endDate = new Date(values.contract_line_end_date + 'T00:00:00');
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
       month: 'long',

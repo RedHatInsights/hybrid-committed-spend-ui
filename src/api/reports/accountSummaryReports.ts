@@ -7,8 +7,10 @@ export interface AccountSummaryReportData extends ReportData {
   account_name?: string;
   account_number?: string;
   actual_committed_spend?: ReportValue;
-  contract_start_date?: string;
   contract_end_date?: string;
+  contract_start_date?: string;
+  contract_line_start_date?: string;
+  contract_line_end_date?: string;
   consumption_date?: string;
   committed_spend?: ReportValue;
   delta?: { value: string; percent: string };
