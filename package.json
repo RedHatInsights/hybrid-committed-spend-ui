@@ -47,7 +47,7 @@
     "@redhat-cloud-services/frontend-components-translations": "^3.2.5",
     "@redhat-cloud-services/frontend-components-utilities": "^3.3.9",
     "@unleash/proxy-client-react": "^3.4.1",
-    "axios": "^1.2.0",
+    "axios": "^1.2.1",
     "classnames": "^2.3.2",
     "js-file-download": "^0.4.12",
     "react": "17.0.2",
