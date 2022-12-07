@@ -45,7 +45,7 @@
     "@redhat-cloud-services/frontend-components": "^3.9.25",
     "@redhat-cloud-services/frontend-components-notifications": "^3.2.12",
     "@redhat-cloud-services/frontend-components-translations": "^3.2.5",
-    "@redhat-cloud-services/frontend-components-utilities": "^3.3.9",
+    "@redhat-cloud-services/frontend-components-utilities": "^3.3.10",
     "@unleash/proxy-client-react": "^3.4.1",
     "axios": "^1.2.1",
     "classnames": "^2.3.2",
