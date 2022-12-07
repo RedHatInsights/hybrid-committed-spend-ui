@@ -8,31 +8,26 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Reducer } from 'redux';
 
-import pckg from '../package.json';
+import pkg from '../package.json';
 import { useFeatureFlags } from './components/feature-flags';
 import { Routes } from './Routes';
 
-type Unregister = () => void;
-
 const App = () => {
   const navigate = useNavigate();
-  const chrome = useChrome();
+  const { on, updateDocumentTitle } = useChrome();
 
   useEffect(() => {
-    let unregister: Unregister;
-    if (chrome) {
-      const registry = getRegistry();
-      registry.register({ notifications: notificationsReducer as Reducer });
-      const { identifyApp, on } = chrome.init();
+    const registry = getRegistry();
+    registry.register({ notifications: notificationsReducer as Reducer });
 
-      // You can use directly the name of your app
-      identifyApp(pckg.insights.appname);
-      unregister = on('APP_NAVIGATION', event => navigate(`/${event.navId}`));
-    }
+    // You can use directly the name of your app
+    updateDocumentTitle(pkg.insights.appname);
+    const unregister = on('APP_NAVIGATION', event => navigate(`/${event.navId}`));
+
     return () => {
       unregister();
     };
-  }, [chrome]);
+  }, []);
 
   useFeatureFlags();
 
