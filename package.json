@@ -63,7 +63,7 @@
     "victory-core": "36.6.7"
   },
   "devDependencies": {
-    "@formatjs/cli": "^5.1.7",
+    "@formatjs/cli": "^5.1.10",
     "@redhat-cloud-services/eslint-config-redhat-cloud-services": "^1.2.6",
     "@redhat-cloud-services/frontend-components-config": "^4.6.34",
     "@testing-library/jest-dom": "^5.16.5",
