@@ -1,3 +1,4 @@
+import type { Query } from 'api/queries';
 import { DateRangeType } from 'routes/utils/dateRange';
 
 // eslint-disable-next-line no-shadow
@@ -10,7 +11,7 @@ export enum GroupByType {
 }
 
 // eslint-disable-next-line no-shadow
-export enum SourcesOfSpendType {
+export enum SourceOfSpendType {
   all = 'all',
   aws = 'aws',
   azure = 'azure',
@@ -39,10 +40,24 @@ export function getDateRangeType(dateRange: DateRangeType): string {
   }
 }
 
+export function getIdKeyForGroupBy(groupBy: Query['group_by'] = {}) {
+  if (groupBy.affiliate) {
+    return GroupByType.affiliate;
+  }
+  if (groupBy.none) {
+    return GroupByType.none;
+  }
+  if (groupBy.product) {
+    return GroupByType.product;
+  }
+  if (groupBy.source_of_spend) {
+    return GroupByType.sourceOfSpend;
+  }
+  return undefined;
+}
+
 export function getGroupByType(groupBy: GroupByType): string {
   switch (groupBy) {
-    case GroupByType.account:
-      return 'account';
     case GroupByType.affiliate:
       return 'affiliate';
     case GroupByType.product:
@@ -55,25 +70,25 @@ export function getGroupByType(groupBy: GroupByType): string {
   }
 }
 
-export function getSourcesOfSpendType(sourcesOfSpend: SourcesOfSpendType): string {
-  switch (sourcesOfSpend) {
-    case SourcesOfSpendType.aws:
+export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): string {
+  switch (sourceOfSpendType) {
+    case SourceOfSpendType.aws:
       return 'aws';
-    case SourcesOfSpendType.azure:
+    case SourceOfSpendType.azure:
       return 'azure';
-    case SourcesOfSpendType.consulting:
+    case SourceOfSpendType.consulting:
       return 'consulting';
-    case SourcesOfSpendType.gcp:
+    case SourceOfSpendType.gcp:
       return 'gcp';
-    case SourcesOfSpendType.marketplace:
+    case SourceOfSpendType.marketplace:
       return 'marketplace';
-    case SourcesOfSpendType.reseller:
+    case SourceOfSpendType.reseller:
       return 'reseller';
-    case SourcesOfSpendType.subs_on_demand:
+    case SourceOfSpendType.subs_on_demand:
       return 'subs_on_demand';
-    case SourcesOfSpendType.subs_yearly:
+    case SourceOfSpendType.subs_yearly:
       return 'subs_yearly';
-    case SourcesOfSpendType.all:
+    case SourceOfSpendType.all:
     default:
       return 'all';
   }

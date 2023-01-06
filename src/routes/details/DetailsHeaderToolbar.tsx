@@ -7,9 +7,10 @@ import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
 import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 
-import { GroupByType, SourcesOfSpendType } from './types';
+import { GroupByType, SourceOfSpendType } from './types';
 
 interface DetailsToolbarOwnProps {
+  contractLineStartDate?: Date;
   contractStartDate?: Date;
   dateRange?: string;
   endDate?: Date;
@@ -17,9 +18,9 @@ interface DetailsToolbarOwnProps {
   onDateRangeSelected(value: string);
   onGroupBySelected(value: string);
   onSecondaryGroupBySelected(value: string);
-  onSourcesOfSpendSelected(value: string);
+  onSourceOfSpendSelected(value: string);
   secondaryGroupBy?: string;
-  sourcesOfSpend?: string;
+  sourceOfSpendType?: string;
   startDate?: Date;
 }
 
@@ -48,19 +49,20 @@ const secondaryGroupByOptions: PerspectiveOption[] = [
   { label: messages.groupBy, value: GroupByType.sourceOfSpend },
 ];
 
-const sourcesOfSpendOptions: PerspectiveOption[] = [
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.all },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_yearly },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.subs_on_demand, isDisabled: true },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.reseller, isDisabled: true },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.marketplace },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.aws },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.azure },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.gcp },
-  { label: messages.sourcesOfSpendValues, value: SourcesOfSpendType.consulting, isDisabled: true },
+const sourceOfSpendTypeOptions: PerspectiveOption[] = [
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.all },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.subs_yearly },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.subs_on_demand, isDisabled: true },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.reseller, isDisabled: true },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.marketplace },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.aws },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.azure },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.gcp },
+  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.consulting, isDisabled: true },
 ];
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
+  contractLineStartDate = new Date(),
   contractStartDate = new Date(),
   dateRange,
   groupBy,
@@ -68,9 +70,9 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   onDateRangeSelected,
   onGroupBySelected,
   onSecondaryGroupBySelected,
-  onSourcesOfSpendSelected,
+  onSourceOfSpendSelected,
   secondaryGroupBy,
-  sourcesOfSpend,
+  sourceOfSpendType,
 }) => {
   const formatDateRange = (startDate, endDate) => {
     return intl.formatDateTimeRange(startDate, endDate, {
@@ -79,13 +81,18 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
     });
   };
 
-  const getContractedLastYearDateRange = () => {
-    const { endDate, startDate } = getDateRange(DateRangeType.contractedLastYear, contractStartDate);
+  const isContractedLastYearDateRangeDisabled = () => {
+    const { startDate } = getDateRange(DateRangeType.contractedLastYear, contractLineStartDate);
+    return startDate < contractStartDate;
+  };
+
+  const getContractedLastYearDateRangeDesc = () => {
+    const { endDate, startDate } = getDateRange(DateRangeType.contractedLastYear, contractLineStartDate);
     return formatDateRange(startDate, endDate);
   };
 
   const getContractedYtdDateRange = () => {
-    const { endDate, startDate } = getDateRange(DateRangeType.contractedYtd, contractStartDate);
+    const { endDate, startDate } = getDateRange(DateRangeType.contractedYtd, contractLineStartDate);
     return formatDateRange(startDate, endDate);
   };
 
@@ -110,7 +117,8 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
     options.map(option => {
       switch (option.value) {
         case DateRangeType.contractedLastYear:
-          option.description = getContractedLastYearDateRange();
+          option.description = getContractedLastYearDateRangeDesc();
+          option.isDisabled = isContractedLastYearDateRangeDisabled();
           break;
         case DateRangeType.contractedYtd:
           option.description = getContractedYtdDateRange();
@@ -150,21 +158,21 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
     }
   };
 
-  const handleOnSourcesOfSpendSelected = value => {
-    if (onSourcesOfSpendSelected) {
-      onSourcesOfSpendSelected(value);
+  const handleOnSourceOfSpendSelected = value => {
+    if (onSourceOfSpendSelected) {
+      onSourceOfSpendSelected(value);
     }
   };
 
   return (
     <div>
       <Perspective
-        currentItem={sourcesOfSpend}
-        id="sourcesOfSpend"
-        label={intl.formatMessage(messages.sourcesOfSpendLabel)}
+        currentItem={sourceOfSpendType}
+        id="sourceOfSpendType"
+        label={intl.formatMessage(messages.sourceOfSpendTypeLabel)}
         minWidth={200}
-        onSelected={handleOnSourcesOfSpendSelected}
-        options={sourcesOfSpendOptions}
+        onSelected={handleOnSourceOfSpendSelected}
+        options={sourceOfSpendTypeOptions}
       />
       <Perspective
         currentItem={groupBy}

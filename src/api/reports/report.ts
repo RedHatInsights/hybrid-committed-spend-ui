@@ -5,29 +5,12 @@ export interface ReportValue {
   value?: string;
 }
 
-// Todo: supports test data
-export interface _ReportValue {
-  units?: string;
-  value?: number;
-}
-
-// Todo: supports test data
-export interface ReportItemValue {
-  markup?: _ReportValue;
-  raw?: _ReportValue;
-  total?: _ReportValue;
-  usage: _ReportValue;
-}
-
-// Todo: supports test data
 export interface ReportItem {
-  cost?: ReportItemValue;
+  affiliate?: string;
   date?: string;
-  delta_percent?: number;
-  delta_value?: number;
-  infrastructure?: ReportItemValue;
-  source_uuid?: string;
-  supplementary?: ReportItemValue;
+  committedSpend?: ReportValue;
+  product?: string;
+  sourceOfSpend?: string;
 }
 
 export interface ReportData {
@@ -36,7 +19,7 @@ export interface ReportData {
 }
 
 export interface ReportMeta extends PagedMetaData {
-  count?: string | number; // Todo: supports test data
+  count?: string | number;
   delta?: {
     percent: number;
     value: number;
@@ -51,16 +34,6 @@ export interface ReportMeta extends PagedMetaData {
     [order: string]: string;
   };
   others?: number;
-  total?: {
-    capacity?: ReportValue;
-    cost?: ReportItemValue;
-    count?: ReportValue;
-    infrastructure?: ReportItemValue;
-    limit?: ReportValue;
-    request?: ReportValue;
-    supplementary?: ReportItemValue;
-    usage?: ReportValue;
-  };
 }
 
 export interface Report extends PagedResponse<ReportData, ReportMeta> {}

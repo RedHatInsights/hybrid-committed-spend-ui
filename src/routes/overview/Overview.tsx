@@ -1,5 +1,6 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
+import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { lazy, Suspense } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
@@ -17,18 +18,15 @@ interface OverviewOwnProps {
 }
 
 interface OverviewStateProps {
-  hasReportErrors: boolean;
+  reportErrors: Map<string, AxiosError>;
 }
 
 type OverviewProps = OverviewOwnProps & WrappedComponentProps;
 
 const Overview: React.FC<OverviewProps> = ({ intl }) => {
-  const { hasReportErrors } = useMapToProps({});
+  const { reportErrors } = useMapToProps({});
 
-  // Todo: Remove when APIs are available
-  const isTest = true;
-
-  if (hasReportErrors && !isTest) {
+  if (reportSelectors.hasReportErrors(reportErrors)) {
     const title = intl.formatMessage(messages.overviewTitle);
     return <NotAvailable title={title} />;
   }
@@ -53,10 +51,10 @@ const Overview: React.FC<OverviewProps> = ({ intl }) => {
 
 // eslint-disable-next-line no-empty-pattern
 const useMapToProps = ({}: OverviewOwnProps): OverviewStateProps => {
-  const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
+  const reportErrors = useSelector((state: RootState) => reportSelectors.selectReportErrors(state));
 
   return {
-    hasReportErrors,
+    reportErrors,
   };
 };
 

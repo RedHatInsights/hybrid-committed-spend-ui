@@ -1,45 +1,49 @@
 import { Bullseye, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import { Main } from '@redhat-cloud-services/frontend-components/Main';
 import type { Query } from 'api/queries';
-import { getQueryRoute } from 'api/queries';
+import { getQueryRoute, parseQuery } from 'api/queries';
 import type { Report } from 'api/reports/report';
 import { ReportPathsType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
-import React, { lazy, Suspense, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import { PageHeading } from 'routes/components/page-heading';
 import { DateRangeType } from 'routes/utils/dateRange';
 import type { Filter } from 'routes/utils/filter';
 import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
-import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
-import { reportSelectors } from 'store/reports';
 import { useStateCallback } from 'utils/hooks';
 
-import { useAccountSummaryMapToProps, useDetailsMapDateRangeToProps } from './api';
 import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
 import { DetailsTable } from './DetailsTable';
-import { getDateRangeType, getGroupByType, getSourcesOfSpendType, GroupByType, SourcesOfSpendType } from './types';
+import {
+  getDateRangeType,
+  getGroupByType,
+  getIdKeyForGroupBy,
+  getSourceOfSpendType,
+  GroupByType,
+  SourceOfSpendType,
+} from './types';
+import { useAccountSummaryMapToProps, useDetailsMapDateRangeToProps } from './utils';
 const Loading = lazy(() => import('routes/state/loading/Loading'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
 interface DetailsOwnProps {
   dateRange?: string;
   groupBy?: string;
-  sourcesOfSpend?: string;
+  sourceOfSpend?: string;
 }
 
 interface DetailsStateProps {
+  contractLineStartDate?: Date;
   contractStartDate?: Date;
   endDate?: Date;
-  hasReportErrors?: boolean;
   query?: Query;
   report?: Report;
   reportError?: AxiosError;
@@ -53,25 +57,26 @@ type DetailsProps = DetailsOwnProps & WrappedComponentProps;
 const Details: React.FC<DetailsProps> = ({ intl }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [dateRange, setDateRange] = useState(getDateRangeType(DateRangeType.contractedYtd));
-  const [groupBy, setGroupBy] = useStateCallback(getGroupByType(GroupByType.product));
+  const [dateRange, setDateRange] = useStateCallback(useDefaultDateRange());
+  const [groupBy, setGroupBy] = useStateCallback(useDefaultGroupBy());
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const [secondaryGroupBy, setSecondaryGroupBy] = useState(GroupByType.none);
-  const [sourcesOfSpend, setSourcesOfSpend] = useState(getSourcesOfSpendType(SourcesOfSpendType.marketplace));
+  const [secondaryGroupBy, setSecondaryGroupBy] = useStateCallback(useDefaultSecondaryGroupBy());
+  const [sourceOfSpend, setSourceOfSpend] = useStateCallback(useDefaultSourceOfSpend());
 
   const {
+    contractLineStartDate,
     contractStartDate,
     endDate,
-    hasReportErrors,
     query,
     report,
+    reportError,
     reportFetchStatus,
     reportQueryString,
     startDate,
   } = useMapToProps({
     dateRange,
     groupBy,
-    sourcesOfSpend,
+    sourceOfSpend,
   });
 
   const getFilterToolbar = () => {
@@ -106,7 +111,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
       report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 0;
     const offset =
       report && report.meta && report.meta.filter && report.meta.filter.offset ? report.meta.filter.offset : 0;
-    const page = offset / limit + 1;
+    const page = limit > 0 ? offset / limit + 1 : 1;
 
     return (
       <Pagination
@@ -149,14 +154,20 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
         query={query}
         report={report}
         secondaryGroupBy={secondaryGroupBy}
-        sourcesOfSpend={sourcesOfSpend}
+        sourceOfSpendType={sourceOfSpend}
         startDate={startDate}
       />
     );
   };
 
   const handleOnDateRangeSelected = value => {
-    setDateRange(value);
+    setDateRange(value, () => {
+      const newQuery = {
+        ...JSON.parse(JSON.stringify(query)),
+        dateRange: value,
+      };
+      navigate(getRouteForQuery(newQuery, true), { replace: true });
+    });
   };
 
   const handleOnExportModalClose = (isOpen: boolean) => {
@@ -178,15 +189,14 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   };
 
   const handleOnGroupBySelected = value => {
+    setSecondaryGroupBy(GroupByType.none);
     setGroupBy(value, () => {
-      const groupByKey: keyof Query['group_by'] = value as any;
       const newQuery = {
         ...JSON.parse(JSON.stringify(query)),
-        filter_by: undefined, // Reset filter
-        group_by: {
-          [groupByKey]: '*',
+        primaryGroupBy: {
+          [value]: '*',
         },
-        order_by: { cost: 'desc' },
+        secondaryGroupBy: undefined,
       };
       navigate(getRouteForQuery(newQuery, true), { replace: true });
     });
@@ -203,7 +213,15 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   };
 
   const handleOnSecondaryGroupBySelected = value => {
-    setSecondaryGroupBy(value);
+    setSecondaryGroupBy(value, () => {
+      const newQuery = {
+        ...JSON.parse(JSON.stringify(query)),
+        secondaryGroupBy: {
+          [value]: '*',
+        },
+      };
+      navigate(getRouteForQuery(newQuery, true), { replace: true });
+    });
   };
 
   const handleOnSetPage = (event, pageNumber) => {
@@ -232,26 +250,27 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     navigate(filteredQuery, { replace: true });
   };
 
-  const handleOnSourcesOfSpendSelected = value => {
-    setSourcesOfSpend(value);
+  const handleOnSourceOfSpendSelected = value => {
+    setSecondaryGroupBy(GroupByType.none);
+    setSourceOfSpend(value, () => {
+      const newQuery = {
+        ...JSON.parse(JSON.stringify(query)),
+        sourceOfSpend: value,
+        secondaryGroupBy: undefined,
+      };
+      navigate(getRouteForQuery(newQuery, true), { replace: true });
+    });
   };
 
-  useEffect(() => {
-    setSecondaryGroupBy(GroupByType.none);
-  }, [groupBy, sourcesOfSpend]);
-
-  // Todo: Remove when APIs are available
-  const isTest = true;
-
-  if (hasReportErrors && !isTest) {
+  if (reportError) {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
-
   return (
     <React.Fragment>
       <PageHeading>
         <DetailsHeaderToolbar
+          contractLineStartDate={contractLineStartDate}
           contractStartDate={contractStartDate}
           dateRange={dateRange}
           endDate={endDate}
@@ -259,9 +278,9 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
           onDateRangeSelected={handleOnDateRangeSelected}
           onGroupBySelected={handleOnGroupBySelected}
           onSecondaryGroupBySelected={handleOnSecondaryGroupBySelected}
-          onSourcesOfSpendSelected={handleOnSourcesOfSpendSelected}
+          onSourceOfSpendSelected={handleOnSourceOfSpendSelected}
           secondaryGroupBy={secondaryGroupBy}
-          sourcesOfSpend={sourcesOfSpend}
+          sourceOfSpendType={sourceOfSpend}
           startDate={startDate}
         />
       </PageHeading>
@@ -289,27 +308,56 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   );
 };
 
-const useMapToProps = ({ dateRange, groupBy, sourcesOfSpend }: DetailsOwnProps): DetailsStateProps => {
-  const hasReportErrors = useSelector((state: RootState) => reportSelectors.selectHasErrors(state));
+const getQueryFromRoute = () => {
+  const location = useLocation();
+  return parseQuery<Query>(location.search);
+};
 
+const useDefaultDateRange = () => {
+  const queryFromRoute = getQueryFromRoute();
+  return getDateRangeType(queryFromRoute.dateRange ? queryFromRoute.dateRange : DateRangeType.contractedYtd);
+};
+
+const useDefaultGroupBy = () => {
+  const queryFromRoute = getQueryFromRoute();
+  const primaryGroupBy = getIdKeyForGroupBy(queryFromRoute.primaryGroupBy);
+  return getGroupByType(primaryGroupBy ? primaryGroupBy : GroupByType.product);
+};
+
+const useDefaultSecondaryGroupBy = () => {
+  const queryFromRoute = getQueryFromRoute();
+  const secondaryGroupBy = getIdKeyForGroupBy(queryFromRoute.secondaryGroupBy);
+  return getGroupByType(secondaryGroupBy ? secondaryGroupBy : GroupByType.none);
+};
+
+const useDefaultSourceOfSpend = () => {
+  const queryFromRoute = getQueryFromRoute();
+  return getSourceOfSpendType(queryFromRoute.sourceOfSpend ? queryFromRoute.sourceOfSpend : SourceOfSpendType.all);
+};
+
+const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
   const { summary } = useAccountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
   const contractStartDate =
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
+  const contractLineStartDate =
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
 
-  const { endDate, query, report, reportFetchStatus, reportQueryString, startDate } = useDetailsMapDateRangeToProps({
-    contractStartDate,
-    dateRange,
-    groupBy,
-    sourcesOfSpend,
-  });
+  const { endDate, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
+    useDetailsMapDateRangeToProps({
+      contractStartDate,
+      dateRange,
+      groupBy,
+      sourceOfSpend,
+    });
 
   return {
+    contractLineStartDate,
     contractStartDate,
     endDate,
-    hasReportErrors,
     query,
     report,
+    reportError,
     reportFetchStatus,
     reportQueryString,
     startDate,

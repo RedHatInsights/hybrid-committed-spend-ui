@@ -462,12 +462,12 @@ export default defineMessages({
     description: '{value} selected',
     id: 'selected',
   },
-  sourcesOfSpendLabel: {
+  sourceOfSpendTypeLabel: {
     defaultMessage: 'View',
     description: 'Sources of spend dropdown label',
-    id: 'sourcesOfSpendLabel',
+    id: 'sourceOfSpendTypeLabel',
   },
-  sourcesOfSpendValues: {
+  sourceOfSpendTypeValues: {
     defaultMessage:
       '{value, select, ' +
       'all {All sources of spend} ' +
@@ -481,7 +481,7 @@ export default defineMessages({
       'subs_yearly {Yearly subscriptions} ' +
       'other {}}',
     description: 'All sources of spend',
-    id: 'sourcesOfSpendValues',
+    id: 'sourceOfSpendTypeValues',
   },
   suggestions: {
     defaultMessage: 'Suggestions',

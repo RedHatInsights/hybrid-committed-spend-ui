@@ -5,8 +5,6 @@ import { UserAccessType } from 'api/user-access';
 import type { AxiosError } from 'axios';
 import { PageTitle } from 'components/page-title';
 import React, { lazy, Suspense, useEffect } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
@@ -28,7 +26,7 @@ interface PermissionsWrapperStateProps {
   userAccessQueryString: string;
 }
 
-type PermissionsWrapperProps = PermissionsWrapperOwnProps & WrappedComponentProps;
+type PermissionsWrapperProps = PermissionsWrapperOwnProps;
 
 const PermissionsWrapperBase: React.FC<PermissionsWrapperProps> = ({ children }) => {
   const { userAccessFetchStatus } = useMapToProps();
@@ -81,6 +79,6 @@ const useMapToProps = (): PermissionsWrapperStateProps => {
   };
 };
 
-const PermissionsWrapper = injectIntl(PermissionsWrapperBase);
+const PermissionsWrapper = PermissionsWrapperBase;
 
 export default PermissionsWrapper;

@@ -1,4 +1,5 @@
 import type { ReportPathsType, ReportType } from 'api/reports/report';
+import type { AxiosError } from 'axios';
 import type { RootState } from 'store/rootReducer';
 
 import { getFetchId, reportStateKey } from './reportCommon';
@@ -26,6 +27,17 @@ export const selectReportError = (
   reportQueryString: string
 ) => selectReportState(state).errors.get(getFetchId(reportPathsType, reportType, reportQueryString));
 
-export const selectHasErrors = (state: RootState) => {
-  return selectReportState(state).errors.size > 0;
+export const selectReportErrors = (state: RootState) => {
+  return selectReportState(state).errors;
+};
+
+export const hasReportErrors = (errors: Map<string, AxiosError>) => {
+  if (errors) {
+    errors.forEach(error => {
+      if (error !== null) {
+        return true;
+      }
+    });
+  }
+  return false;
 };

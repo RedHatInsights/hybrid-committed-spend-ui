@@ -13,9 +13,9 @@ import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputed
 import { compareDateYearAndMonth } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
-import { useDetailsMapToProps } from './api';
 import type { DetailsTableCell } from './DetailsTable';
-import { reportItem, reportItemValue } from './DetailsTable';
+import { reportItem } from './DetailsTable';
+import { useDetailsMapToProps } from './utils';
 
 interface DetailsTableExpandOwnProps {
   columns?: any[];
@@ -24,6 +24,7 @@ interface DetailsTableExpandOwnProps {
   groupByValue?: string;
   isExpanded?: boolean;
   secondaryGroupBy?: string;
+  sourceOfSpendType?: string;
   startDate?: Date;
 }
 
@@ -126,10 +127,9 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
 
         // Add row cells
         cells.push({
-          value:
-            item[reportItem] && item[reportItem][reportItemValue]
-              ? formatCurrency(item[reportItem][reportItemValue].value, item[reportItem][reportItemValue].units)
-              : intl.formatMessage(messages.chartNoData),
+          value: item[reportItem]
+            ? formatCurrency(item[reportItem].value, item[reportItem].units)
+            : intl.formatMessage(messages.chartNoData),
         });
       });
 
