@@ -9,14 +9,14 @@
     "jsx": "react",
     "lib": [
       "dom",
-      "esnext"
+      "es2017"
     ],
     "module": "esnext",
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "target": "es5"
+    "target": "es2017"
   },
   "include": [
     "./src/**/*.ts*",
