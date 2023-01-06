@@ -43,8 +43,8 @@ export const getYear = offset => {
 export const formatDate = (startDate, endDate, isFormatted = true) => {
   return isFormatted
     ? {
-        endDate: format(endDate, 'yyyy-MM'),
-        startDate: format(startDate, 'yyyy-MM'),
+        endDate: endDate ? format(endDate, 'yyyy-MM') : undefined,
+        startDate: startDate ? format(startDate, 'yyyy-MM') : undefined,
       }
     : {
         endDate,

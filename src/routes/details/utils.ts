@@ -4,7 +4,6 @@ import type { AccountSummaryReport } from 'api/reports/accountSummaryReports';
 import type { Report } from 'api/reports/report';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
-import { cloneDeep } from 'lodash';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -14,13 +13,9 @@ import { getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
-import { compareDateYearAndMonth } from 'utils/dates';
+import { formatDate } from 'utils/dates';
 
-import { affiliateData } from './data/affiliateData';
-import { emptyData } from './data/emptyData';
-import { productData } from './data/productData';
-import { sourceData } from './data/sourceData';
-import { GroupByType, SourcesOfSpendType } from './types';
+import { GroupByType, SourceOfSpendType } from './types';
 
 interface AccountSummaryStateProps {
   summary?: AccountSummaryReport;
@@ -37,7 +32,7 @@ interface DetailsOwnProps {
   groupByValue?: string;
   isExpanded?: boolean;
   secondaryGroupBy?: string;
-  sourcesOfSpend?: string;
+  sourceOfSpend?: string;
   startDate?: Date;
 }
 
@@ -87,7 +82,7 @@ export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps
   );
 
   useEffect(() => {
-    if (summaryFetchStatus !== FetchStatus.inProgress) {
+    if (!summaryError && summaryFetchStatus !== FetchStatus.inProgress) {
       dispatch(reportActions.fetchReport(reportPathsType, reportType, summaryQueryString));
     }
   }, deps);
@@ -106,106 +101,94 @@ export const useDetailsMapDateRangeToProps = ({
   groupBy,
   groupByValue,
   secondaryGroupBy,
-  sourcesOfSpend,
+  sourceOfSpend,
 }: DetailsOwnProps): DetailsStateProps => {
   const { endDate, startDate } = getDateRange(dateRange, contractStartDate);
 
   return useDetailsMapToProps({
+    dateRange,
     endDate,
     groupBy,
     groupByValue,
     secondaryGroupBy,
-    sourcesOfSpend,
+    sourceOfSpend,
     startDate,
   });
 };
 
 export const useDetailsMapToProps = ({
+  dateRange,
   endDate,
   groupBy,
   groupByValue,
-  isExpanded,
+  isExpanded = false,
   secondaryGroupBy,
-  sourcesOfSpend = SourcesOfSpendType.all,
+  sourceOfSpend = SourceOfSpendType.all,
   startDate,
 }: DetailsOwnProps): DetailsStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
   const location = useLocation();
-
   const queryFromRoute = parseQuery<Query>(location.search);
+
+  // const query = {
+  //   filter: {
+  //     ...(secondaryGroupBy
+  //       ? {
+  //           [groupBy]: groupByValue,
+  //         }
+  //       : {}),
+  //     ...queryFromRoute.filter,
+  //   },
+  //   filter_by: queryFromRoute.filter_by || baseQuery.filter_by,
+  //   group_by: secondaryGroupBy ? secondaryGroupBy : groupBy,
+  //   order_by: queryFromRoute.order_by,
+  // };
   const query = {
-    filter: {
-      ...(secondaryGroupBy
-        ? {
-            [groupBy]: groupByValue,
-          }
-        : {}),
-      ...queryFromRoute.filter,
+    sourceOfSpend,
+    primaryGroupBy: {
+      [groupBy]: groupByValue ? groupByValue : '*',
     },
-    filter_by: queryFromRoute.filter_by || baseQuery.filter_by,
-    group_by: secondaryGroupBy ? secondaryGroupBy : groupBy,
-    order_by: queryFromRoute.order_by,
+    ...(secondaryGroupBy &&
+      secondaryGroupBy !== GroupByType.none && {
+        secondaryGroupBy: {
+          [secondaryGroupBy]: '*',
+        },
+      }),
+    ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
+    dateRange,
   };
 
-  // Todo: temporary placeholder for upcoming API
+  // Todo: current API uses plurals for projects and affiliates.
+  const newQuery = { ...query };
+  if (groupBy === GroupByType.affiliate || groupBy === GroupByType.product) {
+    newQuery.primaryGroupBy = {
+      [`${groupBy}s`]: groupByValue ? groupByValue : '*',
+    };
+  }
+  // Todo: current API uses plurals for projects and affiliates.
+  if (secondaryGroupBy === GroupByType.affiliate || secondaryGroupBy === GroupByType.product) {
+    newQuery.secondaryGroupBy = {
+      [`${secondaryGroupBy}s`]: '*',
+    };
+  }
+
   const reportPathsType = ReportPathsType.details;
   const reportType = ReportType.billing;
-
   const reportQueryString = getQuery({
-    ...query,
+    ...newQuery,
+    filter: {
+      limit: 10,
+      offset: 0,
+      ...(sourceOfSpend !== SourceOfSpendType.all && { sources_of_spend: sourceOfSpend }),
+    },
+    ...formatDate(startDate, endDate),
+    sourceOfSpend: undefined,
     dateRange: undefined,
-    end_date: endDate,
-    start_date: startDate,
   });
-  const report = useSelector((/* state: RootState */) => {
-    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, reportQueryString)
 
-    let result;
-    switch (secondaryGroupBy || groupBy) {
-      case GroupByType.affiliate:
-        result = cloneDeep(affiliateData);
-        break;
-      case GroupByType.product:
-        result = cloneDeep(productData);
-        break;
-      case GroupByType.sourceOfSpend:
-        result = cloneDeep(sourceData);
-        break;
-      case GroupByType.none:
-      default:
-        result = cloneDeep(emptyData);
-        break;
-    }
-
-    if (startDate && endDate) {
-      result.data = result.data.filter(item => {
-        const currentDate = new Date(item.date + 'T00:00:00');
-        if (
-          compareDateYearAndMonth(currentDate, startDate) >= 0 &&
-          compareDateYearAndMonth(currentDate, endDate) <= 0
-        ) {
-          return item;
-        }
-      });
-
-      if (
-        sourcesOfSpend !== SourcesOfSpendType.all &&
-        secondaryGroupBy !== GroupByType.none &&
-        groupBy === GroupByType.product
-      ) {
-        result.data.map(item => {
-          for (const key in item) {
-            if (item[key] instanceof Array) {
-              item[key].map(dataPoint => {
-                dataPoint.values = dataPoint.values.filter(val => val.source_of_spend === sourcesOfSpend);
-              });
-            }
-          }
-        });
-      }
-    }
-    return result;
-  });
+  const report = useSelector((state: RootState) =>
+    reportSelectors.selectReport(state, reportPathsType, reportType, reportQueryString)
+  );
   const reportFetchStatus = useSelector((state: RootState) =>
     reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, reportQueryString)
   );
@@ -214,17 +197,24 @@ export const useDetailsMapToProps = ({
   );
 
   useEffect(() => {
-    if (reportFetchStatus !== FetchStatus.inProgress && isExpanded) {
-      dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
+    if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate) {
+      if (secondaryGroupBy) {
+        if (secondaryGroupBy !== GroupByType.none && isExpanded) {
+          dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
+        }
+      } else {
+        // Primary group by
+        dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
+      }
     }
-  }, [isExpanded, secondaryGroupBy]);
+  });
 
   return {
     endDate,
     query,
     report,
-    reportFetchStatus,
     reportError,
+    reportFetchStatus,
     reportQueryString,
     startDate,
   };

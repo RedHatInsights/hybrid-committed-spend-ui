@@ -3,8 +3,8 @@ import type { Report } from 'api/reports/report';
 import { intl } from 'components/i18n';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
-import type { ComputedReportItem } from 'utils/computedReport/getComputedReportItems';
-import { getComputedReportItems } from 'utils/computedReport/getComputedReportItems';
+import type { ComputedReportItem } from 'utils/computedReport/getFakeComputedReportItems';
+import { getComputedReportItems } from 'utils/computedReport/getFakeComputedReportItems';
 import { getToday, getYear } from 'utils/dates';
 import type { FormatOptions } from 'utils/format';
 import { formatCurrency } from 'utils/format';
@@ -43,7 +43,7 @@ export interface ReportData<T extends ComputedReportItem> {
   value: number;
 }
 
-export interface PadtData {
+export interface PadData {
   datums: ChartDatum[];
   endDate?: Date;
   startDate?: Date;
@@ -52,6 +52,9 @@ export interface PadtData {
 // The computed report cost or usage item
 // eslint-disable-next-line no-shadow
 export const enum ComputedReportItemType {
+  committedSpend = 'committedSpend',
+
+  // Todo: Keep for test data
   cost = 'cost', // cost.total.value
   infrastructure = 'infrastructure', // infrastructure.total.value
   supplementary = 'supplementary', // supplementary.total.value
@@ -154,7 +157,7 @@ export function createReportDatum<T extends ComputedReportItem>({
 // This pads chart datums with null datum objects, representing missing data at the beginning and end of the
 // data series. The remaining data is left as is to allow for extrapolation. This allows us to display a "no data"
 // message in the tooltip, which helps distinguish between zero values and when there is no data available.
-export function padChartDatums({ datums, startDate = getYear(1), endDate = getToday() }: PadtData): ChartDatum[] {
+export function padChartDatums({ datums, startDate = getYear(1), endDate = getToday() }: PadData): ChartDatum[] {
   const result = [];
   if (!datums || datums.length === 0) {
     return result;

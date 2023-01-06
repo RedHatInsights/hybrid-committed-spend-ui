@@ -20,7 +20,7 @@ import messages from 'locales/messages';
 import React, { useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { ComputedReportItemType, ComputedReportItemValueType } from 'routes/components/charts/common/chart-datum';
+import { ComputedReportItemType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { compareDateYearAndMonth } from 'utils/dates';
@@ -38,7 +38,7 @@ interface DetailsTableOwnProps {
   query?: Query;
   report?: Report;
   secondaryGroupBy?: string;
-  sourcesOfSpend?: string;
+  sourceOfSpendType?: string;
   startDate?: Date;
 }
 
@@ -55,8 +55,7 @@ export interface DetailsTableCell {
 
 type DetailsTableProps = DetailsTableOwnProps & WrappedComponentProps;
 
-export const reportItem = ComputedReportItemType.cost;
-export const reportItemValue = ComputedReportItemValueType.total;
+export const reportItem = ComputedReportItemType.committedSpend;
 
 const DetailsTableBase: React.FC<DetailsTableProps> = ({
   endDate,
@@ -67,7 +66,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   query,
   report,
   secondaryGroupBy,
-  sourcesOfSpend,
+  sourceOfSpendType,
   startDate,
 }) => {
   const [activeSortIndex, setActiveSortIndex] = useState<number | null>(null);
@@ -153,10 +152,9 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
 
         // Add row cells
         cells.push({
-          value:
-            item[reportItem] && item[reportItem][reportItemValue]
-              ? formatCurrency(item[reportItem][reportItemValue].value, item[reportItem][reportItemValue].units)
-              : intl.formatMessage(messages.chartNoData),
+          value: item[reportItem]
+            ? formatCurrency(item[reportItem].value, item[reportItem].units)
+            : intl.formatMessage(messages.chartNoData),
         });
       });
 
@@ -170,9 +168,11 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   };
 
   const getEmptyState = () => {
-    for (const val of Object.values(query.filter_by)) {
-      if (val !== '*') {
-        return <EmptyFilterState filter={val as string} showMargin={false} />;
+    if (query && query.filter_by) {
+      for (const val of Object.values(query.filter_by)) {
+        if (val !== '*') {
+          return <EmptyFilterState filter={val as string} showMargin={false} />;
+        }
       }
     }
     return (
@@ -210,7 +210,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
 
   useEffect(() => {
     setExpandedRows(new Set());
-  }, [groupBy, secondaryGroupBy, sourcesOfSpend]);
+  }, [groupBy, secondaryGroupBy, sourceOfSpendType]);
 
   return (
     <React.Fragment>
@@ -293,6 +293,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                     groupByValue={cells[0].value}
                     isExpanded={isRowExpanded(`row-${rowIndex}`)}
                     secondaryGroupBy={secondaryGroupBy}
+                    sourceOfSpendType={sourceOfSpendType}
                     startDate={startDate}
                   />
                 </React.Fragment>

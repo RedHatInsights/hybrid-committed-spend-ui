@@ -19,12 +19,14 @@ export interface Query {
   dateRange?: any;
   end_date?: any;
   product?: any;
-  source_of_spend?: any;
   filter?: any;
   filter_by?: any;
-  group_by?: any;
+  group_by?: any; // Todo: Replace with primaryGroupBy?
   limit?: number;
   order_by?: any;
+  primaryGroupBy?: any;
+  secondaryGroupBy?: any;
+  sourceOfSpend?: any;
   start_date?: any;
 }
 
@@ -93,19 +95,34 @@ export function parseFilterByPrefix(query: Query) {
   }
   return newQuery;
 }
-
+// Todo: Use group_by?
 // Returns query without group_by prefix -- https://github.com/project-koku/koku-ui/issues/704
+// export function parseGroupByPrefixSAVE(query: Query) {
+//   if (!(query && query.group_by)) {
+//     return query;
+//   }
+//   const newQuery = {
+//     ...JSON.parse(JSON.stringify(query)),
+//     group_by: {},
+//   };
+//   for (const key of Object.keys(query.group_by)) {
+//     const groupByKey = parseKey(key);
+//     newQuery.group_by[groupByKey] = query.group_by[key];
+//   }
+//   return newQuery;
+// }
+
 export function parseGroupByPrefix(query: Query) {
-  if (!(query && query.group_by)) {
+  if (!(query && query.primaryGroupBy)) {
     return query;
   }
   const newQuery = {
     ...JSON.parse(JSON.stringify(query)),
-    group_by: {},
+    primaryGroupBy: {},
   };
-  for (const key of Object.keys(query.group_by)) {
+  for (const key of Object.keys(query.primaryGroupBy)) {
     const groupByKey = parseKey(key);
-    newQuery.group_by[groupByKey] = query.group_by[key];
+    newQuery.primaryGroupBy[groupByKey] = query.primaryGroupBy[key];
   }
   return newQuery;
 }
