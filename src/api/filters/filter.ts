@@ -14,8 +14,8 @@ export interface Filter extends PagedResponse<FilterData, FilterMeta> {}
 
 // eslint-disable-next-line no-shadow
 export const enum FilterType {
-  affiliate = 'affiliates', // Todo: current API uses plural here.
-  product = 'products', // Todo: current API uses plural here.
+  affiliate = 'affiliate',
+  product = 'product',
   sourceOfSpend = 'source_of_spend',
 }
 

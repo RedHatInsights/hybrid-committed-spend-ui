@@ -31,6 +31,7 @@ import { useStateCallback } from 'utils/hooks';
 import { noop } from 'utils/noop';
 
 interface FilterInputOwnProps {
+  category?: string;
   isDisabled?: boolean;
   onClear?: () => void;
   onSearchChanged?: (value: string) => void;
@@ -52,6 +53,7 @@ interface FilterInputDispatchProps {
 type FilterInputProps = FilterInputOwnProps & FilterInputStateProps & FilterInputDispatchProps & WrappedComponentProps;
 
 const FilterInputBase: React.FC<FilterInputProps> = ({
+  category,
   filterPathsType,
   filterType,
   isDisabled,
@@ -67,6 +69,7 @@ const FilterInputBase: React.FC<FilterInputProps> = ({
   const textInputGroupRef = React.createRef<HTMLDivElement>();
 
   const { filter, filterFetchStatus } = useMapToProps({
+    category,
     filterPathsType,
     filterType,
     search,
@@ -231,13 +234,20 @@ const FilterInputBase: React.FC<FilterInputProps> = ({
   );
 };
 
-const useMapToProps = ({ filterPathsType, filterType, search }: FilterInputOwnProps): FilterInputStateProps => {
+const useMapToProps = ({
+  category,
+  filterPathsType,
+  filterType,
+  search,
+}: FilterInputOwnProps): FilterInputStateProps => {
   const [searchTimeout, setSearchTimeout] = useState(noop);
 
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query: Query = {
-    productName: search, // Todo: API currently only supports productName param
+    filter: {
+      [category]: search,
+    },
   } as any;
   const filterQueryString = getQuery(query);
 
