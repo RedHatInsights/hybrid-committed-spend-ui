@@ -149,7 +149,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
       <DetailsTable
         endDate={endDate}
         groupBy={groupBy}
-        isLoading={reportFetchStatus === FetchStatus.inProgress}
+        isLoading={!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress}
         onSort={handleOnSort}
         query={query}
         report={report}
@@ -296,7 +296,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
         >
           {getFilterToolbar()}
           {getExportModal()}
-          {reportFetchStatus === FetchStatus.inProgress ? (
+          {!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress ? (
             <Loading />
           ) : (
             <React.Fragment>
