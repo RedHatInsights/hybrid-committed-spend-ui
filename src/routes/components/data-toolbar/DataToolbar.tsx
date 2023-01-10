@@ -26,7 +26,6 @@ import React, { useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { FilterTypeahead } from 'routes/components/filterTypeahead';
-import { GroupByType } from 'routes/details/types';
 import type { Filter } from 'routes/utils/filter';
 import { usePrevious, useStateCallback } from 'utils/hooks';
 
@@ -106,12 +105,6 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
       return 'date';
     }
     for (const option of categoryOptions) {
-      // Todo: current API uses plural here.
-      if (groupBy === GroupByType.product || groupBy === GroupByType.affiliate) {
-        if (`${groupBy}s` === option.key) {
-          return option.key;
-        }
-      }
       if (groupBy === option.key) {
         return option.key;
       }
@@ -167,6 +160,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         <InputGroup style={styles.categoryInput}>
           {isFilterTypeValid(filterPathsType, categoryOption.key as FilterType) ? (
             <FilterTypeahead
+              category={currentCategory}
               filterPathsType={filterPathsType}
               filterType={categoryOption.key as FilterType}
               isDisabled={isDisabled}

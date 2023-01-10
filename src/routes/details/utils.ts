@@ -159,24 +159,10 @@ export const useDetailsMapToProps = ({
     dateRange,
   };
 
-  // Todo: current API uses plurals for projects and affiliates.
-  const newQuery = { ...query };
-  if (groupBy === GroupByType.affiliate || groupBy === GroupByType.product) {
-    newQuery.primaryGroupBy = {
-      [`${groupBy}s`]: groupByValue ? groupByValue : '*',
-    };
-  }
-  // Todo: current API uses plurals for projects and affiliates.
-  if (secondaryGroupBy === GroupByType.affiliate || secondaryGroupBy === GroupByType.product) {
-    newQuery.secondaryGroupBy = {
-      [`${secondaryGroupBy}s`]: '*',
-    };
-  }
-
   const reportPathsType = ReportPathsType.details;
   const reportType = ReportType.billing;
   const reportQueryString = getQuery({
-    ...newQuery,
+    ...query,
     filter: {
       limit: 10,
       offset: 0,

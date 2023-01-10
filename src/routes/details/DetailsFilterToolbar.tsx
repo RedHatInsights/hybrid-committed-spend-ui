@@ -32,8 +32,8 @@ const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
 }) => {
   const getCategoryOptions = (): ToolbarChipGroup[] => {
     return [
-      { name: intl.formatMessage(messages.filterByValues, { value: 'product' }), key: 'products' }, // Todo: current API uses plural here.
-      { name: intl.formatMessage(messages.filterByValues, { value: 'affiliate' }), key: 'affiliates' }, // Todo: current API uses plural here.
+      { name: intl.formatMessage(messages.filterByValues, { value: 'product' }), key: 'product' },
+      { name: intl.formatMessage(messages.filterByValues, { value: 'affiliate' }), key: 'affiliate' },
       { name: intl.formatMessage(messages.filterByValues, { value: 'source_of_spend' }), key: 'source_of_spend' },
     ];
   };

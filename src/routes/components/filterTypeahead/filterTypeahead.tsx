@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { FilterInput } from './filterInput';
 
 interface FilterTypeaheadOwnProps {
+  category?: string;
   filterPathsType: FilterPathsType;
   filterType: FilterType;
   isDisabled?: boolean;
@@ -14,7 +15,13 @@ type FilterTypeaheadProps = FilterTypeaheadOwnProps;
 
 // This wrapper provides text input value as the search prop for FilterInput.
 // This is used to create a query param to retrieve cached API requests.
-const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({ filterPathsType, filterType, isDisabled, onSelect }) => {
+const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({
+  category,
+  filterPathsType,
+  filterType,
+  isDisabled,
+  onSelect,
+}) => {
   const [search, setSearch] = useState(undefined);
 
   const handleOnClear = () => {
@@ -26,7 +33,7 @@ const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({ filterPathsType, filt
   };
 
   const handleOnSelect = (value: string) => {
-    setSearch(value);
+    setSearch(undefined);
     if (onSelect) {
       onSelect(value);
     }
@@ -34,6 +41,7 @@ const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({ filterPathsType, filt
 
   return (
     <FilterInput
+      category={category}
       isDisabled={isDisabled}
       onClear={handleOnClear}
       onSearchChanged={handleOnSearch}
