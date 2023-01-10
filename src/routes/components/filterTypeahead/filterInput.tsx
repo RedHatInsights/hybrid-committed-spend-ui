@@ -252,7 +252,7 @@ const useMapToProps = ({ filterPathsType, filterType, search }: FilterInputOwnPr
   );
 
   useEffect(() => {
-    if (!filterError && filterFetchStatus !== FetchStatus.inProgress) {
+    if (!filterError && filterFetchStatus !== FetchStatus.inProgress && search) {
       clearTimeout(searchTimeout);
 
       // Delay was 750ms, but reduced -- https://issues.redhat.com/browse/COST-1742
