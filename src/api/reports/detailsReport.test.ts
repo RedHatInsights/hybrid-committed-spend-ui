@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { runReport } from './detailsReports';
+import { runReport } from './detailsReport';
 import { ReportType } from './report';
 
 test('api run reports calls axios get', () => {

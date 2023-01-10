@@ -1,6 +1,6 @@
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { getQuery } from 'api/queries';
-import type { AccountSummaryReport } from 'api/reports/accountSummaryReports';
+import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';

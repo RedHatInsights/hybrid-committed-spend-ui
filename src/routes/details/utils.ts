@@ -1,6 +1,6 @@
 import type { Query } from 'api/queries';
 import { getQuery, parseQuery } from 'api/queries';
-import type { AccountSummaryReport } from 'api/reports/accountSummaryReports';
+import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
 import type { Report } from 'api/reports/report';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
