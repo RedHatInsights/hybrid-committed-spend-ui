@@ -16,12 +16,17 @@ import {
 import { ExportIcon } from '@patternfly/react-icons/dist/esm/icons/export-icon';
 import { FilterIcon } from '@patternfly/react-icons/dist/esm/icons/filter-icon';
 import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
+import type { FilterPathsType } from 'api/filters/filter';
+import type { FilterType } from 'api/filters/filter';
+import { isFilterTypeValid } from 'api/filters/filterUtils';
 import type { Query } from 'api/queries/query';
 import messages from 'locales/messages';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
+import { FilterTypeahead } from 'routes/components/filterTypeahead';
+import { GroupByType } from 'routes/details/types';
 import type { Filter } from 'routes/utils/filter';
 import { usePrevious, useStateCallback } from 'utils/hooks';
 
@@ -33,10 +38,10 @@ interface Filters {
 
 interface DataToolbarOwnProps {
   categoryOptions?: ToolbarChipGroup[]; // Options for category menu
+  filterPathsType?: FilterPathsType;
   groupBy?: string; // Sync category selection with groupBy value
   isDisabled?: boolean;
   isExportDisabled?: boolean; // Show export icon as disabled
-  onClearAll?: (type: string) => void;
   onExportClicked?: () => void;
   onFilterAdded?: (filter: Filter) => void;
   onFilterRemoved?: (filterType: Filter) => void;
@@ -48,6 +53,7 @@ type DataToolbarProps = DataToolbarOwnProps & WrappedComponentProps;
 
 const DataToolbar: React.FC<DataToolbarProps> = ({
   categoryOptions,
+  filterPathsType,
   groupBy,
   intl,
   isDisabled,
@@ -100,6 +106,12 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
       return 'date';
     }
     for (const option of categoryOptions) {
+      // Todo: current API uses plural here.
+      if (groupBy === GroupByType.product || groupBy === GroupByType.affiliate) {
+        if (`${groupBy}s` === option.key) {
+          return option.key;
+        }
+      }
       if (groupBy === option.key) {
         return option.key;
       }
@@ -153,25 +165,36 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         showToolbarItem={currentCategory === categoryOption.key}
       >
         <InputGroup style={styles.categoryInput}>
-          <TextInput
-            isDisabled={isDisabled}
-            name={`category-input-${categoryOption.key}`}
-            id={`category-input-${categoryOption.key}`}
-            type="search"
-            aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
-            onChange={handleOnCategoryInputChange}
-            value={categoryInput}
-            placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
-            onKeyDown={evt => onCategoryInput(evt, categoryOption.key)}
-          />
-          <Button
-            isDisabled={isDisabled}
-            variant={ButtonVariant.control}
-            aria-label={intl.formatMessage(messages.filterByButtonAriaLabel, { value: categoryOption.key })}
-            onClick={evt => onCategoryInput(evt, categoryOption.key)}
-          >
-            <SearchIcon />
-          </Button>
+          {isFilterTypeValid(filterPathsType, categoryOption.key as FilterType) ? (
+            <FilterTypeahead
+              filterPathsType={filterPathsType}
+              filterType={categoryOption.key as FilterType}
+              isDisabled={isDisabled}
+              onSelect={value => onCategoryInputSelect(value, categoryOption.key)}
+            />
+          ) : (
+            <>
+              <TextInput
+                isDisabled={isDisabled}
+                name={`category-input-${categoryOption.key}`}
+                id={`category-input-${categoryOption.key}`}
+                type="search"
+                aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
+                onChange={handleOnCategoryInputChange}
+                value={categoryInput}
+                placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
+                onKeyDown={evt => onCategoryInput(evt, categoryOption.key)}
+              />
+              <Button
+                isDisabled={isDisabled}
+                variant={ButtonVariant.control}
+                aria-label={intl.formatMessage(messages.filterByButtonAriaLabel, { value: categoryOption.key })}
+                onClick={evt => onCategoryInput(evt, categoryOption.key)}
+              >
+                <SearchIcon />
+              </Button>
+            </>
+          )}
         </InputGroup>
       </ToolbarFilter>
     );
@@ -200,6 +223,25 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
       ...filters,
       [currentCategory]:
         prevItems && (prevItems as Filter[]).find(item => item.value === categoryInput)
+          ? prevItems
+          : prevItems
+          ? [...(prevItems as Filter[]), filter]
+          : [filter],
+    };
+
+    setCategoryInput('');
+    setFilters(newFilters, () => {
+      onFilterAdded(filter);
+    });
+  };
+
+  const onCategoryInputSelect = (value, key) => {
+    const filter = getFilter(currentCategory, value);
+    const prevItems = filters[key] ? filters[key] : [];
+    const newFilters = {
+      ...filters,
+      [currentCategory]:
+        prevItems && (prevItems as Filter[]).find(item => item.value === value)
           ? prevItems
           : prevItems
           ? [...(prevItems as Filter[]), filter]
@@ -243,7 +285,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
     if (prevCategoryOptions !== categoryOptions || prevGroupBy !== groupBy) {
       setCurrentCategory(getDefaultCategory());
       setCategoryInput('');
-      setFilters({});
+      setFilters(getActiveFilters());
     } else {
       setFilters(getActiveFilters());
     }

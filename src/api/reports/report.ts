@@ -46,8 +46,7 @@ export const enum ReportType {
 // eslint-disable-next-line no-shadow
 export const enum ReportPathsType {
   accountSummary = 'accountSummary',
-  details = 'details', // Todo: placeholder for upcoming API
-  detailsFilter = 'detailsFilter',
+  details = 'details',
 
   // Todo: for testing
   actualSpend = 'actualSpend',

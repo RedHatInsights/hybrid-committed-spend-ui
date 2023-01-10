@@ -189,6 +189,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   };
 
   const handleOnGroupBySelected = value => {
+    handleOnFilterRemoved(null); // Clear all
     setSecondaryGroupBy(GroupByType.none);
     setGroupBy(value, () => {
       const newQuery = {
@@ -197,6 +198,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
           [value]: '*',
         },
         secondaryGroupBy: undefined,
+        filter_by: undefined,
       };
       navigate(getRouteForQuery(newQuery, true), { replace: true });
     });

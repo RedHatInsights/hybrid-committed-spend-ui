@@ -22,8 +22,9 @@
         // --pf-c-table__expandable-row--after--BorderLeftWidth: 0; // Left blue line for expanded rows
       }
     }
+
     .pf-c-table__sticky-column {
-      z-index: 199;
+      z-index: 99;
     }
   }
 }

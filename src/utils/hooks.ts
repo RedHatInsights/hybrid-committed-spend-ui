@@ -14,7 +14,7 @@ export const usePrevious = value => {
   return ref.current;
 };
 
-export const useStateCallback = initialState => {
+export const useStateCallback = (initialState: any) => {
   const [state, setState] = useState(initialState);
   const cbRef = useRef(null); // init mutable ref container for callbacks
 
