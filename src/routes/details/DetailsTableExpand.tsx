@@ -149,7 +149,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
 
   return (
     <React.Fragment>
-      {reportFetchStatus === FetchStatus.inProgress && isExpanded ? (
+      {(!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress) && isExpanded ? (
         <Tr>
           <Td colSpan={100}>
             <Bullseye>
