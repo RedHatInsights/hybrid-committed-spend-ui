@@ -1,6 +1,6 @@
 import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
 import { getQuery } from 'api/queries';
-import type { AccountSummaryReport } from 'api/reports/accountSummaryReports';
+import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useEffect } from 'react';

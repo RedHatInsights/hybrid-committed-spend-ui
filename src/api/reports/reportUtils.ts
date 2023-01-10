@@ -1,5 +1,5 @@
-import { runReport as runAccountSummaryReport } from './accountSummaryReports';
-import { runReport as runDetailsReport } from './detailsReports';
+import { runReport as runAccountSummaryReport } from './accountSummaryReport';
+import { runReport as runDetailsReport } from './detailsReport';
 import type { ReportType } from './report';
 import { ReportPathsType } from './report';
 
