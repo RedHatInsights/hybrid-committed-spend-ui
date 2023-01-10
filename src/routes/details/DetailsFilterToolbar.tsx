@@ -1,4 +1,5 @@
 import type { ToolbarChipGroup } from '@patternfly/react-core';
+import { FilterPathsType } from 'api/filters/filter';
 import type { Query } from 'api/queries';
 import messages from 'locales/messages';
 import React from 'react';
@@ -40,6 +41,7 @@ const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
   return (
     <DataToolbar
       categoryOptions={getCategoryOptions()}
+      filterPathsType={FilterPathsType.detailsFilter}
       groupBy={groupBy}
       isExportDisabled={isExportDisabled}
       onExportClicked={onExportClicked}

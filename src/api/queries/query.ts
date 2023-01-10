@@ -25,6 +25,7 @@ export interface Query {
   limit?: number;
   order_by?: any;
   primaryGroupBy?: any;
+  search?: any; // Todo: Replace with productName?
   secondaryGroupBy?: any;
   sourceOfSpend?: any;
   start_date?: any;

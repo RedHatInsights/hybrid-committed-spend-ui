@@ -154,6 +154,7 @@ export const useDetailsMapToProps = ({
           [secondaryGroupBy]: '*',
         },
       }),
+    ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
     ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
     dateRange,
   };
@@ -207,7 +208,7 @@ export const useDetailsMapToProps = ({
         dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
       }
     }
-  });
+  }, [reportQueryString]);
 
   return {
     endDate,
