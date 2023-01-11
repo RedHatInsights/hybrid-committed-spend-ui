@@ -23,10 +23,9 @@ export interface Query {
   filter_by?: any;
   group_by?: any; // Todo: Replace with primaryGroupBy?
   limit?: number;
-  order_by?: any;
-  primaryGroupBy?: any;
-  search?: any; // Todo: Replace with productName?
-  secondaryGroupBy?: any;
+  orderBy?: any;
+  primaryGroupBy?: any; // Todo: Use group_by?
+  secondaryGroupBy?: any; // Todo: Use group_by?
   sourceOfSpend?: any;
   start_date?: any;
 }

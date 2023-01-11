@@ -69,8 +69,6 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   sourceOfSpendType,
   startDate,
 }) => {
-  const [activeSortIndex, setActiveSortIndex] = useState<number | null>(null);
-  const [activeSortDirection, setActiveSortDirection] = useState<'asc' | 'desc' | null>(null);
   const [columns, setColumns] = useState([]);
   const [expandedRows, setExpandedRows] = useState(new Set());
   const [rows, setRows] = useState([]);
@@ -97,9 +95,9 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
 
     const newColumns: DetailsTableColumn[] = [
       {
-        isSortable: true,
         name: intl.formatMessage(messages.groupByValueNames, { groupBy }),
         orderBy: groupBy,
+        ...(computedItems.length && { isSortable: true }),
       },
     ];
 
@@ -109,14 +107,15 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     for (; compareDateYearAndMonth(currentDate, endDate) <= 0; currentDate.setMonth(currentDate.getMonth() + 1)) {
       const mapId = format(currentDate, 'yyyy-MM');
 
-      let isSortable = computedItems.length > 0;
+      let isSortable = false;
       computedItems.map(rowItem => {
         const item = rowItem.get(mapId);
         if (!item) {
-          isSortable = false;
           rowItem.set(mapId, {
             date: mapId,
           });
+        } else {
+          isSortable = true; // At least one row must be available
         }
       });
 
@@ -125,7 +124,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
         name: intl.formatDate(currentDate, { month: 'long' }),
         date: mapId,
         isSortable,
-        orderBy: 'cost', // Todo: update when APIs are available
+        orderBy: 'committed_spend',
       });
     }
 
@@ -183,24 +182,35 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     );
   };
 
+  const getSortBy = index => {
+    let direction;
+
+    const column = columns[index];
+    const hasOrderBy = query && query.orderBy && query.orderBy;
+
+    if (column.orderBy && !column.date) {
+      direction = hasOrderBy && query.orderBy[column.orderBy];
+    } else if (hasOrderBy && query.orderBy.date === column.date) {
+      direction = hasOrderBy && query.orderBy[column.orderBy];
+    }
+    return direction
+      ? {
+          index,
+          direction,
+        }
+      : {};
+  };
   const getSortParams = (columnIndex: number): ThProps['sort'] => ({
-    sortBy: {
-      index: activeSortIndex,
-      direction: activeSortDirection,
-      defaultDirection: 'asc',
-    },
+    sortBy: getSortBy(columnIndex),
     onSort: handleOnSort,
     columnIndex,
   });
 
   const handleOnSort = (event, index, direction) => {
-    setActiveSortDirection(direction);
-    setActiveSortIndex(index);
-
     if (onSort) {
       const column = columns[index];
       const isSortAscending = direction === SortByDirection.asc;
-      onSort(column.orderBy, isSortAscending, column.date);
+      onSort(column.orderBy, isSortAscending, columns[index].date);
     }
   };
 

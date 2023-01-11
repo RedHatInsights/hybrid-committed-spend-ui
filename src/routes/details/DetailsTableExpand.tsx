@@ -45,7 +45,7 @@ export const baseQuery: Query = {
   group_by: {
     product: '*',
   },
-  order_by: {
+  orderBy: {
     cost: 'desc',
   },
 };

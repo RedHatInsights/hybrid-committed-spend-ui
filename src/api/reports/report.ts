@@ -30,7 +30,15 @@ export interface ReportMeta extends PagedMetaData {
   group_by?: {
     [group: string]: string[];
   };
-  order_by?: {
+  // Todo: use group_by?
+  primaryGroupBy?: {
+    [group: string]: string[];
+  };
+  // Todo: use group_by?
+  secondaryGroupBy?: {
+    [group: string]: string[];
+  };
+  orderBy?: {
     [order: string]: string;
   };
   others?: number;
