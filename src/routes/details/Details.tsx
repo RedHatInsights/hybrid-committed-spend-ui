@@ -242,11 +242,11 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
 
   const handleOnSort = (sortType: string, isSortAscending: boolean, date: string = undefined) => {
     const newQuery = { ...JSON.parse(JSON.stringify(query)) };
-    newQuery.order_by = {};
-    newQuery.order_by[sortType] = isSortAscending ? 'asc' : 'desc';
+    newQuery.orderBy = {};
+    newQuery.orderBy[sortType] = isSortAscending ? 'asc' : 'desc';
 
     if (date) {
-      newQuery.order_by.date = date;
+      newQuery.orderBy.date = date;
     }
     const filteredQuery = getRouteForQuery(newQuery);
     navigate(filteredQuery, { replace: true });

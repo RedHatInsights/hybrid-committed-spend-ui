@@ -24,7 +24,9 @@ export interface BillingQuery extends utils.Query {
   delta?: string;
   filter?: BillingFilters;
   group_by?: BillingGroupBys;
-  order_by?: BillingOrderBys;
+  primaryGroupBy?: BillingGroupBys; // Todo: use group_by?
+  secondaryGroupBy?: BillingGroupBys; // Todo: Use group_by?
+  orderBy?: BillingOrderBys;
 }
 
 // filter_by props are converted and returned with logical OR/AND prefix

@@ -55,7 +55,7 @@ export const baseQuery: Query = {
   group_by: {
     product: '*',
   },
-  order_by: {
+  orderBy: {
     cost: 'desc',
   },
 };
@@ -141,7 +141,7 @@ export const useDetailsMapToProps = ({
   //   },
   //   filter_by: queryFromRoute.filter_by || baseQuery.filter_by,
   //   group_by: secondaryGroupBy ? secondaryGroupBy : groupBy,
-  //   order_by: queryFromRoute.order_by,
+  //   orderBy: queryFromRoute.orderBy,
   // };
   const query = {
     sourceOfSpend,
@@ -156,6 +156,7 @@ export const useDetailsMapToProps = ({
       }),
     ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
     ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
+    ...(queryFromRoute.orderBy && { orderBy: queryFromRoute.orderBy }),
     dateRange,
   };
 

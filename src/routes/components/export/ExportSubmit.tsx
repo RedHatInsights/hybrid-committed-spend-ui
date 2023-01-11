@@ -125,7 +125,7 @@ const useMapToProps = ({
       },
       filter_by: {}, // Don't want page filter, selected items will be filtered below
       limit: 0, // No limit to number of items returned
-      order_by: undefined, // Don't want items sorted by cost
+      orderBy: undefined, // Don't want items sorted by cost
     };
 
     // Store filter_by as an array, so we can add to it below
