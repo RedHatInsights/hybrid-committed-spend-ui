@@ -154,7 +154,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
         query={query}
         report={report}
         secondaryGroupBy={secondaryGroupBy}
-        sourceOfSpendType={sourceOfSpend}
+        sourceOfSpend={sourceOfSpend}
         startDate={startDate}
       />
     );
@@ -282,7 +282,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
           onSecondaryGroupBySelected={handleOnSecondaryGroupBySelected}
           onSourceOfSpendSelected={handleOnSourceOfSpendSelected}
           secondaryGroupBy={secondaryGroupBy}
-          sourceOfSpendType={sourceOfSpend}
+          sourceOfSpend={sourceOfSpend}
           startDate={startDate}
         />
       </PageHeading>

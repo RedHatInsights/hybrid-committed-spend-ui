@@ -20,7 +20,7 @@ interface DetailsToolbarOwnProps {
   onSecondaryGroupBySelected(value: string);
   onSourceOfSpendSelected(value: string);
   secondaryGroupBy?: string;
-  sourceOfSpendType?: string;
+  sourceOfSpend?: string;
   startDate?: Date;
 }
 
@@ -49,16 +49,16 @@ const secondaryGroupByOptions: PerspectiveOption[] = [
   { label: messages.groupBy, value: GroupByType.sourceOfSpend },
 ];
 
-const sourceOfSpendTypeOptions: PerspectiveOption[] = [
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.all },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.subs_yearly },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.subs_on_demand, isDisabled: true },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.reseller, isDisabled: true },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.marketplace },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.aws },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.azure },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.gcp },
-  { label: messages.sourceOfSpendTypeValues, value: SourceOfSpendType.consulting, isDisabled: true },
+const sourceOfSpendOptions: PerspectiveOption[] = [
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.all },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.subs_yearly },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.subs_on_demand, isDisabled: true },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.reseller, isDisabled: true },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.marketplace },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.aws },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.azure },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp },
+  { label: messages.sourceOfSpendValues, value: SourceOfSpendType.consulting, isDisabled: true },
 ];
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
@@ -72,7 +72,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   onSecondaryGroupBySelected,
   onSourceOfSpendSelected,
   secondaryGroupBy,
-  sourceOfSpendType,
+  sourceOfSpend,
 }) => {
   const formatDateRange = (startDate, endDate) => {
     return intl.formatDateTimeRange(startDate, endDate, {
@@ -167,12 +167,12 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   return (
     <div>
       <Perspective
-        currentItem={sourceOfSpendType}
+        currentItem={sourceOfSpend}
         id="sourceOfSpendType"
-        label={intl.formatMessage(messages.sourceOfSpendTypeLabel)}
+        label={intl.formatMessage(messages.sourceOfSpendLabel)}
         minWidth={200}
         onSelected={handleOnSourceOfSpendSelected}
-        options={sourceOfSpendTypeOptions}
+        options={sourceOfSpendOptions}
       />
       <Perspective
         currentItem={groupBy}
