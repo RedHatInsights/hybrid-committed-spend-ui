@@ -19,7 +19,7 @@ I've pushed some new changes as per our last discussion.
 Let me know if you find any issues or have any questions/concerns .
 
  */
-export const details = {
+export const primaryGroupBy = {
   meta: {
     count: '6',
     others: null,
