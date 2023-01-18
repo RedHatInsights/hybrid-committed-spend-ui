@@ -70,6 +70,31 @@ export function getGroupByType(groupBy: GroupByType): string {
   }
 }
 
+// Todo: details API only handles exact matches
+export function getSourceOfSpendFilter(sourceOfSpendType): string {
+  switch (sourceOfSpendType) {
+    case SourceOfSpendType.aws:
+      return 'Amazon Web Services';
+    case SourceOfSpendType.azure:
+      return 'Microsoft Azure';
+    case SourceOfSpendType.consulting:
+      return 'Consulting';
+    case SourceOfSpendType.gcp:
+      return 'Google Cloud Platform';
+    case SourceOfSpendType.marketplace:
+      return 'Red Hat Marketplace';
+    case SourceOfSpendType.reseller:
+      return 'Reseller/Distributor';
+    case SourceOfSpendType.subs_on_demand:
+      return 'On-demand subscriptions';
+    case SourceOfSpendType.subs_yearly:
+      return 'Yearly subscriptions';
+    case SourceOfSpendType.all:
+    default:
+      return 'All sources of spend';
+  }
+}
+
 export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): string {
   switch (sourceOfSpendType) {
     case SourceOfSpendType.aws:

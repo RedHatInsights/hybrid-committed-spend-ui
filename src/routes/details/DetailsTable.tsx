@@ -38,7 +38,7 @@ interface DetailsTableOwnProps {
   query?: Query;
   report?: Report;
   secondaryGroupBy?: string;
-  sourceOfSpendType?: string;
+  sourceOfSpend?: string;
   startDate?: Date;
 }
 
@@ -66,7 +66,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   query,
   report,
   secondaryGroupBy,
-  sourceOfSpendType,
+  sourceOfSpend,
   startDate,
 }) => {
   const [columns, setColumns] = useState([]);
@@ -220,7 +220,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
 
   useEffect(() => {
     setExpandedRows(new Set());
-  }, [groupBy, secondaryGroupBy, sourceOfSpendType]);
+  }, [groupBy, secondaryGroupBy, sourceOfSpend]);
 
   return (
     <React.Fragment>
@@ -303,7 +303,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                     groupByValue={cells[0].value}
                     isExpanded={isRowExpanded(`row-${rowIndex}`)}
                     secondaryGroupBy={secondaryGroupBy}
-                    sourceOfSpendType={sourceOfSpendType}
+                    sourceOfSpend={sourceOfSpend}
                     startDate={startDate}
                   />
                 </React.Fragment>

@@ -1322,13 +1322,13 @@
         "value": " selected"
       }
     ],
-    "sourcesOfSpendLabel": [
+    "sourceOfSpendLabel": [
       {
         "type": 0,
         "value": "View"
       }
     ],
-    "sourcesOfSpendValues": [
+    "sourceOfSpendValues": [
       {
         "options": {
           "all": {

@@ -15,7 +15,7 @@ import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatDate } from 'utils/dates';
 
-import { GroupByType, SourceOfSpendType } from './types';
+import { getSourceOfSpendFilter, GroupByType, SourceOfSpendType } from './types';
 
 interface AccountSummaryStateProps {
   summary?: AccountSummaryReport;
@@ -167,7 +167,7 @@ export const useDetailsMapToProps = ({
     filter: {
       limit: 10,
       offset: 0,
-      ...(sourceOfSpend !== SourceOfSpendType.all && { sources_of_spend: sourceOfSpend }),
+      ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
     },
     ...formatDate(startDate, endDate),
     sourceOfSpend: undefined,
@@ -195,7 +195,7 @@ export const useDetailsMapToProps = ({
         dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
       }
     }
-  }, [reportQueryString]);
+  }, [reportQueryString, isExpanded]);
 
   return {
     endDate,

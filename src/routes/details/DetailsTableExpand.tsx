@@ -24,7 +24,7 @@ interface DetailsTableExpandOwnProps {
   groupByValue?: string;
   isExpanded?: boolean;
   secondaryGroupBy?: string;
-  sourceOfSpendType?: string;
+  sourceOfSpend?: string;
   startDate?: Date;
 }
 
@@ -59,6 +59,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
   isExpanded,
   secondaryGroupBy,
   startDate,
+  sourceOfSpend,
 }) => {
   const [rows, setRows] = useState([]);
   const { report, reportFetchStatus } = useMapToProps({
@@ -68,6 +69,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
     isExpanded,
     secondaryGroupBy,
     startDate,
+    sourceOfSpend,
   });
 
   const isMounted = useRef(false);
@@ -192,6 +194,7 @@ const useMapToProps = ({
   isExpanded,
   secondaryGroupBy,
   startDate,
+  sourceOfSpend,
 }: DetailsTableExpandOwnProps): DetailsTableExpandStateProps => {
   const { report, reportFetchStatus } = useDetailsMapToProps({
     endDate,
@@ -200,6 +203,7 @@ const useMapToProps = ({
     isExpanded,
     secondaryGroupBy,
     startDate,
+    sourceOfSpend,
   });
 
   return {
