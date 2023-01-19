@@ -111,7 +111,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
         } else {
           const item = itemMap.get(mapId);
           if (item) {
-            // When applying multiple group_by params, costs may be split between regions. We need to sum those costs
+            // When applying multiple groupBy params, costs may be split between regions. We need to sum those costs
             itemMap.set(mapId, {
               ...item,
               affiliate,

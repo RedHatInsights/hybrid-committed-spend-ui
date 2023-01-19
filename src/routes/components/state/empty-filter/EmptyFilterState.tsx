@@ -66,8 +66,8 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
       }
     } else {
       const queryFromRoute = parseQuery<Query>(location.search);
-      if (queryFromRoute && queryFromRoute.group_by) {
-        for (const values of Object.values(queryFromRoute.group_by)) {
+      if (queryFromRoute && queryFromRoute.groupBy) {
+        for (const values of Object.values(queryFromRoute.groupBy)) {
           if (Array.isArray(values)) {
             for (const val of values) {
               if (filterTest1(val)) {

@@ -23,9 +23,7 @@ interface BillingOrderBys {
 export interface BillingQuery extends utils.Query {
   delta?: string;
   filter?: BillingFilters;
-  group_by?: BillingGroupBys;
-  primaryGroupBy?: BillingGroupBys; // Todo: use group_by?
-  secondaryGroupBy?: BillingGroupBys; // Todo: Use group_by?
+  groupBy?: BillingGroupBys;
   orderBy?: BillingOrderBys;
 }
 

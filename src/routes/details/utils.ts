@@ -52,7 +52,7 @@ export const baseQuery: Query = {
     offset: 0,
   },
   filter_by: {},
-  group_by: {
+  groupBy: {
     product: '*',
   },
   orderBy: {
@@ -130,30 +130,15 @@ export const useDetailsMapToProps = ({
   const location = useLocation();
   const queryFromRoute = parseQuery<Query>(location.search);
 
-  // const query = {
-  //   filter: {
-  //     ...(secondaryGroupBy
-  //       ? {
-  //           [groupBy]: groupByValue,
-  //         }
-  //       : {}),
-  //     ...queryFromRoute.filter,
-  //   },
-  //   filter_by: queryFromRoute.filter_by || baseQuery.filter_by,
-  //   group_by: secondaryGroupBy ? secondaryGroupBy : groupBy,
-  //   orderBy: queryFromRoute.orderBy,
-  // };
   const query = {
     sourceOfSpend,
-    primaryGroupBy: {
+    groupBy: {
       [groupBy]: groupByValue ? groupByValue : '*',
-    },
-    ...(secondaryGroupBy &&
-      secondaryGroupBy !== GroupByType.none && {
-        secondaryGroupBy: {
+      ...(secondaryGroupBy &&
+        secondaryGroupBy !== GroupByType.none && {
           [secondaryGroupBy]: '*',
-        },
-      }),
+        }),
+    },
     ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
     ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
     ...(queryFromRoute.orderBy && { orderBy: queryFromRoute.orderBy }),

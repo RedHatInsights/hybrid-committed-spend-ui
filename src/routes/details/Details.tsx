@@ -194,7 +194,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     setGroupBy(value, () => {
       const newQuery = {
         ...JSON.parse(JSON.stringify(query)),
-        primaryGroupBy: {
+        groupBy: {
           [value]: '*',
         },
         secondaryGroupBy: undefined,
@@ -322,8 +322,8 @@ const useDefaultDateRange = () => {
 
 const useDefaultGroupBy = () => {
   const queryFromRoute = getQueryFromRoute();
-  const primaryGroupBy = getIdKeyForGroupBy(queryFromRoute.primaryGroupBy);
-  return getGroupByType(primaryGroupBy ? primaryGroupBy : GroupByType.product);
+  const groupBy = getIdKeyForGroupBy(queryFromRoute.groupBy);
+  return getGroupByType(groupBy ? groupBy : GroupByType.product);
 };
 
 const useDefaultSecondaryGroupBy = () => {
