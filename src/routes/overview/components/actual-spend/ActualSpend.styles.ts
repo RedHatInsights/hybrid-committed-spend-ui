@@ -11,7 +11,7 @@ export const styles = {
   body: {
     minHeight: '125px',
   },
-  percent: {
+  percentage: {
     paddingLeft: global_spacer_sm.var,
   },
   percentContainer: {
