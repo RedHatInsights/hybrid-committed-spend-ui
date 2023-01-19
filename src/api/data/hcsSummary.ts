@@ -19,7 +19,7 @@ export const hcsSummary = {
       actual_committed_spend: { value: '6641613', units: 'EUR' },
       excess_committed_spend: { value: '0', units: 'EUR' },
       remaining_committed_spend: { value: '10025000.96', units: 'EUR' },
-      delta: { value: null, percent: null },
+      delta: { value: '9473.0', percent: '10.0' },
       contract_line_start_date: '2022-03-31',
       contract_line_end_date: '2023-03-30',
     },

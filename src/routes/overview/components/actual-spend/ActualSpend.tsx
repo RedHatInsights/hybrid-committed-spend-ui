@@ -1,3 +1,4 @@
+import { ArrowDownIcon } from '@patternfly/react-icons';
 import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
 import { getQuery } from 'api/queries';
 import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
@@ -54,12 +55,8 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
     ) : (
       <EmptyValueState />
     );
-  const percent: string | React.ReactNode =
-    values && values.delta && values.delta.percent ? (
-      formatPercentage(Number(values.delta.percent))
-    ) : (
-      <EmptyValueState />
-    );
+  const percent = values && values.delta && values.delta.percent ? Number(values.delta.percent) : undefined;
+  const percentage: string | React.ReactNode = percent !== undefined ? formatPercentage(percent) : <EmptyValueState />;
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
   if (values && values.contract_line_start_date) {
@@ -73,6 +70,17 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
     });
   }
 
+  const getArrowIcon = () => {
+    if (percent !== undefined) {
+      if (percent > 0) {
+        return <ArrowUpIcon style={styles.arrowIcon} />;
+      } else if (percent < 0) {
+        return <ArrowDownIcon style={styles.arrowIcon} />;
+      }
+    }
+    return null;
+  };
+
   return (
     <ReportSummary
       bodyStyle={styles.body}
@@ -85,8 +93,8 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
         <div style={styles.value}>{actualCommittedSpend}</div>
         <div>
           <div style={styles.percentContainer}>
-            <ArrowUpIcon style={styles.arrowIcon} />
-            <span style={styles.percent}>{intl.formatMessage(messages.percent, { value: percent })}</span>
+            {getArrowIcon()}
+            <span style={styles.percentage}>{intl.formatMessage(messages.percent, { value: percentage })}</span>
           </div>
           {intl.formatMessage(messages.overLastMonth)}
         </div>
