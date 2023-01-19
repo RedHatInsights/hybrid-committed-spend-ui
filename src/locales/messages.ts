@@ -176,8 +176,8 @@ export default defineMessages({
     id: 'detailsTableSelectAriaLabel',
   },
   detailsTitle: {
-    defaultMessage: 'Committed Spend details',
-    description: 'Committed Spend details',
+    defaultMessage: 'Hybrid Committed Spend Details',
+    description: 'Hybrid Committed Spend Details',
     id: 'detailsTitle',
   },
   emptyFilterStateSubtitle: {
@@ -419,8 +419,8 @@ export default defineMessages({
     id: 'overLastMonth',
   },
   overviewTitle: {
-    defaultMessage: 'Committed Spend overview',
-    description: 'Committed Spend overview',
+    defaultMessage: 'Hybrid Committed Spend Overview',
+    description: 'Hybrid Committed Spend Overview',
     id: 'overviewTitle',
   },
   pageTitleDefault: {

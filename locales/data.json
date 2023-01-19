@@ -432,7 +432,7 @@
     "detailsTitle": [
       {
         "type": 0,
-        "value": "Committed Spend details"
+        "value": "Hybrid Committed Spend Details"
       }
     ],
     "emptyFilterStateSubtitle": [
@@ -1231,7 +1231,7 @@
     "overviewTitle": [
       {
         "type": 0,
-        "value": "Committed Spend overview"
+        "value": "Hybrid Committed Spend Overview"
       }
     ],
     "pageTitleDefault": [
