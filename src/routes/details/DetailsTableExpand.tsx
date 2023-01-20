@@ -42,7 +42,7 @@ export const baseQuery: Query = {
     offset: 0,
   },
   filter_by: {},
-  group_by: {
+  groupBy: {
     product: '*',
   },
   orderBy: {

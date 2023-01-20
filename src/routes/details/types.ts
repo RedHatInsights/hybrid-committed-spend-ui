@@ -40,7 +40,7 @@ export function getDateRangeType(dateRange: DateRangeType): string {
   }
 }
 
-export function getIdKeyForGroupBy(groupBy: Query['group_by'] = {}) {
+export function getIdKeyForGroupBy(groupBy: Query['groupBy'] = {}) {
   if (groupBy.affiliate) {
     return GroupByType.affiliate;
   }

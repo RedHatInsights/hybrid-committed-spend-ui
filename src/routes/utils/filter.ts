@@ -27,8 +27,8 @@ export const addQueryFilter = (query: Query, filterType: string, filterValue: st
     newQuery[type] = {};
   }
 
-  // Filter by * won't generate a new request if group_by * already exists
-  if (filterValue === '*' && newQuery.primaryGroupBy[filterType] === '*') {
+  // Filter by * won't generate a new request if groupBy * already exists
+  if (filterValue === '*' && newQuery.groupBy[filterType] === '*') {
     return;
   }
 

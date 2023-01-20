@@ -127,7 +127,7 @@ function getUsageData(val, item?: any) {
 
 // Details pages typically use this function with filter[resolution]=monthly
 export function getUnsortedComputedReportItems<R extends Report, T extends ReportItem>({
-  idKey, // Note: The idKey must use org_entities for reports, while group_by uses org_unit_id
+  idKey, // Note: The idKey must use org_entities for reports, while groupBy uses org_unit_id
   isDateMap = false,
   report,
 }: ComputedReportItemsParams<R, T>) {
@@ -192,7 +192,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
         } else {
           const item = itemMap.get(mapId);
           if (item) {
-            // When applying multiple group_by params, costs may be split between regions. We need to sum those costs
+            // When applying multiple groupBy params, costs may be split between regions. We need to sum those costs
             // See https://issues.redhat.com/browse/COST-1131
             itemMap.set(mapId, {
               ...item,

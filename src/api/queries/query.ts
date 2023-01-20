@@ -1,7 +1,7 @@
 import { parse, stringify } from 'qs';
 
-export const logicalOrPrefix = 'or:'; // logical OR prefix for group_by
-export const logicalAndPrefix = 'and:'; // logical AND prefix for group_by
+export const logicalOrPrefix = 'or:'; // logical OR prefix for groupBy
+export const logicalAndPrefix = 'and:'; // logical AND prefix for groupBy
 
 export interface Filters {
   limit?: number;
@@ -17,17 +17,16 @@ export interface Query {
   account?: any;
   affiliate?: any;
   dateRange?: any;
-  end_date?: any;
+  endDate?: any;
   product?: any;
   filter?: any;
   filter_by?: any;
-  group_by?: any; // Todo: Replace with primaryGroupBy?
+  groupBy?: any;
   limit?: number;
   orderBy?: any;
-  primaryGroupBy?: any; // Todo: Use group_by?
-  secondaryGroupBy?: any; // Todo: Use group_by?
+  secondaryGroupBy?: any;
   sourceOfSpend?: any;
-  start_date?: any;
+  startDate?: any;
 }
 
 // Converts filter_by props to filter props
@@ -95,34 +94,18 @@ export function parseFilterByPrefix(query: Query) {
   }
   return newQuery;
 }
-// Todo: Use group_by?
-// Returns query without group_by prefix -- https://github.com/project-koku/koku-ui/issues/704
-// export function parseGroupByPrefixSAVE(query: Query) {
-//   if (!(query && query.group_by)) {
-//     return query;
-//   }
-//   const newQuery = {
-//     ...JSON.parse(JSON.stringify(query)),
-//     group_by: {},
-//   };
-//   for (const key of Object.keys(query.group_by)) {
-//     const groupByKey = parseKey(key);
-//     newQuery.group_by[groupByKey] = query.group_by[key];
-//   }
-//   return newQuery;
-// }
 
 export function parseGroupByPrefix(query: Query) {
-  if (!(query && query.primaryGroupBy)) {
+  if (!(query && query.groupBy)) {
     return query;
   }
   const newQuery = {
     ...JSON.parse(JSON.stringify(query)),
-    primaryGroupBy: {},
+    groupBy: {},
   };
-  for (const key of Object.keys(query.primaryGroupBy)) {
+  for (const key of Object.keys(query.groupBy)) {
     const groupByKey = parseKey(key);
-    newQuery.primaryGroupBy[groupByKey] = query.primaryGroupBy[key];
+    newQuery.groupBy[groupByKey] = query.groupBy[key];
   }
   return newQuery;
 }
