@@ -9,6 +9,7 @@ export interface ComputedReportValue {
 }
 
 export interface ComputedReportItem {
+  actualSpend?: ComputedReportValue;
   affiliate?: string;
   date?: string;
   committedSpend?: ComputedReportValue;
@@ -92,6 +93,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
         if (isDateMap) {
           // Map idKey by date
           const data = {
+            actualSpend: getCostData(val, 'actual_spend'),
             affiliate,
             date,
             committedSpend: getCostData(val, 'committed_spend'),
@@ -114,6 +116,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
             // When applying multiple groupBy params, costs may be split between regions. We need to sum those costs
             itemMap.set(mapId, {
               ...item,
+              actualSpend: getCostData(val, 'actual_spend', item),
               affiliate,
               date,
               committedSpend: getCostData(val, 'committed_spend', item),
@@ -124,6 +127,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
             });
           } else {
             itemMap.set(mapId, {
+              actualSpend: getCostData(val, 'actual_spend'),
               affiliate,
               date,
               committedSpend: getCostData(val, 'committed_spend'),

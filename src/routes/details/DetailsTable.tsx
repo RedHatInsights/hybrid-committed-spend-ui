@@ -55,7 +55,7 @@ export interface DetailsTableCell {
 
 type DetailsTableProps = DetailsTableOwnProps & WrappedComponentProps;
 
-export const reportItem = ComputedReportItemType.committedSpend;
+export const reportItem = ComputedReportItemType.actualSpend;
 
 const DetailsTableBase: React.FC<DetailsTableProps> = ({
   endDate,
@@ -124,7 +124,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
         name: intl.formatDate(currentDate, { month: 'long' }),
         date: mapId,
         isSortable,
-        orderBy: 'committed_spend',
+        orderBy: 'actual_spend',
       });
     }
 

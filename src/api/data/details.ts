@@ -24,32 +24,34 @@ export const primaryGroupByProduct = {
   meta: {
     count: '6',
     others: null,
-    startDate: '2022-05',
+    startDate: '2022-03',
     endDate: '2022-12',
     links: {
       first:
-        '/v1/reports/details?accountNumber=1290557&primaryGroupBy[product]=*&startDate=2022-05&endDate=2022-12&limit=10&offset=0',
+        '/v1/reports/details?accountNumber=1290557&groupBy[product]=*&startDate=2022-03&endDate=2022-12&limit=10&offset=0',
       next: null,
       previous: null,
-      last: '/v1/reports/details?accountNumber=1290557&primaryGroupBy[product]=*&startDate=2022-05&endDate=2022-12&limit=10&offset=0',
+      last: '/v1/reports/details?accountNumber=1290557&groupBy[product]=*&startDate=2022-03&endDate=2022-12&limit=10&offset=0',
     },
     filter: { limit: '10', offset: '0', resolution: 'monthly', product: [], affiliate: [], source_of_spend: [] },
     group_by: { product: ['*'], affiliate: [], source_of_spend: [] },
-    order_by: { date: null, committedSpend: null, products: null, affiliates: null, sourcesOfSpend: null },
+    order_by: {},
   },
   data: [
     {
       date: '2022-06',
       products: [
+        { product: 'RHEL 8', values: [] },
         {
           product: 'RHEL Server',
           values: [
             {
-              date: '2022-06',
+              actual_spend: { value: '60', units: 'EUR' },
               affiliate: 'SAP SE',
               source_of_spend: 'Red Hat Marketplace',
-              committed_spend: { value: '13283226', units: 'EUR' },
+              committed_spend: { value: '13283225', units: 'EUR' },
               product: 'RHEL Server',
+              date: '2022-06',
             },
           ],
         },
@@ -62,28 +64,32 @@ export const primaryGroupByProduct = {
           product: 'RHEL 8',
           values: [
             {
-              date: '2022-07',
+              actual_spend: { value: '70', units: 'EUR' },
               affiliate: 'SAP SE',
               source_of_spend: 'RedHat',
               committed_spend: { value: '39849678', units: 'EUR' },
               product: 'RHEL 8',
+              date: '2022-07',
             },
           ],
         },
+        { product: 'RHEL Server', values: [] },
       ],
     },
     {
       date: '2022-08',
       products: [
+        { product: 'RHEL 8', values: [] },
         {
           product: 'RHEL Server',
           values: [
             {
-              date: '2022-08',
+              actual_spend: { value: '60', units: 'EUR' },
               affiliate: 'SAP SE',
               source_of_spend: 'Red Hat Marketplace',
               committed_spend: { value: '13283226', units: 'EUR' },
               product: 'RHEL Server',
+              date: '2022-08',
             },
           ],
         },
@@ -92,15 +98,17 @@ export const primaryGroupByProduct = {
     {
       date: '2022-09',
       products: [
+        { product: 'RHEL 8', values: [] },
         {
           product: 'RHEL Server',
           values: [
             {
-              date: '2022-09',
+              actual_spend: { value: '70', units: 'EUR' },
               affiliate: 'SAP SE',
               source_of_spend: 'RedHat',
               committed_spend: { value: '39849678', units: 'EUR' },
               product: 'RHEL Server',
+              date: '2022-09',
             },
           ],
         },
@@ -109,15 +117,17 @@ export const primaryGroupByProduct = {
     {
       date: '2022-10',
       products: [
+        { product: 'RHEL 8', values: [] },
         {
           product: 'RHEL Server',
           values: [
             {
-              date: '2022-10',
+              actual_spend: { value: '70', units: 'EUR' },
               affiliate: 'SAP SE',
               source_of_spend: 'Red Hat Marketplace',
               committed_spend: { value: '39849678', units: 'EUR' },
               product: 'RHEL Server',
+              date: '2022-10',
             },
           ],
         },
@@ -126,15 +136,17 @@ export const primaryGroupByProduct = {
     {
       date: '2022-11',
       products: [
+        { product: 'RHEL 8', values: [] },
         {
           product: 'RHEL Server',
           values: [
             {
-              date: '2022-11',
+              actual_spend: { value: '70', units: 'EUR' },
               affiliate: 'SAP SE',
               source_of_spend: 'Red Hat Marketplace',
               committed_spend: { value: '39849678', units: 'EUR' },
               product: 'RHEL Server',
+              date: '2022-11',
             },
           ],
         },
