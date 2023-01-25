@@ -27,7 +27,7 @@ export function initApi({ version }: { version: string }) {
   axios.interceptors.request.use(insightsAuthInterceptor);
 }
 
-export function authInterceptor(reqConfig: AxiosRequestConfig): AxiosRequestConfig {
+export function authInterceptor(reqConfig: AxiosRequestConfig) {
   const insights = (window as any).insights;
   return insights.chrome.auth.getToken().then(token => {
     if (!token) {
