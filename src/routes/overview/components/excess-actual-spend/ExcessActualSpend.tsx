@@ -19,6 +19,9 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
   excessActualSpendBreakdown,
   intl,
 }) => {
+  if (!excessActualSpend && !excessActualSpendBreakdown) {
+    return null;
+  }
   const showExcessActualSpendBreakdown = excessActualSpendBreakdown && !excessActualSpend;
   return (
     <span style={styles.infoIcon}>
