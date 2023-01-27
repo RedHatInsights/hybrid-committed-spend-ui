@@ -42,19 +42,18 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[0];
 
-  // Todo: replace with actual spend
   const actualCommittedSpend: string | React.ReactNode =
     values && values.actual_committed_spend && values.actual_committed_spend.value ? (
       formatCurrency(Number(values.actual_committed_spend.value), values.actual_committed_spend.units || 'USD')
     ) : (
       <EmptyValueState />
     );
-  const excessActualSpend: string | React.ReactNode =
-    values && values.excess_committed_spend && values.excess_committed_spend.value ? (
-      formatCurrency(Number(values.excess_committed_spend.value), values.excess_committed_spend.units || 'USD')
-    ) : (
-      <EmptyValueState />
-    );
+
+  // Don't show excess spend unless greater than zero
+  const excessSpend = values && values.excess_committed_spend ? Number(values.excess_committed_spend.value) : undefined;
+  const excessActualSpend: string =
+    excessSpend > 0 ? formatCurrency(excessSpend, values.excess_committed_spend.units || 'USD') : undefined;
+
   const percent = values && values.delta && values.delta.percent ? Number(values.delta.percent) : undefined;
   const percentage: string | React.ReactNode = percent !== undefined ? formatPercentage(percent) : <EmptyValueState />;
 
