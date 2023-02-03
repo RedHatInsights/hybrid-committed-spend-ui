@@ -18,6 +18,7 @@ import type { FilterPathsType, FilterType } from 'api/filters/filter';
 import type { Query } from 'api/queries/query';
 import { getQuery } from 'api/queries/query';
 import messages from 'locales/messages';
+import type { FormEvent } from 'react';
 import React, { useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
@@ -34,7 +35,7 @@ interface FilterInputOwnProps {
   category?: string;
   isDisabled?: boolean;
   onClear?: () => void;
-  onSearchChanged?: (value: string) => void;
+  onSearchChanged?: (evt: FormEvent, value: string) => void;
   onSelect?: (value: string) => void;
   filterPathsType: FilterPathsType;
   filterType: FilterType;
