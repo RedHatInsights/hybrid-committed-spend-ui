@@ -75,7 +75,7 @@
   "secondaryGroupByLabel": "Secondary group by",
   "selected": "{value} selected",
   "sourceOfSpendLabel": "View",
-  "sourceOfSpendValues": "{value, select, all {All sources of spend} aws {Amazon Web Services} azure {Microsoft Azure} consulting {Consulting} gcp {Google Cloud Platform} marketplace {Red Hat Marketplace} reseller {Reseller/Distributor} subs_on_demand {On-demand subscriptions} subs_yearly {Yearly subscriptions} other {}}",
+  "sourceOfSpendValues": "{value, select, all {All sources of spend} aws {Amazon Web Services} azure {Microsoft Azure} ccsp {CCSP} consulting {Consulting} gcp {Google Cloud Platform} miscellaneous {Miscellaneous} oci {Oracle Cloud Infrastructure} on_demand {On-demand subscriptions} red_hat_marketplace {Red Hat Marketplace} redhat {Red Hat} reseller_distributor {Reseller / Distributor} training {Training} yearly_subscriptions {Yearly subscriptions} other {}}",
   "suggestions": "Suggestions",
   "toolBarBulkSelectAll": "Select all ({value} items)",
   "toolBarBulkSelectAriaDeselect": "Deselect all items",

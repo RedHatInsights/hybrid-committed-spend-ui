@@ -3,17 +3,17 @@ import axios from 'axios';
 import type { Filter, FilterData, FilterMeta } from './filter';
 import { FilterType } from './filter';
 
-export interface DetailsFilterReportData extends FilterData {
+export interface DetailsFilterData extends FilterData {
   value?: string;
 }
 
-export interface DetailsFilterReportMeta extends FilterMeta {
+export interface DetailsFilterMeta extends FilterMeta {
   count?: string;
 }
 
-export interface DetailsFilterReport extends Filter {
-  meta: DetailsFilterReportMeta;
-  data: DetailsFilterReportData[];
+export interface DetailsFilter extends Filter {
+  meta: DetailsFilterMeta;
+  data: DetailsFilterData[];
 }
 
 export const FilterTypePaths: Partial<Record<FilterType, string>> = {
@@ -25,5 +25,5 @@ export const FilterTypePaths: Partial<Record<FilterType, string>> = {
 export function runFilter(reportType: FilterType, query: string) {
   const path = FilterTypePaths[reportType];
   const _query = query ? `?${query}` : '';
-  return axios.get<DetailsFilterReport>(`${path}${_query}`);
+  return axios.get<DetailsFilter>(`${path}${_query}`);
 }

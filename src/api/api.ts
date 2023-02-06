@@ -15,8 +15,14 @@ export interface PagedLinks {
 
 export interface PagedResponse<D = any, M = any> {
   meta: M;
-  links: PagedLinks;
+  links?: PagedLinks;
   data: D[];
+}
+
+export interface PagedResponseAlt<D = any, M = any> {
+  meta: M;
+  links?: PagedLinks;
+  data: D;
 }
 
 export function initApi({ version }: { version: string }) {

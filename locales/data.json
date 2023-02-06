@@ -1355,6 +1355,14 @@
               }
             ]
           },
+          "ccsp": {
+            "value": [
+              {
+                "type": 0,
+                "value": "CCSP"
+              }
+            ]
+          },
           "consulting": {
             "value": [
               {
@@ -1371,26 +1379,23 @@
               }
             ]
           },
-          "marketplace": {
+          "miscellaneous": {
             "value": [
               {
                 "type": 0,
-                "value": "Red Hat Marketplace"
+                "value": "Miscellaneous"
               }
             ]
           },
-          "other": {
-            "value": []
-          },
-          "reseller": {
+          "oci": {
             "value": [
               {
                 "type": 0,
-                "value": "Reseller/Distributor"
+                "value": "Oracle Cloud Infrastructure"
               }
             ]
           },
-          "subs_on_demand": {
+          "on_demand": {
             "value": [
               {
                 "type": 0,
@@ -1398,7 +1403,42 @@
               }
             ]
           },
-          "subs_yearly": {
+          "other": {
+            "value": []
+          },
+          "red_hat_marketplace": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Red Hat Marketplace"
+              }
+            ]
+          },
+          "redhat": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Red Hat"
+              }
+            ]
+          },
+          "reseller_distributor": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Reseller / Distributor"
+              }
+            ]
+          },
+          "training": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Training"
+              }
+            ]
+          },
+          "yearly_subscriptions": {
             "value": [
               {
                 "type": 0,
