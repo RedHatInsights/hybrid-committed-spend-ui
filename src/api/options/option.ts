@@ -1,25 +1,20 @@
-import type { PagedMetaData, PagedResponse } from 'api/api';
+import type { PagedMetaData, PagedResponseAlt } from 'api/api';
 
 export interface OptionValue {
   code?: string;
   name?: string;
 }
 
-export interface OptionGroupBy {
+export interface OptionData {
   group_by?: OptionValue[];
-}
-
-export interface OptionSourceOfSpend {
   source_of_spend?: OptionValue[];
 }
-
-export type OptionData = OptionGroupBy | OptionSourceOfSpend;
 
 export interface OptionMeta extends PagedMetaData {
   // TBD...
 }
 
-export interface Option extends PagedResponse<OptionData, OptionMeta> {}
+export interface Option extends PagedResponseAlt<OptionData, OptionMeta> {}
 
 // eslint-disable-next-line no-shadow
 export const enum OptionType {

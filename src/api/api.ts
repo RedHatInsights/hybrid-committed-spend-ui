@@ -19,6 +19,12 @@ export interface PagedResponse<D = any, M = any> {
   data: D[];
 }
 
+export interface PagedResponseAlt<D = any, M = any> {
+  meta: M;
+  links?: PagedLinks;
+  data: D;
+}
+
 export function initApi({ version }: { version: string }) {
   axios.defaults.baseURL = `https://billing.dev.api.redhat.com/${version}/`;
   // axios.defaults.baseURL = `https://billing.qa.api.redhat.com/${version}/`;

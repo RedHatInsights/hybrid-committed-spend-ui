@@ -35,10 +35,10 @@ interface DetailsHeaderToolbarOwnProps {
 }
 
 interface DetailsHeaderToolbarStateProps {
-  optionData?: DetailsOption;
-  optionError?: AxiosError;
-  optionFetchStatus?: FetchStatus;
-  optionQueryString?: string;
+  options?: DetailsOption;
+  optionsError?: AxiosError;
+  optionsFetchStatus?: FetchStatus;
+  optionsQueryString?: string;
 }
 
 export type DetailsToolbarProps = DetailsHeaderToolbarOwnProps & WrappedComponentProps;
@@ -70,7 +70,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   secondaryGroupBy,
   sourceOfSpend,
 }) => {
-  const { optionData } = useMapToProps();
+  const { options } = useMapToProps();
 
   const formatDateRange = (startDate, endDate) => {
     return intl.formatDateTimeRange(startDate, endDate, {
@@ -110,9 +110,9 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   };
 
   const getDateRangeOptions = () => {
-    const options = cloneDeep(dateRangeOptions);
+    const newOptions = cloneDeep(dateRangeOptions);
 
-    options.map(option => {
+    newOptions.map(option => {
       switch (option.value) {
         case DateRangeType.contractedLastYear:
           option.description = getContractedLastYearDateRangeDesc();
@@ -134,91 +134,87 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
           break;
       }
     });
-
-    return options;
+    return newOptions;
   };
 
   const getGroupByOptions = (includeNoneOption = true) => {
-    const options = includeNoneOption ? cloneDeep(groupByOptions) : [];
+    const newOptions = includeNoneOption ? cloneDeep(groupByOptions) : [];
 
-    if (optionData && optionData.data) {
-      const groupByObj: any = optionData.data.find((data: any) => data.group_by);
-      if (groupByObj) {
-        groupByObj.group_by.forEach(item => {
-          switch (item.code) {
-            case GroupByType.affiliate:
-              options.push({ label: messages.groupBy, value: GroupByType.affiliate });
-              break;
-            case GroupByType.product:
-              options.push({ label: messages.groupBy, value: GroupByType.product });
-              break;
-            case GroupByType.sourceOfSpend:
-              options.push({ label: messages.groupBy, value: GroupByType.sourceOfSpend });
-              break;
-
-            // yearly_subscriptions
-            // on-demand
-            // reseller_distributor
-            // red_hat_marketplace
-            // aws
-            // azure
-            // gcp
-            // consulting
-            default:
-              options.push({ label: item.name, value: item.code });
-              break;
-          }
-          options.push();
-        });
-      }
+    if (options && options.data && options.data.group_by) {
+      options.data.group_by.forEach(item => {
+        switch (item.code) {
+          case GroupByType.affiliate:
+            newOptions.push({ label: messages.groupBy, value: GroupByType.affiliate });
+            break;
+          case GroupByType.product:
+            newOptions.push({ label: messages.groupBy, value: GroupByType.product });
+            break;
+          case GroupByType.sourceOfSpend:
+            newOptions.push({ label: messages.groupBy, value: GroupByType.sourceOfSpend });
+            break;
+          default:
+            newOptions.push({ label: item.name, value: item.code });
+            break;
+        }
+        newOptions.push();
+      });
     }
-    return options;
+    return newOptions;
   };
 
   const getSourceOfSpendOptions = () => {
-    const options = cloneDeep(sourceOfSpendOptions);
+    const newOptions = cloneDeep(sourceOfSpendOptions);
 
-    if (optionData && optionData.data) {
-      const sourceOfSpendObj: any = optionData.data.find((data: any) => data.source_of_spend);
-      if (sourceOfSpendObj) {
-        sourceOfSpendObj.source_of_spend.forEach(item => {
-          switch (item.code) {
-            case SourceOfSpendType.aws:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.aws });
-              break;
-            case SourceOfSpendType.azure:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.azure });
-              break;
-            case SourceOfSpendType.consulting:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.consulting });
-              break;
-            case SourceOfSpendType.gcp:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
-              break;
-            case SourceOfSpendType.on_demand:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.on_demand });
-              break;
-            case SourceOfSpendType.redhat:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.redhat });
-              break;
-            case SourceOfSpendType.red_hat_marketplace:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.red_hat_marketplace });
-              break;
-            case SourceOfSpendType.reseller_distributor:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.reseller_distributor });
-              break;
-            case SourceOfSpendType.yearly_subscriptions:
-              options.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.yearly_subscriptions });
-              break;
-            default:
-              options.push({ label: item.name, value: item.code });
-              break;
-          }
-          options.push();
-        });
-      }
+    if (options && options.data && options.data.source_of_spend) {
+      options.data.source_of_spend.forEach(item => {
+        switch (item.code) {
+          case SourceOfSpendType.aws:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.aws });
+            break;
+          case SourceOfSpendType.azure:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.azure });
+            break;
+          case SourceOfSpendType.ccsp:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.ccsp });
+            break;
+          case SourceOfSpendType.consulting:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.consulting });
+            break;
+          case SourceOfSpendType.gcp:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
+            break;
+          case SourceOfSpendType.miscellaneous:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.miscellaneous });
+            break;
+          case SourceOfSpendType.on_demand:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.on_demand });
+            break;
+          case SourceOfSpendType.oci:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oci });
+            break;
+          case SourceOfSpendType.redhat:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.redhat });
+            break;
+          case SourceOfSpendType.red_hat_marketplace:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.red_hat_marketplace });
+            break;
+          case SourceOfSpendType.reseller_distributor:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.reseller_distributor });
+            break;
+          case SourceOfSpendType.training:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.training });
+            break;
+          case SourceOfSpendType.yearly_subscriptions:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.yearly_subscriptions });
+            break;
+          default:
+            newOptions.push({ label: item.name, value: item.code });
+            break;
+        }
+        newOptions.push();
+      });
     }
-    return options;
+    return newOptions;
   };
 
   const handleOnDateRangeSelected = value => {
@@ -290,26 +286,26 @@ const useMapToProps = (): DetailsHeaderToolbarStateProps => {
     // TBD...
   };
 
-  const optionQueryString = getQuery(query);
-  const optionPathsType = OptionPathsType.detailsOption;
-  const optionType = OptionType.all;
-  const optionData = useSelector((state: RootState) =>
-    optionSelectors.selectOption(state, optionPathsType, optionType, optionQueryString)
+  const optionsQueryString = getQuery(query);
+  const optionsPathsType = OptionPathsType.detailsOption;
+  const optionsType = OptionType.all;
+  const options = useSelector((state: RootState) =>
+    optionSelectors.selectOption(state, optionsPathsType, optionsType, optionsQueryString)
   );
-  const optionFetchStatus = useSelector((state: RootState) =>
-    optionSelectors.selectOptionFetchStatus(state, optionPathsType, optionType, optionQueryString)
+  const optionsFetchStatus = useSelector((state: RootState) =>
+    optionSelectors.selectOptionFetchStatus(state, optionsPathsType, optionsType, optionsQueryString)
   );
 
   useEffect(() => {
-    if (optionFetchStatus !== FetchStatus.inProgress) {
-      dispatch(optionActions.fetchOption(optionPathsType, optionType, optionQueryString));
+    if (optionsFetchStatus !== FetchStatus.inProgress) {
+      dispatch(optionActions.fetchOption(optionsPathsType, optionsType, optionsQueryString));
     }
-  }, [optionQueryString]);
+  }, [optionsQueryString]);
 
   return {
-    optionData,
-    optionFetchStatus,
-    optionQueryString,
+    options,
+    optionsFetchStatus,
+    optionsQueryString,
   };
 };
 

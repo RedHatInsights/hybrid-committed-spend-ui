@@ -11,11 +11,11 @@ export interface DetailsOptionMeta extends OptionMeta {
 
 export interface DetailsOption extends Option {
   meta: DetailsOptionMeta;
-  data: DetailsOptionData[];
+  data: DetailsOptionData;
 }
 
 export const OptionTypePaths: Partial<Record<OptionType, string>> = {
-  [OptionType.all]: 'reports/dropdown',
+  [OptionType.all]: 'reports/detailsOptions',
 };
 
 export function runOption(reportType: OptionType, query: string) {

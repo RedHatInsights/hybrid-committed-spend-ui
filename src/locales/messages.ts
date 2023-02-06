@@ -473,12 +473,16 @@ export default defineMessages({
       'all {All sources of spend} ' +
       'aws {Amazon Web Services} ' +
       'azure {Microsoft Azure} ' +
+      'ccsp {CCSP} ' +
       'consulting {Consulting} ' +
       'gcp {Google Cloud Platform} ' +
+      'miscellaneous {Miscellaneous} ' +
+      'oci {Oracle Cloud Infrastructure} ' +
       'on_demand {On-demand subscriptions} ' +
       'red_hat_marketplace {Red Hat Marketplace} ' +
       'redhat {Red Hat} ' +
       'reseller_distributor {Reseller / Distributor} ' +
+      'training {Training} ' +
       'yearly_subscriptions {Yearly subscriptions} ' +
       'other {}}',
     description: 'All sources of spend',

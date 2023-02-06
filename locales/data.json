@@ -1355,6 +1355,14 @@
               }
             ]
           },
+          "ccsp": {
+            "value": [
+              {
+                "type": 0,
+                "value": "CCSP"
+              }
+            ]
+          },
           "consulting": {
             "value": [
               {
@@ -1368,6 +1376,22 @@
               {
                 "type": 0,
                 "value": "Google Cloud Platform"
+              }
+            ]
+          },
+          "miscellaneous": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Miscellaneous"
+              }
+            ]
+          },
+          "oci": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Oracle Cloud Infrastructure"
               }
             ]
           },
@@ -1403,6 +1427,14 @@
               {
                 "type": 0,
                 "value": "Reseller / Distributor"
+              }
+            ]
+          },
+          "training": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Training"
               }
             ]
           },

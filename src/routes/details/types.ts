@@ -15,12 +15,16 @@ export enum SourceOfSpendType {
   all = 'all',
   aws = 'aws',
   azure = 'azure',
+  ccsp = 'ccsp',
   consulting = 'consulting',
   gcp = 'gcp',
+  oci = 'oci',
   on_demand = 'on_demand',
+  miscellaneous = 'miscellaneous',
   redhat = 'redhat',
   red_hat_marketplace = 'red_hat_marketplace',
   reseller_distributor = 'reseller_distributor',
+  training = 'training',
   yearly_subscriptions = 'subs_yearly',
 }
 
@@ -71,17 +75,22 @@ export function getGroupByType(groupBy: GroupByType): string {
   }
 }
 
-// Todo: details API only handles exact matches
 export function getSourceOfSpendFilter(sourceOfSpendType): string {
   switch (sourceOfSpendType) {
     case SourceOfSpendType.aws:
       return 'Amazon Web Services';
     case SourceOfSpendType.azure:
       return 'Microsoft Azure';
+    case SourceOfSpendType.ccsp:
+      return 'CCSP';
     case SourceOfSpendType.consulting:
       return 'Consulting';
     case SourceOfSpendType.gcp:
       return 'Google Cloud Platform';
+    case SourceOfSpendType.miscellaneous:
+      return 'Miscellaneous';
+    case SourceOfSpendType.oci:
+      return 'Oracle Cloud Infrastructure';
     case SourceOfSpendType.on_demand:
       return 'On-demand subscriptions';
     case SourceOfSpendType.redhat:
@@ -90,6 +99,8 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'Red Hat Marketplace';
     case SourceOfSpendType.reseller_distributor:
       return 'Reseller / Distributor';
+    case SourceOfSpendType.training:
+      return 'Training';
     case SourceOfSpendType.yearly_subscriptions:
       return 'Yearly subscriptions';
     case SourceOfSpendType.all:
