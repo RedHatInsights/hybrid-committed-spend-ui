@@ -1371,26 +1371,7 @@
               }
             ]
           },
-          "marketplace": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Red Hat Marketplace"
-              }
-            ]
-          },
-          "other": {
-            "value": []
-          },
-          "reseller": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Reseller/Distributor"
-              }
-            ]
-          },
-          "subs_on_demand": {
+          "on_demand": {
             "value": [
               {
                 "type": 0,
@@ -1398,7 +1379,34 @@
               }
             ]
           },
-          "subs_yearly": {
+          "other": {
+            "value": []
+          },
+          "red_hat_marketplace": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Red Hat Marketplace"
+              }
+            ]
+          },
+          "redhat": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Red Hat"
+              }
+            ]
+          },
+          "reseller_distributor": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Reseller / Distributor"
+              }
+            ]
+          },
+          "yearly_subscriptions": {
             "value": [
               {
                 "type": 0,

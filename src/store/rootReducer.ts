@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { dashboardReducer, dashboardStateKey } from 'store/dashboard';
 import { exportReducer, exportStateKey } from 'store/export';
 import { filterReducer, filterStateKey } from 'store/filters';
+import { optionReducer, optionStateKey } from 'store/options';
 import { reportReducer, reportStateKey } from 'store/reports';
 import { userAccessReducer, userAccessStateKey } from 'store/user-access';
 import type { StateType } from 'typesafe-actions';
@@ -15,6 +16,7 @@ export const rootReducer = combineReducers({
   [exportStateKey]: exportReducer,
   [featureFlagsStateKey]: featureFlagsReducer,
   [filterStateKey]: filterReducer,
+  [optionStateKey]: optionReducer,
   [reportStateKey]: reportReducer,
   [userAccessStateKey]: userAccessReducer,
   notifications: notificationsReducer,

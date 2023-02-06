@@ -1,8 +1,6 @@
 import type { PagedMetaData, PagedResponse } from 'api/api';
 
 export interface FilterData {
-  account_alias: string;
-  cluster_alias: string;
   value?: string;
 }
 

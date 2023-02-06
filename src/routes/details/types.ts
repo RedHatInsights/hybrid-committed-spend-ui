@@ -17,10 +17,11 @@ export enum SourceOfSpendType {
   azure = 'azure',
   consulting = 'consulting',
   gcp = 'gcp',
-  marketplace = 'marketplace',
-  reseller = 'reseller',
-  subs_on_demand = 'subs_on_demand',
-  subs_yearly = 'subs_yearly',
+  on_demand = 'on_demand',
+  redhat = 'redhat',
+  red_hat_marketplace = 'red_hat_marketplace',
+  reseller_distributor = 'reseller_distributor',
+  yearly_subscriptions = 'subs_yearly',
 }
 
 export function getDateRangeType(dateRange: DateRangeType): string {
@@ -81,13 +82,15 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'Consulting';
     case SourceOfSpendType.gcp:
       return 'Google Cloud Platform';
-    case SourceOfSpendType.marketplace:
-      return 'Red Hat Marketplace';
-    case SourceOfSpendType.reseller:
-      return 'Reseller/Distributor';
-    case SourceOfSpendType.subs_on_demand:
+    case SourceOfSpendType.on_demand:
       return 'On-demand subscriptions';
-    case SourceOfSpendType.subs_yearly:
+    case SourceOfSpendType.redhat:
+      return 'Red Hat';
+    case SourceOfSpendType.red_hat_marketplace:
+      return 'Red Hat Marketplace';
+    case SourceOfSpendType.reseller_distributor:
+      return 'Reseller / Distributor';
+    case SourceOfSpendType.yearly_subscriptions:
       return 'Yearly subscriptions';
     case SourceOfSpendType.all:
     default:
@@ -105,14 +108,14 @@ export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): stri
       return 'consulting';
     case SourceOfSpendType.gcp:
       return 'gcp';
-    case SourceOfSpendType.marketplace:
-      return 'marketplace';
-    case SourceOfSpendType.reseller:
-      return 'reseller';
-    case SourceOfSpendType.subs_on_demand:
-      return 'subs_on_demand';
-    case SourceOfSpendType.subs_yearly:
-      return 'subs_yearly';
+    case SourceOfSpendType.red_hat_marketplace:
+      return 'red_hat_marketplace';
+    case SourceOfSpendType.redhat:
+      return 'reseller_distributor';
+    case SourceOfSpendType.on_demand:
+      return 'on_demand';
+    case SourceOfSpendType.yearly_subscriptions:
+      return 'yearly_subscriptions';
     case SourceOfSpendType.all:
     default:
       return 'all';

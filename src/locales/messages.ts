@@ -475,10 +475,11 @@ export default defineMessages({
       'azure {Microsoft Azure} ' +
       'consulting {Consulting} ' +
       'gcp {Google Cloud Platform} ' +
-      'marketplace {Red Hat Marketplace} ' +
-      'reseller {Reseller/Distributor} ' +
-      'subs_on_demand {On-demand subscriptions} ' +
-      'subs_yearly {Yearly subscriptions} ' +
+      'on_demand {On-demand subscriptions} ' +
+      'red_hat_marketplace {Red Hat Marketplace} ' +
+      'redhat {Red Hat} ' +
+      'reseller_distributor {Reseller / Distributor} ' +
+      'yearly_subscriptions {Yearly subscriptions} ' +
       'other {}}',
     description: 'All sources of spend',
     id: 'sourceOfSpendValues',
