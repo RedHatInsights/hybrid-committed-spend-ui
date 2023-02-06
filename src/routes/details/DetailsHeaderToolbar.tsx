@@ -193,12 +193,15 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oci });
             break;
           case SourceOfSpendType.redhat:
+            // Todo: Not a valid source of spend -- for testing only
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.redhat });
             break;
           case SourceOfSpendType.red_hat_marketplace:
+            // Todo: Not a valid source of spend -- for testing only
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.red_hat_marketplace });
             break;
           case SourceOfSpendType.reseller_distributor:
+            // Todo: Not a valid source of spend -- for testing only
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.reseller_distributor });
             break;
           case SourceOfSpendType.training:
