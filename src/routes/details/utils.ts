@@ -150,8 +150,7 @@ export const useDetailsMapToProps = ({
   const reportQueryString = getQuery({
     ...query,
     filter: {
-      limit: 10,
-      offset: 0,
+      ...(query.filter ? query.filter : {}),
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
     },
     ...formatDate(startDate, endDate),
