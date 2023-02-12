@@ -26,6 +26,7 @@ interface AccountSummaryStateProps {
 
 interface DetailsOwnProps {
   contractStartDate?: Date;
+  consumptionDate?: Date;
   dateRange?: string;
   endDate?: Date;
   groupBy?: string;
@@ -97,13 +98,14 @@ export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps
 
 export const useDetailsMapDateRangeToProps = ({
   contractStartDate,
+  consumptionDate,
   dateRange,
   groupBy,
   groupByValue,
   secondaryGroupBy,
   sourceOfSpend,
 }: DetailsOwnProps): DetailsStateProps => {
-  const { endDate, startDate } = getDateRange(dateRange, contractStartDate);
+  const { endDate, startDate } = getDateRange(dateRange, contractStartDate, consumptionDate);
 
   return useDetailsMapToProps({
     dateRange,
@@ -152,6 +154,7 @@ export const useDetailsMapToProps = ({
     filter: {
       ...(query.filter ? query.filter : {}),
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
+      ...(secondaryGroupBy && { limit: undefined, offset: 0 }), // Children are not paginated
     },
     ...formatDate(startDate, endDate),
     sourceOfSpend: undefined,

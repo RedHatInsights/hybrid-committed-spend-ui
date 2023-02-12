@@ -1379,6 +1379,14 @@
               }
             ]
           },
+          "hyperscalers": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Named Hyperscalers (CCSP)"
+              }
+            ]
+          },
           "miscellaneous": {
             "value": [
               {
@@ -1405,30 +1413,6 @@
           },
           "other": {
             "value": []
-          },
-          "red_hat_marketplace": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Red Hat Marketplace"
-              }
-            ]
-          },
-          "redhat": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Red Hat"
-              }
-            ]
-          },
-          "reseller_distributor": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Reseller / Distributor"
-              }
-            ]
           },
           "training": {
             "value": [

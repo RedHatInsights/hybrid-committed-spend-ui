@@ -144,21 +144,19 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     return `${location.pathname}?${getQueryRoute(newQuery)}`;
   };
 
-  const getTable = () => {
-    return (
-      <DetailsTable
-        endDate={endDate}
-        groupBy={groupBy}
-        isLoading={!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress}
-        onSort={handleOnSort}
-        query={query}
-        report={report}
-        secondaryGroupBy={secondaryGroupBy}
-        sourceOfSpend={sourceOfSpend}
-        startDate={startDate}
-      />
-    );
-  };
+  const getTable = () => (
+    <DetailsTable
+      endDate={endDate}
+      groupBy={groupBy}
+      isLoading={!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress}
+      onSort={handleOnSort}
+      query={query}
+      report={report}
+      secondaryGroupBy={secondaryGroupBy}
+      sourceOfSpend={sourceOfSpend}
+      startDate={startDate}
+    />
+  );
 
   const handleOnDateRangeSelected = value => {
     setDateRange(value, () => {
@@ -344,10 +342,13 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
   const contractLineStartDate =
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
+  const consumptionDate =
+    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
   const { endDate, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
     useDetailsMapDateRangeToProps({
       contractStartDate,
+      consumptionDate,
       dateRange,
       groupBy,
       sourceOfSpend,
