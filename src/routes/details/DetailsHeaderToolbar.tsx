@@ -153,10 +153,8 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
             newOptions.push({ label: messages.groupBy, value: GroupByType.sourceOfSpend });
             break;
           default:
-            newOptions.push({ label: item.name, value: item.code });
             break;
         }
-        newOptions.push();
       });
     }
     return newOptions;
@@ -183,6 +181,9 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
           case SourceOfSpendType.gcp:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
             break;
+          case SourceOfSpendType.hyperscalers:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.hyperscalers });
+            break;
           case SourceOfSpendType.miscellaneous:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.miscellaneous });
             break;
@@ -192,18 +193,6 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
           case SourceOfSpendType.oci:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oci });
             break;
-          case SourceOfSpendType.redhat:
-            // Todo: Not a valid source of spend -- for testing only
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.redhat });
-            break;
-          case SourceOfSpendType.red_hat_marketplace:
-            // Todo: Not a valid source of spend -- for testing only
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.red_hat_marketplace });
-            break;
-          case SourceOfSpendType.reseller_distributor:
-            // Todo: Not a valid source of spend -- for testing only
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.reseller_distributor });
-            break;
           case SourceOfSpendType.training:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.training });
             break;
@@ -211,10 +200,8 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.yearly_subscriptions });
             break;
           default:
-            newOptions.push({ label: item.name, value: item.code });
             break;
         }
-        newOptions.push();
       });
     }
     return newOptions;

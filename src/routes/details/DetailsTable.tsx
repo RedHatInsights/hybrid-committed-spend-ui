@@ -74,7 +74,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   const [rows, setRows] = useState([]);
 
   const isRowExpanded = id => expandedRows.has(id);
-  const initExpandedRows = id => {
+  const updateExpandedRows = id => {
     const result = new Set(expandedRows);
     if (!result.delete(id)) {
       result.add(id);
@@ -216,11 +216,8 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
 
   useEffect(() => {
     initDatum();
-  }, [JSON.stringify(report)]);
-
-  useEffect(() => {
     setExpandedRows(new Set());
-  }, [groupBy, secondaryGroupBy, sourceOfSpend]);
+  }, [JSON.stringify(report)]);
 
   return (
     <React.Fragment>
@@ -279,7 +276,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                               ? {
                                   areAllExpanded: !isRowExpanded(`row-${rowIndex}`),
                                   collapseAllAriaLabel: intl.formatMessage(messages.detailsTableSelectAriaLabel) as '', // Todo: Workaround for https://github.com/patternfly/patternfly-react/issues/8330
-                                  onToggle: () => initExpandedRows(`row-${rowIndex}`),
+                                  onToggle: () => updateExpandedRows(`row-${rowIndex}`),
                                 }
                               : undefined
                           }

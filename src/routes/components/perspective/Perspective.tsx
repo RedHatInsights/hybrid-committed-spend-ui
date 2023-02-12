@@ -76,9 +76,9 @@ class Perspective extends React.Component<PerspectiveProps> {
         selections={selection}
         variant={SelectVariant.single}
       >
-        {selectOptions.map(option => (
+        {selectOptions.map((option, index) => (
           <SelectOption
-            key={option.value}
+            key={`${id}-${index}-${option.value}`}
             description={option.description}
             value={option}
             isDisabled={option.isDisabled}

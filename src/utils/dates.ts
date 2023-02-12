@@ -63,40 +63,47 @@ export const getContractedLastYear = (startDate: Date = new Date(), isFormatted)
   return formatDate(_startDate, endDate, isFormatted);
 };
 
-export const getContractedYtd = (startDate, isFormatted) => {
-  const endDate = new Date();
-  endDate.setDate(1); // Workaround to compare month properly
-  endDate.setMonth(endDate.getMonth() - 1);
+export const getContractedYtd = (startDate, consumptionDate, isFormatted) => {
+  const endDate = consumptionDate ? consumptionDate : new Date();
+  const _startDate = startDate ? new Date(startDate.getTime()) : new Date();
 
-  return formatDate(startDate, endDate, isFormatted);
+  // Workaround to compare month properly
+  endDate.setDate(1);
+  _startDate.setDate(1);
+
+  if (!consumptionDate) {
+    endDate.setMonth(endDate.getMonth() - 1);
+  }
+  return formatDate(_startDate, endDate, isFormatted);
 };
 
 // Returns 9 months, including today's date
-export const getLastNineMonthsDate = isFormatted => {
-  return getLastMonthsDate(9, isFormatted);
+export const getLastNineMonthsDate = (consumptionDate, isFormatted) => {
+  return getLastMonthsDate(consumptionDate, 8, isFormatted);
 };
 
 // Returns 6 months, including today's date
-export const getLastSixMonthsDate = isFormatted => {
-  return getLastMonthsDate(6, isFormatted);
+export const getLastSixMonthsDate = (consumptionDate, isFormatted) => {
+  return getLastMonthsDate(consumptionDate, 5, isFormatted);
 };
 
 // Returns 3 months, including today's date
-export const getLastThreeMonthsDate = isFormatted => {
-  return getLastMonthsDate(3, isFormatted);
+export const getLastThreeMonthsDate = (consumptionDate, isFormatted) => {
+  return getLastMonthsDate(consumptionDate, 2, isFormatted);
 };
 
 // Returns today's month - offset
-export const getLastMonthsDate = (offset: number, isFormatted) => {
-  const endDate = getDate();
-  const startDate = getDate();
+export const getLastMonthsDate = (consumptionDate: Date, offset: number, isFormatted) => {
+  const endDate = consumptionDate ? consumptionDate : getDate();
+  const startDate = new Date();
 
   // Workaround to compare month properly
   endDate.setDate(1);
   startDate.setDate(1);
 
-  startDate.setMonth(startDate.getMonth() - offset);
-  endDate.setMonth(endDate.getMonth() - 1);
-
+  if (!consumptionDate) {
+    endDate.setMonth(endDate.getMonth() - 1);
+  }
+  startDate.setMonth(endDate.getMonth() - offset);
   return formatDate(startDate, endDate, isFormatted);
 };

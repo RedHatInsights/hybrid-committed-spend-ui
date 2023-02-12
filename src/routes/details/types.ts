@@ -18,12 +18,11 @@ export enum SourceOfSpendType {
   ccsp = 'ccsp',
   consulting = 'consulting',
   gcp = 'gcp',
+  hyperscalers = 'hyperscalers', // Todo: Add code when available
+  miscellaneous = 'miscellaneous',
+  none = 'none',
   oci = 'oci',
   on_demand = 'on_demand',
-  miscellaneous = 'miscellaneous',
-  redhat = 'redhat',
-  red_hat_marketplace = 'red_hat_marketplace',
-  reseller_distributor = 'reseller_distributor',
   training = 'training',
   yearly_subscriptions = 'subs_yearly',
 }
@@ -89,16 +88,12 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'Google Cloud Platform';
     case SourceOfSpendType.miscellaneous:
       return 'Miscellaneous';
+    case SourceOfSpendType.hyperscalers:
+      return 'Named Hyperscalers (CCSP)';
     case SourceOfSpendType.oci:
       return 'Oracle Cloud Infrastructure';
     case SourceOfSpendType.on_demand:
       return 'On-demand subscriptions';
-    case SourceOfSpendType.redhat:
-      return 'Red Hat';
-    case SourceOfSpendType.red_hat_marketplace:
-      return 'Red Hat Marketplace';
-    case SourceOfSpendType.reseller_distributor:
-      return 'Reseller / Distributor';
     case SourceOfSpendType.training:
       return 'Training';
     case SourceOfSpendType.yearly_subscriptions:
@@ -115,16 +110,22 @@ export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): stri
       return 'aws';
     case SourceOfSpendType.azure:
       return 'azure';
+    case SourceOfSpendType.ccsp:
+      return 'ccsp';
     case SourceOfSpendType.consulting:
       return 'consulting';
     case SourceOfSpendType.gcp:
       return 'gcp';
-    case SourceOfSpendType.red_hat_marketplace:
-      return 'red_hat_marketplace';
-    case SourceOfSpendType.redhat:
-      return 'reseller_distributor';
+    case SourceOfSpendType.hyperscalers:
+      return 'hyperscalers';
+    case SourceOfSpendType.miscellaneous:
+      return 'miscellaneous';
+    case SourceOfSpendType.oci:
+      return 'oci';
     case SourceOfSpendType.on_demand:
       return 'on_demand';
+    case SourceOfSpendType.training:
+      return 'training';
     case SourceOfSpendType.yearly_subscriptions:
       return 'yearly_subscriptions';
     case SourceOfSpendType.all:

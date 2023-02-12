@@ -476,12 +476,10 @@ export default defineMessages({
       'ccsp {CCSP} ' +
       'consulting {Consulting} ' +
       'gcp {Google Cloud Platform} ' +
+      'hyperscalers {Named Hyperscalers (CCSP)} ' +
       'miscellaneous {Miscellaneous} ' +
       'oci {Oracle Cloud Infrastructure} ' +
       'on_demand {On-demand subscriptions} ' +
-      'red_hat_marketplace {Red Hat Marketplace} ' +
-      'redhat {Red Hat} ' +
-      'reseller_distributor {Reseller / Distributor} ' +
       'training {Training} ' +
       'yearly_subscriptions {Yearly subscriptions} ' +
       'other {}}',
