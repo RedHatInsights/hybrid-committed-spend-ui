@@ -18,13 +18,14 @@ export enum SourceOfSpendType {
   ccsp = 'ccsp',
   consulting = 'consulting',
   gcp = 'gcp',
-  hyperscalers = 'hyperscalers', // Todo: Add code when available
+  hyperscalers = 'Named Hyperscalers (CCSP)', // Todo: This isn't a good code
+  hyperscalersAlt = 'hyperscalers',
   miscellaneous = 'miscellaneous',
   none = 'none',
   oci = 'oci',
   on_demand = 'on_demand',
   training = 'training',
-  yearly_subscriptions = 'subs_yearly',
+  yearlySubscriptions = 'yearly_subscriptions',
 }
 
 export function getDateRangeType(dateRange: DateRangeType): string {
@@ -96,7 +97,7 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'On-demand subscriptions';
     case SourceOfSpendType.training:
       return 'Training';
-    case SourceOfSpendType.yearly_subscriptions:
+    case SourceOfSpendType.yearlySubscriptions:
       return 'Yearly subscriptions';
     case SourceOfSpendType.all:
     default:
@@ -126,7 +127,7 @@ export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): stri
       return 'on_demand';
     case SourceOfSpendType.training:
       return 'training';
-    case SourceOfSpendType.yearly_subscriptions:
+    case SourceOfSpendType.yearlySubscriptions:
       return 'yearly_subscriptions';
     case SourceOfSpendType.all:
     default:

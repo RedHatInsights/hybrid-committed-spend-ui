@@ -182,7 +182,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
             break;
           case SourceOfSpendType.hyperscalers:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.hyperscalers });
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.hyperscalersAlt });
             break;
           case SourceOfSpendType.miscellaneous:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.miscellaneous });
@@ -196,8 +196,8 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
           case SourceOfSpendType.training:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.training });
             break;
-          case SourceOfSpendType.yearly_subscriptions:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.yearly_subscriptions });
+          case SourceOfSpendType.yearlySubscriptions:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.yearlySubscriptions });
             break;
           default:
             break;
