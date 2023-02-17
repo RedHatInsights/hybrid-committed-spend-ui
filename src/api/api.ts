@@ -25,10 +25,19 @@ export interface PagedResponseAlt<D = any, M = any> {
   data: D;
 }
 
+/*
+ * Potential API environments
+ *
+ * billing.dev.api.redhat.com
+ * billing.qa.api.redhat.com
+ * billing.stage.api.redhat.com
+ * billing.api.redhat.com
+ */
 export function initApi({ version }: { version: string }) {
-  axios.defaults.baseURL = `https://billing.dev.api.redhat.com/${version}/`;
-  // axios.defaults.baseURL = `https://billing.qa.api.redhat.com/${version}/`;
-  // axios.defaults.baseURL = `https://billing.stage.api.redhat.com/${version}/`;
+  const insights = (window as any).insights;
+  const env = insights.chrome.isBeta() ? '.dev' : '';
+
+  axios.defaults.baseURL = `https://billing${env}.api.redhat.com/${version}/`;
   axios.interceptors.request.use(authInterceptor);
   axios.interceptors.request.use(insightsAuthInterceptor);
 }
