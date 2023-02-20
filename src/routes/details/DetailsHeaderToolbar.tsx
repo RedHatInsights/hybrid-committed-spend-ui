@@ -181,9 +181,6 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
           case SourceOfSpendType.gcp:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
             break;
-          case SourceOfSpendType.hyperscalers:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.hyperscalersAlt });
-            break;
           case SourceOfSpendType.miscellaneous:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.miscellaneous });
             break;
@@ -204,7 +201,15 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
         }
       });
     }
-    return newOptions;
+    return newOptions.sort((a: any, b: any) => {
+      if (a.value > b.value) {
+        return 1;
+      } else if (a.value < b.value) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
   };
 
   const handleOnDateRangeSelected = value => {
