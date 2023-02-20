@@ -18,8 +18,6 @@ export enum SourceOfSpendType {
   ccsp = 'ccsp',
   consulting = 'consulting',
   gcp = 'gcp',
-  hyperscalers = 'Named Hyperscalers (CCSP)', // Todo: This isn't a good code
-  hyperscalersAlt = 'hyperscalers',
   miscellaneous = 'miscellaneous',
   none = 'none',
   oci = 'oci',
@@ -80,7 +78,7 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
     case SourceOfSpendType.aws:
       return 'Amazon Web Services';
     case SourceOfSpendType.azure:
-      return 'Microsoft Azure';
+      return 'Azure';
     case SourceOfSpendType.ccsp:
       return 'CCSP';
     case SourceOfSpendType.consulting:
@@ -89,8 +87,6 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'Google Cloud Platform';
     case SourceOfSpendType.miscellaneous:
       return 'Miscellaneous';
-    case SourceOfSpendType.hyperscalers:
-      return 'Named Hyperscalers (CCSP)';
     case SourceOfSpendType.oci:
       return 'Oracle Cloud Infrastructure';
     case SourceOfSpendType.on_demand:
@@ -117,8 +113,6 @@ export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): stri
       return 'consulting';
     case SourceOfSpendType.gcp:
       return 'gcp';
-    case SourceOfSpendType.hyperscalers:
-      return 'hyperscalers';
     case SourceOfSpendType.miscellaneous:
       return 'miscellaneous';
     case SourceOfSpendType.oci:

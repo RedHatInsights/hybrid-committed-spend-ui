@@ -472,11 +472,10 @@ export default defineMessages({
       '{value, select, ' +
       'all {All sources of spend} ' +
       'aws {Amazon Web Services} ' +
-      'azure {Microsoft Azure} ' +
+      'azure {Azure} ' +
       'ccsp {CCSP} ' +
       'consulting {Consulting} ' +
       'gcp {Google Cloud Platform} ' +
-      'hyperscalers {Named Hyperscalers (CCSP)} ' +
       'miscellaneous {Miscellaneous} ' +
       'oci {Oracle Cloud Infrastructure} ' +
       'on_demand {On-demand subscriptions} ' +
