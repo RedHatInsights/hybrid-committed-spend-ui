@@ -1,7 +1,7 @@
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import messages from 'locales/messages';
 import { lazy } from 'react';
-import { paths } from 'Routes';
+import { formatPath, routes } from 'Routes';
 
 import type { DashboardWidget } from './dashboardCommon';
 import { DashboardSize } from './dashboardCommon';
@@ -33,7 +33,7 @@ export const actualSpendBreakdownWidget: DashboardWidget = {
   title: messages.dashboardActualSpendBreakdownTitle,
   reportPathsType: ReportPathsType.actualSpendBreakdown,
   reportType: ReportType.billing,
-  viewAllPath: paths.details,
+  viewAllPath: formatPath(routes.details.path),
 };
 
 export const committedSpendWidget: DashboardWidget = {
@@ -53,5 +53,5 @@ export const committedSpendTrendWidget: DashboardWidget = {
   title: messages.dashboardCommitmentSpendTrendTitle,
   reportPathsType: ReportPathsType.committedSpendTrend,
   reportType: ReportType.billing,
-  viewAllPath: paths.details,
+  viewAllPath: formatPath(routes.details.path),
 };

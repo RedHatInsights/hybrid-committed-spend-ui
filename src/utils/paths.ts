@@ -1,7 +1,14 @@
-import { routes } from 'Routes';
+// TBD...
+export const getReleasePath = () => {
+  const pathName = window.location.pathname.split('/');
+  pathName.shift();
 
-// Returns Routes path associated with given window location
-export const getPath = location => {
-  const currRoute = location ? routes.find(({ path }) => path === location.pathname) : undefined;
-  return currRoute ? currRoute.path : undefined;
+  let release = '';
+  if (pathName[0] === 'beta') {
+    release = `/beta`;
+  }
+  if (pathName[0] === 'preview') {
+    release = `/preview`;
+  }
+  return release;
 };

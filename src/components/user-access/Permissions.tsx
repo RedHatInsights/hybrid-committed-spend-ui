@@ -5,7 +5,7 @@ import type { AxiosError } from 'axios';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { paths, routes } from 'Routes';
+import { formatPath, routes } from 'Routes';
 import { Loading, NotAuthorized, NotAvailable } from 'routes/state';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
@@ -31,11 +31,6 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
   const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
   const location = useLocation();
 
-  const getRoutePath = () => {
-    const currRoute = routes.find(({ path }) => path === location.pathname);
-    return currRoute ? currRoute.path : undefined;
-  };
-
   const hasPermissions = () => {
     if (userAccessFetchStatus !== FetchStatus.complete) {
       return false;
@@ -45,10 +40,10 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
     const details = hasAccess && isDetailsFeatureEnabled;
     const overview = hasAccess;
 
-    switch (getRoutePath()) {
-      case paths.details:
+    switch (location.pathname) {
+      case formatPath(routes.details.path):
         return details;
-      case paths.overview:
+      case formatPath(routes.overview.path):
         return overview;
       default:
         return false;

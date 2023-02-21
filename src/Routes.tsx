@@ -6,22 +6,23 @@ import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom';
 const Details = lazy(() => import(/* webpackChunkName: "Details" */ 'routes/details/Details'));
 const Overview = lazy(() => import(/* webpackChunkName: "Overview" */ 'routes/overview/Overview'));
 
-// For syncing with permissions
-const paths = {
-  details: '/details',
-  overview: '/',
+// Prefixes the given path with a basename, but without the release (/beta) prefix
+const formatPath = path => {
+  const basename = '/business-services/hybrid-committed-spend';
+  return path === routes.overview.path ? basename : `${basename}${path}`;
 };
 
-const routes = [
-  {
+// For syncing with permissions
+const routes = {
+  details: {
     element: UserAccess(Details),
-    path: paths.details,
+    path: '/details',
   },
-  {
+  overview: {
     element: UserAccess(Overview),
-    path: paths.overview,
+    path: '/',
   },
-];
+};
 
 const Routes = () => (
   <Suspense
@@ -32,13 +33,14 @@ const Routes = () => (
     }
   >
     <RouterRoutes>
-      {routes.map(route => (
-        <Route key={route.path} path={route.path} element={<route.element />} />
-      ))}
+      {Object.keys(routes).map(key => {
+        const route = routes[key];
+        return <Route key={route.path} path={route.path} element={<route.element />} />;
+      })}
       {/* Finally, catch all unmatched routes */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </RouterRoutes>
   </Suspense>
 );
 
-export { paths, Routes, routes };
+export { formatPath, routes, Routes };
