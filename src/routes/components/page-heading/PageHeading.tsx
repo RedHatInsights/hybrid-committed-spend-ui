@@ -8,15 +8,14 @@ import React, { useEffect } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
-import { paths } from 'Routes';
+import { routes } from 'Routes';
 import { EmptyValueState } from 'routes/components/state/empty-value';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
-import { getPath } from 'utils/paths';
+import { formatPath, usePathname } from 'utils/paths';
 
 import { styles } from './PageHeading.styles';
 
@@ -35,7 +34,7 @@ type PageHeadingProps = PageHeadingOwnProps & WrappedComponentProps;
 
 const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
   const { report, reportFetchStatus } = useMapToProps();
-  const location = useLocation();
+  const pathname = usePathname();
 
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[0];
@@ -56,10 +55,10 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
     values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
   const getPageTitle = () => {
-    switch (getPath(location)) {
-      case paths.details:
+    switch (pathname) {
+      case formatPath(routes.details.path):
         return messages.detailsTitle;
-      case paths.overview:
+      case formatPath(routes.overview.path):
       default:
         return messages.overviewTitle;
     }

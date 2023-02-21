@@ -3,7 +3,8 @@ import messages from 'locales/messages';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { paths } from 'Routes';
+import { routes } from 'Routes';
+import { formatPath } from 'utils/paths';
 
 interface NotAuthorizedStateOwnProps {
   pathname?: string;
@@ -18,8 +19,8 @@ class NotAuthorizedStateBase extends React.Component<NotAuthorizedStateProps> {
     let msg;
 
     switch (pathname) {
-      case paths.details:
-      case paths.overview:
+      case formatPath(routes.details.path):
+      case formatPath(routes.overview.path):
       default:
         msg = messages.hcs;
         break;
