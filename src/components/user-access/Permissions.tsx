@@ -4,13 +4,13 @@ import { UserAccessType } from 'api/user-access';
 import type { AxiosError } from 'axios';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { formatPath, routes } from 'Routes';
+import { routes } from 'Routes';
 import { Loading, NotAuthorized, NotAvailable } from 'routes/state';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { featureFlagsSelectors } from 'store/feature-flags';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
+import { formatPath, usePathname } from 'utils/paths';
 import { hasAllAccess } from 'utils/userAccess';
 
 interface PermissionsOwnProps {
@@ -29,7 +29,7 @@ type PermissionsProps = PermissionsOwnProps;
 
 const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
   const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
-  const location = useLocation();
+  const pathname = usePathname();
 
   const hasPermissions = () => {
     if (userAccessFetchStatus !== FetchStatus.complete) {
@@ -40,7 +40,7 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
     const details = hasAccess && isDetailsFeatureEnabled;
     const overview = hasAccess;
 
-    switch (location.pathname) {
+    switch (pathname) {
       case formatPath(routes.details.path):
         return details;
       case formatPath(routes.overview.path):
@@ -51,7 +51,7 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
   };
 
   // Page access denied because user doesn't have RBAC permissions and is not an org admin
-  let result = <NotAuthorized pathname={location.pathname} />;
+  let result = <NotAuthorized pathname={pathname} />;
 
   if (userAccessFetchStatus === FetchStatus.inProgress) {
     result = <Loading />;

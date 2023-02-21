@@ -1,7 +1,8 @@
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import messages from 'locales/messages';
 import { lazy } from 'react';
-import { formatPath, routes } from 'Routes';
+import { routes } from 'Routes';
+import { formatPath } from 'utils/paths';
 
 import type { DashboardWidget } from './dashboardCommon';
 import { DashboardSize } from './dashboardCommon';

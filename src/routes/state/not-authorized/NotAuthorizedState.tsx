@@ -3,7 +3,8 @@ import messages from 'locales/messages';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { formatPath, routes } from 'Routes';
+import { routes } from 'Routes';
+import { formatPath } from 'utils/paths';
 
 interface NotAuthorizedStateOwnProps {
   pathname?: string;

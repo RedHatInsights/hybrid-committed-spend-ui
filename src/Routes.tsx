@@ -6,12 +6,6 @@ import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom';
 const Details = lazy(() => import(/* webpackChunkName: "Details" */ 'routes/details/Details'));
 const Overview = lazy(() => import(/* webpackChunkName: "Overview" */ 'routes/overview/Overview'));
 
-// Prefixes the given path with a basename, but without the release (/beta) prefix
-const formatPath = path => {
-  const basename = '/business-services/hybrid-committed-spend';
-  return path === routes.overview.path ? basename : `${basename}${path}`;
-};
-
 // For syncing with permissions
 const routes = {
   details: {
@@ -43,4 +37,4 @@ const Routes = () => (
   </Suspense>
 );
 
-export { formatPath, routes, Routes };
+export { routes, Routes };
