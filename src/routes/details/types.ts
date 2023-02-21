@@ -18,13 +18,12 @@ export enum SourceOfSpendType {
   ccsp = 'ccsp',
   consulting = 'consulting',
   gcp = 'gcp',
-  hyperscalers = 'hyperscalers', // Todo: Add code when available
   miscellaneous = 'miscellaneous',
   none = 'none',
   oci = 'oci',
   on_demand = 'on_demand',
   training = 'training',
-  yearly_subscriptions = 'subs_yearly',
+  yearlySubscriptions = 'yearly_subscriptions',
 }
 
 export function getDateRangeType(dateRange: DateRangeType): string {
@@ -79,7 +78,7 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
     case SourceOfSpendType.aws:
       return 'Amazon Web Services';
     case SourceOfSpendType.azure:
-      return 'Microsoft Azure';
+      return 'Azure';
     case SourceOfSpendType.ccsp:
       return 'CCSP';
     case SourceOfSpendType.consulting:
@@ -88,15 +87,13 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'Google Cloud Platform';
     case SourceOfSpendType.miscellaneous:
       return 'Miscellaneous';
-    case SourceOfSpendType.hyperscalers:
-      return 'Named Hyperscalers (CCSP)';
     case SourceOfSpendType.oci:
       return 'Oracle Cloud Infrastructure';
     case SourceOfSpendType.on_demand:
       return 'On-demand subscriptions';
     case SourceOfSpendType.training:
       return 'Training';
-    case SourceOfSpendType.yearly_subscriptions:
+    case SourceOfSpendType.yearlySubscriptions:
       return 'Yearly subscriptions';
     case SourceOfSpendType.all:
     default:
@@ -116,8 +113,6 @@ export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): stri
       return 'consulting';
     case SourceOfSpendType.gcp:
       return 'gcp';
-    case SourceOfSpendType.hyperscalers:
-      return 'hyperscalers';
     case SourceOfSpendType.miscellaneous:
       return 'miscellaneous';
     case SourceOfSpendType.oci:
@@ -126,7 +121,7 @@ export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): stri
       return 'on_demand';
     case SourceOfSpendType.training:
       return 'training';
-    case SourceOfSpendType.yearly_subscriptions:
+    case SourceOfSpendType.yearlySubscriptions:
       return 'yearly_subscriptions';
     case SourceOfSpendType.all:
     default:

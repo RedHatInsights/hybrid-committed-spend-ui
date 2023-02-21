@@ -217,7 +217,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   useEffect(() => {
     initDatum();
     setExpandedRows(new Set());
-  }, [JSON.stringify(report)]);
+  }, [JSON.stringify(report), groupBy, secondaryGroupBy]);
 
   return (
     <React.Fragment>

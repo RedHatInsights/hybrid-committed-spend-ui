@@ -1,7 +1,7 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
 import { UserAccess } from 'components/user-access';
 import React, { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes as Switch } from 'react-router-dom';
+import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom';
 
 const Details = lazy(() => import(/* webpackChunkName: "Details" */ 'routes/details/Details'));
 const Overview = lazy(() => import(/* webpackChunkName: "Overview" */ 'routes/overview/Overview'));
@@ -31,13 +31,13 @@ const Routes = () => (
       </Bullseye>
     }
   >
-    <Switch>
+    <RouterRoutes>
       {routes.map(route => (
         <Route key={route.path} path={route.path} element={<route.element />} />
       ))}
       {/* Finally, catch all unmatched routes */}
       <Route path="*" element={<Navigate to="/" replace />} />
-    </Switch>
+    </RouterRoutes>
   </Suspense>
 );
 

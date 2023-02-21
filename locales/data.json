@@ -1351,7 +1351,7 @@
             "value": [
               {
                 "type": 0,
-                "value": "Microsoft Azure"
+                "value": "Azure"
               }
             ]
           },
@@ -1376,14 +1376,6 @@
               {
                 "type": 0,
                 "value": "Google Cloud Platform"
-              }
-            ]
-          },
-          "hyperscalers": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Named Hyperscalers (CCSP)"
               }
             ]
           },
