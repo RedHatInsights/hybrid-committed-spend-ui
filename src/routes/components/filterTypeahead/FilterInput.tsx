@@ -31,14 +31,18 @@ import { filterActions, filterSelectors } from 'store/filters';
 import { useStateCallback } from 'utils/hooks';
 import { noop } from 'utils/noop';
 
+import { styles } from './FilterTypeahead.styles';
+
 interface FilterInputOwnProps {
+  ariaLabel?: string;
   category?: string;
+  filterPathsType: FilterPathsType;
+  filterType: FilterType;
   isDisabled?: boolean;
   onClear?: () => void;
   onSearchChanged?: (evt: FormEvent, value: string) => void;
   onSelect?: (value: string) => void;
-  filterPathsType: FilterPathsType;
-  filterType: FilterType;
+  placeholder?: string;
   search?: string;
 }
 
@@ -54,6 +58,7 @@ interface FilterInputDispatchProps {
 type FilterInputProps = FilterInputOwnProps & FilterInputStateProps & FilterInputDispatchProps & WrappedComponentProps;
 
 const FilterInputBase: React.FC<FilterInputProps> = ({
+  ariaLabel,
   category,
   filterPathsType,
   filterType,
@@ -63,6 +68,7 @@ const FilterInputBase: React.FC<FilterInputProps> = ({
   onSearchChanged,
   onSelect,
   search,
+  placeholder,
 }) => {
   const [menuIsOpen, setMenuIsOpen] = useStateCallback(false);
 
@@ -84,22 +90,26 @@ const FilterInputBase: React.FC<FilterInputProps> = ({
   const getInputGroup = () => {
     return (
       <div ref={textInputGroupRef}>
-        <TextInputGroup isDisabled={isDisabled}>
-          <TextInputGroupMain
-            icon={<SearchIcon />}
-            value={search}
-            onChange={onSearchChanged}
-            onFocus={openMenu}
-            onKeyDown={handleTextInputKeyDown}
-          />
-          {search && search.length && (
-            <TextInputGroupUtilities>
-              <Button variant="plain" onClick={handleClearSearch} aria-label="Clear button and input">
-                <TimesIcon />
-              </Button>
-            </TextInputGroupUtilities>
-          )}
-        </TextInputGroup>
+        <div style={styles.container}>
+          <TextInputGroup isDisabled={isDisabled}>
+            <TextInputGroupMain
+              aria-label={ariaLabel}
+              icon={<SearchIcon />}
+              value={search}
+              onChange={onSearchChanged}
+              onFocus={openMenu}
+              onKeyDown={handleTextInputKeyDown}
+              placeholder={placeholder}
+            />
+            {search && search.length && (
+              <TextInputGroupUtilities>
+                <Button variant="plain" onClick={handleClearSearch} aria-label="Clear button and input">
+                  <TimesIcon />
+                </Button>
+              </TextInputGroupUtilities>
+            )}
+          </TextInputGroup>
+        </div>
       </div>
     );
   };

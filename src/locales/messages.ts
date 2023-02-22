@@ -277,7 +277,6 @@ export default defineMessages({
   exportFileName: {
     defaultMessage:
       '{groupBy, select, ' +
-      'account {{resolution, select, daily {{provider}_cloud_payer_accounts_{startDate}_{endDate}} monthly {{provider}_cloud_payer_accounts_{startDate}_{endDate}} other {}}} ' +
       'affiliate {{resolution, select, daily {{provider}_affiliates_{startDate}_{endDate}} monthly {{provider}_affiliates_{startDate}_{endDate}} other {}}} ' +
       'product {{resolution, select, daily {{provider}_product_{startDate}_{endDate}} monthly {{provider}_product_{startDate}_{endDate}} other {}}} ' +
       'source_of_spend {{resolution, select, daily {{provider}_source_of_spend_{startDate}_{endDate}} monthly {{provider}_source_of_spend_{startDate}_{endDate}} other {}}} ' +
@@ -293,7 +292,6 @@ export default defineMessages({
   exportHeading: {
     defaultMessage:
       '{groupBy, select, ' +
-      'account {Aggregates of the following cloud payer accounts will be exported to a .csv file.} ' +
       'affiliate {Aggregates of the following affiliates will be exported to a .csv file.} ' +
       'product {Aggregates of the following products will be exported to a .csv file.} ' +
       'source_of_spend {Aggregates of the following source of spend will be exported to a .csv file.} ' +
@@ -309,7 +307,6 @@ export default defineMessages({
   filterByButtonAriaLabel: {
     defaultMessage:
       '{value, select, ' +
-      'account {Filter button for cloud payer accounts} ' +
       'affiliate {Filter button for affiliates} ' +
       'product {Filter button for products} ' +
       'source_of_spend {Filter button for source of spend} ' +
@@ -320,7 +317,6 @@ export default defineMessages({
   filterByInputAriaLabel: {
     defaultMessage:
       '{value, select, ' +
-      'account {Filter input for cloud payer accounts} ' +
       'affiliate {Filter input for affiliates} ' +
       'product {Filter input for products} ' +
       'source_of_spend {Filter input for source of spend} ' +
@@ -331,7 +327,6 @@ export default defineMessages({
   filterByPlaceholder: {
     defaultMessage:
       '{value, select, ' +
-      'account {Filter by account name} ' +
       'affiliate {Filter by affiliate name} ' +
       'product {Filter by product name} ' +
       'source_of_spend {Filter by source of spend} ' +
@@ -342,7 +337,6 @@ export default defineMessages({
   filterByValues: {
     defaultMessage:
       '{value, select, ' +
-      'account {Cloud payer account} ' +
       'affiliate {Affiliate} ' +
       'product {Product} ' +
       'source_of_spend {Source of spend} ' +
@@ -358,7 +352,6 @@ export default defineMessages({
   groupBy: {
     defaultMessage:
       '{value, select, ' +
-      'account {Cloud payer accounts} ' +
       'affiliate {Affiliates} ' +
       'none {None} ' +
       'product {Products} ' +
@@ -375,7 +368,6 @@ export default defineMessages({
   groupByValueNames: {
     defaultMessage:
       '{groupBy, select, ' +
-      'account {Cloud payer accounts names} ' +
       'affiliate {Affiliate names} ' +
       'product {Product names} ' +
       'source_of_spend {Source of spend names} ' +

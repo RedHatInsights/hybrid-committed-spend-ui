@@ -29,8 +29,6 @@ import { FilterTypeahead } from 'routes/components/filterTypeahead';
 import type { Filter } from 'routes/utils/filter';
 import { usePrevious, useStateCallback } from 'utils/hooks';
 
-import { styles } from './DataToolbar.styles';
-
 interface Filters {
   [key: string]: Filter[] | { [key: string]: Filter[] };
 }
@@ -157,27 +155,29 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         key={categoryOption.key}
         showToolbarItem={currentCategory === categoryOption.key}
       >
-        <InputGroup style={styles.categoryInput}>
+        <InputGroup>
           {isFilterTypeValid(filterPathsType, categoryOption.key as FilterType) ? (
             <FilterTypeahead
+              aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
               category={currentCategory}
               filterPathsType={filterPathsType}
               filterType={categoryOption.key as FilterType}
               isDisabled={isDisabled}
               onSelect={value => onCategoryInputSelect(value, categoryOption.key)}
+              placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
             />
           ) : (
             <>
               <TextInput
-                isDisabled={isDisabled}
+                aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
                 name={`category-input-${categoryOption.key}`}
                 id={`category-input-${categoryOption.key}`}
-                type="search"
-                aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
+                isDisabled={isDisabled}
                 onChange={handleOnCategoryInputChange}
-                value={categoryInput}
-                placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
                 onKeyDown={evt => onCategoryInput(evt, categoryOption.key)}
+                placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
+                type="search"
+                value={categoryInput}
               />
               <Button
                 isDisabled={isDisabled}

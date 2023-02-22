@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 
-import { styles } from './exportModal.styles';
+import { styles } from './ExportModal.styles';
 import { ExportSubmit } from './ExportSubmit';
 
 export interface ExportModalOwnProps {

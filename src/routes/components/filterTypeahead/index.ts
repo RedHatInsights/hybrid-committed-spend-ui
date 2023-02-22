@@ -1,1 +1,1 @@
-export { default as FilterTypeahead } from './filterTypeahead';
+export { default as FilterTypeahead } from './FilterTypeahead';
