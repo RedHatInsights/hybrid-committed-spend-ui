@@ -25,8 +25,8 @@ interface AccountSummaryStateProps {
 }
 
 interface DetailsOwnProps {
-  contractStartDate?: Date;
   consumptionDate?: Date;
+  contractLineStartDate?: Date;
   dateRange?: string;
   endDate?: Date;
   groupBy?: string;
@@ -97,15 +97,19 @@ export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps
 };
 
 export const useDetailsMapDateRangeToProps = ({
-  contractStartDate,
   consumptionDate,
+  contractLineStartDate,
   dateRange,
   groupBy,
   groupByValue,
   secondaryGroupBy,
   sourceOfSpend,
 }: DetailsOwnProps): DetailsStateProps => {
-  const { endDate, startDate } = getDateRange(dateRange, contractStartDate, consumptionDate);
+  const { endDate, startDate } = getDateRange({
+    dateRange,
+    consumptionDate,
+    contractLineStartDate,
+  });
 
   return useDetailsMapToProps({
     dateRange,
@@ -156,7 +160,7 @@ export const useDetailsMapToProps = ({
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
       ...(secondaryGroupBy && { limit: undefined, offset: 0 }), // Children are not paginated
     },
-    ...formatDate(startDate, endDate),
+    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
     sourceOfSpend: undefined,
     dateRange: undefined,
   });
@@ -172,7 +176,7 @@ export const useDetailsMapToProps = ({
   );
 
   useEffect(() => {
-    if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate) {
+    if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate && endDate) {
       if (secondaryGroupBy) {
         if (secondaryGroupBy !== GroupByType.none && isExpanded) {
           dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));

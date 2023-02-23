@@ -16,33 +16,31 @@ export const enum DateRangeType {
   lastThreeMonths = 'last_three_months', // Last 30 days (Dec 18 - Jan 17)
 }
 
-export const getDateRange = (
-  dateRangeType: string,
-  contractStartDate: Date = undefined,
-  consumptionDate: Date = undefined,
-  isFormatted = false
-) => {
-  let dateRange;
+interface DateRangeProps {
+  dateRange: string;
+  consumptionDate?: Date;
+  contractLineStartDate?: Date;
+  isFormatted?: boolean;
+}
 
-  switch (dateRangeType) {
+export const getDateRange = ({
+  dateRange,
+  consumptionDate,
+  contractLineStartDate,
+  isFormatted = false,
+}: DateRangeProps) => {
+  switch (dateRange) {
     case DateRangeType.contractedLastYear:
-      dateRange = getContractedLastYear(contractStartDate, isFormatted);
-      break;
+      return getContractedLastYear(contractLineStartDate, isFormatted);
     case DateRangeType.contractedYtd:
-      dateRange = getContractedYtd(contractStartDate, consumptionDate, isFormatted);
-      break;
+      return getContractedYtd(contractLineStartDate, consumptionDate, isFormatted);
     case DateRangeType.lastNineMonths:
-      dateRange = getLastNineMonthsDate(consumptionDate, isFormatted);
-      break;
+      return getLastNineMonthsDate(consumptionDate, isFormatted);
     case DateRangeType.lastSixMonths:
-      dateRange = getLastSixMonthsDate(consumptionDate, isFormatted);
-      break;
+      return getLastSixMonthsDate(consumptionDate, isFormatted);
     case DateRangeType.lastThreeMonths:
-      dateRange = getLastThreeMonthsDate(consumptionDate, isFormatted);
-      break;
+      return getLastThreeMonthsDate(consumptionDate, isFormatted);
     default:
-      dateRange = undefined;
-      break;
+      return undefined;
   }
-  return dateRange;
 };
