@@ -20,8 +20,8 @@ import { optionActions, optionSelectors } from 'store/options';
 import { GroupByType, SourceOfSpendType } from './types';
 
 interface DetailsHeaderToolbarOwnProps {
+  consumptionDate?: Date;
   contractLineStartDate?: Date;
-  contractStartDate?: Date;
   dateRange?: string;
   endDate?: Date;
   groupBy?: string;
@@ -58,8 +58,8 @@ const sourceOfSpendOptions: PerspectiveOption[] = [
 ];
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
+  consumptionDate = new Date(),
   contractLineStartDate = new Date(),
-  contractStartDate = new Date(),
   dateRange,
   groupBy,
   intl,
@@ -73,6 +73,9 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   const { options } = useMapToProps();
 
   const formatDateRange = (startDate, endDate) => {
+    if (startDate === undefined || endDate === undefined) {
+      return undefined;
+    }
     return intl.formatDateTimeRange(startDate, endDate, {
       month: 'long',
       year: 'numeric',
@@ -80,32 +83,51 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   };
 
   const isContractedLastYearDateRangeDisabled = () => {
-    const { startDate } = getDateRange(DateRangeType.contractedLastYear, contractLineStartDate);
-    return startDate < contractStartDate;
+    const { startDate } = getDateRange({
+      dateRange: DateRangeType.contractedLastYear,
+      contractLineStartDate,
+    });
+    return startDate < contractLineStartDate;
   };
 
-  const getContractedLastYearDateRangeDesc = () => {
-    const { endDate, startDate } = getDateRange(DateRangeType.contractedLastYear, contractLineStartDate);
+  const getContractedLastYearDateRange = () => {
+    const { endDate, startDate } = getDateRange({
+      dateRange: DateRangeType.contractedLastYear,
+      contractLineStartDate,
+    });
     return formatDateRange(startDate, endDate);
   };
 
   const getContractedYtdDateRange = () => {
-    const { endDate, startDate } = getDateRange(DateRangeType.contractedYtd, contractLineStartDate);
+    const { endDate, startDate } = getDateRange({
+      dateRange: DateRangeType.contractedYtd,
+      consumptionDate,
+      contractLineStartDate,
+    });
     return formatDateRange(startDate, endDate);
   };
 
   const getLastNineMonthsDateRange = () => {
-    const { endDate, startDate } = getDateRange(DateRangeType.lastNineMonths);
+    const { endDate, startDate } = getDateRange({
+      dateRange: DateRangeType.lastNineMonths,
+      consumptionDate,
+    });
     return formatDateRange(startDate, endDate);
   };
 
   const getLastSixMonthsDateRange = () => {
-    const { endDate, startDate } = getDateRange(DateRangeType.lastSixMonths);
+    const { endDate, startDate } = getDateRange({
+      dateRange: DateRangeType.lastSixMonths,
+      consumptionDate,
+    });
     return formatDateRange(startDate, endDate);
   };
 
   const getLastThreeMonthsDateRange = () => {
-    const { endDate, startDate } = getDateRange(DateRangeType.lastThreeMonths);
+    const { endDate, startDate } = getDateRange({
+      dateRange: DateRangeType.lastThreeMonths,
+      consumptionDate,
+    });
     return formatDateRange(startDate, endDate);
   };
 
@@ -115,7 +137,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
     newOptions.map(option => {
       switch (option.value) {
         case DateRangeType.contractedLastYear:
-          option.description = getContractedLastYearDateRangeDesc();
+          option.description = getContractedLastYearDateRange();
           option.isDisabled = isContractedLastYearDateRangeDisabled();
           break;
         case DateRangeType.contractedYtd:
@@ -266,7 +288,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
         currentItem={dateRange}
         id="dateRange"
         label={intl.formatMessage(messages.dateRangeLabel)}
-        minWidth={200}
+        minWidth={225}
         onSelected={handleOnDateRangeSelected}
         options={getDateRangeOptions()}
       />

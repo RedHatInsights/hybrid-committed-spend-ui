@@ -41,8 +41,8 @@ interface DetailsOwnProps {
 }
 
 interface DetailsStateProps {
+  consumptionDate?: Date;
   contractLineStartDate?: Date;
-  contractStartDate?: Date;
   endDate?: Date;
   query?: Query;
   report?: Report;
@@ -64,8 +64,8 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   const [sourceOfSpend, setSourceOfSpend] = useStateCallback(useDefaultSourceOfSpend());
 
   const {
+    consumptionDate,
     contractLineStartDate,
-    contractStartDate,
     endDate,
     query,
     report,
@@ -270,8 +270,8 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     <React.Fragment>
       <PageHeading>
         <DetailsHeaderToolbar
+          consumptionDate={consumptionDate}
           contractLineStartDate={contractLineStartDate}
-          contractStartDate={contractStartDate}
           dateRange={dateRange}
           endDate={endDate}
           groupBy={groupBy}
@@ -338,8 +338,6 @@ const useDefaultSourceOfSpend = () => {
 const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
   const { summary } = useAccountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
-  const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
   const contractLineStartDate =
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
   const consumptionDate =
@@ -347,16 +345,16 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
 
   const { endDate, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
     useDetailsMapDateRangeToProps({
-      contractStartDate,
       consumptionDate,
+      contractLineStartDate,
       dateRange,
       groupBy,
       sourceOfSpend,
     });
 
   return {
+    consumptionDate,
     contractLineStartDate,
-    contractStartDate,
     endDate,
     query,
     report,
