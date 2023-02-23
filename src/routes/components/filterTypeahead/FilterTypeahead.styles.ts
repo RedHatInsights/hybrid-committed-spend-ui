@@ -1,5 +1,5 @@
 export const styles = {
-  categoryInput: {
-    minWidth: '275px',
+  container: {
+    minWidth: '250px',
   },
 } as { [className: string]: React.CSSProperties };

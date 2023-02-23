@@ -577,67 +577,6 @@
     "exportFileName": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "options": {
-                  "daily": {
-                    "value": [
-                      {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
-                        "type": 0,
-                        "value": "_cloud_payer_accounts_"
-                      },
-                      {
-                        "type": 1,
-                        "value": "startDate"
-                      },
-                      {
-                        "type": 0,
-                        "value": "_"
-                      },
-                      {
-                        "type": 1,
-                        "value": "endDate"
-                      }
-                    ]
-                  },
-                  "monthly": {
-                    "value": [
-                      {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
-                        "type": 0,
-                        "value": "_cloud_payer_accounts_"
-                      },
-                      {
-                        "type": 1,
-                        "value": "startDate"
-                      },
-                      {
-                        "type": 0,
-                        "value": "_"
-                      },
-                      {
-                        "type": 1,
-                        "value": "endDate"
-                      }
-                    ]
-                  },
-                  "other": {
-                    "value": []
-                  }
-                },
-                "type": 5,
-                "value": "resolution"
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
@@ -838,14 +777,6 @@
     "exportHeading": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Aggregates of the following cloud payer accounts will be exported to a .csv file."
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
@@ -887,14 +818,6 @@
     "filterByButtonAriaLabel": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Filter button for cloud payer accounts"
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
@@ -930,14 +853,6 @@
     "filterByInputAriaLabel": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Filter input for cloud payer accounts"
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
@@ -973,14 +888,6 @@
     "filterByPlaceholder": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Filter by account name"
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
@@ -1016,14 +923,6 @@
     "filterByValues": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Cloud payer account"
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
@@ -1065,14 +964,6 @@
     "groupBy": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Cloud payer accounts"
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
@@ -1122,14 +1013,6 @@
     "groupByValueNames": [
       {
         "options": {
-          "account": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Cloud payer accounts names"
-              }
-            ]
-          },
           "affiliate": {
             "value": [
               {
