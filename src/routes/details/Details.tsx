@@ -16,7 +16,6 @@ import { DateRangeType } from 'routes/utils/dateRange';
 import type { Filter } from 'routes/utils/filter';
 import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
 import { FetchStatus } from 'store/common';
-import type { ComputedReportItem } from 'utils/computedReport/getComputedReportItems';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { useStateCallback } from 'utils/hooks';
 
@@ -81,9 +80,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     sourceOfSpend,
   });
 
-  const getFilterToolbar = (computedItems: ComputedReportItem[]) => {
-    const isDisabled = computedItems.length === 0;
-
+  const getFilterToolbar = (isDisabled: boolean) => {
     return (
       <DetailsFilterToolbar
         groupBy={groupBy}
@@ -275,14 +272,13 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     });
   };
 
+  const computedItems = getComputedItems();
+  const isDisabled = computedItems.length === 0;
+
   if (reportError) {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
-
-  const computedItems = getComputedItems();
-  const isDisabled = computedItems.length === 0;
-
   return (
     <React.Fragment>
       <PageHeading>
@@ -309,7 +305,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
             </Bullseye>
           }
         >
-          {getFilterToolbar(computedItems)}
+          {getFilterToolbar(isDisabled)}
           {getExportModal()}
           {!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress ? (
             <Loading />
@@ -325,31 +321,31 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   );
 };
 
-const getQueryFromRoute = () => {
-  const location = useLocation();
-  return parseQuery<Query>(location.search);
-};
-
 const useDefaultDateRange = () => {
-  const queryFromRoute = getQueryFromRoute();
+  const queryFromRoute = useQueryFromRoute();
   return getDateRangeType(queryFromRoute.dateRange ? queryFromRoute.dateRange : DateRangeType.contractedYtd);
 };
 
 const useDefaultGroupBy = () => {
-  const queryFromRoute = getQueryFromRoute();
+  const queryFromRoute = useQueryFromRoute();
   const groupBy = getIdKeyForGroupBy(queryFromRoute.groupBy);
   return getGroupByType(groupBy ? groupBy : GroupByType.product);
 };
 
 const useDefaultSecondaryGroupBy = () => {
-  const queryFromRoute = getQueryFromRoute();
+  const queryFromRoute = useQueryFromRoute();
   const secondaryGroupBy = getIdKeyForGroupBy(queryFromRoute.secondaryGroupBy);
   return getGroupByType(secondaryGroupBy ? secondaryGroupBy : GroupByType.none);
 };
 
 const useDefaultSourceOfSpend = () => {
-  const queryFromRoute = getQueryFromRoute();
+  const queryFromRoute = useQueryFromRoute();
   return getSourceOfSpendType(queryFromRoute.sourceOfSpend ? queryFromRoute.sourceOfSpend : SourceOfSpendType.all);
+};
+
+const useQueryFromRoute = () => {
+  const location = useLocation();
+  return parseQuery<Query>(location.search);
 };
 
 const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
