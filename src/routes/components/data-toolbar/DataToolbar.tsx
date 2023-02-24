@@ -123,6 +123,10 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
     return chips;
   };
 
+  const hasFilters = () => {
+    return Object.keys(filters).length > 0 ? true : false;
+  };
+
   const onDelete = (type: any, chip: any) => {
     // Todo: workaround for https://github.com/patternfly/patternfly-react/issues/3552
     // This prevents us from using a localized string, if necessary
@@ -147,6 +151,8 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
 
   // Category input
   const getCategoryInput = (categoryOption: ToolbarChipGroup) => {
+    const disabled = isDisabled && !hasFilters();
+
     return (
       <ToolbarFilter
         categoryName={categoryOption}
@@ -162,7 +168,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
               category={currentCategory}
               filterPathsType={filterPathsType}
               filterType={categoryOption.key as FilterType}
-              isDisabled={isDisabled}
+              isDisabled={disabled}
               onSelect={value => onCategoryInputSelect(value, categoryOption.key)}
               placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
             />
@@ -172,7 +178,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
                 aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
                 name={`category-input-${categoryOption.key}`}
                 id={`category-input-${categoryOption.key}`}
-                isDisabled={isDisabled}
+                isDisabled={disabled}
                 onChange={handleOnCategoryInputChange}
                 onKeyDown={evt => onCategoryInput(evt, categoryOption.key)}
                 placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
@@ -180,7 +186,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
                 value={categoryInput}
               />
               <Button
-                isDisabled={isDisabled}
+                isDisabled={disabled}
                 variant={ButtonVariant.control}
                 aria-label={intl.formatMessage(messages.filterByButtonAriaLabel, { value: categoryOption.key })}
                 onClick={evt => onCategoryInput(evt, categoryOption.key)}

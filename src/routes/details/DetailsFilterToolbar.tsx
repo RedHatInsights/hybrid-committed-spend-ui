@@ -10,6 +10,7 @@ import type { Filter } from 'routes/utils/filter';
 
 interface DetailsFilterToolbarOwnProps {
   groupBy: string; // Options for category menu
+  isDisabled?: boolean;
   isExportDisabled?: boolean; // Sync category selection with groupBy value
   onExportClicked();
   onFilterAdded(filter: Filter);
@@ -23,6 +24,7 @@ type DetailsFilterToolbarProps = DetailsFilterToolbarOwnProps & WrappedComponent
 const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
   groupBy,
   intl,
+  isDisabled,
   isExportDisabled,
   onExportClicked,
   onFilterAdded,
@@ -43,6 +45,7 @@ const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
       categoryOptions={getCategoryOptions()}
       filterPathsType={FilterPathsType.detailsFilter}
       groupBy={groupBy}
+      isDisabled={isDisabled}
       isExportDisabled={isExportDisabled}
       onExportClicked={onExportClicked}
       onFilterAdded={onFilterAdded}
