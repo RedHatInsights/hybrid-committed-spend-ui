@@ -22,13 +22,13 @@ import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { ComputedReportItemType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
+import { GroupByType } from 'routes/details/types';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { compareDateYearAndMonth } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
 import { styles } from './DetailsTable.styles';
 import { DetailsTableExpand } from './DetailsTableExpand';
-import { GroupByType } from './types';
 
 interface DetailsTableOwnProps {
   endDate?: Date;

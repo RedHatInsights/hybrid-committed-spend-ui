@@ -2,7 +2,7 @@ import type { Report } from 'api/reports/report';
 import React from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import { transformReport } from 'routes/components/charts/common/chart-datum';
+import { transformReportPOC } from 'routes/components/charts/common/chart-datum';
 
 import { PerspectiveType } from './CommittedSpendTrend';
 import { CommittedSpendTrendChart } from './CommittedSpendTrendChart';
@@ -12,11 +12,9 @@ import { CommittedSpendTrendOverChart } from './CommittedSpendTrendOverChart';
 interface CommittedSpendTrendTransformOwnProps {
   chartName?: string;
   currentReport?: Report;
-  endDate?: Date;
   perspective: PerspectiveType;
   previousReport?: Report;
   thresholdReport?: Report;
-  startDate?: Date;
 }
 
 export type CommittedSpendTrendTransformProps = CommittedSpendTrendTransformOwnProps & WrappedComponentProps;
@@ -24,23 +22,31 @@ export type CommittedSpendTrendTransformProps = CommittedSpendTrendTransformOwnP
 const CommittedSpendTrendTransformBase: React.FC<CommittedSpendTrendTransformProps> = ({
   chartName,
   currentReport,
-  endDate,
   perspective,
   previousReport,
-  startDate,
   thresholdReport,
 }) => {
   const getData = () => {
-    const current = currentReport
-      ? transformReport({ report: currentReport, reportItem: 'actualSpend', startDate, endDate })
-      : undefined;
-    const previous = currentReport
-      ? transformReport({ report: previousReport, reportItem: 'actualSpend', startDate, endDate })
-      : undefined;
-    const threshold = thresholdReport
-      ? transformReport({ report: thresholdReport, reportItem: 'committedSpend', startDate, endDate })
-      : undefined;
+    const startDate = new Date('2021-12-01T00:00:00');
+    const endDate = new Date('2022-12-01T00:00:00');
 
+    const current = currentReport ? transformReportPOC({ report: currentReport, startDate, endDate }) : undefined;
+    const threshold = thresholdReport ? transformReportPOC({ report: thresholdReport, startDate, endDate }) : undefined;
+
+    let previous;
+    if (previousReport) {
+      const previousStartDate = new Date(startDate.getTime());
+      const previousEndDate = new Date(endDate.getTime());
+      previousStartDate.setFullYear(previousStartDate.getFullYear() - 1);
+      previousEndDate.setFullYear(previousEndDate.getFullYear() - 1);
+
+      previous = transformReportPOC({
+        report: previousReport,
+        startDate: previousStartDate,
+        endDate: previousEndDate,
+        shiftDateByYear: 1,
+      });
+    }
     return { current, previous, threshold } as any;
   };
 
