@@ -1,12 +1,11 @@
 import type { Query } from 'api/queries';
-import { getQuery, parseQuery } from 'api/queries';
+import { getQuery } from 'api/queries';
 import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
 import type { Report } from 'api/reports/report';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { getDateRange } from 'routes/utils/dateRange';
@@ -14,8 +13,6 @@ import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
 import { formatDate } from 'utils/dates';
-
-import { getSourceOfSpendFilter, GroupByType, SourceOfSpendType } from './types';
 
 interface AccountSummaryStateProps {
   summary?: AccountSummaryReport;
@@ -30,13 +27,9 @@ interface DetailsOwnProps {
   contractStartDate?: Date;
   dateRange?: string;
   endDate?: Date;
-  groupBy?: string;
-  groupByValue?: string;
   isExpanded?: boolean;
   reportPathsType?: ReportPathsType;
   reportType?: ReportType;
-  secondaryGroupBy?: string;
-  sourceOfSpend?: string;
   startDate?: Date;
 }
 
@@ -52,15 +45,7 @@ interface DetailsStateProps {
 
 export const baseQuery: Query = {
   filter: {
-    limit: 10,
-    offset: 0,
-  },
-  filter_by: {},
-  groupBy: {
-    product: '*',
-  },
-  orderBy: {
-    cost: 'desc',
+    limit: 100,
   },
 };
 
@@ -104,12 +89,8 @@ export const useDetailsMapDateRangeToProps = ({
   contractLineStartDate,
   contractStartDate,
   dateRange,
-  groupBy,
-  groupByValue,
   reportPathsType,
   reportType,
-  secondaryGroupBy,
-  sourceOfSpend,
 }: DetailsOwnProps): DetailsStateProps => {
   const { endDate, startDate } = getDateRange({
     dateRange,
@@ -121,12 +102,8 @@ export const useDetailsMapDateRangeToProps = ({
   return useDetailsMapToProps({
     dateRange,
     endDate,
-    groupBy,
-    groupByValue,
     reportPathsType,
     reportType,
-    secondaryGroupBy,
-    sourceOfSpend,
     startDate,
   });
 };
@@ -134,43 +111,23 @@ export const useDetailsMapDateRangeToProps = ({
 export const useDetailsMapToProps = ({
   dateRange,
   endDate,
-  groupBy,
-  groupByValue,
   isExpanded = false,
   reportPathsType = ReportPathsType.details,
   reportType = ReportType.billing,
-  secondaryGroupBy,
-  sourceOfSpend = SourceOfSpendType.all,
   startDate,
 }: DetailsOwnProps): DetailsStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
-  const location = useLocation();
-  const queryFromRoute = parseQuery<Query>(location.search);
 
   const query = {
-    sourceOfSpend,
-    groupBy: {
-      [groupBy]: groupByValue ? groupByValue : '*',
-      ...(secondaryGroupBy &&
-        secondaryGroupBy !== GroupByType.none && {
-          [secondaryGroupBy]: '*',
-        }),
+    filter: {
+      ...baseQuery.filter, // Todo do we need to set limit?
     },
-    ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
-    ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
-    ...(queryFromRoute.orderBy && { orderBy: queryFromRoute.orderBy }),
     dateRange,
   };
 
   const reportQueryString = getQuery({
     ...query,
-    filter: {
-      ...(query.filter ? query.filter : {}),
-      ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
-      ...(secondaryGroupBy && { limit: undefined, offset: 0 }), // Children are not paginated
-    },
     ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
-    sourceOfSpend: undefined,
     dateRange: undefined,
   });
 
@@ -186,14 +143,7 @@ export const useDetailsMapToProps = ({
 
   useEffect(() => {
     if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate && endDate) {
-      if (secondaryGroupBy) {
-        if (secondaryGroupBy !== GroupByType.none && isExpanded) {
-          dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
-        }
-      } else {
-        // Primary group by
-        dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
-      }
+      dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
     }
   }, [reportQueryString, isExpanded]);
 

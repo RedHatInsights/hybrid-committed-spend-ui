@@ -8,7 +8,7 @@ import type { ChartDatum } from 'routes/components/charts/common/chart-datum';
 import {
   ComputedReportItemType,
   ComputedReportItemValueType,
-  createReportDatum,
+  createReportDatumPOC,
   DatumType,
 } from 'routes/components/charts/common/chart-datum';
 import type { ComputedReportItem } from 'utils/computedReport/getFakeComputedReportItems';
@@ -66,13 +66,13 @@ const ActualSpendBreakdownChartBase: React.FC<ActualSpendBreakdownChartProps> = 
             const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;
             return [
               ...acc,
-              createReportDatum({ value: prevValue + val, computedItem: d, reportItem, reportItemValue }),
+              createReportDatumPOC({ value: prevValue + val, computedItem: d, reportItem, reportItemValue }),
             ];
           }, []);
         } else {
           items.map(i => {
             const value = i[reportItem][reportItemValue] ? i[reportItem][reportItemValue].value : i[reportItem].value;
-            datums.push(createReportDatum({ value, computedItem: i, reportItem, reportItemValue }));
+            datums.push(createReportDatumPOC({ value, computedItem: i, reportItem, reportItemValue }));
           });
         }
       }
@@ -105,7 +105,7 @@ const ActualSpendBreakdownChartBase: React.FC<ActualSpendBreakdownChartProps> = 
           newItems.push(chartDatum);
         } else {
           newItems.push(
-            createReportDatum({
+            createReportDatumPOC({
               computedItem: { date, id: datums[0].name },
               isForceNoData: true,
               reportItemValue: null,

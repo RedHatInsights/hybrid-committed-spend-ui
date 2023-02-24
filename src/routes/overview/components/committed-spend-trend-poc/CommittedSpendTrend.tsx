@@ -2,25 +2,24 @@ import { getQuery } from 'api/queries/query';
 import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
-import {
-  useAccountSummaryMapToProps,
-  useDetailsMapDateRangeToProps,
-} from 'routes/overview/components/committed-spend-trend/utils';
 import { ReportSummary } from 'routes/overview/components/report-summary';
-import { DateRangeType } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import type { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
+import { reportActions, reportSelectors } from 'store/reports';
 import { formatCurrency } from 'utils/format';
 
 import { CommittedSpendTrendTransform } from './CommittedSpendTrendTransform';
+import { currentData } from './data/currentData';
+import { previousData } from './data/previousData';
+import { thresholdData } from './data/thresholdData';
 
 interface CommittedSpendTrendOwnProps {
   widgetId: number;
@@ -30,11 +29,9 @@ interface CommittedSpendTrendStateProps {
   currentReport?: Report;
   currentReportFetchStatus?: FetchStatus;
   currentReportError?: AxiosError;
-  endDate?: Date;
   previousReport?: Report;
   previousReportFetchStatus?: FetchStatus;
   previousReportError?: AxiosError;
-  startDate?: Date;
   widget: DashboardWidget;
 }
 
@@ -53,15 +50,7 @@ const perspectiveOptions = [
 
 const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetId }) => {
   const [perspective, setPerspective] = useState(PerspectiveType.previous_over_actual);
-  const {
-    currentReport,
-    currentReportFetchStatus,
-    endDate,
-    previousReport,
-    previousReportFetchStatus,
-    startDate,
-    widget,
-  } = useMapToProps({
+  const { currentReport, currentReportFetchStatus, previousReport, previousReportFetchStatus, widget } = useMapToProps({
     widgetId,
   });
 
@@ -90,66 +79,57 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
       <CommittedSpendTrendTransform
         chartName={widget.chartName}
         currentReport={currentReport}
-        endDate={endDate}
         perspective={perspective}
         previousReport={perspective === PerspectiveType.previous_over_actual ? previousReport : undefined}
-        startDate={startDate}
-        thresholdReport={currentReport}
+        thresholdReport={thresholdData as any}
       />
     </ReportSummary>
   );
 };
 
 const useMapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTrendStateProps => {
-  const { summary } = useAccountSummaryMapToProps();
-  const values = summary && summary.data && summary.data.length && summary.data[0];
-  const contractLineStartDate =
-    values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
-  const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
-  const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
+  const currentQueryString = ''; // Todo: add query string for API when available
+  const previousQueryString = ''; // Todo: add query string for API when available
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
-  const {
-    endDate: currentEndDate,
-    report: currentReport,
-    reportError: currentReportError,
-    reportFetchStatus: currentReportFetchStatus,
-    startDate: currentStartDate,
-  } = useDetailsMapDateRangeToProps({
-    consumptionDate,
-    contractLineStartDate,
-    contractStartDate,
-    dateRange: DateRangeType.contractedYtd,
-    reportPathsType: widget.reportPathsType,
-    reportType: widget.reportType,
+  const currentReport = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, currentQueryString)
+    return currentData as any;
   });
+  const currentReportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, currentQueryString)
+  );
+  const currentReportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, currentQueryString)
+  );
 
-  const {
-    endDate: previousEndDate,
-    report: previousReport,
-    reportError: previousReportError,
-    reportFetchStatus: previousReportFetchStatus,
-    startDate: previousStartDate,
-  } = useDetailsMapDateRangeToProps({
-    consumptionDate,
-    contractLineStartDate,
-    contractStartDate,
-    dateRange: DateRangeType.contractedLastYear,
-    reportPathsType: widget.reportPathsType,
-    reportType: widget.reportType,
+  const previousReport = useSelector((/* state: RootState */) => {
+    // reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, previousQueryString)
+    return previousData as any;
   });
+  const previousReportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, widget.reportPathsType, widget.reportType, previousQueryString)
+  );
+  const previousReportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, widget.reportPathsType, widget.reportType, previousQueryString)
+  );
+
+  useMemo(() => {
+    // Todo: Enable via dispatch
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, currentQueryString);
+  }, [currentQueryString]);
+  useMemo(() => {
+    // Todo: Enable via dispatch
+    reportActions.fetchReport(widget.reportPathsType, widget.reportType, previousQueryString);
+  }, [previousQueryString]);
 
   return {
     currentReport,
     currentReportFetchStatus,
     currentReportError,
-    endDate: currentEndDate > previousEndDate ? currentEndDate : previousEndDate,
     previousReport,
     previousReportFetchStatus,
     previousReportError,
-    startDate: previousStartDate < currentStartDate ? previousStartDate : currentStartDate,
     widget,
   };
 };

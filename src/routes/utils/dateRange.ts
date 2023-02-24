@@ -20,6 +20,7 @@ interface DateRangeProps {
   dateRange: string;
   consumptionDate?: Date;
   contractLineStartDate?: Date;
+  contractStartDate?: Date;
   isFormatted?: boolean;
 }
 
@@ -27,11 +28,12 @@ export const getDateRange = ({
   dateRange,
   consumptionDate,
   contractLineStartDate,
+  contractStartDate,
   isFormatted = false,
 }: DateRangeProps) => {
   switch (dateRange) {
     case DateRangeType.contractedLastYear:
-      return getContractedLastYear(contractLineStartDate, isFormatted);
+      return getContractedLastYear(contractLineStartDate, contractStartDate, isFormatted);
     case DateRangeType.contractedYtd:
       return getContractedYtd(contractLineStartDate, consumptionDate, isFormatted);
     case DateRangeType.lastNineMonths:

@@ -27,7 +27,7 @@ export interface ComputedReportItemsParams<R extends Report, T extends ReportIte
   sortDirection?: SortDirection;
 }
 
-export function getComputedReportItemsNew<R extends Report, T extends ReportItem>({
+export function getComputedReportItems<R extends Report, T extends ReportItem>({
   idKey,
   isDateMap,
   report,

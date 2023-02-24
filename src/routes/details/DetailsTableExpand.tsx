@@ -8,6 +8,7 @@ import messages from 'locales/messages';
 import React, { useEffect, useRef, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
+import { useDetailsMapToProps } from 'routes/details/utils';
 import { FetchStatus } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { compareDateYearAndMonth } from 'utils/dates';
@@ -15,7 +16,6 @@ import { formatCurrency } from 'utils/format';
 
 import type { DetailsTableCell } from './DetailsTable';
 import { reportItem } from './DetailsTable';
-import { useDetailsMapToProps } from './utils';
 
 interface DetailsTableExpandOwnProps {
   columns?: any[];

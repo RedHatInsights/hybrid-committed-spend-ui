@@ -12,12 +12,11 @@ import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
+import { GroupByType, SourceOfSpendType } from 'routes/details/types';
 import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { optionActions, optionSelectors } from 'store/options';
-
-import { GroupByType, SourceOfSpendType } from './types';
 
 interface DetailsHeaderToolbarOwnProps {
   consumptionDate?: Date;

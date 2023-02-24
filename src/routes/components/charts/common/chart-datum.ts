@@ -3,8 +3,9 @@ import type { Report } from 'api/reports/report';
 import { intl } from 'components/i18n';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
+import { getComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import type { ComputedReportItem } from 'utils/computedReport/getFakeComputedReportItems';
-import { getComputedReportItems } from 'utils/computedReport/getFakeComputedReportItems';
+import { getComputedReportItems as getFakeComputedReportItems } from 'utils/computedReport/getFakeComputedReportItems';
 import { getToday, getYear } from 'utils/dates';
 import type { FormatOptions } from 'utils/format';
 import { formatCurrency } from 'utils/format';
@@ -78,7 +79,7 @@ export const enum DatumType {
   rolling,
 }
 
-export function transformReport({
+export function transformReportPOC({
   datumType,
   report,
   startDate,
@@ -95,7 +96,7 @@ export function transformReport({
     sortKey: 'date',
     sortDirection: SortDirection.desc,
   } as any;
-  const computedItems = getComputedReportItems(items);
+  const computedItems = getFakeComputedReportItems(items);
   let datums;
   if (datumType === DatumType.cumulative) {
     datums = computedItems.reduce<ChartDatum[]>((acc, d) => {
@@ -103,7 +104,7 @@ export function transformReport({
       const val = d[reportItem][reportItemValue] ? d[reportItem][reportItemValue].value : d[reportItem].value;
       return [
         ...acc,
-        createReportDatum({ value: prevValue + val, computedItem: d, shiftDateByYear, reportItem, reportItemValue }),
+        createReportDatumPOC({ value: prevValue + val, computedItem: d, shiftDateByYear, reportItem, reportItemValue }),
       ];
     }, []);
   } else {
@@ -111,13 +112,13 @@ export function transformReport({
       const value = computedItem[reportItem][reportItemValue]
         ? computedItem[reportItem][reportItemValue].value
         : undefined;
-      return createReportDatum({ value, computedItem, shiftDateByYear, reportItem, reportItemValue });
+      return createReportDatumPOC({ value, computedItem, shiftDateByYear, reportItem, reportItemValue });
     });
   }
   return padChartDatums({ datums, startDate, endDate });
 }
 
-export function createReportDatum<T extends ComputedReportItem>({
+export function createReportDatumPOC<T extends ComputedReportItem>({
   computedItem,
   idKey = 'date',
   isForceNoData,
@@ -152,6 +153,72 @@ export function createReportDatum<T extends ComputedReportItem>({
         ? computedItem[reportItem][reportItemValue].units // cost, infrastructure, supplementary
         : computedItem[reportItem].units // capacity, limit, request, usage
       : undefined,
+  };
+}
+
+export function transformReport({
+  datumType,
+  report,
+  startDate,
+  endDate,
+  shiftDateByYear = 0, // Shift the year, so we can overlap current and previous months
+  reportItem = 'actualSpend',
+}: TransformData): ChartDatum[] {
+  if (!report) {
+    return [];
+  }
+  const items = {
+    report,
+    sortKey: 'date',
+    sortDirection: SortDirection.desc,
+  } as any;
+  const computedItems = getComputedReportItems(items);
+  let datums;
+  if (datumType === DatumType.cumulative) {
+    datums = computedItems.reduce<ChartDatum[]>((acc, d) => {
+      const prevValue = acc.length ? acc[acc.length - 1].y : 0;
+      const val = d[reportItem] ? d[reportItem].value : d[reportItem].value;
+      return [...acc, createReportDatum({ value: prevValue + val, computedItem: d, shiftDateByYear, reportItem })];
+    }, []);
+  } else {
+    datums = computedItems.map(computedItem => {
+      const value = computedItem[reportItem] ? computedItem[reportItem].value : undefined;
+      return createReportDatum({ value, computedItem, shiftDateByYear, reportItem });
+    });
+  }
+  return padChartDatums({ datums, startDate, endDate });
+}
+
+export function createReportDatum<T extends ComputedReportItem>({
+  computedItem,
+  idKey = 'date',
+  isForceNoData,
+  shiftDateByYear = 0, // Shift the year, so we can overlap current and previous months
+  reportItem = 'actualSpend',
+  value,
+}: ReportData<T>): ChartDatum {
+  const getDate = () => {
+    return new Date(`${computedItem.date}T00:00:00`);
+  };
+  const getXVal = () => {
+    if (idKey === 'date' || shiftDateByYear > 0) {
+      const date = getDate();
+      if (shiftDateByYear > 0) {
+        date.setFullYear(date.getFullYear() + shiftDateByYear);
+      }
+      return format(date, 'yyyy-MM');
+    }
+    return computedItem.label;
+  };
+  const xVal = getXVal();
+  const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
+  return {
+    x: xVal,
+    y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips
+    ...(value === null && isForceNoData && { _y: 0 }), // Todo: Force "no data" tooltips for bar charts.
+    key: idKey === 'date' ? format(getDate(), 'yyyy-MM') : computedItem.id,
+    name: computedItem.label ? computedItem.label : computedItem.id, // legend item label
+    units: computedItem[reportItem] ? computedItem[reportItem].units : undefined,
   };
 }
 

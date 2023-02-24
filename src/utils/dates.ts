@@ -52,8 +52,8 @@ export const formatDate = (startDate, endDate, isFormatted = true) => {
       };
 };
 
-export const getContractedLastYear = (contractLineStartDate: Date = new Date(), isFormatted) => {
-  if (contractLineStartDate === undefined) {
+export const getContractedLastYear = (contractLineStartDate: Date, contractStartDate: Date, isFormatted) => {
+  if (contractLineStartDate === undefined || contractStartDate === undefined) {
     return { startDate: undefined, endDate: undefined };
   }
   const endDate = new Date(contractLineStartDate.getTime());
@@ -63,6 +63,10 @@ export const getContractedLastYear = (contractLineStartDate: Date = new Date(), 
   const startDate = new Date(contractLineStartDate.getTime());
   startDate.setFullYear(startDate.getFullYear() - 1);
 
+  // Dates must be within the contract
+  if (contractStartDate > startDate) {
+    return { startDate: undefined, endDate: undefined };
+  }
   return formatDate(startDate, endDate, isFormatted);
 };
 

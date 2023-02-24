@@ -12,6 +12,15 @@ import { injectIntl } from 'react-intl';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import { PageHeading } from 'routes/components/page-heading';
+import {
+  getDateRangeType,
+  getGroupByType,
+  getIdKeyForGroupBy,
+  getSourceOfSpendType,
+  GroupByType,
+  SourceOfSpendType,
+} from 'routes/details/types';
+import { useAccountSummaryMapToProps, useDetailsMapDateRangeToProps } from 'routes/details/utils';
 import { DateRangeType } from 'routes/utils/dateRange';
 import type { Filter } from 'routes/utils/filter';
 import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
@@ -23,15 +32,6 @@ import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
 import { DetailsTable } from './DetailsTable';
-import {
-  getDateRangeType,
-  getGroupByType,
-  getIdKeyForGroupBy,
-  getSourceOfSpendType,
-  GroupByType,
-  SourceOfSpendType,
-} from './types';
-import { useAccountSummaryMapToProps, useDetailsMapDateRangeToProps } from './utils';
 const Loading = lazy(() => import('routes/state/loading/Loading'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
@@ -353,6 +353,8 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
   const values = summary && summary.data && summary.data.length && summary.data[0];
   const contractLineStartDate =
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
+  const contractStartDate =
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
   const consumptionDate =
     values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
@@ -360,6 +362,7 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
     useDetailsMapDateRangeToProps({
       consumptionDate,
       contractLineStartDate,
+      contractStartDate,
       dateRange,
       groupBy,
       sourceOfSpend,
