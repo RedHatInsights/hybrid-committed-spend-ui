@@ -16,6 +16,8 @@ import { DateRangeType } from 'routes/utils/dateRange';
 import type { Filter } from 'routes/utils/filter';
 import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
 import { FetchStatus } from 'store/common';
+import type { ComputedReportItem } from 'utils/computedReport/getComputedReportItems';
+import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { useStateCallback } from 'utils/hooks';
 
 import { styles } from './Details.styles';
@@ -79,18 +81,28 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     sourceOfSpend,
   });
 
-  const getFilterToolbar = () => {
+  const getFilterToolbar = (computedItems: ComputedReportItem[]) => {
+    const isDisabled = computedItems.length === 0;
+
     return (
       <DetailsFilterToolbar
         groupBy={groupBy}
-        isExportDisabled={!(report && report.meta) || report.meta.count === 0}
+        isDisabled={isDisabled}
+        isExportDisabled={isDisabled}
         onExportClicked={handleOnExportModalOpen}
         onFilterAdded={handleOnFilterAdded}
         onFilterRemoved={handleOnFilterRemoved}
-        pagination={getPagination()}
+        pagination={getPagination(isDisabled)}
         query={query}
       />
     );
+  };
+
+  const getComputedItems = () => {
+    return getUnsortedComputedReportItems({
+      report,
+      idKey: groupBy,
+    });
   };
 
   const getExportModal = () => {
@@ -105,7 +117,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     );
   };
 
-  const getPagination = (isBottom: boolean = false) => {
+  const getPagination = (isDisabled = false, isBottom = false) => {
     const count = report && report.meta && report.meta.count !== undefined ? report.meta.count : 0;
     const limit =
       report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 0;
@@ -116,6 +128,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     return (
       <Pagination
         isCompact={!isBottom}
+        isDisabled={isDisabled}
         itemCount={count as number}
         onPerPageSelect={handleOnPerPageSelect}
         onSetPage={handleOnSetPage}
@@ -266,6 +279,10 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
+
+  const computedItems = getComputedItems();
+  const isDisabled = computedItems.length === 0;
+
   return (
     <React.Fragment>
       <PageHeading>
@@ -292,14 +309,14 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
             </Bullseye>
           }
         >
-          {getFilterToolbar()}
+          {getFilterToolbar(computedItems)}
           {getExportModal()}
           {!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress ? (
             <Loading />
           ) : (
             <React.Fragment>
               <div>{getTable()}</div>
-              <div style={styles.pagination}>{getPagination(true)}</div>
+              <div style={styles.pagination}>{getPagination(isDisabled, true)}</div>
             </React.Fragment>
           )}
         </Suspense>
