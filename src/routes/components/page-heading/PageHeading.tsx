@@ -47,10 +47,10 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
 
   const accountName: string | React.ReactNode = values && values.account_name ? values.account_name : emptyValue;
   const accountNumber: string | React.ReactNode = values && values.account_number ? values.account_number : emptyValue;
-  const contractLineStartDate =
-    values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
-  const contractLineEndDate =
-    values && values.contract_line_end_date ? new Date(values.contract_line_end_date + 'T00:00:00') : undefined;
+  const contractStartDate =
+    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
+  const contractEndDate =
+    values && values.contract_end_date ? new Date(values.contract_end_date + 'T00:00:00') : undefined;
   const consumptionDate =
     values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
@@ -79,8 +79,8 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
             <div style={styles.headingContentRight}>
               {intl.formatMessage(messages.contractDate, {
                 dateRange:
-                  contractLineStartDate && contractLineEndDate
-                    ? intl.formatDateTimeRange(contractLineStartDate, contractLineEndDate, {
+                  contractStartDate && contractEndDate
+                    ? intl.formatDateTimeRange(contractStartDate, contractEndDate, {
                         month: 'long',
                         year: 'numeric',
                       })
