@@ -1,5 +1,4 @@
-import { Bullseye, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
-import { Main } from '@redhat-cloud-services/frontend-components/Main';
+import { Bullseye, PageSection, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import type { Query } from 'api/queries';
 import { getQueryRoute, parseQuery } from 'api/queries';
 import type { Report } from 'api/reports/report';
@@ -297,7 +296,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
           startDate={startDate}
         />
       </PageHeading>
-      <Main>
+      <PageSection>
         <Suspense
           fallback={
             <Bullseye>
@@ -316,7 +315,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
             </React.Fragment>
           )}
         </Suspense>
-      </Main>
+      </PageSection>
     </React.Fragment>
   );
 };

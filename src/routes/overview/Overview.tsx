@@ -1,5 +1,4 @@
-import { Bullseye, Spinner } from '@patternfly/react-core';
-import { Main } from '@redhat-cloud-services/frontend-components/Main';
+import { Bullseye, PageSection, Spinner } from '@patternfly/react-core';
 import messages from 'locales/messages';
 import React, { lazy, Suspense } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
@@ -33,7 +32,7 @@ const Overview: React.FC<OverviewProps> = ({ intl }) => {
   return (
     <React.Fragment>
       <PageHeading />
-      <Main>
+      <PageSection>
         <Suspense
           fallback={
             <Bullseye>
@@ -43,7 +42,7 @@ const Overview: React.FC<OverviewProps> = ({ intl }) => {
         >
           <Dashboard />
         </Suspense>
-      </Main>
+      </PageSection>
     </React.Fragment>
   );
 };
