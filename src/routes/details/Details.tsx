@@ -43,6 +43,7 @@ interface DetailsOwnProps {
 interface DetailsStateProps {
   consumptionDate?: Date;
   contractLineStartDate?: Date;
+  contractStartDate?: Date;
   endDate?: Date;
   query?: Query;
   report?: Report;
@@ -66,6 +67,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   const {
     consumptionDate,
     contractLineStartDate,
+    contractStartDate,
     endDate,
     query,
     report,
@@ -284,6 +286,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
         <DetailsHeaderToolbar
           consumptionDate={consumptionDate}
           contractLineStartDate={contractLineStartDate}
+          contractStartDate={contractStartDate}
           dateRange={dateRange}
           endDate={endDate}
           groupBy={groupBy}
@@ -370,6 +373,7 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
   return {
     consumptionDate,
     contractLineStartDate,
+    contractStartDate,
     endDate,
     query,
     report,

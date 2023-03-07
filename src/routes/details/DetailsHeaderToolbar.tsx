@@ -21,6 +21,7 @@ import { optionActions, optionSelectors } from 'store/options';
 interface DetailsHeaderToolbarOwnProps {
   consumptionDate?: Date;
   contractLineStartDate?: Date;
+  contractStartDate?: Date;
   dateRange?: string;
   endDate?: Date;
   groupBy?: string;
@@ -57,8 +58,9 @@ const sourceOfSpendOptions: PerspectiveOption[] = [
 ];
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
-  consumptionDate = new Date(),
-  contractLineStartDate = new Date(),
+  consumptionDate,
+  contractLineStartDate,
+  contractStartDate,
   dateRange,
   groupBy,
   intl,
@@ -86,7 +88,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
       dateRange: DateRangeType.contractedLastYear,
       contractLineStartDate,
     });
-    return startDate < contractLineStartDate;
+    return startDate < contractStartDate;
   };
 
   const getContractedLastYearDateRange = () => {
