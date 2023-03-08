@@ -54,7 +54,7 @@ export const formatDate = (startDate, endDate, isFormatted = true) => {
 
 export const getContractedLastYear = (contractLineStartDate: Date, isFormatted) => {
   if (contractLineStartDate === undefined) {
-    return { startDate: undefined, endDate: undefined };
+    return getUndefinedDates();
   }
   const endDate = new Date(contractLineStartDate.getTime());
   endDate.setDate(1); // Workaround to compare month properly
@@ -68,7 +68,7 @@ export const getContractedLastYear = (contractLineStartDate: Date, isFormatted) 
 
 export const getContractedYtd = (contractLineStartDate, consumptionDate, isFormatted) => {
   if (contractLineStartDate === undefined || consumptionDate === undefined) {
-    return { startDate: undefined, endDate: undefined };
+    return getUndefinedDates();
   }
   const endDate = consumptionDate;
   const startDate = new Date(contractLineStartDate.getTime());
@@ -101,7 +101,7 @@ export const getLastThreeMonthsDate = (consumptionDate, isFormatted) => {
 // Returns today's month - offset
 export const getLastMonthsDate = (consumptionDate: Date, offset: number, isFormatted) => {
   if (consumptionDate === undefined) {
-    return { startDate: undefined, endDate: undefined };
+    return getUndefinedDates();
   }
   const endDate = consumptionDate;
   const startDate = new Date();
@@ -115,4 +115,8 @@ export const getLastMonthsDate = (consumptionDate: Date, offset: number, isForma
   }
   startDate.setMonth(endDate.getMonth() - offset);
   return formatDate(startDate, endDate, isFormatted);
+};
+
+export const getUndefinedDates = () => {
+  return { startDate: undefined, endDate: undefined };
 };

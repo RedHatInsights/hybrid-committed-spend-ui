@@ -4,6 +4,7 @@ import {
   getLastNineMonthsDate,
   getLastSixMonthsDate,
   getLastThreeMonthsDate,
+  getUndefinedDates,
 } from 'utils/dates';
 
 // The date range drop down has the options below (if today is Jan 18th…)
@@ -42,6 +43,6 @@ export const getDateRange = ({
     case DateRangeType.lastThreeMonths:
       return getLastThreeMonthsDate(consumptionDate, isFormatted);
     default:
-      return undefined;
+      return getUndefinedDates();
   }
 };
