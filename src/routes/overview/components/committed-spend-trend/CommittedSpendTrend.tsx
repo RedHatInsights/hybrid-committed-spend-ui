@@ -23,6 +23,7 @@ import { formatCurrency } from 'utils/format';
 import { CommittedSpendTrendTransform } from './CommittedSpendTrendTransform';
 
 interface CommittedSpendTrendOwnProps {
+  perspective?: PerspectiveType;
   widgetId: number;
 }
 
@@ -52,7 +53,7 @@ const perspectiveOptions = [
 ];
 
 const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetId }) => {
-  const [perspective, setPerspective] = useState(PerspectiveType.previous_over_actual);
+  const [perspective, setPerspective] = useState(PerspectiveType.actual);
   const {
     currentReport,
     currentReportFetchStatus,
@@ -64,6 +65,18 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
   } = useMapToProps({
     widgetId,
   });
+
+  const hasData = currentReport && currentReport.meta;
+  const values = hasData && currentReport.meta;
+
+  // Don't show excess spend unless greater than zero
+  // const excessSpend = values && values.excessAmountSpend ? Number(values.excessAmountSpend.value) : undefined;
+  // const excessActualSpend: string =
+  //   excessSpend ? formatCurrency(excessSpend, values.excessAmountSpend.units || 'USD') : undefined;
+
+  // Todo: Units should come from API ^^^ above ^^^
+  const excessSpend = values && values.excessAmountSpend ? Number(values.excessAmountSpend) : undefined;
+  const excessActualSpend: string = excessSpend ? formatCurrency(excessSpend, 'USD') : undefined;
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -78,11 +91,11 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
   const handleOnPerspectiveSelected = value => {
     setPerspective(value);
   };
-
+  // excessAmountSpend
   return (
     <ReportSummary
       detailsLink={getDetailsLink()}
-      excessActualSpend={formatCurrency(98321.34, 'USD')}
+      excessActualSpend={excessActualSpend}
       fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
       title={widget.title}
     >
@@ -100,15 +113,15 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
   );
 };
 
-const useMapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTrendStateProps => {
+const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTrendStateProps => {
   const { summary } = useAccountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
+  const consumptionDate =
+    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
   const contractLineStartDate =
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
-  const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
   const {
@@ -136,7 +149,7 @@ const useMapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpen
     consumptionDate,
     contractLineStartDate,
     contractStartDate,
-    dateRange: DateRangeType.contractedLastYear,
+    dateRange: perspective === PerspectiveType.previous_over_actual ? DateRangeType.contractedYtd : undefined,
     reportPathsType: widget.reportPathsType,
     reportType: widget.reportType,
   });

@@ -353,12 +353,12 @@ const useQueryFromRoute = () => {
 const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
   const { summary } = useAccountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
+  const consumptionDate =
+    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
   const contractLineStartDate =
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
-  const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
   const { endDate, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
     useDetailsMapDateRangeToProps({
