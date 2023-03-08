@@ -28,7 +28,7 @@ export interface AccountSummaryReport extends Report {
 }
 
 export const ReportTypePaths: Partial<Record<ReportType, string>> = {
-  [ReportType.billing]: 'reports/hcsSummary',
+  [ReportType.details]: 'reports/hcsSummary',
 };
 
 export function runReport(reportType: ReportType, query: string) {

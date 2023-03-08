@@ -17,7 +17,8 @@ export interface DetailsFilterReport extends Report {
 }
 
 export const ReportTypePaths: Partial<Record<ReportType, string>> = {
-  [ReportType.billing]: 'reports/details',
+  [ReportType.details]: 'reports/details',
+  [ReportType.committedSpend]: 'reports/committedSpendTrendChart',
 };
 
 export function runReport(reportType: ReportType, query: string) {

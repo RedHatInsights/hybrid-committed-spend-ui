@@ -26,7 +26,7 @@ const mockExport: Export = {
   },
 } as any;
 
-const reportType = ReportType.billing;
+const reportType = ReportType.details;
 const reportPathsType = ReportPathsType.accountSummary;
 const reportQueryString = 'reportQueryString';
 

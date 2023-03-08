@@ -115,7 +115,7 @@ const useMapToProps = (): PageHeadingStateProps => {
 
   const reportQueryString = getQuery(query);
   const reportPathsType = ReportPathsType.accountSummary;
-  const reportType = ReportType.billing;
+  const reportType = ReportType.details;
   const report = useSelector((state: RootState) =>
     reportSelectors.selectReport(state, reportPathsType, reportType, reportQueryString)
   );
