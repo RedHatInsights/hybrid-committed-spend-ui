@@ -124,7 +124,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
         name: intl.formatDate(currentDate, { month: 'long' }),
         date: mapId,
         isSortable,
-        orderBy: groupBy,
+        orderBy: groupBy, // Todo: use 'actual_spend'?
       });
     }
 
@@ -186,12 +186,17 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     let direction;
 
     const column = columns[index];
-    const hasOrderBy = query && query.orderBy && query.orderBy;
+    const hasOrderBy = query && query.orderBy && query.orderBy[column.orderBy];
+    const hasOrderByDate = query && query.orderBy && query.orderBy.date;
 
-    if (column.orderBy && !column.date) {
-      direction = hasOrderBy && query.orderBy[column.orderBy];
-    } else if (hasOrderBy && query.orderBy.date === column.date) {
-      direction = hasOrderBy && query.orderBy[column.orderBy];
+    if (hasOrderBy && hasOrderByDate) {
+      if (column.orderBy && column.date && query.orderBy.date === column.date) {
+        direction = query.orderBy[column.orderBy];
+      }
+    } else if (hasOrderBy) {
+      if (column.orderBy && !column.date) {
+        direction = query.orderBy[column.orderBy];
+      }
     }
     return direction
       ? {
