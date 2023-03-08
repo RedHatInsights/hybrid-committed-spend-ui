@@ -9,20 +9,15 @@ import { styles } from './ExcessActualSpend.styles';
 
 interface ExcessActualSpendOwnProps {
   excessActualSpend?: string | React.ReactNode;
-  excessActualSpendBreakdown?: string | React.ReactNode;
+  showBreakdown?: boolean;
 }
 
 type ExcessActualSpendProps = ExcessActualSpendOwnProps & WrappedComponentProps;
 
-const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
-  excessActualSpend,
-  excessActualSpendBreakdown,
-  intl,
-}) => {
-  if (!excessActualSpend && !excessActualSpendBreakdown) {
+const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({ excessActualSpend, intl, showBreakdown }) => {
+  if (!excessActualSpend) {
     return null;
   }
-  const showExcessActualSpendBreakdown = excessActualSpendBreakdown && !excessActualSpend;
   return (
     <span style={styles.infoIcon}>
       <Popover
@@ -32,23 +27,18 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
           <>
             <p style={styles.infoTitle}>
               {intl.formatMessage(
-                showExcessActualSpendBreakdown ? messages.excessActualSpendExcluded : messages.excessActualSpendIncluded
+                showBreakdown ? messages.excessActualSpendExcluded : messages.excessActualSpendIncluded
               )}
             </p>
             <br />
-            {showExcessActualSpendBreakdown ? (
-              <p>
-                {intl.formatMessage(messages.excessActualSpendBreakdownDesc, {
-                  value: <b>{excessActualSpendBreakdown}</b>,
-                })}
-              </p>
-            ) : (
-              <p>
-                {intl.formatMessage(messages.excessActualSpendDesc, {
+            <p>
+              {intl.formatMessage(
+                showBreakdown ? messages.excessActualSpendBreakdownDesc : messages.excessActualSpendDesc,
+                {
                   value: <b>{excessActualSpend}</b>,
-                })}
-              </p>
-            )}
+                }
+              )}
+            </p>
           </>
         }
       >
@@ -60,7 +50,7 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({
             <InfoCircleIcon />
             <span style={styles.infoLabel}>
               {intl.formatMessage(
-                showExcessActualSpendBreakdown ? messages.excessActualSpendExcluded : messages.excessActualSpendIncluded
+                showBreakdown ? messages.excessActualSpendExcluded : messages.excessActualSpendIncluded
               )}
             </span>
           </span>

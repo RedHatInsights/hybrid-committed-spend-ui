@@ -51,8 +51,9 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ intl, widgetId }) => {
 
   // Don't show excess spend unless greater than zero
   const excessSpend = values && values.excess_committed_spend ? Number(values.excess_committed_spend.value) : undefined;
-  const excessActualSpend: string =
-    excessSpend > 0 ? formatCurrency(excessSpend, values.excess_committed_spend.units || 'USD') : undefined;
+  const excessActualSpend: string = excessSpend
+    ? formatCurrency(excessSpend, values.excess_committed_spend.units || 'USD')
+    : undefined;
 
   const percent = values && values.delta && values.delta.percent ? Number(values.delta.percent) : undefined;
   const percentage: string | React.ReactNode = percent !== undefined ? formatPercentage(percent) : <EmptyValueState />;
