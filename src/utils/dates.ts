@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 
 export const compareDateYearAndMonth = (a: Date, b: Date) => {
   if (a.getFullYear() > b.getFullYear()) {
@@ -31,7 +32,7 @@ export const getToday = (hrs: number = 0, min: number = 0, sec: number = 0) => {
   return today;
 };
 
-export const getYear = offset => {
+export const getYear = (offset: number) => {
   const today = getToday();
 
   today.setMonth(today.getMonth() + 1); // Adjust to include this month
@@ -40,7 +41,7 @@ export const getYear = offset => {
   return today;
 };
 
-export const formatDate = (startDate, endDate, isFormatted = true) => {
+export const formatDate = (startDate: Date, endDate: Date, isFormatted = true) => {
   return isFormatted
     ? {
         endDate: endDate ? format(endDate, 'yyyy-MM') : undefined,
@@ -52,7 +53,7 @@ export const formatDate = (startDate, endDate, isFormatted = true) => {
       };
 };
 
-export const getContractedLastYear = (contractLineStartDate: Date, isFormatted) => {
+export const getContractedLastYear = (contractLineStartDate: Date, isFormatted: boolean) => {
   if (contractLineStartDate === undefined) {
     return getUndefinedDates();
   }
@@ -66,7 +67,7 @@ export const getContractedLastYear = (contractLineStartDate: Date, isFormatted) 
   return formatDate(startDate, endDate, isFormatted);
 };
 
-export const getContractedYtd = (contractLineStartDate, consumptionDate, isFormatted) => {
+export const getContractedYtd = (contractLineStartDate: Date, consumptionDate: Date, isFormatted: boolean) => {
   if (contractLineStartDate === undefined || consumptionDate === undefined) {
     return getUndefinedDates();
   }
@@ -84,22 +85,22 @@ export const getContractedYtd = (contractLineStartDate, consumptionDate, isForma
 };
 
 // Returns 9 months, including today's date
-export const getLastNineMonthsDate = (consumptionDate, isFormatted) => {
+export const getLastNineMonthsDate = (consumptionDate: Date, isFormatted: boolean) => {
   return getLastMonthsDate(consumptionDate, 8, isFormatted);
 };
 
 // Returns 6 months, including today's date
-export const getLastSixMonthsDate = (consumptionDate, isFormatted) => {
+export const getLastSixMonthsDate = (consumptionDate: Date, isFormatted: boolean) => {
   return getLastMonthsDate(consumptionDate, 5, isFormatted);
 };
 
 // Returns 3 months, including today's date
-export const getLastThreeMonthsDate = (consumptionDate, isFormatted) => {
+export const getLastThreeMonthsDate = (consumptionDate: Date, isFormatted: boolean) => {
   return getLastMonthsDate(consumptionDate, 2, isFormatted);
 };
 
 // Returns today's month - offset
-export const getLastMonthsDate = (consumptionDate: Date, offset: number, isFormatted) => {
+export const getLastMonthsDate = (consumptionDate: Date, offset: number, isFormatted: boolean) => {
   if (consumptionDate === undefined) {
     return getUndefinedDates();
   }
@@ -119,4 +120,12 @@ export const getLastMonthsDate = (consumptionDate: Date, offset: number, isForma
 
 export const getUndefinedDates = () => {
   return { startDate: undefined, endDate: undefined };
+};
+
+export const isContractedLastYearValid = (contractLineStartDate: Date, contractStartDate: Date) => {
+  const { startDate } = getDateRange({
+    dateRange: DateRangeType.contractedLastYear,
+    contractLineStartDate,
+  });
+  return startDate < contractStartDate;
 };

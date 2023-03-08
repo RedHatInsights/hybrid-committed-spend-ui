@@ -2,12 +2,14 @@ import { getQuery } from 'api/queries/query';
 import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
+import { cloneDeep } from 'lodash';
 import React, { useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
+import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
 import {
   useAccountSummaryMapToProps,
   useDetailsMapDateRangeToProps,
@@ -18,6 +20,7 @@ import type { RootState } from 'store';
 import type { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
+import { isContractedLastYearValid } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
 import { CommittedSpendTrendTransform } from './CommittedSpendTrendTransform';
@@ -28,6 +31,8 @@ interface CommittedSpendTrendOwnProps {
 }
 
 interface CommittedSpendTrendStateProps {
+  contractLineStartDate?: Date;
+  contractStartDate?: Date;
   currentReport?: Report;
   currentReportFetchStatus?: FetchStatus;
   currentReportError?: AxiosError;
@@ -47,7 +52,7 @@ export enum PerspectiveType {
   previous_over_actual = 'previous_over_actual',
 }
 
-const perspectiveOptions = [
+const perspectiveOptions: PerspectiveOption[] = [
   { label: messages.committedSpendTrendPerspectiveValues, value: PerspectiveType.actual },
   { label: messages.committedSpendTrendPerspectiveValues, value: PerspectiveType.previous_over_actual },
 ];
@@ -55,6 +60,8 @@ const perspectiveOptions = [
 const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetId }) => {
   const [perspective, setPerspective] = useState(PerspectiveType.actual);
   const {
+    contractLineStartDate,
+    contractStartDate,
     currentReport,
     currentReportFetchStatus,
     endDate,
@@ -63,6 +70,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
     startDate,
     widget,
   } = useMapToProps({
+    perspective,
     widgetId,
   });
 
@@ -88,10 +96,25 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
     return null;
   };
 
+  const getPerspectiveOptions = () => {
+    const newOptions = cloneDeep(perspectiveOptions);
+
+    newOptions.map(option => {
+      switch (option.value) {
+        case PerspectiveType.previous_over_actual:
+          option.isDisabled = isContractedLastYearValid(contractLineStartDate, contractStartDate);
+          break;
+        default:
+          break;
+      }
+    });
+    return newOptions;
+  };
+
   const handleOnPerspectiveSelected = value => {
     setPerspective(value);
   };
-  // excessAmountSpend
+
   return (
     <ReportSummary
       detailsLink={getDetailsLink()}
@@ -99,7 +122,11 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
       fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
       title={widget.title}
     >
-      <Perspective currentItem={perspective} onSelected={handleOnPerspectiveSelected} options={perspectiveOptions} />
+      <Perspective
+        currentItem={perspective}
+        onSelected={handleOnPerspectiveSelected}
+        options={getPerspectiveOptions()}
+      />
       <CommittedSpendTrendTransform
         chartName={widget.chartName}
         currentReport={currentReport}
@@ -149,12 +176,14 @@ const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): 
     consumptionDate,
     contractLineStartDate,
     contractStartDate,
-    dateRange: perspective === PerspectiveType.previous_over_actual ? DateRangeType.contractedYtd : undefined,
+    dateRange: perspective === PerspectiveType.previous_over_actual ? DateRangeType.contractedLastYear : undefined,
     reportPathsType: widget.reportPathsType,
     reportType: widget.reportType,
   });
 
   return {
+    contractLineStartDate,
+    contractStartDate,
     currentReport,
     currentReportFetchStatus,
     currentReportError,

@@ -105,7 +105,6 @@ export const useDetailsMapDateRangeToProps = ({
 export const useDetailsMapToProps = ({
   dateRange,
   endDate,
-  isExpanded = false,
   reportPathsType = ReportPathsType.details,
   reportType = ReportType.committedSpend,
   startDate,
@@ -139,7 +138,7 @@ export const useDetailsMapToProps = ({
     if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate && endDate) {
       dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
     }
-  }, [reportQueryString, isExpanded]);
+  }, [endDate, reportQueryString, startDate]);
 
   return {
     endDate,

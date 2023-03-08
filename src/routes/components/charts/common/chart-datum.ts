@@ -249,7 +249,7 @@ export function padChartDatums({
         createReportDatum({
           computedItem: { date, id: date },
           reportItemValue: null, // Todo: This is only used with the fake data -- remove after APIs are avialable
-          value: padWithPrevious ? prevChartDatum.y : null,
+          value: padWithPrevious && prevChartDatum ? prevChartDatum.y : null,
         })
       );
     }
