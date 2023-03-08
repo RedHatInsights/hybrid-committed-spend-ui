@@ -17,10 +17,12 @@ import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { optionActions, optionSelectors } from 'store/options';
+import { isContractedLastYearValid } from 'utils/dates';
 
 interface DetailsHeaderToolbarOwnProps {
   consumptionDate?: Date;
   contractLineStartDate?: Date;
+  contractStartDate?: Date;
   dateRange?: string;
   endDate?: Date;
   groupBy?: string;
@@ -57,8 +59,9 @@ const sourceOfSpendOptions: PerspectiveOption[] = [
 ];
 
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
-  consumptionDate = new Date(),
-  contractLineStartDate = new Date(),
+  consumptionDate,
+  contractLineStartDate,
+  contractStartDate,
   dateRange,
   groupBy,
   intl,
@@ -79,14 +82,6 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
       month: 'long',
       year: 'numeric',
     });
-  };
-
-  const isContractedLastYearDateRangeDisabled = () => {
-    const { startDate } = getDateRange({
-      dateRange: DateRangeType.contractedLastYear,
-      contractLineStartDate,
-    });
-    return startDate < contractLineStartDate;
   };
 
   const getContractedLastYearDateRange = () => {
@@ -137,7 +132,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
       switch (option.value) {
         case DateRangeType.contractedLastYear:
           option.description = getContractedLastYearDateRange();
-          option.isDisabled = isContractedLastYearDateRangeDisabled();
+          option.isDisabled = isContractedLastYearValid(contractLineStartDate, contractStartDate);
           break;
         case DateRangeType.contractedYtd:
           option.description = getContractedYtdDateRange();

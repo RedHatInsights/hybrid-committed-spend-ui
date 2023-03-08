@@ -73,7 +73,7 @@ export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps
   const summaryQueryString = getQuery(query);
 
   const reportPathsType = ReportPathsType.accountSummary;
-  const reportType = ReportType.billing;
+  const reportType = ReportType.details;
 
   const summary: AccountSummaryReport = useSelector((state: RootState) =>
     reportSelectors.selectReport(state, reportPathsType, reportType, summaryQueryString)
@@ -138,7 +138,7 @@ export const useDetailsMapToProps = ({
   groupByValue,
   isExpanded = false,
   reportPathsType = ReportPathsType.details,
-  reportType = ReportType.billing,
+  reportType = ReportType.details,
   secondaryGroupBy,
   sourceOfSpend = SourceOfSpendType.all,
   startDate,

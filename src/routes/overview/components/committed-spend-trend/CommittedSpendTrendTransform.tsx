@@ -32,13 +32,25 @@ const CommittedSpendTrendTransformBase: React.FC<CommittedSpendTrendTransformPro
 }) => {
   const getData = () => {
     const current = currentReport
-      ? transformReport({ report: currentReport, reportItem: 'actualSpend', startDate, endDate })
+      ? transformReport({ endDate, report: currentReport, reportItem: 'actualSpend', startDate })
       : undefined;
-    const previous = currentReport
-      ? transformReport({ report: previousReport, reportItem: 'actualSpend', startDate, endDate })
+    const previous = previousReport
+      ? transformReport({
+          endDate,
+          report: previousReport,
+          reportItem: 'actualSpend',
+          shiftDateByYear: 1,
+          startDate,
+        })
       : undefined;
     const threshold = thresholdReport
-      ? transformReport({ report: thresholdReport, reportItem: 'committedSpend', startDate, endDate })
+      ? transformReport({
+          endDate,
+          padWithPrevious: true,
+          report: thresholdReport,
+          reportItem: 'committedSpend',
+          startDate,
+        })
       : undefined;
 
     return { current, previous, threshold } as any;

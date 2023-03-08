@@ -14,8 +14,8 @@ interface ReportSummaryOwnProps {
   children?: React.ReactNode;
   detailsLink?: React.ReactNode;
   excessActualSpend?: string | React.ReactNode;
-  excessActualSpendBreakdown?: string | React.ReactNode;
   fetchStatus: number | number[];
+  showBreakdown?: boolean;
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;
 }
@@ -29,8 +29,8 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
   fetchStatus,
   intl,
   excessActualSpend,
-  excessActualSpendBreakdown,
   title,
+  showBreakdown,
   subTitle,
 }) => {
   const isSkeleton = () => {
@@ -53,12 +53,9 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
             </Title>
             {Boolean(subTitle) && <p style={styles.subtitle}>{intl.formatMessage(subTitle)}</p>}
           </div>
-          {(excessActualSpend !== undefined || excessActualSpendBreakdown !== undefined) && (
+          {excessActualSpend && (
             <div>
-              <ExcessActualSpend
-                excessActualSpend={excessActualSpend}
-                excessActualSpendBreakdown={excessActualSpendBreakdown}
-              />
+              <ExcessActualSpend excessActualSpend={excessActualSpend} showBreakdown={showBreakdown} />
             </div>
           )}
         </div>

@@ -29,6 +29,7 @@ export interface TransformData {
   report: Report;
   startDate?: Date;
   endDate?: Date;
+  padWithPrevious?: boolean; // Used with committed spend threshold
   shiftDateByYear?: number; // Shift the year, so we can overlap current and previous months
   reportItem?: string;
   reportItemValue?: string; // useful for infrastructure.usage values
@@ -47,6 +48,7 @@ export interface ReportData<T extends ComputedReportItem> {
 export interface PadData {
   datums: ChartDatum[];
   endDate?: Date;
+  padWithPrevious?: boolean;
   startDate?: Date;
 }
 
@@ -161,6 +163,7 @@ export function transformReport({
   report,
   startDate,
   endDate,
+  padWithPrevious,
   shiftDateByYear = 0, // Shift the year, so we can overlap current and previous months
   reportItem = 'actualSpend',
 }: TransformData): ChartDatum[] {
@@ -186,7 +189,7 @@ export function transformReport({
       return createReportDatum({ value, computedItem, shiftDateByYear, reportItem });
     });
   }
-  return padChartDatums({ datums, startDate, endDate });
+  return padChartDatums({ datums, startDate, endDate, padWithPrevious });
 }
 
 export function createReportDatum<T extends ComputedReportItem>({
@@ -225,11 +228,17 @@ export function createReportDatum<T extends ComputedReportItem>({
 // This pads chart datums with null datum objects, representing missing data at the beginning and end of the
 // data series. The remaining data is left as is to allow for extrapolation. This allows us to display a "no data"
 // message in the tooltip, which helps distinguish between zero values and when there is no data available.
-export function padChartDatums({ datums, startDate = getYear(1), endDate = getToday() }: PadData): ChartDatum[] {
+export function padChartDatums({
+  datums,
+  startDate = getYear(1),
+  endDate = getToday(),
+  padWithPrevious,
+}: PadData): ChartDatum[] {
   const result = [];
   if (!datums || datums.length === 0) {
     return result;
   }
+  let prevChartDatum;
   for (const padDate = new Date(startDate.getTime()); padDate < endDate; padDate.setMonth(padDate.getMonth() + 1)) {
     const date = format(padDate, 'yyyy-MM');
     const chartDatum = datums.find(val => val.key === date);
@@ -239,11 +248,12 @@ export function padChartDatums({ datums, startDate = getYear(1), endDate = getTo
       result.push(
         createReportDatum({
           computedItem: { date, id: date },
-          reportItemValue: null,
-          value: null,
+          reportItemValue: null, // Todo: This is only used with the fake data -- remove after APIs are avialable
+          value: padWithPrevious && prevChartDatum ? prevChartDatum.y : null,
         })
       );
     }
+    prevChartDatum = chartDatum;
   }
   return result;
 }

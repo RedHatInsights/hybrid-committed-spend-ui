@@ -43,12 +43,6 @@ interface DetailsStateProps {
   startDate?: Date;
 }
 
-export const baseQuery: Query = {
-  filter: {
-    limit: 100,
-  },
-};
-
 export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
@@ -58,7 +52,7 @@ export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps
   const summaryQueryString = getQuery(query);
 
   const reportPathsType = ReportPathsType.accountSummary;
-  const reportType = ReportType.billing;
+  const reportType = ReportType.details;
 
   const summary: AccountSummaryReport = useSelector((state: RootState) =>
     reportSelectors.selectReport(state, reportPathsType, reportType, summaryQueryString)
@@ -111,16 +105,15 @@ export const useDetailsMapDateRangeToProps = ({
 export const useDetailsMapToProps = ({
   dateRange,
   endDate,
-  isExpanded = false,
   reportPathsType = ReportPathsType.details,
-  reportType = ReportType.billing,
+  reportType = ReportType.committedSpend,
   startDate,
 }: DetailsOwnProps): DetailsStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query = {
     filter: {
-      ...baseQuery.filter, // Todo do we need to set limit?
+      resolution: 'cumulative',
     },
     dateRange,
   };
@@ -145,7 +138,7 @@ export const useDetailsMapToProps = ({
     if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate && endDate) {
       dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
     }
-  }, [reportQueryString, isExpanded]);
+  }, [endDate, reportQueryString, startDate]);
 
   return {
     endDate,

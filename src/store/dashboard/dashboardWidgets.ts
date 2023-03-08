@@ -12,9 +12,7 @@ const ActualSpendBreakdown = lazy(
   () => import('routes/overview/components/actual-spend-breakdown/ActualSpendBreakdown')
 );
 const CommittedSpend = lazy(() => import('routes/overview/components/committed-spend/CommittedSpend'));
-const CommittedSpendTrend = lazy(
-  () => import('routes/overview/components/committed-spend-trend-poc/CommittedSpendTrend')
-);
+const CommittedSpendTrend = lazy(() => import('routes/overview/components/committed-spend-trend/CommittedSpendTrend'));
 
 let currrentId = 0;
 const getId = () => currrentId++;
@@ -25,7 +23,7 @@ export const actualSpendWidget: DashboardWidget = {
   id: getId(),
   title: messages.dashboardActualSpendTitle,
   reportPathsType: ReportPathsType.accountSummary,
-  reportType: ReportType.billing,
+  reportType: ReportType.details,
   size: DashboardSize.half,
 };
 
@@ -35,7 +33,7 @@ export const actualSpendBreakdownWidget: DashboardWidget = {
   id: getId(),
   title: messages.dashboardActualSpendBreakdownTitle,
   reportPathsType: ReportPathsType.actualSpendBreakdown,
-  reportType: ReportType.billing,
+  reportType: ReportType.details,
   viewAllPath: formatPath(routes.details.path),
 };
 
@@ -45,7 +43,7 @@ export const committedSpendWidget: DashboardWidget = {
   id: getId(),
   title: messages.dashboardCommitmentSpendTitle,
   reportPathsType: ReportPathsType.accountSummary,
-  reportType: ReportType.billing,
+  reportType: ReportType.details,
   size: DashboardSize.half,
 };
 
@@ -55,6 +53,6 @@ export const committedSpendTrendWidget: DashboardWidget = {
   id: getId(),
   title: messages.dashboardCommitmentSpendTrendTitle,
   reportPathsType: ReportPathsType.details,
-  reportType: ReportType.billing,
+  reportType: ReportType.committedSpend,
   viewAllPath: formatPath(routes.details.path),
 };

@@ -19,6 +19,8 @@ export interface ReportData {
 }
 
 export interface ReportMeta extends PagedMetaData {
+  excessAmountSpend: number; // Todo: replace with ReportValue
+  // excessAmountSpend: ReportValue;
   count?: string | number;
   delta?: {
     percent: number;
@@ -40,7 +42,8 @@ export interface Report extends PagedResponse<ReportData, ReportMeta> {}
 
 // eslint-disable-next-line no-shadow
 export const enum ReportType {
-  billing = 'billing',
+  committedSpend = 'committedSpend',
+  details = 'details',
 }
 
 // eslint-disable-next-line no-shadow
