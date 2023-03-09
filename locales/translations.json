@@ -49,7 +49,7 @@
   "exportError": "Something went wrong, please try again",
   "exportFileName": "{groupBy, select, affiliate {{resolution, select, daily {{provider}_affiliates_{startDate}_{endDate}} monthly {{provider}_affiliates_{startDate}_{endDate}} other {}}} product {{resolution, select, daily {{provider}_product_{startDate}_{endDate}} monthly {{provider}_product_{startDate}_{endDate}} other {}}} source_of_spend {{resolution, select, daily {{provider}_source_of_spend_{startDate}_{endDate}} monthly {{provider}_source_of_spend_{startDate}_{endDate}} other {}}} other {}}",
   "exportGenerate": "Generate export",
-  "exportHeading": "{groupBy, select, affiliate {Aggregates of the following affiliates will be exported to a .csv file.} product {Aggregates of the following products will be exported to a .csv file.} source_of_spend {Aggregates of the following source of spend will be exported to a .csv file.} other {}}",
+  "exportHeading": "The export file will be in a .CSV format. Any filters that have been applied to the Hybrid Committed Spend Details table, will be used to generate the export file.",
   "exportTitle": "Export",
   "filterByButtonAriaLabel": "{value, select, affiliate {Filter button for affiliates} product {Filter button for products} source_of_spend {Filter button for source of spend} other {}}",
   "filterByInputAriaLabel": "{value, select, affiliate {Filter input for affiliates} product {Filter input for products} source_of_spend {Filter input for source of spend} other {}}",

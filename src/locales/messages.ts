@@ -291,11 +291,7 @@ export default defineMessages({
   },
   exportHeading: {
     defaultMessage:
-      '{groupBy, select, ' +
-      'affiliate {Aggregates of the following affiliates will be exported to a .csv file.} ' +
-      'product {Aggregates of the following products will be exported to a .csv file.} ' +
-      'source_of_spend {Aggregates of the following source of spend will be exported to a .csv file.} ' +
-      'other {}}',
+      'The export file will be in a .CSV format. Any filters that have been applied to the Hybrid Committed Spend Details table, will be used to generate the export file.',
     description: 'Export heading',
     id: 'exportHeading',
   },

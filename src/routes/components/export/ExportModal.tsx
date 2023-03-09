@@ -17,6 +17,7 @@ export interface ExportModalOwnProps {
   onClose(isOpen: boolean);
   reportPathsType: ReportPathsType;
   reportQueryString?: string;
+  showDataTypes?: string;
   startDate?: string;
 }
 
@@ -38,6 +39,7 @@ const ExportModal: React.FC<ExportModalProps> = ({
   onClose,
   reportPathsType,
   reportQueryString,
+  showDataTypes,
   startDate,
 }) => {
   const [dataType, setDataType] = useState<'json' | 'raw'>('json');
@@ -86,27 +88,29 @@ const ExportModal: React.FC<ExportModalProps> = ({
       <div style={styles.title}>
         <span>{intl.formatMessage(messages.exportHeading, { groupBy })}</span>
       </div>
-      <Form style={styles.form}>
-        <Grid hasGutter md={6}>
-          <GridItem span={12}>
-            <FormGroup fieldId="formatType" label={intl.formatMessage(messages.exportDataTypeTitle)} isRequired>
-              {dataTypeOptions.map((option, index) => (
-                <Radio
-                  key={index}
-                  id={`formatType-${index}`}
-                  isValid={option.value !== undefined}
-                  label={intl.formatMessage(option.label, { value: option.value })}
-                  value={option.value}
-                  checked={dataType === option.value}
-                  name="formatType"
-                  onChange={handleOnDataTypeChange}
-                  aria-label={intl.formatMessage(option.label, { value: option.value })}
-                />
-              ))}
-            </FormGroup>
-          </GridItem>
-        </Grid>
-      </Form>
+      {showDataTypes && (
+        <Form style={styles.form}>
+          <Grid hasGutter md={6}>
+            <GridItem span={12}>
+              <FormGroup fieldId="formatType" label={intl.formatMessage(messages.exportDataTypeTitle)} isRequired>
+                {dataTypeOptions.map((option, index) => (
+                  <Radio
+                    key={index}
+                    id={`formatType-${index}`}
+                    isValid={option.value !== undefined}
+                    label={intl.formatMessage(option.label, { value: option.value })}
+                    value={option.value}
+                    checked={dataType === option.value}
+                    name="formatType"
+                    onChange={handleOnDataTypeChange}
+                    aria-label={intl.formatMessage(option.label, { value: option.value })}
+                  />
+                ))}
+              </FormGroup>
+            </GridItem>
+          </Grid>
+        </Form>
+      )}
     </Modal>
   );
 };
