@@ -151,6 +151,14 @@ const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): 
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
+  const previousContractLineEndDate =
+    values && values.previous_contract_line_end_date
+      ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
+      : undefined;
+  const previousContractLineStartDate =
+    values && values.previous_contract_line_start_date
+      ? new Date('values.previous_contract_line_start_date' + 'T00:00:00')
+      : undefined;
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
   const {
@@ -179,6 +187,8 @@ const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): 
     contractLineStartDate,
     contractStartDate,
     dateRange: perspective === PerspectiveType.previous_over_actual ? DateRangeType.contractedLastYear : undefined,
+    previousContractLineEndDate,
+    previousContractLineStartDate,
     reportPathsType: widget.reportPathsType,
     reportType: widget.reportType,
   });
