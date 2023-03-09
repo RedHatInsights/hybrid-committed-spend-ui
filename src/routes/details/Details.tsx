@@ -359,6 +359,14 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
+  const previousContractLineEndDate =
+    values && values.previous_contract_line_end_date
+      ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
+      : undefined;
+  const previousContractLineStartDate =
+    values && values.previous_contract_line_start_date
+      ? new Date('values.previous_contract_line_start_date' + 'T00:00:00')
+      : undefined;
 
   const { endDate, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
     useDetailsMapDateRangeToProps({
@@ -367,6 +375,8 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
       contractStartDate,
       dateRange,
       groupBy,
+      previousContractLineEndDate,
+      previousContractLineStartDate,
       sourceOfSpend,
     });
 

@@ -15,6 +15,8 @@ export interface AccountSummaryReportData extends ReportData {
   committed_spend?: ReportValue;
   delta?: { value: string; percent: string };
   excess_committed_spend?: ReportValue;
+  previous_contract_line_end_date?: string;
+  previous_contract_line_start_date?: string;
   remaining_committed_spend?: ReportValue;
 }
 

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
-import { getDateRange } from 'routes/utils/dateRange';
+import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
@@ -33,6 +33,8 @@ interface DetailsOwnProps {
   groupBy?: string;
   groupByValue?: string;
   isExpanded?: boolean;
+  previousContractLineEndDate?: Date;
+  previousContractLineStartDate?: Date;
   reportPathsType?: ReportPathsType;
   reportType?: ReportType;
   secondaryGroupBy?: string;
@@ -106,17 +108,25 @@ export const useDetailsMapDateRangeToProps = ({
   dateRange,
   groupBy,
   groupByValue,
+  previousContractLineEndDate,
+  previousContractLineStartDate,
   reportPathsType,
   reportType,
   secondaryGroupBy,
   sourceOfSpend,
 }: DetailsOwnProps): DetailsStateProps => {
-  const { endDate, startDate } = getDateRange({
-    dateRange,
-    consumptionDate,
-    contractLineStartDate,
-    contractStartDate,
-  });
+  const { endDate, startDate } =
+    dateRange === DateRangeType.contractedLastYear
+      ? {
+          endDate: previousContractLineEndDate,
+          startDate: previousContractLineStartDate,
+        }
+      : getDateRange({
+          dateRange,
+          consumptionDate,
+          contractLineStartDate,
+          contractStartDate,
+        });
 
   return useDetailsMapToProps({
     dateRange,
@@ -167,7 +177,7 @@ export const useDetailsMapToProps = ({
     filter: {
       ...(query.filter ? query.filter : {}),
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
-      ...(secondaryGroupBy && { limit: undefined, offset: 0 }), // Children are not paginated
+      ...(secondaryGroupBy && { limit: undefined, offset: undefined }), // Children are not paginated
     },
     ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
     sourceOfSpend: undefined,

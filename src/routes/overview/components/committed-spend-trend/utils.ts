@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
-import { getDateRange } from 'routes/utils/dateRange';
+import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
@@ -28,6 +28,8 @@ interface DetailsOwnProps {
   dateRange?: string;
   endDate?: Date;
   isExpanded?: boolean;
+  previousContractLineEndDate?: Date;
+  previousContractLineStartDate?: Date;
   reportPathsType?: ReportPathsType;
   reportType?: ReportType;
   startDate?: Date;
@@ -83,15 +85,23 @@ export const useDetailsMapDateRangeToProps = ({
   contractLineStartDate,
   contractStartDate,
   dateRange,
+  previousContractLineEndDate,
+  previousContractLineStartDate,
   reportPathsType,
   reportType,
 }: DetailsOwnProps): DetailsStateProps => {
-  const { endDate, startDate } = getDateRange({
-    dateRange,
-    consumptionDate,
-    contractLineStartDate,
-    contractStartDate,
-  });
+  const { endDate, startDate } =
+    dateRange === DateRangeType.contractedLastYear
+      ? {
+          endDate: previousContractLineEndDate,
+          startDate: previousContractLineStartDate,
+        }
+      : getDateRange({
+          dateRange,
+          consumptionDate,
+          contractLineStartDate,
+          contractStartDate,
+        });
 
   return useDetailsMapToProps({
     dateRange,

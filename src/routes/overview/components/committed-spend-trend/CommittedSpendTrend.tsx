@@ -41,6 +41,7 @@ interface CommittedSpendTrendStateProps {
   previousReportFetchStatus?: FetchStatus;
   previousReportError?: AxiosError;
   startDate?: Date;
+  summaryFetchStatus?: FetchStatus;
   widget: DashboardWidget;
 }
 
@@ -68,6 +69,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
     previousReport,
     previousReportFetchStatus,
     startDate,
+    summaryFetchStatus,
     widget,
   } = useMapToProps({
     perspective,
@@ -119,7 +121,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
     <ReportSummary
       detailsLink={getDetailsLink()}
       excessActualSpend={excessActualSpend}
-      fetchStatus={[currentReportFetchStatus, previousReportFetchStatus]}
+      fetchStatus={[currentReportFetchStatus, previousReportFetchStatus, summaryFetchStatus]}
       title={widget.title}
     >
       <Perspective
@@ -141,7 +143,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
 };
 
 const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): CommittedSpendTrendStateProps => {
-  const { summary } = useAccountSummaryMapToProps();
+  const { summary, summaryFetchStatus } = useAccountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
   const consumptionDate =
     values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
@@ -149,6 +151,14 @@ const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): 
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
   const contractStartDate =
     values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
+  const previousContractLineEndDate =
+    values && values.previous_contract_line_end_date
+      ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
+      : undefined;
+  const previousContractLineStartDate =
+    values && values.previous_contract_line_start_date
+      ? new Date('values.previous_contract_line_start_date' + 'T00:00:00')
+      : undefined;
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
   const {
@@ -177,6 +187,8 @@ const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): 
     contractLineStartDate,
     contractStartDate,
     dateRange: perspective === PerspectiveType.previous_over_actual ? DateRangeType.contractedLastYear : undefined,
+    previousContractLineEndDate,
+    previousContractLineStartDate,
     reportPathsType: widget.reportPathsType,
     reportType: widget.reportType,
   });
@@ -192,6 +204,7 @@ const useMapToProps = ({ perspective, widgetId }: CommittedSpendTrendOwnProps): 
     previousReportFetchStatus,
     previousReportError,
     startDate: previousStartDate < currentStartDate ? previousStartDate : currentStartDate,
+    summaryFetchStatus,
     widget,
   };
 };
