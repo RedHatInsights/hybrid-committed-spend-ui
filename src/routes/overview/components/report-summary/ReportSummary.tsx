@@ -33,15 +33,18 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
   showBreakdown,
   subTitle,
 }) => {
-  const isSkeleton = () => {
+  const isLoading = () => {
+    let result = false;
     if (Array.isArray(fetchStatus)) {
       fetchStatus.forEach(status => {
         if (status === FetchStatus.inProgress) {
-          return true;
+          result = true;
         }
       });
+    } else {
+      result = fetchStatus === FetchStatus.inProgress;
     }
-    return fetchStatus === FetchStatus.inProgress;
+    return result;
   };
   return (
     <Card style={styles.reportSummary}>
@@ -61,7 +64,7 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
         </div>
       </CardTitle>
       <CardBody style={bodyStyle}>
-        {isSkeleton() ? (
+        {isLoading() ? (
           <>
             <Skeleton width="16%" />
             <Skeleton style={styles.chartSkeleton} width={skeletonWidth.md} />
