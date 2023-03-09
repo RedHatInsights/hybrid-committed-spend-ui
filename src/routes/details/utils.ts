@@ -168,7 +168,7 @@ export const useDetailsMapToProps = ({
     },
     ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
     ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
-    ...(queryFromRoute.orderBy && { orderBy: queryFromRoute.orderBy }),
+    ...(queryFromRoute.orderBy && { orderBy: secondaryGroupBy ? secondaryGroupBy : queryFromRoute.orderBy }),
     dateRange,
   };
 
