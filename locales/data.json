@@ -776,37 +776,8 @@
     ],
     "exportHeading": [
       {
-        "options": {
-          "affiliate": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Aggregates of the following affiliates will be exported to a .csv file."
-              }
-            ]
-          },
-          "other": {
-            "value": []
-          },
-          "product": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Aggregates of the following products will be exported to a .csv file."
-              }
-            ]
-          },
-          "source_of_spend": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Aggregates of the following source of spend will be exported to a .csv file."
-              }
-            ]
-          }
-        },
-        "type": 5,
-        "value": "groupBy"
+        "type": 0,
+        "value": "The export file will be in a .CSV format. Any filters that have been applied to the Hybrid Committed Spend Details table, will be used to generate the export file."
       }
     ],
     "exportTitle": [
