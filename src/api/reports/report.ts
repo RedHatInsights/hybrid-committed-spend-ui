@@ -19,8 +19,7 @@ export interface ReportData {
 }
 
 export interface ReportMeta extends PagedMetaData {
-  excessAmountSpend: number; // Todo: replace with ReportValue
-  // excessAmountSpend: ReportValue;
+  excess_actual_spend: ReportValue;
   count?: string | number;
   delta?: {
     percent: number;
