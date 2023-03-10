@@ -80,13 +80,10 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetI
   const values = hasData && currentReport.meta;
 
   // Don't show excess spend unless greater than zero
-  // const excessSpend = values && values.excessAmountSpend ? Number(values.excessAmountSpend.value) : undefined;
-  // const excessActualSpend: string =
-  //   excessSpend ? formatCurrency(excessSpend, values.excessAmountSpend.units || 'USD') : undefined;
-
-  // Todo: Units should come from API ^^^ above ^^^
-  const excessSpend = values && values.excessAmountSpend ? Number(values.excessAmountSpend) : undefined;
-  const excessActualSpend: string = excessSpend ? formatCurrency(excessSpend, 'USD') : undefined;
+  const excessSpend = values && values.excess_actual_spend ? Number(values.excess_actual_spend.value) : undefined;
+  const excessActualSpend: string = excessSpend
+    ? formatCurrency(excessSpend, values.excess_actual_spend.units || 'USD')
+    : undefined;
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
