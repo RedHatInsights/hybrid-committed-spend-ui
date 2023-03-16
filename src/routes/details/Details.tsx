@@ -115,13 +115,19 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     );
   };
 
-  const getPagination = (isDisabled = false, isBottom = false) => {
+  const getPaginationProps = () => {
     const count = report && report.meta && report.meta.count !== undefined ? report.meta.count : 0;
     const limit =
       report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 0;
     const offset =
       report && report.meta && report.meta.filter && report.meta.filter.offset ? report.meta.filter.offset : 0;
     const page = limit > 0 ? offset / limit + 1 : 1;
+
+    return { count, limit, offset, page };
+  };
+
+  const getPagination = (isDisabled = false, isBottom = false) => {
+    const { count, limit, page } = getPaginationProps();
 
     return (
       <Pagination

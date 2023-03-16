@@ -285,7 +285,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                                 }
                               : undefined
                           }
-                          key={`cell-${cellIndex}-${rowIndex}`}
+                          key={`cell-${rowIndex}-${cellIndex}`}
                           hasRightBorder
                           isStickyColumn
                         >
