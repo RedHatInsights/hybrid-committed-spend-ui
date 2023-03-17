@@ -43,8 +43,9 @@ interface DetailsOwnProps {
 interface DetailsStateProps {
   consumptionDate?: Date;
   contractLineStartDate?: Date;
-  contractStartDate?: Date;
   endDate?: Date;
+  previousContractLineEndDate?: Date;
+  previousContractLineStartDate?: Date;
   query?: Query;
   report?: Report;
   reportError?: AxiosError;
@@ -67,8 +68,9 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   const {
     consumptionDate,
     contractLineStartDate,
-    contractStartDate,
     endDate,
+    previousContractLineEndDate,
+    previousContractLineStartDate,
     query,
     report,
     reportError,
@@ -292,7 +294,6 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
         <DetailsHeaderToolbar
           consumptionDate={consumptionDate}
           contractLineStartDate={contractLineStartDate}
-          contractStartDate={contractStartDate}
           dateRange={dateRange}
           endDate={endDate}
           groupBy={groupBy}
@@ -300,6 +301,8 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
           onGroupBySelected={handleOnGroupBySelected}
           onSecondaryGroupBySelected={handleOnSecondaryGroupBySelected}
           onSourceOfSpendSelected={handleOnSourceOfSpendSelected}
+          previousContractLineEndDate={previousContractLineEndDate}
+          previousContractLineStartDate={previousContractLineStartDate}
           secondaryGroupBy={secondaryGroupBy}
           sourceOfSpend={sourceOfSpend}
           startDate={startDate}
@@ -361,24 +364,24 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
   const values = summary && summary.data && summary.data.length && summary.data[0];
   const consumptionDate =
     values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
+  const contractLineEndDate =
+    values && values.contract_line_end_date ? new Date(values.contract_line_end_date + 'T00:00:00') : undefined;
   const contractLineStartDate =
     values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
-  const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
   const previousContractLineEndDate =
     values && values.previous_contract_line_end_date
       ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
       : undefined;
   const previousContractLineStartDate =
     values && values.previous_contract_line_start_date
-      ? new Date('values.previous_contract_line_start_date' + 'T00:00:00')
+      ? new Date(values.previous_contract_line_start_date + 'T00:00:00')
       : undefined;
 
   const { endDate, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
     useDetailsMapDateRangeToProps({
       consumptionDate,
+      contractLineEndDate,
       contractLineStartDate,
-      contractStartDate,
       dateRange,
       groupBy,
       previousContractLineEndDate,
@@ -389,8 +392,9 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
   return {
     consumptionDate,
     contractLineStartDate,
-    contractStartDate,
     endDate,
+    previousContractLineEndDate,
+    previousContractLineStartDate,
     query,
     report,
     reportError,
