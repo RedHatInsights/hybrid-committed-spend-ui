@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 
 export const compareDateYearAndMonth = (a: Date, b: Date) => {
   if (a.getFullYear() > b.getFullYear()) {
@@ -53,18 +52,22 @@ export const formatDate = (startDate: Date, endDate: Date, isFormatted = true) =
       };
 };
 
-export const getContractedLastYear = (contractLineStartDate: Date, isFormatted: boolean) => {
-  if (contractLineStartDate === undefined) {
+export const getContractedLastYear = (
+  previousContractLineStartDate: Date,
+  previousContractLineEndDate: Date,
+  isFormatted: boolean
+) => {
+  if (previousContractLineStartDate === undefined || previousContractLineEndDate === undefined) {
     return getUndefinedDates();
   }
-  const endDate = new Date(contractLineStartDate.getTime());
-  endDate.setDate(1); // Workaround to compare month properly
-  // endDate.setMonth(endDate.getMonth() - 1); // Todo: do we include month of contractLineStartDate?
+  return formatDate(previousContractLineStartDate, previousContractLineEndDate, isFormatted);
+};
 
-  const startDate = new Date(contractLineStartDate.getTime());
-  startDate.setFullYear(startDate.getFullYear() - 1);
-
-  return formatDate(startDate, endDate, isFormatted);
+export const getContractedYear = (contractLineStartDate: Date, contractLineEndDate: Date, isFormatted: boolean) => {
+  if (contractLineStartDate === undefined || contractLineEndDate === undefined) {
+    return getUndefinedDates();
+  }
+  return formatDate(contractLineStartDate, contractLineEndDate, isFormatted);
 };
 
 export const getContractedYtd = (contractLineStartDate: Date, consumptionDate: Date, isFormatted: boolean) => {
@@ -120,12 +123,4 @@ export const getLastMonthsDate = (consumptionDate: Date, offset: number, isForma
 
 export const getUndefinedDates = () => {
   return { startDate: undefined, endDate: undefined };
-};
-
-export const isContractedLastYearValid = (contractLineStartDate: Date, contractStartDate: Date) => {
-  const { startDate } = getDateRange({
-    dateRange: DateRangeType.contractedLastYear,
-    contractLineStartDate,
-  });
-  return startDate < contractStartDate;
 };

@@ -17,15 +17,16 @@ import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { optionActions, optionSelectors } from 'store/options';
-import { isContractedLastYearValid } from 'utils/dates';
 
 interface DetailsHeaderToolbarOwnProps {
   consumptionDate?: Date;
   contractLineStartDate?: Date;
-  contractStartDate?: Date;
   dateRange?: string;
   endDate?: Date;
+  previousContractLineEndDate?: Date;
+  previousContractLineStartDate?: Date;
   groupBy?: string;
+  hasPreviousData?: boolean;
   onDateRangeSelected(value: string);
   onGroupBySelected(value: string);
   onSecondaryGroupBySelected(value: string);
@@ -61,7 +62,6 @@ const sourceOfSpendOptions: PerspectiveOption[] = [
 const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   consumptionDate,
   contractLineStartDate,
-  contractStartDate,
   dateRange,
   groupBy,
   intl,
@@ -69,6 +69,8 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   onGroupBySelected,
   onSecondaryGroupBySelected,
   onSourceOfSpendSelected,
+  previousContractLineEndDate,
+  previousContractLineStartDate,
   secondaryGroupBy,
   sourceOfSpend,
 }) => {
@@ -87,7 +89,8 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   const getContractedLastYearDateRange = () => {
     const { endDate, startDate } = getDateRange({
       dateRange: DateRangeType.contractedLastYear,
-      contractLineStartDate,
+      previousContractLineEndDate,
+      previousContractLineStartDate,
     });
     return formatDateRange(startDate, endDate);
   };
@@ -132,7 +135,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
       switch (option.value) {
         case DateRangeType.contractedLastYear:
           option.description = getContractedLastYearDateRange();
-          option.isDisabled = isContractedLastYearValid(contractLineStartDate, contractStartDate);
+          option.isDisabled = !(previousContractLineEndDate && previousContractLineStartDate);
           break;
         case DateRangeType.contractedYtd:
           option.description = getContractedYtdDateRange();
