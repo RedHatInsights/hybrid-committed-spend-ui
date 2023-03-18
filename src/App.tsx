@@ -32,10 +32,10 @@ const App = () => {
   useFeatureFlags();
 
   return (
-    <div className="hybrid-committed-spend">
+    <>
       <NotificationsPortal />
       <Routes />
-    </div>
+    </>
   );
 };
 
