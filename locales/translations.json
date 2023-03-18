@@ -64,6 +64,8 @@
   "loadingStateTitle": "Looking for sources...",
   "names": "{count, plural, one {Name} other {Names}}",
   "noResultsFound": "No results found",
+  "notViewable": "Committed Spend data is not available to be viewed",
+  "notViewableDesc": "Committed Spend data is not viewable at this time. If you need access to this data, please contact your account manager.",
   "outOf": "out of {value}",
   "overLastMonth": "Over last month",
   "overviewTitle": "Hybrid Committed Spend Overview",

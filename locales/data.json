@@ -1066,6 +1066,18 @@
         "value": "No results found"
       }
     ],
+    "notViewable": [
+      {
+        "type": 0,
+        "value": "Committed Spend data is not available to be viewed"
+      }
+    ],
+    "notViewableDesc": [
+      {
+        "type": 0,
+        "value": "Committed Spend data is not viewable at this time. If you need access to this data, please contact your account manager."
+      }
+    ],
     "outOf": [
       {
         "type": 0,
