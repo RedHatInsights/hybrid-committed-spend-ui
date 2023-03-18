@@ -5,13 +5,13 @@ import type { AxiosError } from 'axios';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { routes } from 'Routes';
-import { Loading, NotAuthorized, NotAvailable } from 'routes/state';
+import { Loading, NotAuthorized, NotAvailable, NotViewable } from 'routes/state';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { featureFlagsSelectors } from 'store/feature-flags';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
 import { formatPath, usePathname } from 'utils/paths';
-import { hasAllAccess } from 'utils/userAccess';
+import { hasHcsDataVisibility, hasHcsDeal } from 'utils/userAccess';
 
 interface PermissionsOwnProps {
   children?: React.ReactNode;
@@ -35,16 +35,13 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
     if (userAccessFetchStatus !== FetchStatus.complete) {
       return false;
     }
-
-    const hasAccess = hasAllAccess(userAccess);
-    const details = hasAccess && isDetailsFeatureEnabled;
-    const overview = hasAccess;
+    const hasDeal = hasHcsDeal(userAccess);
 
     switch (pathname) {
       case formatPath(routes.details.path):
-        return details;
+        return hasDeal && isDetailsFeatureEnabled;
       case formatPath(routes.overview.path):
-        return overview;
+        return hasDeal;
       default:
         return false;
     }
@@ -57,6 +54,10 @@ const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
     result = <Loading />;
   } else if (userAccessError) {
     result = <NotAvailable />;
+  } else if (userAccessFetchStatus === FetchStatus.complete && !hasHcsDeal(userAccess)) {
+    result = <NotAuthorized pathname={pathname} />;
+  } else if (userAccessFetchStatus === FetchStatus.complete && !hasHcsDataVisibility(userAccess)) {
+    result = <NotViewable pathname={pathname} />;
   } else if (hasPermissions()) {
     result = <>{children}</>;
   }

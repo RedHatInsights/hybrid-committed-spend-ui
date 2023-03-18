@@ -396,6 +396,18 @@ export default defineMessages({
     description: 'No results found',
     id: 'noResultsFound',
   },
+  notViewable: {
+    defaultMessage: 'Committed Spend data is not available to be viewed',
+    description: 'Committed Spend data is not available to be viewed',
+    id: 'notViewable',
+  },
+  notViewableDesc: {
+    defaultMessage:
+      'Committed Spend data is not viewable at this time. If you need access to this data, please contact your account manager.',
+    description:
+      'Committed Spend data is not viewable at this time. If you need access to this data, please contact your account manager.',
+    id: 'notViewableDesc',
+  },
   outOf: {
     defaultMessage: 'out of {value}',
     description: 'out of {value}',
