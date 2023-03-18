@@ -1,5 +1,5 @@
 import type { Export } from 'api/export';
-import { runExport } from 'api/export';
+import { runExport } from 'api/export/exportUtils';
 import type { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import type { ThunkAction } from 'redux-thunk';

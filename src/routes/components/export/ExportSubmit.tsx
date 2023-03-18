@@ -7,28 +7,29 @@ import { ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import fileDownload from 'js-file-download';
 import messages from 'locales/messages';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { WrappedComponentProps } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { exportActions, exportSelectors } from 'store/export';
+import { formatDate } from 'utils/dates';
 
 export interface ExportSubmitOwnProps {
   disabled?: boolean;
   dataType?: 'json' | 'raw';
-  endDate?: string;
+  endDate?: Date;
   groupBy?: string;
   onClose?: (isOpen: boolean) => void;
   onError?: (error: AxiosError) => void;
   name?: string;
   reportPathsType?: ReportPathsType;
   reportQueryString: string;
-  startDate?: string;
+  secondaryGroupBy?: string;
+  startDate?: Date;
 }
 
 interface ExportSubmitStateProps {
@@ -52,8 +53,10 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   onError,
   reportPathsType,
   reportQueryString,
+  secondaryGroupBy,
   startDate,
 }) => {
+  const [fetchExportClicked, setFetchExportClicked] = useState(false);
   const { exportReport, exportFetchStatus, exportQueryString } = useMapToProps({
     dataType,
     onError,
@@ -64,18 +67,21 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
 
   const getExport = () => {
     if (exportReport && exportFetchStatus === FetchStatus.complete) {
-      fileDownload(exportReport.data, getFileName(), 'text/csv');
+      const data = (exportReport.data as any).data;
+      fileDownload(data, getFileName(), 'text/csv');
       handleClose();
     }
   };
 
   const getFileName = () => {
-    // defaultMessage: '<provider>_<groupBy>_<resolution>_<start-date>_<end-date>',
+    const { endDate: endDateStr, startDate: startDateStr } = formatDate(startDate, endDate, true);
+
+    // File name format: '<groupBy>_<secondaryGroupBy>_<start-date>_<end-date>',
     const fileName = intl.formatMessage(messages.exportFileName, {
-      endDate,
-      provider: reportPathsType,
+      endDate: endDateStr,
       groupBy,
-      startDate,
+      secondaryGroupBy,
+      startDate: startDateStr,
     });
 
     return `${fileName}.csv`;
@@ -88,12 +94,15 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
   };
 
   const handleFetchReport = () => {
+    setFetchExportClicked(true);
     dispatch(exportActions.exportReport(reportPathsType, reportType, exportQueryString));
   };
 
   useEffect(() => {
-    getExport();
-  }, [exportReport]);
+    if (fetchExportClicked) {
+      getExport();
+    }
+  }, [exportReport, fetchExportClicked]);
 
   return (
     <Button
@@ -112,31 +121,17 @@ const useMapToProps = ({
   reportPathsType,
   reportQueryString,
 }: ExportSubmitOwnProps): ExportSubmitStateProps => {
-  const location = useLocation();
-  const queryFromRoute = parseQuery<Query>(location.search);
-
   const getQueryString = () => {
     const reportQuery = parseQuery(reportQueryString);
     const newQuery: Query = {
       ...reportQuery,
       filter: {
+        ...reportQuery.filter,
         limit: undefined, // Don't want paginated data
         offset: undefined, // Don't want a page
       },
-      filter_by: {}, // Don't want page filter, selected items will be filtered below
-      limit: 0, // No limit to number of items returned
-      orderBy: undefined, // Don't want items sorted by cost
+      orderBy: undefined, // Don't want items sorted by actual_spend
     };
-
-    // Store filter_by as an array, so we can add to it below
-    if (queryFromRoute.filter_by) {
-      for (const key of Object.keys(queryFromRoute.filter_by)) {
-        if (newQuery.filter_by[key] === undefined) {
-          newQuery.filter_by[key] = [];
-        }
-        newQuery.filter_by[key].push(queryFromRoute.filter_by[key]);
-      }
-    }
     return getQuery(newQuery);
   };
 

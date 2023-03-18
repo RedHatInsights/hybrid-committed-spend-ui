@@ -88,7 +88,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
       <DetailsFilterToolbar
         groupBy={groupBy}
         isDisabled={isDisabled}
-        isExportDisabled={isDisabled}
+        isExportDisabled={isDisabled || (report && report.meta && report.meta.count === 0)}
         onExportClicked={handleOnExportModalOpen}
         onFilterAdded={handleOnFilterAdded}
         onFilterRemoved={handleOnFilterRemoved}
@@ -108,11 +108,14 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   const getExportModal = () => {
     return (
       <ExportModal
+        endDate={endDate}
         groupBy={groupBy}
         isOpen={isExportModalOpen}
         onClose={handleOnExportModalClose}
-        reportPathsType={ReportPathsType.accountSummary}
+        reportPathsType={ReportPathsType.details}
         reportQueryString={reportQueryString}
+        secondaryGroupBy={secondaryGroupBy}
+        startDate={startDate}
       />
     );
   };

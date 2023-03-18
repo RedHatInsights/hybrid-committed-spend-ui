@@ -51,9 +51,9 @@ export function authInterceptor(reqConfig: AxiosRequestConfig) {
     return {
       ...reqConfig,
       headers: {
-        ...reqConfig.headers,
-        Accept: 'application/json',
+        Accept: 'application/json', // Allow to be overridden
         Authorization: `Bearer ${token}`,
+        ...reqConfig.headers,
       } as any,
     };
   });
