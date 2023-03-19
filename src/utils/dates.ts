@@ -1,5 +1,10 @@
 import { format } from 'date-fns';
 
+export interface DateType {
+  endDate: Date;
+  startDate: Date;
+}
+
 export const compareDateYearAndMonth = (a: Date, b: Date) => {
   if (a.getFullYear() > b.getFullYear()) {
     return 1;

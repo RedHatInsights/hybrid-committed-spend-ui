@@ -99,7 +99,7 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
               }
             />
           ),
-        })
+        } as any)
       : undefined;
   };
 
@@ -114,7 +114,7 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
   };
 
   // If bar width exceeds max and domainPadding is true, extra width is returned to help center bars horizontally
-  const getBarWidth = (domainPadding: boolean = false) => {
+  const getBarWidth = (domainPadding = false) => {
     const maxWidth = 10;
     let maxValue = -1;
 

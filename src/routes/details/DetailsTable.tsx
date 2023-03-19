@@ -89,7 +89,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
 
     const computedItems = getUnsortedComputedReportItems({
       report,
-      idKey: groupBy,
+      idKey: groupBy as any,
       isDateMap: true,
     });
 

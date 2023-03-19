@@ -12,6 +12,7 @@ import { getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
+import type { DateType } from 'utils/dates';
 import { formatDate } from 'utils/dates';
 
 interface AccountSummaryStateProps {
@@ -90,7 +91,7 @@ export const useDetailsMapDateRangeToProps = ({
   reportPathsType,
   reportType,
 }: DetailsOwnProps): DetailsStateProps => {
-  const { endDate, startDate } = getDateRange({
+  const { endDate, startDate }: DateType = getDateRange({
     dateRange,
     contractLineEndDate,
     contractLineStartDate,

@@ -37,7 +37,7 @@ interface PerspectiveState {
 
 type PerspectiveProps = PerspectiveOwnProps & WrappedComponentProps;
 
-class Perspective extends React.Component<PerspectiveProps> {
+class Perspective extends React.Component<PerspectiveProps, any> {
   protected defaultState: PerspectiveState = {
     isSelectOpen: false,
   };
@@ -64,7 +64,7 @@ class Perspective extends React.Component<PerspectiveProps> {
     const { isSelectOpen } = this.state;
 
     const selectOptions = this.getSelectOptions();
-    const selection = selectOptions.find((option: PerspectiveOption) => option.value === currentItem);
+    const selection = selectOptions.find((option: PerspectiveOptionExt) => option.value === currentItem);
 
     return (
       <Select
@@ -88,11 +88,11 @@ class Perspective extends React.Component<PerspectiveProps> {
     );
   };
 
-  private handleSelect = (event, selection: PerspectiveOption) => {
+  private handleSelect = (event: React.MouseEvent | React.ChangeEvent, selection: SelectOptionObject) => {
     const { onSelected } = this.props;
 
     if (onSelected) {
-      onSelected(selection.value);
+      onSelected((selection as PerspectiveOption).value);
     }
     this.setState({
       isSelectOpen: false,
