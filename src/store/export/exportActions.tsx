@@ -1,5 +1,5 @@
-import type { Export } from 'api/export';
-import { runExport } from 'api/export';
+import type { Export } from 'api/export/export';
+import { runExport } from 'api/export/exportUtils';
 import type { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import type { ThunkAction } from 'redux-thunk';
@@ -36,7 +36,7 @@ export function exportReport(
     dispatch(fetchExportRequest(meta));
     runExport(reportPathsType, reportType, reportQueryString)
       .then(res => {
-        dispatch(fetchExportSuccess({ data: res.data }, meta));
+        dispatch(fetchExportSuccess(res.data, meta));
       })
       .catch(err => {
         dispatch(fetchExportFailure(err, meta));

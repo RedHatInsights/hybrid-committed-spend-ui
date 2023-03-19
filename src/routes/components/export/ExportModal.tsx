@@ -11,14 +11,15 @@ import { styles } from './ExportModal.styles';
 import { ExportSubmit } from './ExportSubmit';
 
 export interface ExportModalOwnProps {
-  endDate?: string;
+  endDate?: Date;
   groupBy?: string;
   isOpen: boolean;
   onClose(isOpen: boolean);
   reportPathsType: ReportPathsType;
   reportQueryString?: string;
   showDataTypes?: string;
-  startDate?: string;
+  secondaryGroupBy?: string;
+  startDate?: Date;
 }
 
 type ExportModalProps = ExportModalOwnProps & WrappedComponentProps;
@@ -39,6 +40,7 @@ const ExportModal: React.FC<ExportModalProps> = ({
   onClose,
   reportPathsType,
   reportQueryString,
+  secondaryGroupBy,
   showDataTypes,
   startDate,
 }) => {
@@ -77,6 +79,7 @@ const ExportModal: React.FC<ExportModalProps> = ({
           onError={handleOnError}
           reportPathsType={reportPathsType}
           reportQueryString={reportQueryString}
+          secondaryGroupBy={secondaryGroupBy}
           startDate={startDate}
         />,
         <Button key="cancel" onClick={handleOnClose} variant={ButtonVariant.link}>

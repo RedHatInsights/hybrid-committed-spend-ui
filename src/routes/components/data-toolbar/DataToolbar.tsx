@@ -48,7 +48,7 @@ interface DataToolbarOwnProps {
 
 type DataToolbarProps = DataToolbarOwnProps & WrappedComponentProps;
 
-const DataToolbar: React.FC<DataToolbarProps> = ({
+const DataToolbarBase: React.FC<DataToolbarProps> = ({
   categoryOptions,
   filterPathsType,
   groupBy,
@@ -308,4 +308,6 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   );
 };
 
-export default injectIntl(DataToolbar);
+const DataToolbar = injectIntl(DataToolbarBase);
+
+export default DataToolbar;

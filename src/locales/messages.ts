@@ -277,9 +277,9 @@ export default defineMessages({
   exportFileName: {
     defaultMessage:
       '{groupBy, select, ' +
-      'affiliate {{resolution, select, daily {{provider}_affiliates_{startDate}_{endDate}} monthly {{provider}_affiliates_{startDate}_{endDate}} other {}}} ' +
-      'product {{resolution, select, daily {{provider}_product_{startDate}_{endDate}} monthly {{provider}_product_{startDate}_{endDate}} other {}}} ' +
-      'source_of_spend {{resolution, select, daily {{provider}_source_of_spend_{startDate}_{endDate}} monthly {{provider}_source_of_spend_{startDate}_{endDate}} other {}}} ' +
+      'affiliate {{secondaryGroupBy, select, product {affiliate_product_{startDate}_{endDate}} source_of_spend {affiliate_source-of-spend_{startDate}_{endDate}} none {affiliate_{startDate}_{endDate}} other {}}} ' +
+      'product {{secondaryGroupBy, select, affiliate {product_affiliate_{startDate}_{endDate}} source_of_spend {product_source-of-spend_{startDate}_{endDate}} none {product_{startDate}_{endDate}} other {}}} ' +
+      'source_of_spend {{secondaryGroupBy, select, affiliate {source-of-spend_affiliate_{startDate}_{endDate}} product {source-of-spend_product_{startDate}_{endDate}} none {source-of-spend_{startDate}_{endDate}} other {}}} ' +
       'other {}}',
     description: 'Export file name',
     id: 'exportFileName',

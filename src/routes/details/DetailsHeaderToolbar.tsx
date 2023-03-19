@@ -27,6 +27,7 @@ interface DetailsHeaderToolbarOwnProps {
   previousContractLineStartDate?: Date;
   groupBy?: string;
   hasPreviousData?: boolean;
+  isExportDisabled?: boolean;
   onDateRangeSelected(value: string);
   onGroupBySelected(value: string);
   onSecondaryGroupBySelected(value: string);
