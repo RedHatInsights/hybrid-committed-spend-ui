@@ -1,8 +1,8 @@
-jest.mock('api/export/export');
+jest.mock('api/export/exportUtils');
 
 import { waitFor } from '@testing-library/react';
-import { runExport } from 'api/export';
 import type { Export } from 'api/export/export';
+import { runExport } from 'api/export/exportUtils';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import { FetchStatus } from 'store/common';
 import { createMockStoreCreator } from 'store/mockStore';
@@ -27,7 +27,7 @@ const mockExport: Export = {
 } as any;
 
 const reportType = ReportType.details;
-const reportPathsType = ReportPathsType.accountSummary;
+const reportPathsType = ReportPathsType.details;
 const reportQueryString = 'reportQueryString';
 
 runExportMock.mockResolvedValue({ data: mockExport });

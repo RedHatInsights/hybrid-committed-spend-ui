@@ -67,8 +67,7 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
 
   const getExport = () => {
     if (exportReport && exportFetchStatus === FetchStatus.complete) {
-      const data = (exportReport.data as any).data;
-      fileDownload(data, getFileName(), 'text/csv');
+      fileDownload(exportReport.data, getFileName(), 'text/csv');
       handleClose();
     }
   };
