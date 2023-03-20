@@ -3,8 +3,8 @@ import { UserAccess } from 'components/user-access';
 import React, { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes as RouterRoutes } from 'react-router-dom';
 
-const Details = lazy(() => import(/* webpackChunkName: "Details" */ 'routes/details/Details'));
-const Overview = lazy(() => import(/* webpackChunkName: "Overview" */ 'routes/overview/Overview'));
+const Details = lazy(() => import(/* webpackChunkName: "Details" */ 'routes/details'));
+const Overview = lazy(() => import(/* webpackChunkName: "Overview" */ 'routes/overview'));
 
 // For syncing with permissions
 const routes = {

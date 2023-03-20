@@ -1,1 +1,1 @@
-export { default as CommittedSpendTrend } from './CommittedSpendTrend';
+export { default } from './CommittedSpendTrend';

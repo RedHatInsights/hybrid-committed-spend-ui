@@ -1,1 +1,1 @@
-export { default as ActualSpendBreakdown } from './ActualSpendBreakdown';
+export { default } from './ActualSpendBreakdown';

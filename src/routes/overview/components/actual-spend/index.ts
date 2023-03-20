@@ -1,1 +1,1 @@
-export { default as ActualSpend } from './ActualSpend';
+export { default } from './ActualSpend';
