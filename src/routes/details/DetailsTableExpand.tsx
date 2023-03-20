@@ -87,7 +87,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
 
     const computedItems = getUnsortedComputedReportItems({
       report,
-      idKey: secondaryGroupBy,
+      idKey: secondaryGroupBy as any,
       isDateMap: true,
     });
 

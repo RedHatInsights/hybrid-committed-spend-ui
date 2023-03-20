@@ -87,13 +87,13 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
                 intl.formatMessage(messages.chartTooltipTitle, {
                   value: intl.formatDate(`${datum.key}T00:00:00`, {
                     month: 'long',
-                    ...(!previousData && { year: 'numeric' }),
+                    ...(!previousData && ({ year: 'numeric' } as any)),
                   }),
                 })
               }
             />
           ),
-        })
+        } as any)
       : undefined;
   };
 
@@ -329,7 +329,7 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
                 }
                 return intl.formatDate(`${t}T00:00:00`, {
                   month: previousData ? 'long' : 'short',
-                  ...(!previousData && { year: 'numeric' }),
+                  ...(!previousData && ({ year: 'numeric' } as any)),
                 });
               }}
               tickValues={getTickValues(series)}

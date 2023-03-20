@@ -101,7 +101,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   const getComputedItems = () => {
     return getUnsortedComputedReportItems({
       report,
-      idKey: groupBy,
+      idKey: groupBy as any,
     });
   };
 

@@ -251,7 +251,7 @@ const useMapToProps = ({
   filterType,
   search,
 }: FilterInputOwnProps): FilterInputStateProps => {
-  const [searchTimeout, setSearchTimeout] = useState(noop);
+  const [searchTimeout, setSearchTimeout] = useState<any>(noop);
 
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 

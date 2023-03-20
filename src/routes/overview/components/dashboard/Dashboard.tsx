@@ -18,7 +18,7 @@ interface DashboardStateProps {
 
 type DashboardProps = DashboardOwnProps & WrappedComponentProps;
 
-const Dashboard: React.FC<DashboardProps> = () => {
+const DashboardBase: React.FC<DashboardProps> = () => {
   const { selectWidgets, currentWidgets } = useMapToProps();
 
   return (
@@ -49,4 +49,6 @@ const useMapToProps = (): DashboardStateProps => {
   };
 };
 
-export default injectIntl(Dashboard);
+const Dashboard = injectIntl(DashboardBase);
+
+export default Dashboard;

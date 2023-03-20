@@ -27,7 +27,7 @@ const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({
   onSelect,
   placeholder,
 }) => {
-  const [search, setSearch] = useState(undefined);
+  const [search, setSearch] = useState<string>(undefined);
 
   const handleOnClear = () => {
     setSearch(undefined);
