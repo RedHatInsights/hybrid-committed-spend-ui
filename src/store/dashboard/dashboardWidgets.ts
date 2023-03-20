@@ -7,12 +7,10 @@ import { formatPath } from 'utils/paths';
 import type { DashboardWidget } from './dashboardCommon';
 import { DashboardSize } from './dashboardCommon';
 
-const ActualSpend = lazy(() => import('routes/overview/components/actual-spend/ActualSpend'));
-const ActualSpendBreakdown = lazy(
-  () => import('routes/overview/components/actual-spend-breakdown/ActualSpendBreakdown')
-);
-const CommittedSpend = lazy(() => import('routes/overview/components/committed-spend/CommittedSpend'));
-const CommittedSpendTrend = lazy(() => import('routes/overview/components/committed-spend-trend/CommittedSpendTrend'));
+const ActualSpend = lazy(() => import('routes/overview/components/actual-spend'));
+const ActualSpendBreakdown = lazy(() => import('routes/overview/components/actual-spend-breakdown'));
+const CommittedSpend = lazy(() => import('routes/overview/components/committed-spend'));
+const CommittedSpendTrend = lazy(() => import('routes/overview/components/committed-spend-trend'));
 
 let currrentId = 0;
 const getId = () => currrentId++;
