@@ -27,7 +27,7 @@ interface PermissionsStateProps {
 
 type PermissionsProps = PermissionsOwnProps;
 
-const PermissionsBase: React.FC<PermissionsProps> = ({ children = null }) => {
+const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
   const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
   const pathname = usePathname();
 
@@ -88,7 +88,5 @@ const useMapToProps = (): PermissionsStateProps => {
     userAccessQueryString,
   };
 };
-
-const Permissions = PermissionsBase;
 
 export default Permissions;
