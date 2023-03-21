@@ -1,10 +1,14 @@
 {
   "name": "hybrid-committed-spend",
-  "version": "1.1.0",
+  "version": "0.0.1",
+  "description": "User Interface for Hybrid Committed Spend",
+  "main": "index.js",
+  "author": "Red Hat",
+  "license": "GNU AGPLv3",
   "private": false,
   "engines": {
     "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "npm": ">=8.0.0"
   },
   "scripts": {
     "build": "npm run build:prod",
@@ -23,9 +27,10 @@
     "postinstall": "rm -rf .cache",
     "start": "HMR=true fec dev",
     "start:csc": "CLOUD_SERVICES_CONFIG_PORT=8889 npm start",
+    "stats": "npm run build:prod --profile --json > stats.json",
     "test": "jest --no-cache",
     "test:clean": "jest --clearCache",
-    "test:update": "yarn test:clean && jest --updateSnapshot",
+    "test:update": "npm run test:clean && jest --updateSnapshot",
     "translations": "npm-run-all translations:extract translations:compile translations:compile:ast translations:datafile",
     "translations:test": "npm-run-all translations:extract translations:compile translations:compile:ast 'translations:syncTranslations --locale fr' 'translations:syncTranslations --locale de' translations:datafile",
     "translations:clean": "rm -f `/bin/ls -1 locales/*.json | /usr/bin/egrep -v 'data|translations'.json`",
@@ -54,7 +59,7 @@
     "qs": "^6.11.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-intl": "^6.3.0",
+    "react-intl": "^6.3.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "redux": "^4.2.1",
@@ -103,7 +108,7 @@
   "overrides": {
     "eslint": "^8.36.0",
     "eslint-plugin-rulesdir": "^0.2.1",
-    "react-intl": "^6.3.0",
+    "react-intl": "^6.3.1",
     "typescript": "^5.0.2"
   },
   "insights": {

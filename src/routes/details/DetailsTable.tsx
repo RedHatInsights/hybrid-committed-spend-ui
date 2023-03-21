@@ -237,10 +237,10 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
               {columns.map((col, index) =>
                 index === 0 ? (
                   <Th
-                    isStickyColumn
                     hasRightBorder
+                    isStickyColumn
                     key={`col-${index}-${col.name}`}
-                    modifier="truncate"
+                    modifier="nowrap"
                     sort={col.isSortable ? getSortParams(index) : undefined}
                   >
                     {col.name}
@@ -275,6 +275,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                     {cells.map((item, cellIndex) =>
                       cellIndex === 0 ? (
                         <Th
+                          className="firstColumn"
                           dataLabel={columns[cellIndex]}
                           expand={
                             secondaryGroupBy && secondaryGroupBy !== GroupByType.none
@@ -285,9 +286,9 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
                                 }
                               : undefined
                           }
-                          key={`cell-${rowIndex}-${cellIndex}`}
                           hasRightBorder
                           isStickyColumn
+                          key={`cell-${rowIndex}-${cellIndex}`}
                         >
                           {item.value}
                         </Th>
