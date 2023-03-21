@@ -21,6 +21,7 @@ import { formatDate } from 'utils/dates';
 export interface ExportSubmitOwnProps {
   disabled?: boolean;
   dataType?: 'json' | 'raw';
+  exportQueryString?: string;
   endDate?: Date;
   groupBy?: string;
   onClose?: (isOpen: boolean) => void;
@@ -117,8 +118,8 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
 
 const useMapToProps = ({
   onError,
-  reportPathsType,
   reportQueryString,
+  reportPathsType,
 }: ExportSubmitOwnProps): ExportSubmitStateProps => {
   const getQueryString = () => {
     const reportQuery = parseQuery(reportQueryString);

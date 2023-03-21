@@ -168,11 +168,11 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
               cellIndex === 0 ? (
                 <Th
                   dataLabel={columns[cellIndex]}
-                  key={`expanded-cell-${cellIndex}-${rowIndex}`}
                   hasRightBorder
                   isStickyColumn
+                  key={`expanded-cell-${cellIndex}-${rowIndex}`}
                 >
-                  <span className="expandedCol">{item.value}</span>
+                  {item.value}
                 </Th>
               ) : (
                 <Td dataLabel={columns[cellIndex]} key={`cell-${rowIndex}-${cellIndex}`}>
@@ -200,6 +200,7 @@ const useMapToProps = ({
     endDate,
     groupBy,
     groupByValue,
+    isChildNode: true,
     isExpanded,
     secondaryGroupBy,
     startDate,

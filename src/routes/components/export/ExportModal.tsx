@@ -15,8 +15,8 @@ export interface ExportModalOwnProps {
   groupBy?: string;
   isOpen: boolean;
   onClose(isOpen: boolean);
-  reportPathsType: ReportPathsType;
   reportQueryString?: string;
+  reportPathsType: ReportPathsType;
   showDataTypes?: string;
   secondaryGroupBy?: string;
   startDate?: Date;

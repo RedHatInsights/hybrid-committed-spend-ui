@@ -37,6 +37,7 @@ const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'
 interface DetailsOwnProps {
   dateRange?: string;
   groupBy?: string;
+  secondaryGroupBy?: string;
   sourceOfSpend?: string;
 }
 
@@ -44,6 +45,7 @@ interface DetailsStateProps {
   consumptionDate?: Date;
   contractLineStartDate?: Date;
   endDate?: Date;
+  exportQueryString?: string;
   previousContractLineEndDate?: Date;
   previousContractLineStartDate?: Date;
   query?: Query;
@@ -69,17 +71,18 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
     consumptionDate,
     contractLineStartDate,
     endDate,
+    exportQueryString,
     previousContractLineEndDate,
     previousContractLineStartDate,
     query,
     report,
     reportError,
     reportFetchStatus,
-    reportQueryString,
     startDate,
   } = useMapToProps({
     dateRange,
     groupBy,
+    secondaryGroupBy,
     sourceOfSpend,
   });
 
@@ -113,7 +116,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
         isOpen={isExportModalOpen}
         onClose={handleOnExportModalClose}
         reportPathsType={ReportPathsType.details}
-        reportQueryString={reportQueryString}
+        reportQueryString={exportQueryString}
         secondaryGroupBy={secondaryGroupBy}
         startDate={startDate}
       />
@@ -362,7 +365,7 @@ const useQueryFromRoute = () => {
   return parseQuery<Query>(location.search);
 };
 
-const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
+const useMapToProps = ({ dateRange, groupBy, secondaryGroupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
   const { summary } = useAccountSummaryMapToProps();
   const values = summary && summary.data && summary.data.length && summary.data[0];
   const consumptionDate =
@@ -380,7 +383,7 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
       ? new Date(values.previous_contract_line_start_date + 'T00:00:00')
       : undefined;
 
-  const { endDate, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
+  const { endDate, exportQueryString, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
     useDetailsMapDateRangeToProps({
       consumptionDate,
       contractLineEndDate,
@@ -389,6 +392,7 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
       groupBy,
       previousContractLineEndDate,
       previousContractLineStartDate,
+      secondaryGroupBy,
       sourceOfSpend,
     });
 
@@ -396,6 +400,7 @@ const useMapToProps = ({ dateRange, groupBy, sourceOfSpend }: DetailsOwnProps): 
     consumptionDate,
     contractLineStartDate,
     endDate,
+    exportQueryString,
     previousContractLineEndDate,
     previousContractLineStartDate,
     query,

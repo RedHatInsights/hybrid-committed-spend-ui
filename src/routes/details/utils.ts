@@ -34,6 +34,7 @@ interface DetailsOwnProps {
   endDate?: Date;
   groupBy?: string;
   groupByValue?: string;
+  isChildNode?: boolean;
   isExpanded?: boolean;
   previousContractLineEndDate?: Date;
   previousContractLineStartDate?: Date;
@@ -46,6 +47,7 @@ interface DetailsOwnProps {
 
 interface DetailsStateProps {
   endDate?: Date;
+  exportQueryString?: string;
   query?: Query;
   report: Report;
   reportError: AxiosError;
@@ -139,11 +141,13 @@ export const useDetailsMapDateRangeToProps = ({
   });
 };
 
+// Intended to be used with table rows at the root level
 export const useDetailsMapToProps = ({
   dateRange,
   endDate,
   groupBy,
   groupByValue,
+  isChildNode = false,
   isExpanded = false,
   reportPathsType = ReportPathsType.details,
   reportType = ReportType.details,
@@ -161,7 +165,7 @@ export const useDetailsMapToProps = ({
       [groupBy]: groupByValue ? groupByValue : '*',
       ...(secondaryGroupBy &&
         secondaryGroupBy !== GroupByType.none && {
-          [secondaryGroupBy]: '*',
+          [secondaryGroupBy]: '*', // Required for export and child nodes
         }),
     },
     ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
@@ -188,6 +192,14 @@ export const useDetailsMapToProps = ({
     reportQuery.orderBy[groupBy] = undefined;
   }
 
+  // Save secondaryGroupBy for export
+  const exportQueryString = getQuery(reportQuery);
+
+  // If not a child node, omit secondaryGroupBy
+  if (!isChildNode) {
+    reportQuery.groupBy[secondaryGroupBy] = undefined;
+  }
+
   const reportQueryString = getQuery(reportQuery);
   const report = useSelector((state: RootState) =>
     reportSelectors.selectReport(state, reportPathsType, reportType, reportQueryString)
@@ -201,7 +213,7 @@ export const useDetailsMapToProps = ({
 
   useEffect(() => {
     if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate && endDate) {
-      if (secondaryGroupBy) {
+      if (isChildNode) {
         if (secondaryGroupBy !== GroupByType.none && isExpanded) {
           dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
         }
@@ -210,10 +222,11 @@ export const useDetailsMapToProps = ({
         dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
       }
     }
-  }, [reportQueryString, isExpanded]);
+  }, [reportQueryString, isExpanded, isChildNode]);
 
   return {
     endDate,
+    exportQueryString,
     query,
     report,
     reportError,
