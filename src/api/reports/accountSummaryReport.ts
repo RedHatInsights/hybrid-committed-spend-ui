@@ -6,6 +6,7 @@ import { ReportType } from './report';
 export interface AccountSummaryReportData extends ReportData {
   account_name?: string;
   account_number?: string;
+  actual_spend?: ReportValue;
   actual_committed_spend?: ReportValue;
   contract_end_date?: string;
   contract_start_date?: string;

@@ -50,9 +50,19 @@ export function getComputedReportItems<R extends Report, T extends ReportItem>({
 }
 
 function getCostData(val, key, item?: any) {
+  const hasVal = val && val[key];
+  const value = hasVal ? val[key].value : val[key] === null ? val[key] : 0;
+  const units = hasVal ? val[key].units : 'USD';
+
+  if (value === null) {
+    return {
+      value,
+      units,
+    };
+  }
   return {
-    value: (item && item[key] ? Number(item[key].value) : 0) + (val[key] ? Number(val[key].value) : 0),
-    units: val && val[key] ? val[key].units : 'USD',
+    value: (item && item[key] ? Number(item[key].value) : 0) + Number(value),
+    units,
   };
 }
 

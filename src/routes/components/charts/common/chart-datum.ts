@@ -195,7 +195,6 @@ export function transformReport({
 export function createReportDatum<T extends ComputedReportItem>({
   computedItem,
   idKey = 'date',
-  isForceNoData,
   shiftDateByYear = 0, // Shift the year, so we can overlap current and previous months
   reportItem = 'actualSpend',
   value,
@@ -217,8 +216,7 @@ export function createReportDatum<T extends ComputedReportItem>({
   const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
   return {
     x: xVal,
-    y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips
-    ...(value === null && isForceNoData && { _y: 0 }), // Todo: Force "no data" tooltips for bar charts.
+    y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips\
     key: idKey === 'date' ? format(getDate(), 'yyyy-MM') : computedItem.id,
     name: computedItem.label ? computedItem.label : computedItem.id, // legend item label
     units: computedItem[reportItem] ? computedItem[reportItem].units : undefined,
