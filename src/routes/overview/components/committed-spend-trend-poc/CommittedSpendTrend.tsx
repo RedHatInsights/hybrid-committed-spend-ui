@@ -3,8 +3,7 @@ import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Perspective } from 'routes/components/perspective';
@@ -35,7 +34,7 @@ interface CommittedSpendTrendStateProps {
   widget: DashboardWidget;
 }
 
-export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps & WrappedComponentProps;
+export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps;
 
 // eslint-disable-next-line no-shadow
 export enum PerspectiveType {
@@ -48,11 +47,12 @@ const perspectiveOptions = [
   { label: messages.committedSpendTrendPerspectiveValues, value: PerspectiveType.previous_over_actual },
 ];
 
-const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ intl, widgetId }) => {
+const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ widgetId }) => {
   const [perspective, setPerspective] = useState(PerspectiveType.previous_over_actual);
   const { currentReport, currentReportFetchStatus, previousReport, previousReportFetchStatus, widget } = useMapToProps({
     widgetId,
   });
+  const intl = useIntl();
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
@@ -134,4 +134,4 @@ const useMapToProps = ({ widgetId }: CommittedSpendTrendOwnProps): CommittedSpen
   };
 };
 
-export default injectIntl(CommittedSpendTrend);
+export default CommittedSpendTrend;

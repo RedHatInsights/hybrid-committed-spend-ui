@@ -13,8 +13,7 @@ import {
 } from '@patternfly/react-charts';
 import messages from 'locales/messages';
 import React, { useEffect, useMemo, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { getMaxValue, isFloat, isInt } from 'routes/components/charts/common/chart-datum';
 import type { ChartSeries } from 'routes/components/charts/common/chart-utils';
 import {
@@ -51,15 +50,14 @@ interface BreakdownChartOwnProps {
   top6thData: any;
 }
 
-type BreakdownChartProps = BreakdownChartOwnProps & WrappedComponentProps;
+type BreakdownChartProps = BreakdownChartOwnProps;
 
-const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
+const BreakdownChart: React.FC<BreakdownChartProps> = ({
   adjustContainerHeight,
   containerHeight,
   formatter,
   formatOptions,
   height,
-  intl,
   name,
   padding = {
     bottom: 75,
@@ -80,6 +78,7 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
   const [series, setSeries] = useState<ChartSeries[]>();
   const [units, setUnits] = useState('USD');
   const [width, setWidth] = useState(0);
+  const intl = useIntl();
 
   // Clone original container. See https://issues.redhat.com/browse/COST-762
   const cloneContainer = () => {
@@ -439,7 +438,5 @@ const BreakdownChartBase: React.FC<BreakdownChartProps> = ({
     </div>
   );
 };
-
-const BreakdownChart = injectIntl(BreakdownChartBase);
 
 export { BreakdownChart };

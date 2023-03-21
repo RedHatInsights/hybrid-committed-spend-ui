@@ -12,8 +12,7 @@ import {
 import { Title } from '@patternfly/react-core';
 import messages from 'locales/messages';
 import React, { useEffect, useMemo, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { getCostRangeString, isFloat, isInt } from 'routes/components/charts/common/chart-datum';
 import type { ChartSeries } from 'routes/components/charts/common/chart-utils';
 import {
@@ -47,16 +46,15 @@ interface TrendChartOwnProps {
   formatOptions?: FormatOptions;
 }
 
-type TrendChartProps = TrendChartOwnProps & WrappedComponentProps;
+type TrendChartProps = TrendChartOwnProps;
 
-const TrendChartBase: React.FC<TrendChartProps> = ({
+const TrendChart: React.FC<TrendChartProps> = ({
   adjustContainerHeight,
   containerHeight,
   currentData,
   formatter,
   formatOptions,
   height,
-  intl,
   name,
   padding = {
     bottom: 75,
@@ -74,6 +72,7 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
   const [series, setSeries] = useState<ChartSeries[]>();
   const [units, setUnits] = useState('USD');
   const [width, setWidth] = useState(0);
+  const intl = useIntl();
 
   // Clone original container. See https://issues.redhat.com/browse/COST-762
   const cloneContainer = () => {
@@ -341,7 +340,5 @@ const TrendChartBase: React.FC<TrendChartProps> = ({
     </>
   );
 };
-
-const TrendChart = injectIntl(TrendChartBase);
 
 export { TrendChart };

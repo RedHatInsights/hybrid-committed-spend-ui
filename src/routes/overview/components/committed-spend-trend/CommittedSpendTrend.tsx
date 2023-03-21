@@ -1,8 +1,6 @@
 import messages from 'locales/messages';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
 import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
 import { useAccountSummaryMapToProps } from 'routes/overview/components/committed-spend-trend/utils';
@@ -17,7 +15,7 @@ interface CommittedSpendTrendStateProps {
   hasPreviousData?: boolean;
 }
 
-export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps & WrappedComponentProps;
+export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps;
 
 // eslint-disable-next-line no-shadow
 export enum PerspectiveType {
@@ -87,4 +85,4 @@ const useMapToProps = (): CommittedSpendTrendStateProps => {
   };
 };
 
-export default injectIntl(CommittedSpendTrend);
+export default CommittedSpendTrend;

@@ -5,8 +5,7 @@ import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useEffect } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
@@ -30,11 +29,12 @@ interface PageHeadingStateProps {
   reportQueryString?: string;
 }
 
-type PageHeadingProps = PageHeadingOwnProps & WrappedComponentProps;
+type PageHeadingProps = PageHeadingOwnProps;
 
-const PageHeading: React.FC<PageHeadingProps> = ({ children, intl }) => {
+const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
   const { report, reportFetchStatus } = useMapToProps();
   const pathname = usePathname();
+  const intl = useIntl();
 
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[0];
@@ -136,4 +136,4 @@ const useMapToProps = (): PageHeadingStateProps => {
   };
 };
 
-export default injectIntl(PageHeading);
+export default PageHeading;

@@ -4,8 +4,7 @@ import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import type { ReactNode } from 'react';
 import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -46,10 +45,9 @@ interface CommittedSpendTrendSummaryStateProps {
   widget?: DashboardWidget;
 }
 
-export type CommittedSpendTrendSummaryProps = CommittedSpendTrendSummaryOwnProps & WrappedComponentProps;
+export type CommittedSpendTrendSummaryProps = CommittedSpendTrendSummaryOwnProps;
 
-const CommittedSpendTrendSummaryBase: React.FC<CommittedSpendTrendSummaryProps> = ({
-  intl,
+const CommittedSpendTrendSummary: React.FC<CommittedSpendTrendSummaryProps> = ({
   perspective,
   perspectiveComponent,
   widgetId,
@@ -69,6 +67,7 @@ const CommittedSpendTrendSummaryBase: React.FC<CommittedSpendTrendSummaryProps> 
     perspective,
     widgetId,
   });
+  const intl = useIntl();
 
   const hasData = currentReport && currentReport.meta;
   const values = hasData && currentReport.meta;
@@ -172,4 +171,4 @@ const useMapToProps = ({
   };
 };
 
-export const CommittedSpendTrendSummary = injectIntl(CommittedSpendTrendSummaryBase);
+export { CommittedSpendTrendSummary };

@@ -1,8 +1,7 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Card, CardBody, CardFooter, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
 import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { ExcessActualSpend } from 'routes/overview/components/excess-actual-spend';
 import { FetchStatus } from 'store/common';
 import { skeletonWidth } from 'utils/skeleton';
@@ -20,19 +19,19 @@ interface ReportSummaryOwnProps {
   title: MessageDescriptor;
 }
 
-type ReportSummaryProps = ReportSummaryOwnProps & WrappedComponentProps;
+type ReportSummaryProps = ReportSummaryOwnProps;
 
-const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
+const ReportSummary: React.FC<ReportSummaryProps> = ({
   bodyStyle,
   children,
   detailsLink,
   fetchStatus,
-  intl,
   excessActualSpend,
   title,
   showBreakdown,
   subTitle,
 }) => {
+  const intl = useIntl();
   const isLoading = () => {
     let result = false;
     if (Array.isArray(fetchStatus)) {
@@ -79,7 +78,5 @@ const ReportSummaryBase: React.FC<ReportSummaryProps> = ({
     </Card>
   );
 };
-
-const ReportSummary = injectIntl(ReportSummaryBase);
 
 export default ReportSummary;

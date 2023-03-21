@@ -5,8 +5,7 @@ import type { AxiosError } from 'axios/index';
 import messages from 'locales/messages';
 import { cloneDeep } from 'lodash';
 import React, { useEffect } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
@@ -44,7 +43,7 @@ interface DetailsHeaderToolbarStateProps {
   optionsQueryString?: string;
 }
 
-export type DetailsToolbarProps = DetailsHeaderToolbarOwnProps & WrappedComponentProps;
+export type DetailsToolbarProps = DetailsHeaderToolbarOwnProps;
 
 const dateRangeOptions: PerspectiveOption[] = [
   { label: messages.dateRange, value: DateRangeType.contractedYtd },
@@ -60,12 +59,11 @@ const sourceOfSpendOptions: PerspectiveOption[] = [
   { label: messages.sourceOfSpendValues, value: SourceOfSpendType.all },
 ];
 
-const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
+const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   consumptionDate,
   contractLineStartDate,
   dateRange,
   groupBy,
-  intl,
   onDateRangeSelected,
   onGroupBySelected,
   onSecondaryGroupBySelected,
@@ -76,6 +74,7 @@ const DetailsHeaderToolbarBase: React.FC<DetailsToolbarProps> = ({
   sourceOfSpend,
 }) => {
   const { options } = useMapToProps();
+  const intl = useIntl();
 
   const formatDateRange = (startDate, endDate) => {
     if (startDate === undefined || endDate === undefined) {
@@ -323,7 +322,5 @@ const useMapToProps = (): DetailsHeaderToolbarStateProps => {
     optionsQueryString,
   };
 };
-
-const DetailsHeaderToolbar = injectIntl(DetailsHeaderToolbarBase);
 
 export { DetailsHeaderToolbar };

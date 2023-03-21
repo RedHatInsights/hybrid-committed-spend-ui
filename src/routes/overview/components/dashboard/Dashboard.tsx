@@ -1,7 +1,5 @@
 import { Grid, GridItem } from '@patternfly/react-core';
 import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import type { RootState } from 'store';
 import type { DashboardWidget } from 'store/dashboard';
@@ -16,9 +14,9 @@ interface DashboardStateProps {
   selectWidgets: Record<number, DashboardWidget>;
 }
 
-type DashboardProps = DashboardOwnProps & WrappedComponentProps;
+type DashboardProps = DashboardOwnProps;
 
-const DashboardBase: React.FC<DashboardProps> = () => {
+const Dashboard: React.FC<DashboardProps> = () => {
   const { selectWidgets, currentWidgets } = useMapToProps();
 
   return (
@@ -48,7 +46,5 @@ const useMapToProps = (): DashboardStateProps => {
     selectWidgets,
   };
 };
-
-const Dashboard = injectIntl(DashboardBase);
 
 export default Dashboard;

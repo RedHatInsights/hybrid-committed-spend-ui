@@ -18,8 +18,7 @@ import type { Report } from 'api/reports/report';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useEffect, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { ComputedReportItemType } from 'routes/components/charts/common/chart-datum';
 import { EmptyFilterState } from 'routes/components/state/empty-filter';
 import { GroupByType } from 'routes/details/types';
@@ -53,15 +52,14 @@ export interface DetailsTableCell {
   value?: string;
 }
 
-type DetailsTableProps = DetailsTableOwnProps & WrappedComponentProps;
+type DetailsTableProps = DetailsTableOwnProps;
 
 export const reportItem = ComputedReportItemType.actualSpend;
 
-const DetailsTableBase: React.FC<DetailsTableProps> = ({
+const DetailsTable: React.FC<DetailsTableProps> = ({
   endDate,
   groupBy,
   isLoading,
-  intl,
   onSort,
   query,
   report,
@@ -72,6 +70,7 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
   const [columns, setColumns] = useState([]);
   const [expandedRows, setExpandedRows] = useState(new Set());
   const [rows, setRows] = useState([]);
+  const intl = useIntl();
 
   const isRowExpanded = id => expandedRows.has(id);
   const updateExpandedRows = id => {
@@ -319,7 +318,5 @@ const DetailsTableBase: React.FC<DetailsTableProps> = ({
     </React.Fragment>
   );
 };
-
-const DetailsTable = injectIntl(DetailsTableBase);
 
 export { DetailsTable };

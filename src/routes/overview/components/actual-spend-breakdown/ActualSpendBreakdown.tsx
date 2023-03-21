@@ -3,8 +3,7 @@ import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useMemo, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { DatumType } from 'routes/components/charts/common/chart-datum';
@@ -35,7 +34,7 @@ interface ActualSpendBreakdownStateProps {
   widget: DashboardWidget;
 }
 
-export type ActualSpendBreakdownProps = ActualSpendBreakdownOwnProps & WrappedComponentProps;
+export type ActualSpendBreakdownProps = ActualSpendBreakdownOwnProps;
 
 // eslint-disable-next-line no-shadow
 export enum ComparisonType {
@@ -61,9 +60,10 @@ const perspectiveOptions = [
   { label: messages.actualSpendBreakdownPerspectiveValues, value: PerspectiveType.products },
 ];
 
-const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ intl, widgetId }) => {
+const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ widgetId }) => {
   const [comparison, setComparison] = useState(ComparisonType.monthly);
   const [perspective, setPerspective] = useState(PerspectiveType.sources);
+  const intl = useIntl();
 
   const { report, reportFetchStatus, widget } = useMapToProps({ perspective, widgetId });
 
@@ -143,4 +143,4 @@ const useMapToProps = ({ perspective, widgetId }: ActualSpendBreakdownOwnProps):
   };
 };
 
-export default injectIntl(ActualSpendBreakdownBase);
+export default ActualSpendBreakdownBase;

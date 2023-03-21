@@ -8,8 +8,7 @@ import type { AxiosError } from 'axios';
 import fileDownload from 'js-file-download';
 import messages from 'locales/messages';
 import React, { useEffect, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
@@ -40,16 +39,15 @@ interface ExportSubmitStateProps {
   exportQueryString: string;
 }
 
-type ExportSubmitProps = ExportSubmitOwnProps & WrappedComponentProps;
+type ExportSubmitProps = ExportSubmitOwnProps;
 
 const reportType = ReportType.details;
 
-const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
+const ExportSubmit: React.FC<ExportSubmitProps> = ({
   disabled,
   dataType,
   endDate,
   groupBy,
-  intl,
   onClose,
   onError,
   reportPathsType,
@@ -65,6 +63,7 @@ const ExportSubmitBase: React.FC<ExportSubmitProps> = ({
     reportQueryString,
   });
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
+  const intl = useIntl();
 
   const getExport = () => {
     if (exportReport && exportFetchStatus === FetchStatus.complete) {
@@ -159,7 +158,5 @@ const useMapToProps = ({
     exportQueryString,
   };
 };
-
-const ExportSubmit = injectIntl(ExportSubmitBase);
 
 export { ExportSubmit };

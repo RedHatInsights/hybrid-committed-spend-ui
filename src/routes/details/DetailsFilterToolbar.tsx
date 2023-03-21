@@ -3,8 +3,7 @@ import { FilterPathsType } from 'api/filters/filter';
 import type { Query } from 'api/queries';
 import messages from 'locales/messages';
 import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { DataToolbar } from 'routes/components/data-toolbar';
 import type { Filter } from 'routes/utils/filter';
 
@@ -19,11 +18,10 @@ interface DetailsFilterToolbarOwnProps {
   query?: Query; // Query containing filter_by params used to restore state upon page refresh
 }
 
-type DetailsFilterToolbarProps = DetailsFilterToolbarOwnProps & WrappedComponentProps;
+type DetailsFilterToolbarProps = DetailsFilterToolbarOwnProps;
 
-const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
+const DetailsFilterToolbar: React.FC<DetailsFilterToolbarProps> = ({
   groupBy,
-  intl,
   isDisabled,
   isExportDisabled,
   onExportClicked,
@@ -32,6 +30,7 @@ const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
   pagination,
   query,
 }) => {
+  const intl = useIntl();
   const getCategoryOptions = (): ToolbarChipGroup[] => {
     return [
       { name: intl.formatMessage(messages.filterByValues, { value: 'product' }), key: 'product' },
@@ -55,7 +54,5 @@ const DetailsFilterToolbarBase: React.FC<DetailsFilterToolbarProps> = ({
     />
   );
 };
-
-const DetailsFilterToolbar = injectIntl(DetailsFilterToolbarBase);
 
 export { DetailsFilterToolbar };

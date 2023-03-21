@@ -6,8 +6,7 @@ import { ReportPathsType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { lazy, Suspense, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import { PageHeading } from 'routes/components/page-heading';
@@ -57,9 +56,9 @@ interface DetailsStateProps {
   startDate?: Date;
 }
 
-type DetailsProps = DetailsOwnProps & WrappedComponentProps;
+type DetailsProps = DetailsOwnProps;
 
-const Details: React.FC<DetailsProps> = ({ intl }) => {
+const Details: React.FC<DetailsProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [dateRange, setDateRange] = useStateCallback(useDefaultDateRange());
@@ -67,6 +66,7 @@ const Details: React.FC<DetailsProps> = ({ intl }) => {
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [secondaryGroupBy, setSecondaryGroupBy] = useStateCallback(useDefaultSecondaryGroupBy());
   const [sourceOfSpend, setSourceOfSpend] = useStateCallback(useDefaultSourceOfSpend());
+  const intl = useIntl();
 
   const {
     consumptionDate,
@@ -405,4 +405,4 @@ const useMapToProps = ({ dateRange, groupBy, secondaryGroupBy, sourceOfSpend }: 
   };
 };
 
-export default injectIntl(Details);
+export default Details;

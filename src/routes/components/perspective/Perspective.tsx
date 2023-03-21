@@ -1,9 +1,8 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import type { SelectOptionObject } from '@patternfly/react-core';
 import { Select, SelectOption, SelectVariant, Title } from '@patternfly/react-core';
-import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import React, { useState } from 'react';
+import { useIntl } from 'react-intl';
 
 import { styles } from './Perspective.styles';
 
@@ -31,21 +30,21 @@ interface PerspectiveOwnProps {
   options?: PerspectiveOption[];
 }
 
-interface PerspectiveState {
-  isSelectOpen: boolean;
-}
+type PerspectiveProps = PerspectiveOwnProps;
 
-type PerspectiveProps = PerspectiveOwnProps & WrappedComponentProps;
+const Perspective: React.FC<PerspectiveProps> = ({
+  currentItem,
+  id,
+  isDisabled,
+  label,
+  minWidth,
+  onSelected,
+  options,
+}) => {
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const intl = useIntl();
 
-class Perspective extends React.Component<PerspectiveProps, any> {
-  protected defaultState: PerspectiveState = {
-    isSelectOpen: false,
-  };
-  public state: PerspectiveState = { ...this.defaultState };
-
-  private getSelectOptions = (): PerspectiveOptionExt[] => {
-    const { intl, options } = this.props;
-
+  const getSelectOptions = (): PerspectiveOptionExt[] => {
     const selectOptions: PerspectiveOptionExt[] = [];
 
     options.map(option => {
@@ -59,11 +58,8 @@ class Perspective extends React.Component<PerspectiveProps, any> {
     return selectOptions;
   };
 
-  private getSelect = () => {
-    const { currentItem, id, isDisabled } = this.props;
-    const { isSelectOpen } = this.state;
-
-    const selectOptions = this.getSelectOptions();
+  const getSelect = () => {
+    const selectOptions = getSelectOptions();
     const selection = selectOptions.find((option: PerspectiveOptionExt) => option.value === currentItem);
 
     return (
@@ -71,8 +67,8 @@ class Perspective extends React.Component<PerspectiveProps, any> {
         id={id}
         isDisabled={isDisabled}
         isOpen={isSelectOpen}
-        onSelect={this.handleSelect}
-        onToggle={this.handleToggle}
+        onSelect={handleSelect}
+        onToggle={handleToggle}
         selections={selection}
         variant={SelectVariant.single}
       >
@@ -88,37 +84,29 @@ class Perspective extends React.Component<PerspectiveProps, any> {
     );
   };
 
-  private handleSelect = (event: React.MouseEvent | React.ChangeEvent, selection: SelectOptionObject) => {
-    const { onSelected } = this.props;
-
+  const handleSelect = (event: React.MouseEvent | React.ChangeEvent, selection: SelectOptionObject) => {
     if (onSelected) {
       onSelected((selection as PerspectiveOption).value);
     }
-    this.setState({
-      isSelectOpen: false,
-    });
+    setIsSelectOpen(false);
   };
 
-  private handleToggle = isSelectOpen => {
-    this.setState({ isSelectOpen });
+  const handleToggle = isOpen => {
+    setIsSelectOpen(isOpen);
   };
 
-  public render() {
-    const { label, minWidth } = this.props;
-
-    return (
-      <div style={styles.perspectiveContainer}>
-        <div style={{ minWidth }}>
-          {label && (
-            <Title headingLevel="h3" size="md">
-              {label}
-            </Title>
-          )}
-          <div style={styles.perspective}>{this.getSelect()}</div>
-        </div>
+  return (
+    <div style={styles.perspectiveContainer}>
+      <div style={{ minWidth }}>
+        {label && (
+          <Title headingLevel="h3" size="md">
+            {label}
+          </Title>
+        )}
+        <div style={styles.perspective}>{getSelect()}</div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-export default injectIntl(Perspective);
+export default Perspective;
