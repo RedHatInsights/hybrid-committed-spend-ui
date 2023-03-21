@@ -23,8 +23,7 @@ import type { Query } from 'api/queries/query';
 import messages from 'locales/messages';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { FilterTypeahead } from 'routes/components/filterTypeahead';
 import type { Filter } from 'routes/utils/filter';
 import { usePrevious, useStateCallback } from 'utils/hooks';
@@ -46,13 +45,12 @@ interface DataToolbarOwnProps {
   query?: Query; // Query containing filter_by params used to restore state upon page refresh
 }
 
-type DataToolbarProps = DataToolbarOwnProps & WrappedComponentProps;
+type DataToolbarProps = DataToolbarOwnProps;
 
-const DataToolbarBase: React.FC<DataToolbarProps> = ({
+const DataToolbar: React.FC<DataToolbarProps> = ({
   categoryOptions,
   filterPathsType,
   groupBy,
-  intl,
   isDisabled,
   isExportDisabled,
   onExportClicked,
@@ -64,6 +62,7 @@ const DataToolbarBase: React.FC<DataToolbarProps> = ({
   const [categoryInput, setCategoryInput] = useState('');
   const [currentCategory, setCurrentCategory] = useState('');
   const [filters, setFilters] = useStateCallback({});
+  const intl = useIntl();
 
   const prevCategoryOptions = usePrevious(categoryOptions);
   const prevGroupBy = usePrevious(groupBy);
@@ -307,7 +306,5 @@ const DataToolbarBase: React.FC<DataToolbarProps> = ({
     </Toolbar>
   );
 };
-
-const DataToolbar = injectIntl(DataToolbarBase);
 
 export default DataToolbar;

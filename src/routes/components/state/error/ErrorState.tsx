@@ -4,15 +4,15 @@ import { LockIcon } from '@patternfly/react-icons/dist/esm/icons/lock-icon';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
-interface ErrorStateProps extends WrappedComponentProps {
+interface ErrorStateProps {
   error: AxiosError;
   icon?: any;
 }
 
-const ErrorState: React.FC<ErrorStateProps> = ({ error, icon = ErrorCircleOIcon, intl }) => {
+const ErrorState: React.FC<ErrorStateProps> = ({ error, icon = ErrorCircleOIcon }) => {
+  const intl = useIntl();
   let title = intl.formatMessage(messages.errorStateUnexpectedTitle);
   let subTitle = intl.formatMessage(messages.errorStateUnexpectedDesc);
 
@@ -33,4 +33,4 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, icon = ErrorCircleOIcon,
   );
 };
 
-export default injectIntl(ErrorState);
+export default ErrorState;

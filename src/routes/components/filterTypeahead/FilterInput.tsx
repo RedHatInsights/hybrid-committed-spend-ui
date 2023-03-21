@@ -20,8 +20,7 @@ import { getQuery } from 'api/queries/query';
 import messages from 'locales/messages';
 import type { FormEvent } from 'react';
 import React, { useEffect, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
@@ -55,15 +54,14 @@ interface FilterInputDispatchProps {
   fetchFilter?: typeof filterActions.fetchFilter;
 }
 
-type FilterInputProps = FilterInputOwnProps & FilterInputStateProps & FilterInputDispatchProps & WrappedComponentProps;
+type FilterInputProps = FilterInputOwnProps & FilterInputStateProps & FilterInputDispatchProps;
 
-const FilterInputBase: React.FC<FilterInputProps> = ({
+const FilterInput: React.FC<FilterInputProps> = ({
   ariaLabel,
   category,
   filterPathsType,
   filterType,
   isDisabled,
-  intl,
   onClear,
   onSearchChanged,
   onSelect,
@@ -71,6 +69,7 @@ const FilterInputBase: React.FC<FilterInputProps> = ({
   placeholder,
 }) => {
   const [menuIsOpen, setMenuIsOpen] = useStateCallback(false);
+  const intl = useIntl();
 
   const menuRef = React.createRef<HTMLDivElement>();
   const textInputGroupRef = React.createRef<HTMLDivElement>();
@@ -290,7 +289,5 @@ const useMapToProps = ({
     filterFetchStatus,
   };
 };
-
-const FilterInput = injectIntl(FilterInputBase);
 
 export { FilterInput };

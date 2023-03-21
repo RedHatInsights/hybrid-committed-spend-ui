@@ -1,16 +1,15 @@
 import { EmptyState, EmptyStateBody, EmptyStateVariant, Spinner, Title } from '@patternfly/react-core';
-import { intl as defaultIntl } from 'components/i18n';
 import messages from 'locales/messages';
 import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
-interface LoadingStateProps extends WrappedComponentProps {
+interface LoadingStateProps {
   // TBD...
 }
 
 // defaultIntl required for testing
-const LoadingState: React.FC<LoadingStateProps> = ({ intl = defaultIntl }) => {
+const LoadingState: React.FC<LoadingStateProps> = () => {
+  const intl = useIntl();
   const title = intl.formatMessage(messages.loadingStateTitle);
   const subTitle = intl.formatMessage(messages.loadingStateDesc);
 
@@ -25,4 +24,4 @@ const LoadingState: React.FC<LoadingStateProps> = ({ intl = defaultIntl }) => {
   );
 };
 
-export default injectIntl(LoadingState);
+export default LoadingState;

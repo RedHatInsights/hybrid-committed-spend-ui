@@ -3,16 +3,14 @@ import { EmptyState, EmptyStateBody, EmptyStateIcon, Title, TitleSizes } from '@
 import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import type { Query } from 'api/queries/query';
 import { parseQuery } from 'api/queries/query';
-import { intl as defaultIntl } from 'components/i18n';
 import messages from 'locales/messages';
 import React, { useEffect, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 
 import { styles } from './EmptyFilterState.styles';
 
-interface EmptyFilterStateProps extends WrappedComponentProps {
+interface EmptyFilterStateProps {
   filter?: string;
   icon?: any;
   showMargin?: boolean;
@@ -23,7 +21,6 @@ interface EmptyFilterStateProps extends WrappedComponentProps {
 const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
   filter,
   icon = SearchIcon,
-  intl = defaultIntl, // Default required for testing
   showMargin = true,
 
   // destructure last
@@ -31,6 +28,7 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
   title = messages.emptyFilterStateTitle,
 }) => {
   const location = useLocation();
+  const intl = useIntl();
 
   const ImgScroll = () => {
     const imgs = [styles.icon2, styles.icon3, styles.icon4, styles.icon5, styles.icon6];
@@ -119,4 +117,4 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
   );
 };
 
-export default injectIntl(EmptyFilterState);
+export default EmptyFilterState;

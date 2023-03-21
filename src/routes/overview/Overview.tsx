@@ -1,14 +1,13 @@
 import { Bullseye, PageSection, Spinner } from '@patternfly/react-core';
 import messages from 'locales/messages';
 import React, { lazy, Suspense } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { PageHeading } from 'routes/components/page-heading';
 import type { RootState } from 'store';
 import { reportSelectors } from 'store/reports';
 
-const Dashboard = lazy(() => import('routes/overview/components/dashboard/Dashboard'));
+const Dashboard = lazy(() => import('routes/overview/components/dashboard'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
 interface OverviewOwnProps {
@@ -19,10 +18,11 @@ interface OverviewStateProps {
   hasReportErrors: boolean;
 }
 
-type OverviewProps = OverviewOwnProps & WrappedComponentProps;
+type OverviewProps = OverviewOwnProps;
 
-const Overview: React.FC<OverviewProps> = ({ intl }) => {
+const Overview: React.FC<OverviewProps> = () => {
   const { hasReportErrors } = useMapToProps({});
+  const intl = useIntl();
 
   if (hasReportErrors) {
     const title = intl.formatMessage(messages.overviewTitle);
@@ -56,4 +56,4 @@ const useMapToProps = ({}: OverviewOwnProps): OverviewStateProps => {
   };
 };
 
-export default injectIntl(Overview);
+export default Overview;

@@ -2,8 +2,7 @@ import { Button, ButtonVariant, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
 import messages from 'locales/messages';
 import React from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { styles } from './ExcessActualSpend.styles';
 
@@ -12,9 +11,11 @@ interface ExcessActualSpendOwnProps {
   showBreakdown?: boolean;
 }
 
-type ExcessActualSpendProps = ExcessActualSpendOwnProps & WrappedComponentProps;
+type ExcessActualSpendProps = ExcessActualSpendOwnProps;
 
-const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({ excessActualSpend, intl, showBreakdown }) => {
+const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({ excessActualSpend, showBreakdown }) => {
+  const intl = useIntl();
+
   if (!excessActualSpend) {
     return null;
   }
@@ -60,4 +61,4 @@ const ExcessActualSpend: React.FC<ExcessActualSpendProps> = ({ excessActualSpend
   );
 };
 
-export default injectIntl(ExcessActualSpend);
+export default ExcessActualSpend;

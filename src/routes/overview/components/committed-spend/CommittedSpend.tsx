@@ -3,8 +3,7 @@ import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useEffect } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
@@ -32,10 +31,11 @@ interface CommittedSpendStateProps {
   widget: DashboardWidget;
 }
 
-export type CommittedSpendProps = CommittedSpendOwnProps & WrappedComponentProps;
+export type CommittedSpendProps = CommittedSpendOwnProps;
 
-const CommittedSpend: React.FC<CommittedSpendProps> = ({ intl, widgetId }) => {
+const CommittedSpend: React.FC<CommittedSpendProps> = ({ widgetId }) => {
   const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
+  const intl = useIntl();
 
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[0];
@@ -113,4 +113,4 @@ const useMapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStat
   };
 };
 
-export default injectIntl(CommittedSpend);
+export default CommittedSpend;

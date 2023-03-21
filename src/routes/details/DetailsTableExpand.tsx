@@ -6,8 +6,7 @@ import type { AxiosError } from 'axios';
 import { format } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useEffect, useRef, useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDetailsMapToProps } from 'routes/details/utils';
 import { FetchStatus } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
@@ -34,7 +33,7 @@ interface DetailsTableExpandStateProps {
   reportFetchStatus?: FetchStatus;
 }
 
-type DetailsTableExpandProps = DetailsTableExpandOwnProps & WrappedComponentProps;
+type DetailsTableExpandProps = DetailsTableExpandOwnProps;
 
 export const baseQuery: Query = {
   filter: {
@@ -50,12 +49,11 @@ export const baseQuery: Query = {
   },
 };
 
-const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
+const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
   columns,
   endDate,
   groupBy,
   groupByValue,
-  intl,
   isExpanded,
   secondaryGroupBy,
   startDate,
@@ -71,6 +69,7 @@ const DetailsTableExpandBase: React.FC<DetailsTableExpandProps> = ({
     startDate,
     sourceOfSpend,
   });
+  const intl = useIntl();
 
   const isMounted = useRef(false);
   useEffect(() => {
@@ -212,7 +211,5 @@ const useMapToProps = ({
     reportFetchStatus,
   };
 };
-
-const DetailsTableExpand = injectIntl(DetailsTableExpandBase);
 
 export { DetailsTableExpand };

@@ -4,8 +4,7 @@ import type { ReportPathsType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
 import React, { useState } from 'react';
-import type { WrappedComponentProps } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import { styles } from './ExportModal.styles';
 import { ExportSubmit } from './ExportSubmit';
@@ -22,7 +21,7 @@ export interface ExportModalOwnProps {
   startDate?: Date;
 }
 
-type ExportModalProps = ExportModalOwnProps & WrappedComponentProps;
+type ExportModalProps = ExportModalOwnProps;
 
 const dataTypeOptions: {
   label: MessageDescriptor;
@@ -35,7 +34,6 @@ const dataTypeOptions: {
 const ExportModal: React.FC<ExportModalProps> = ({
   endDate,
   groupBy,
-  intl,
   isOpen,
   onClose,
   reportPathsType,
@@ -46,6 +44,7 @@ const ExportModal: React.FC<ExportModalProps> = ({
 }) => {
   const [dataType, setDataType] = useState<'json' | 'raw'>('json');
   const [error, setError] = useState<AxiosError>();
+  const intl = useIntl();
 
   // Reset default state upon close -- see https://issues.redhat.com/browse/COST-1134
   const handleOnClose = () => {
@@ -118,4 +117,4 @@ const ExportModal: React.FC<ExportModalProps> = ({
   );
 };
 
-export default injectIntl(ExportModal);
+export default ExportModal;
