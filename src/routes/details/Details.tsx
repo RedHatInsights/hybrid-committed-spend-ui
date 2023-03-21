@@ -20,6 +20,7 @@ import {
   SourceOfSpendType,
 } from 'routes/details/types';
 import { useAccountSummaryMapToProps, useDetailsMapDateRangeToProps } from 'routes/details/utils';
+import { getAccountSummaryDates } from 'routes/overview/components/committed-spend-trend/utils';
 import { DateRangeType } from 'routes/utils/dateRange';
 import type { Filter } from 'routes/utils/filter';
 import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
@@ -367,21 +368,13 @@ const useQueryFromRoute = () => {
 
 const useMapToProps = ({ dateRange, groupBy, secondaryGroupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
   const { summary } = useAccountSummaryMapToProps();
-  const values = summary && summary.data && summary.data.length && summary.data[0];
-  const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
-  const contractLineEndDate =
-    values && values.contract_line_end_date ? new Date(values.contract_line_end_date + 'T00:00:00') : undefined;
-  const contractLineStartDate =
-    values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
-  const previousContractLineEndDate =
-    values && values.previous_contract_line_end_date
-      ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
-      : undefined;
-  const previousContractLineStartDate =
-    values && values.previous_contract_line_start_date
-      ? new Date(values.previous_contract_line_start_date + 'T00:00:00')
-      : undefined;
+  const {
+    consumptionDate,
+    contractLineEndDate,
+    contractLineStartDate,
+    previousContractLineEndDate,
+    previousContractLineStartDate,
+  } = getAccountSummaryDates(summary);
 
   const { endDate, exportQueryString, query, report, reportError, reportFetchStatus, reportQueryString, startDate } =
     useDetailsMapDateRangeToProps({
