@@ -1,6 +1,6 @@
 module.exports = {
   clearMocks: true,
-  collectCoverage: true,
+  collectCoverage: false,
   collectCoverageFrom: ['src/**/*.tsx'],
   coverageDirectory: './coverage/',
   fakeTimers: {
