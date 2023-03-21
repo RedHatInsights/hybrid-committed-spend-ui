@@ -9,6 +9,7 @@ import { injectIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
+  getAccountSummaryDates,
   useAccountSummaryMapToProps,
   useDetailsMapDateRangeToProps,
 } from 'routes/overview/components/committed-spend-trend/utils';
@@ -116,21 +117,14 @@ const useMapToProps = ({
   widgetId,
 }: CommittedSpendTrendSummaryOwnProps): CommittedSpendTrendSummaryStateProps => {
   const { summary, summaryFetchStatus } = useAccountSummaryMapToProps();
-  const values = summary && summary.data && summary.data.length && summary.data[0];
-  const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
-  const contractLineEndDate =
-    values && values.contract_line_end_date ? new Date(values.contract_line_end_date + 'T00:00:00') : undefined;
-  const contractLineStartDate =
-    values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
-  const previousContractLineEndDate =
-    values && values.previous_contract_line_end_date
-      ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
-      : undefined;
-  const previousContractLineStartDate =
-    values && values.previous_contract_line_start_date
-      ? new Date(values.previous_contract_line_start_date + 'T00:00:00')
-      : undefined;
+  const {
+    consumptionDate,
+    contractLineEndDate,
+    contractLineStartDate,
+    previousContractLineEndDate,
+    previousContractLineStartDate,
+  } = getAccountSummaryDates(summary);
+
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
   const {

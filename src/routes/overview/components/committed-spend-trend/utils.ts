@@ -15,6 +15,14 @@ import { reportActions, reportSelectors } from 'store/reports';
 import type { DateType } from 'utils/dates';
 import { formatDate } from 'utils/dates';
 
+interface AccountSummaryDateProps {
+  consumptionDate?: Date;
+  contractLineEndDate?: Date;
+  contractLineStartDate?: Date;
+  previousContractLineEndDate?: Date;
+  previousContractLineStartDate?: Date;
+}
+
 interface AccountSummaryStateProps {
   summary?: AccountSummaryReport;
   summaryError?: AxiosError;
@@ -46,6 +54,32 @@ interface DetailsStateProps {
   reportQueryString: string;
   startDate?: Date;
 }
+
+export const getAccountSummaryDates = (summary: AccountSummaryReport): AccountSummaryDateProps => {
+  const values = summary && summary.data && summary.data.length && summary.data[0];
+  const consumptionDate =
+    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
+  const contractLineEndDate =
+    values && values.contract_line_end_date ? new Date(values.contract_line_end_date + 'T00:00:00') : undefined;
+  const contractLineStartDate =
+    values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
+  const previousContractLineEndDate =
+    values && values.previous_contract_line_end_date
+      ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
+      : undefined;
+  const previousContractLineStartDate =
+    values && values.previous_contract_line_start_date
+      ? new Date(values.previous_contract_line_start_date + 'T00:00:00')
+      : undefined;
+
+  return {
+    consumptionDate,
+    contractLineEndDate,
+    contractLineStartDate,
+    previousContractLineEndDate,
+    previousContractLineStartDate,
+  };
+};
 
 export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
