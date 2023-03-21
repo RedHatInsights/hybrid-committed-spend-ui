@@ -54,7 +54,6 @@ const CommittedSpendTrendSummaryBase: React.FC<CommittedSpendTrendSummaryProps> 
   widgetId,
 }) => {
   const {
-    consumptionDate,
     currentEndDate,
     currentReport,
     currentReportFetchStatus,
@@ -99,7 +98,6 @@ const CommittedSpendTrendSummaryBase: React.FC<CommittedSpendTrendSummaryProps> 
       {perspectiveComponent}
       <CommittedSpendTrendTransform
         chartName={widget.chartName}
-        consumptionDate={consumptionDate}
         currentEndDate={currentEndDate}
         currentReport={currentReport}
         currentStartDate={currentStartDate}

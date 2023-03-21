@@ -11,7 +11,6 @@ import { CommittedSpendTrendOverChart } from './CommittedSpendTrendOverChart';
 
 interface CommittedSpendTrendTransformOwnProps {
   chartName?: string;
-  consumptionDate?: Date;
   currentEndDate?: Date;
   currentReport?: Report;
   currentStartDate?: Date;
@@ -26,7 +25,6 @@ export type CommittedSpendTrendTransformProps = CommittedSpendTrendTransformOwnP
 
 const CommittedSpendTrendTransformBase: React.FC<CommittedSpendTrendTransformProps> = ({
   chartName,
-  consumptionDate,
   currentEndDate,
   currentReport,
   currentStartDate,
@@ -36,30 +34,15 @@ const CommittedSpendTrendTransformBase: React.FC<CommittedSpendTrendTransformPro
   previousStartDate,
   thresholdReport,
 }) => {
-  // Nullify zero values after consumption date to show "no data" message
-  const nullifyData = report => {
-    if (!report) {
-      return;
-    }
-    report.map(datum => {
-      if (new Date(datum.key + 'T00:00:00') > consumptionDate) {
-        datum.y = null;
-      }
-    });
-    return report;
-  };
-
   const getData = () => {
-    const current = nullifyData(
-      currentReport
-        ? transformReport({
-            endDate: currentEndDate,
-            report: currentReport,
-            reportItem: 'actualSpend',
-            startDate: currentStartDate,
-          })
-        : undefined
-    );
+    const current = currentReport
+      ? transformReport({
+          endDate: currentEndDate,
+          report: currentReport,
+          reportItem: 'actualSpend',
+          startDate: currentStartDate,
+        })
+      : undefined;
     const previous = previousReport
       ? transformReport({
           endDate: previousEndDate,
