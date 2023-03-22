@@ -1,6 +1,5 @@
 import type { Query } from 'api/queries';
 import { getQuery, parseQuery } from 'api/queries';
-import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
 import type { Report } from 'api/reports/report';
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
@@ -17,13 +16,6 @@ import type { DateType } from 'utils/dates';
 import { formatDate } from 'utils/dates';
 
 import { getSourceOfSpendFilter, GroupByType, SourceOfSpendType } from './types';
-
-interface AccountSummaryStateProps {
-  summary?: AccountSummaryReport;
-  summaryError?: AxiosError;
-  summaryFetchStatus?: FetchStatus;
-  summaryQueryString?: string;
-}
 
 interface DetailsOwnProps {
   consumptionDate?: Date;
@@ -68,41 +60,6 @@ export const baseQuery: Query = {
   orderBy: {
     cost: 'desc',
   },
-};
-
-export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps => {
-  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
-
-  const query = {
-    // TBD...
-  };
-  const summaryQueryString = getQuery(query);
-
-  const reportPathsType = ReportPathsType.accountSummary;
-  const reportType = ReportType.details;
-
-  const summary: AccountSummaryReport = useSelector((state: RootState) =>
-    reportSelectors.selectReport(state, reportPathsType, reportType, summaryQueryString)
-  );
-  const summaryError = useSelector((state: RootState) =>
-    reportSelectors.selectReportError(state, reportPathsType, reportType, summaryQueryString)
-  );
-  const summaryFetchStatus = useSelector((state: RootState) =>
-    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, summaryQueryString)
-  );
-
-  useEffect(() => {
-    if (!summaryError && summaryFetchStatus !== FetchStatus.inProgress) {
-      dispatch(reportActions.fetchReport(reportPathsType, reportType, summaryQueryString));
-    }
-  }, deps);
-
-  return {
-    summary,
-    summaryError,
-    summaryFetchStatus,
-    summaryQueryString,
-  };
 };
 
 export const useDetailsMapDateRangeToProps = ({

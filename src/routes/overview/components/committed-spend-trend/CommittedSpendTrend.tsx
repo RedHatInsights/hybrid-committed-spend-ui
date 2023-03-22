@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
-import { useAccountSummaryMapToProps } from 'routes/overview/components/committed-spend-trend/utils';
+import { useAccountSummaryMapToProps } from 'routes/utils/accountSummary';
 
 import { CommittedSpendTrendSummary } from './CommittedSpendTrendSummary';
 

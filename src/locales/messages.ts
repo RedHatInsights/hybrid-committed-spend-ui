@@ -12,20 +12,20 @@ export default defineMessages({
     description: 'Account number: {value}',
     id: 'accountNumber',
   },
-  actualSpendBreakdownDataValues: {
-    defaultMessage: '{value, select, ' + 'monthly {Monthly} ' + 'cumulative {Cumulative} ' + 'other {}}',
-    description: 'Actual spend breakdown data values',
-    id: 'actualSpendBreakdownDataValues',
-  },
   actualSpendBreakdownPerspectiveValues: {
     defaultMessage:
       '{value, select, ' +
-      'sources {Top 3 sources of spend} ' +
-      'affiliates {Top 3 affiliates of spend} ' +
-      'products {Top 3 products of spend} ' +
+      'affiliate {Top 3 affiliates of spend} ' +
+      'product {Top 3 products of spend} ' +
+      'source_of_spend {Top 3 sources of spend} ' +
       'other {}}',
     description: 'Actual spend breakdown perspective values',
     id: 'actualSpendBreakdownPerspectiveValues',
+  },
+  actualSpendBreakdownResolutionValues: {
+    defaultMessage: '{value, select, ' + 'monthly {Monthly} ' + 'cumulative {Cumulative} ' + 'other {}}',
+    description: 'Actual spend breakdown data values',
+    id: 'actualSpendBreakdownResolutionValues',
   },
   cancel: {
     defaultMessage: 'Cancel',

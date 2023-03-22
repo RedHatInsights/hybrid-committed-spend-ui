@@ -30,8 +30,8 @@ export const actualSpendBreakdownWidget: DashboardWidget = {
   chartName: 'actualSpendBreakdown',
   id: getId(),
   title: messages.dashboardActualSpendBreakdownTitle,
-  reportPathsType: ReportPathsType.actualSpendBreakdown,
-  reportType: ReportType.details,
+  reportPathsType: ReportPathsType.details,
+  reportType: ReportType.actualSpend,
   viewAllPath: formatPath(routes.details.path),
 };
 
