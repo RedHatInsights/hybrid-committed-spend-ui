@@ -17,57 +17,45 @@ import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { formatCurrency } from 'utils/format';
 
-import { PerspectiveType } from './CommittedSpendTrend';
-import { CommittedSpendTrendTransform } from './CommittedSpendTrendTransform';
+import { ActualSpendBreakdownTransform } from './ActualSpendBreakdownTransform';
 
-interface CommittedSpendTrendSummaryOwnProps {
-  perspective?: PerspectiveType;
+interface ActualSpendBreakdownSummaryOwnProps {
+  perspective?: string;
   perspectiveComponent?: ReactNode;
+  resolution?: string;
+  resolutionComponent?: ReactNode;
   widgetId: number;
 }
 
-interface CommittedSpendTrendSummaryStateProps {
+interface ActualSpendBreakdownSummaryStateProps {
   consumptionDate?: Date;
-  currentEndDate?: Date;
-  currentReport?: Report;
-  currentReportFetchStatus?: FetchStatus;
-  currentReportError?: AxiosError;
-  currentStartDate?: Date;
-  previousEndDate?: Date;
-  previousReport?: Report;
-  previousReportFetchStatus?: FetchStatus;
-  previousReportError?: AxiosError;
-  previousStartDate?: Date;
+  endDate?: Date;
+  report?: Report;
+  reportFetchStatus?: FetchStatus;
+  reportError?: AxiosError;
+  startDate?: Date;
   summaryFetchStatus?: FetchStatus;
   widget?: DashboardWidget;
 }
 
-export type CommittedSpendTrendSummaryProps = CommittedSpendTrendSummaryOwnProps;
+export type ActualSpendBreakdownSummaryProps = ActualSpendBreakdownSummaryOwnProps;
 
-const CommittedSpendTrendSummary: React.FC<CommittedSpendTrendSummaryProps> = ({
+const ActualSpendBreakdownSummary: React.FC<ActualSpendBreakdownSummaryProps> = ({
   perspective,
   perspectiveComponent,
+  resolution,
+  resolutionComponent,
   widgetId,
 }) => {
-  const {
-    currentEndDate,
-    currentReport,
-    currentReportFetchStatus,
-    currentStartDate,
-    previousEndDate,
-    previousReport,
-    previousReportFetchStatus,
-    previousStartDate,
-    summaryFetchStatus,
-    widget,
-  } = useMapToProps({
+  const { endDate, report, reportFetchStatus, startDate, summaryFetchStatus, widget } = useMapToProps({
     perspective,
+    resolution,
     widgetId,
   });
   const intl = useIntl();
 
-  const hasData = currentReport && currentReport.meta;
-  const values = hasData && currentReport.meta;
+  const hasData = report && report.meta;
+  const values = hasData && report.meta;
 
   // Don't show excess spend unless greater than zero
   const excessSpend = values && values.excess_actual_spend ? Number(values.excess_actual_spend.value) : undefined;
@@ -89,20 +77,18 @@ const CommittedSpendTrendSummary: React.FC<CommittedSpendTrendSummaryProps> = ({
     <ReportSummary
       detailsLink={getDetailsLink()}
       excessActualSpend={excessActualSpend}
-      fetchStatus={[currentReportFetchStatus, previousReportFetchStatus, summaryFetchStatus]}
+      fetchStatus={[reportFetchStatus, summaryFetchStatus]}
+      showBreakdown
       title={widget.title}
     >
       {perspectiveComponent}
-      <CommittedSpendTrendTransform
+      {resolutionComponent}
+      <ActualSpendBreakdownTransform
         chartName={widget.chartName}
-        currentEndDate={currentEndDate}
-        currentReport={currentReport}
-        currentStartDate={currentStartDate}
-        perspective={perspective}
-        previousEndDate={previousEndDate}
-        previousReport={perspective === PerspectiveType.previous_over_actual ? previousReport : undefined}
-        previousStartDate={previousStartDate}
-        thresholdReport={currentReport}
+        endDate={endDate}
+        groupBy={perspective}
+        report={report}
+        startDate={startDate}
       />
     </ReportSummary>
   );
@@ -110,8 +96,9 @@ const CommittedSpendTrendSummary: React.FC<CommittedSpendTrendSummaryProps> = ({
 
 const useMapToProps = ({
   perspective,
+  resolution,
   widgetId,
-}: CommittedSpendTrendSummaryOwnProps): CommittedSpendTrendSummaryStateProps => {
+}: ActualSpendBreakdownSummaryOwnProps): ActualSpendBreakdownSummaryStateProps => {
   const { summary, summaryFetchStatus } = useAccountSummaryMapToProps();
   const {
     consumptionDate,
@@ -123,49 +110,29 @@ const useMapToProps = ({
 
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
-  const {
-    endDate: currentEndDate,
-    report: currentReport,
-    reportError: currentReportError,
-    reportFetchStatus: currentReportFetchStatus,
-    startDate: currentStartDate,
-  } = useReportMapDateRangeToProps({
+  const { endDate, report, reportError, reportFetchStatus, startDate } = useReportMapDateRangeToProps({
     contractLineEndDate,
     contractLineStartDate,
     dateRange: DateRangeType.contractedYear,
-    reportPathsType: widget.reportPathsType,
-    reportType: widget.reportType,
-  });
-
-  const {
-    endDate: previousEndDate,
-    report: previousReport,
-    reportError: previousReportError,
-    reportFetchStatus: previousReportFetchStatus,
-    startDate: previousStartDate,
-  } = useReportMapDateRangeToProps({
-    dateRange: perspective === PerspectiveType.previous_over_actual ? DateRangeType.contractedLastYear : undefined,
-    previousContractLineEndDate,
+    limit: 3,
+    perspective,
+    previousContractLineEndDate, // When there's a lack of data, previous year date range can be used for testing
     previousContractLineStartDate,
     reportPathsType: widget.reportPathsType,
     reportType: widget.reportType,
+    resolution,
   });
 
   return {
     consumptionDate,
-    currentEndDate,
-    currentStartDate,
-    currentReport,
-    currentReportFetchStatus,
-    currentReportError,
-    previousEndDate,
-    previousReport,
-    previousReportFetchStatus,
-    previousReportError,
-    previousStartDate,
+    endDate,
+    report,
+    reportFetchStatus,
+    reportError,
+    startDate,
     summaryFetchStatus,
     widget,
   };
 };
 
-export { CommittedSpendTrendSummary };
+export { ActualSpendBreakdownSummary };

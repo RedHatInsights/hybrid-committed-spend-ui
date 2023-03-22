@@ -20,7 +20,42 @@
         "value": "value"
       }
     ],
-    "actualSpendBreakdownDataValues": [
+    "actualSpendBreakdownPerspectiveValues": [
+      {
+        "options": {
+          "affiliate": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Top 3 affiliates of spend"
+              }
+            ]
+          },
+          "other": {
+            "value": []
+          },
+          "product": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Top 3 products of spend"
+              }
+            ]
+          },
+          "source_of_spend": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Top 3 sources of spend"
+              }
+            ]
+          }
+        },
+        "type": 5,
+        "value": "value"
+      }
+    ],
+    "actualSpendBreakdownResolutionValues": [
       {
         "options": {
           "cumulative": {
@@ -41,41 +76,6 @@
           },
           "other": {
             "value": []
-          }
-        },
-        "type": 5,
-        "value": "value"
-      }
-    ],
-    "actualSpendBreakdownPerspectiveValues": [
-      {
-        "options": {
-          "affiliates": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Top 3 affiliates of spend"
-              }
-            ]
-          },
-          "other": {
-            "value": []
-          },
-          "products": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Top 3 products of spend"
-              }
-            ]
-          },
-          "sources": {
-            "value": [
-              {
-                "type": 0,
-                "value": "Top 3 sources of spend"
-              }
-            ]
           }
         },
         "type": 5,
@@ -581,39 +581,11 @@
             "value": [
               {
                 "options": {
-                  "daily": {
+                  "none": {
                     "value": [
                       {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
                         "type": 0,
-                        "value": "_affiliates_"
-                      },
-                      {
-                        "type": 1,
-                        "value": "startDate"
-                      },
-                      {
-                        "type": 0,
-                        "value": "_"
-                      },
-                      {
-                        "type": 1,
-                        "value": "endDate"
-                      }
-                    ]
-                  },
-                  "monthly": {
-                    "value": [
-                      {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
-                        "type": 0,
-                        "value": "_affiliates_"
+                        "value": "affiliate_"
                       },
                       {
                         "type": 1,
@@ -631,10 +603,50 @@
                   },
                   "other": {
                     "value": []
+                  },
+                  "product": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "affiliate_product_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
+                  },
+                  "source_of_spend": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "affiliate_source-of-spend_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
                   }
                 },
                 "type": 5,
-                "value": "resolution"
+                "value": "secondaryGroupBy"
               }
             ]
           },
@@ -645,15 +657,11 @@
             "value": [
               {
                 "options": {
-                  "daily": {
+                  "affiliate": {
                     "value": [
                       {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
                         "type": 0,
-                        "value": "_product_"
+                        "value": "product_affiliate_"
                       },
                       {
                         "type": 1,
@@ -669,15 +677,11 @@
                       }
                     ]
                   },
-                  "monthly": {
+                  "none": {
                     "value": [
                       {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
                         "type": 0,
-                        "value": "_product_"
+                        "value": "product_"
                       },
                       {
                         "type": 1,
@@ -695,10 +699,30 @@
                   },
                   "other": {
                     "value": []
+                  },
+                  "source_of_spend": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "product_source-of-spend_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
                   }
                 },
                 "type": 5,
-                "value": "resolution"
+                "value": "secondaryGroupBy"
               }
             ]
           },
@@ -706,15 +730,11 @@
             "value": [
               {
                 "options": {
-                  "daily": {
+                  "affiliate": {
                     "value": [
                       {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
                         "type": 0,
-                        "value": "_source_of_spend_"
+                        "value": "source-of-spend_affiliate_"
                       },
                       {
                         "type": 1,
@@ -730,15 +750,11 @@
                       }
                     ]
                   },
-                  "monthly": {
+                  "none": {
                     "value": [
                       {
-                        "type": 1,
-                        "value": "provider"
-                      },
-                      {
                         "type": 0,
-                        "value": "_source_of_spend_"
+                        "value": "source-of-spend_"
                       },
                       {
                         "type": 1,
@@ -756,10 +772,30 @@
                   },
                   "other": {
                     "value": []
+                  },
+                  "product": {
+                    "value": [
+                      {
+                        "type": 0,
+                        "value": "source-of-spend_product_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "startDate"
+                      },
+                      {
+                        "type": 0,
+                        "value": "_"
+                      },
+                      {
+                        "type": 1,
+                        "value": "endDate"
+                      }
+                    ]
                   }
                 },
                 "type": 5,
-                "value": "resolution"
+                "value": "secondaryGroupBy"
               }
             ]
           }

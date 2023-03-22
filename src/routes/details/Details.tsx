@@ -18,8 +18,7 @@ import {
   GroupByType,
   SourceOfSpendType,
 } from 'routes/details/types';
-import { useAccountSummaryMapToProps, useDetailsMapDateRangeToProps } from 'routes/details/utils';
-import { getAccountSummaryDates } from 'routes/overview/components/committed-spend-trend/utils';
+import { getAccountSummaryDates, useAccountSummaryMapToProps } from 'routes/utils/accountSummary';
 import { DateRangeType } from 'routes/utils/dateRange';
 import type { Filter } from 'routes/utils/filter';
 import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
@@ -31,6 +30,7 @@ import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
 import { DetailsHeaderToolbar } from './DetailsHeaderToolbar';
 import { DetailsTable } from './DetailsTable';
+import { useDetailsMapDateRangeToProps } from './utils';
 const Loading = lazy(() => import('routes/state/loading/Loading'));
 const NotAvailable = lazy(() => import('routes/state/not-available/NotAvailable'));
 
