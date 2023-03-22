@@ -144,7 +144,7 @@ export const useDetailsMapToProps = ({
   };
 
   // When sorting secondaryGroupBy names, don't use orderBy[product]=*
-  if (secondaryGroupBy && query.orderBy && query.orderBy[groupBy]) {
+  if (isChildNode && secondaryGroupBy !== GroupByType.none && query.orderBy && query.orderBy[groupBy]) {
     reportQuery.orderBy[secondaryGroupBy] = query.orderBy[groupBy];
     reportQuery.orderBy[groupBy] = undefined;
   }
