@@ -47,9 +47,10 @@ export type DetailsToolbarProps = DetailsHeaderToolbarOwnProps;
 
 const dateRangeOptions: PerspectiveOption[] = [
   { label: messages.dateRange, value: DateRangeType.contractedYtd },
-  { label: messages.dateRange, value: DateRangeType.lastThreeMonths },
-  { label: messages.dateRange, value: DateRangeType.lastSixMonths },
-  { label: messages.dateRange, value: DateRangeType.lastNineMonths },
+  // The team decided to omit the 3, 6, and 9 month views in favor of customer feedback
+  // { label: messages.dateRange, value: DateRangeType.lastThreeMonths },
+  // { label: messages.dateRange, value: DateRangeType.lastSixMonths },
+  // { label: messages.dateRange, value: DateRangeType.lastNineMonths },
   { label: messages.dateRange, value: DateRangeType.contractedLastYear },
 ];
 

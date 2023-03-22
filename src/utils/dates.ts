@@ -22,7 +22,7 @@ export const compareDateYearAndMonth = (a: Date, b: Date) => {
 };
 
 export const getDate = () => {
-  const today = format(new Date(), 'yyyy-MM');
+  const today = format(new Date(), 'yyyy-MM-dd');
   return new Date(`${today}T00:00:00`);
 };
 
@@ -48,8 +48,8 @@ export const getYear = (offset: number) => {
 export const formatDate = (startDate: Date, endDate: Date, isFormatted = true) => {
   return isFormatted
     ? {
-        endDate: endDate ? format(endDate, 'yyyy-MM') : undefined,
-        startDate: startDate ? format(startDate, 'yyyy-MM') : undefined,
+        endDate: endDate ? format(endDate, 'yyyy-MM-dd') : undefined,
+        startDate: startDate ? format(startDate, 'yyyy-MM-dd') : undefined,
       }
     : {
         endDate,
@@ -82,10 +82,6 @@ export const getContractedYtd = (contractLineStartDate: Date, consumptionDate: D
   const endDate = consumptionDate;
   const startDate = new Date(contractLineStartDate.getTime());
 
-  // Workaround to compare month properly
-  endDate.setDate(1);
-  startDate.setDate(1);
-
   if (!consumptionDate) {
     endDate.setMonth(endDate.getMonth() - 1);
   }
@@ -116,7 +112,6 @@ export const getLastMonthsDate = (consumptionDate: Date, offset: number, isForma
   const startDate = new Date();
 
   // Workaround to compare month properly
-  endDate.setDate(1);
   startDate.setDate(1);
 
   if (!consumptionDate) {
