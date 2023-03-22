@@ -136,7 +136,7 @@ export const useDetailsMapToProps = ({
     filter: {
       ...(query.filter ? query.filter : {}),
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
-      ...(secondaryGroupBy && { limit: 1000, offset: undefined }), // Children are not paginated
+      ...(isChildNode && secondaryGroupBy && { limit: 1000, offset: undefined }), // Children are not paginated
     },
     ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
     sourceOfSpend: undefined,
@@ -144,7 +144,7 @@ export const useDetailsMapToProps = ({
   };
 
   // When sorting secondaryGroupBy names, don't use orderBy[product]=*
-  if (secondaryGroupBy && query.orderBy && query.orderBy[groupBy]) {
+  if (isChildNode && secondaryGroupBy && query.orderBy && query.orderBy[groupBy]) {
     reportQuery.orderBy[secondaryGroupBy] = query.orderBy[groupBy];
     reportQuery.orderBy[groupBy] = undefined;
   }
