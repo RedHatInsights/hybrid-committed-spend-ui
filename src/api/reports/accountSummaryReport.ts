@@ -22,7 +22,7 @@ export interface AccountSummaryReportData extends ReportData {
 }
 
 export interface AccountSummaryReportMeta extends ReportMeta {
-  count?: string | number;
+  count?: number;
 }
 
 export interface AccountSummaryReport extends Report {

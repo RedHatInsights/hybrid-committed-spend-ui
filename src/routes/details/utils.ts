@@ -26,7 +26,6 @@ interface DetailsOwnProps {
   endDate?: Date;
   groupBy?: string;
   groupByValue?: string;
-  isChildNode?: boolean;
   isExpanded?: boolean;
   previousContractLineEndDate?: Date;
   previousContractLineStartDate?: Date;
@@ -104,7 +103,86 @@ export const useDetailsMapToProps = ({
   endDate,
   groupBy,
   groupByValue,
-  isChildNode = false,
+  isExpanded = false,
+  reportPathsType = ReportPathsType.details,
+  reportType = ReportType.details,
+  secondaryGroupBy,
+  sourceOfSpend = SourceOfSpendType.all,
+  startDate,
+}: DetailsOwnProps): DetailsStateProps => {
+  const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
+  const location = useLocation();
+  const queryFromRoute = parseQuery<Query>(location.search);
+
+  const query = {
+    sourceOfSpend,
+    groupBy: {
+      [groupBy]: groupByValue ? groupByValue : '*',
+    },
+    ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
+    ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
+    ...(queryFromRoute.orderBy && { orderBy: queryFromRoute.orderBy }),
+    dateRange,
+  };
+
+  const reportQuery = {
+    ...query,
+    filter: {
+      ...(query.filter ? query.filter : {}),
+      ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
+    },
+    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
+    sourceOfSpend: undefined,
+    dateRange: undefined,
+  };
+
+  // Add secondaryGroupBy for export API request
+  const exportQueryString = getQuery({
+    ...reportQuery,
+    groupBy: {
+      ...reportQuery.groupBy,
+      ...(secondaryGroupBy &&
+        secondaryGroupBy !== GroupByType.none && {
+          [secondaryGroupBy]: '*',
+        }),
+    },
+  });
+
+  const reportQueryString = getQuery(reportQuery);
+  const report = useSelector((state: RootState) =>
+    reportSelectors.selectReport(state, reportPathsType, reportType, reportQueryString)
+  );
+  const reportFetchStatus = useSelector((state: RootState) =>
+    reportSelectors.selectReportFetchStatus(state, reportPathsType, reportType, reportQueryString)
+  );
+  const reportError = useSelector((state: RootState) =>
+    reportSelectors.selectReportError(state, reportPathsType, reportType, reportQueryString)
+  );
+
+  useEffect(() => {
+    if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate && endDate) {
+      dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
+    }
+  }, [reportQueryString, isExpanded]);
+
+  return {
+    endDate,
+    exportQueryString,
+    query,
+    report,
+    reportError,
+    reportFetchStatus,
+    reportQueryString,
+    startDate,
+  };
+};
+
+// Intended to be used with expanded table rows
+export const useDetailsExpandMapToProps = ({
+  dateRange,
+  endDate,
+  groupBy,
+  groupByValue,
   isExpanded = false,
   reportPathsType = ReportPathsType.details,
   reportType = ReportType.details,
@@ -136,7 +214,7 @@ export const useDetailsMapToProps = ({
     filter: {
       ...(query.filter ? query.filter : {}),
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
-      ...(isChildNode && secondaryGroupBy && { limit: 1000, offset: undefined }), // Children are not paginated
+      ...(secondaryGroupBy && { limit: 1000, offset: undefined }), // Children are not paginated
     },
     ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
     sourceOfSpend: undefined,
@@ -144,17 +222,9 @@ export const useDetailsMapToProps = ({
   };
 
   // When sorting secondaryGroupBy names, don't use orderBy[product]=*
-  if (isChildNode && secondaryGroupBy && query.orderBy && query.orderBy[groupBy]) {
+  if (secondaryGroupBy && query.orderBy && query.orderBy[groupBy]) {
     reportQuery.orderBy[secondaryGroupBy] = query.orderBy[groupBy];
     reportQuery.orderBy[groupBy] = undefined;
-  }
-
-  // Save secondaryGroupBy for export
-  const exportQueryString = getQuery(reportQuery);
-
-  // If not a child node, omit secondaryGroupBy
-  if (!isChildNode) {
-    reportQuery.groupBy[secondaryGroupBy] = undefined;
   }
 
   const reportQueryString = getQuery(reportQuery);
@@ -170,20 +240,14 @@ export const useDetailsMapToProps = ({
 
   useEffect(() => {
     if (!reportError && reportFetchStatus !== FetchStatus.inProgress && startDate && endDate) {
-      if (isChildNode) {
-        if (secondaryGroupBy !== GroupByType.none && isExpanded) {
-          dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
-        }
-      } else {
-        // Primary group by
+      if (secondaryGroupBy !== GroupByType.none && isExpanded) {
         dispatch(reportActions.fetchReport(reportPathsType, reportType, reportQueryString));
       }
     }
-  }, [reportQueryString, isExpanded, isChildNode]);
+  }, [reportQueryString, isExpanded]);
 
   return {
     endDate,
-    exportQueryString,
     query,
     report,
     reportError,

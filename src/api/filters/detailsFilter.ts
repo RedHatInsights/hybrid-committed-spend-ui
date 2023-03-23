@@ -8,7 +8,7 @@ export interface DetailsFilterData extends FilterData {
 }
 
 export interface DetailsFilterMeta extends FilterMeta {
-  count?: string;
+  count?: number;
 }
 
 export interface DetailsFilter extends Filter {

@@ -56,22 +56,6 @@ export interface PadData {
 export const enum ComputedReportItemType {
   actualSpend = 'actualSpend',
   committedSpend = 'committedSpend',
-
-  // Todo: Keep for test data
-  cost = 'cost', // cost.total.value
-  infrastructure = 'infrastructure', // infrastructure.total.value
-  supplementary = 'supplementary', // supplementary.total.value
-  usage = 'usage', // usage.value
-}
-
-// The computed report value
-// eslint-disable-next-line no-shadow
-export const enum ComputedReportItemValueType {
-  none = 'none', // A value type is not used in this scenario (e.g., usage.value)
-  markup = 'markup', // infrastructure.markup.value
-  raw = 'raw', // infrastructure.raw.value
-  total = 'total', // // infrastructure.total.value
-  usage = 'usage', // infrastructure.usage.value
 }
 
 // eslint-disable-next-line no-shadow
@@ -168,7 +152,6 @@ export function padChartDatums({
       result.push(
         createReportDatum({
           computedItem: { date, id: date },
-          reportItemValue: null, // Todo: This is only used with the fake data -- remove after APIs are avialable
           value: padWithPrevious && prevChartDatum ? prevChartDatum.y : null,
         })
       );

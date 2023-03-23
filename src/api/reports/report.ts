@@ -20,7 +20,7 @@ export interface ReportData {
 
 export interface ReportMeta extends PagedMetaData {
   excess_actual_spend: ReportValue;
-  count?: string | number;
+  count?: number;
   delta?: {
     percent: number;
     value: number;
@@ -50,10 +50,4 @@ export const enum ReportType {
 export const enum ReportPathsType {
   accountSummary = 'accountSummary',
   details = 'details',
-
-  // Todo: for testing
-  actualSpend = 'actualSpend',
-  actualSpendBreakdown = 'actualSpendBreakdown',
-  committedSpend = 'committedSpend',
-  committedSpendTrend = 'committedSpendTrend',
 }
