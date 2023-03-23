@@ -265,6 +265,7 @@ const useMapToProps = ({
   const query: Query = {
     filter: {
       [category]: search,
+      limit: 15, // API is paginated by default
     },
     ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
   } as any;
