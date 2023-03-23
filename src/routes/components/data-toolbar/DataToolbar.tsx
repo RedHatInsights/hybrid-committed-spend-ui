@@ -33,6 +33,7 @@ interface Filters {
 }
 
 interface DataToolbarOwnProps {
+  endDate?: Date;
   categoryOptions?: ToolbarChipGroup[]; // Options for category menu
   filterPathsType?: FilterPathsType;
   groupBy?: string; // Sync category selection with groupBy value
@@ -43,11 +44,13 @@ interface DataToolbarOwnProps {
   onFilterRemoved?: (filterType: Filter) => void;
   pagination?: React.ReactNode; // Optional pagination controls to display in toolbar
   query?: Query; // Query containing filter_by params used to restore state upon page refresh
+  startDate?: Date;
 }
 
 type DataToolbarProps = DataToolbarOwnProps;
 
 const DataToolbar: React.FC<DataToolbarProps> = ({
+  endDate,
   categoryOptions,
   filterPathsType,
   groupBy,
@@ -58,6 +61,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   onFilterRemoved,
   pagination,
   query,
+  startDate,
 }) => {
   const [categoryInput, setCategoryInput] = useState('');
   const [currentCategory, setCurrentCategory] = useState('');
@@ -163,6 +167,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         <InputGroup>
           {isFilterTypeValid(filterPathsType, categoryOption.key as FilterType) ? (
             <FilterTypeahead
+              endDate={endDate}
               aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
               category={currentCategory}
               filterPathsType={filterPathsType}
@@ -170,6 +175,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
               isDisabled={disabled}
               onSelect={value => onCategoryInputSelect(value, categoryOption.key)}
               placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
+              startDate={startDate}
             />
           ) : (
             <>

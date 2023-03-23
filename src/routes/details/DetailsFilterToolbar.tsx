@@ -8,6 +8,7 @@ import { DataToolbar } from 'routes/components/data-toolbar';
 import type { Filter } from 'routes/utils/filter';
 
 interface DetailsFilterToolbarOwnProps {
+  endDate?: Date;
   groupBy: string; // Options for category menu
   isDisabled?: boolean;
   isExportDisabled?: boolean; // Sync category selection with groupBy value
@@ -16,11 +17,13 @@ interface DetailsFilterToolbarOwnProps {
   onFilterRemoved(filter: Filter);
   pagination?: React.ReactNode; // Optional pagination controls to display in toolbar
   query?: Query; // Query containing filter_by params used to restore state upon page refresh
+  startDate?: Date;
 }
 
 type DetailsFilterToolbarProps = DetailsFilterToolbarOwnProps;
 
 const DetailsFilterToolbar: React.FC<DetailsFilterToolbarProps> = ({
+  endDate,
   groupBy,
   isDisabled,
   isExportDisabled,
@@ -29,6 +32,7 @@ const DetailsFilterToolbar: React.FC<DetailsFilterToolbarProps> = ({
   onFilterRemoved,
   pagination,
   query,
+  startDate,
 }) => {
   const intl = useIntl();
   const getCategoryOptions = (): ToolbarChipGroup[] => {
@@ -41,6 +45,7 @@ const DetailsFilterToolbar: React.FC<DetailsFilterToolbarProps> = ({
 
   return (
     <DataToolbar
+      endDate={endDate}
       categoryOptions={getCategoryOptions()}
       filterPathsType={FilterPathsType.detailsFilter}
       groupBy={groupBy}
@@ -51,6 +56,7 @@ const DetailsFilterToolbar: React.FC<DetailsFilterToolbarProps> = ({
       onFilterRemoved={onFilterRemoved}
       pagination={pagination}
       query={query}
+      startDate={startDate}
     />
   );
 };

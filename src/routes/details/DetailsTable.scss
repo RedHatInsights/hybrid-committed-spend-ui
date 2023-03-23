@@ -26,6 +26,11 @@
         // --pf-c-table__expandable-row--after--BorderLeftWidth: 0; // Left blue line for expanded rows
       }
     }
+
+    // Alternative workaround to overriding toolbar style
+    .pf-c-table__sticky-column {
+      z-index: 99;
+    }
   }
 }
 

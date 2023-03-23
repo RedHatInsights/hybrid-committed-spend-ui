@@ -10,6 +10,7 @@
 
 .pf-c-toolbar {
   &.dataToolbarOverride {
-    --pf-c-toolbar--ZIndex: auto; z-index: 301;
+    // Alternative workaround to overriding table sticky style
+    // --pf-c-toolbar--ZIndex: auto; z-index: 301;
   }
 }
