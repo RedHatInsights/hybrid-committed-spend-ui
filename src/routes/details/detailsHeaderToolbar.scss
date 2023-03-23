@@ -2,7 +2,8 @@
 
 .pf-c-toolbar {
   &.detailsHeaderToolbarOverride {
-    --pf-c-toolbar--ZIndex: auto; z-index: 302;
+    // Alternative workaround to overriding table sticky style
+    // --pf-c-toolbar--ZIndex: auto; z-index: 302;
 
     .pf-c-toolbar__content {
       padding: 0;
