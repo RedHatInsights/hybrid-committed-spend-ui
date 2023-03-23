@@ -1,3 +1,6 @@
+import './detailsHeaderToolbar.scss';
+
+import { Toolbar, ToolbarContent, ToolbarItem } from '@patternfly/react-core';
 import type { DetailsOption } from 'api/options/detailsOption';
 import { OptionPathsType, OptionType } from 'api/options/option';
 import { getQuery } from 'api/queries';
@@ -257,40 +260,50 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   };
 
   return (
-    <div>
-      <Perspective
-        currentItem={sourceOfSpend}
-        id="sourceOfSpendType"
-        label={intl.formatMessage(messages.sourceOfSpendLabel)}
-        minWidth={200}
-        onSelected={handleOnSourceOfSpendSelected}
-        options={getSourceOfSpendOptions()}
-      />
-      <Perspective
-        currentItem={groupBy}
-        id="groupBy"
-        label={intl.formatMessage(messages.groupByLabel)}
-        minWidth={200}
-        onSelected={handleOnGroupBySelected}
-        options={getGroupByOptions(false)}
-      />
-      <Perspective
-        currentItem={secondaryGroupBy}
-        id="secondaryGroupBy"
-        label={intl.formatMessage(messages.secondaryGroupByLabel)}
-        minWidth={200}
-        onSelected={handleOnSecondaryGroupBySelected}
-        options={getGroupByOptions().filter(option => option.value !== groupBy)}
-      />
-      <Perspective
-        currentItem={dateRange}
-        id="dateRange"
-        label={intl.formatMessage(messages.dateRangeLabel)}
-        minWidth={225}
-        onSelected={handleOnDateRangeSelected}
-        options={getDateRangeOptions()}
-      />
-    </div>
+    <Toolbar className="detailsHeaderToolbarOverride">
+      <ToolbarContent>
+        <ToolbarItem>
+          <Perspective
+            currentItem={sourceOfSpend}
+            id="sourceOfSpendType"
+            label={intl.formatMessage(messages.sourceOfSpendLabel)}
+            minWidth={200}
+            onSelected={handleOnSourceOfSpendSelected}
+            options={getSourceOfSpendOptions()}
+          />
+        </ToolbarItem>
+        <ToolbarItem>
+          <Perspective
+            currentItem={groupBy}
+            id="groupBy"
+            label={intl.formatMessage(messages.groupByLabel)}
+            minWidth={200}
+            onSelected={handleOnGroupBySelected}
+            options={getGroupByOptions(false)}
+          />
+        </ToolbarItem>
+        <ToolbarItem>
+          <Perspective
+            currentItem={secondaryGroupBy}
+            id="secondaryGroupBy"
+            label={intl.formatMessage(messages.secondaryGroupByLabel)}
+            minWidth={200}
+            onSelected={handleOnSecondaryGroupBySelected}
+            options={getGroupByOptions().filter(option => option.value !== groupBy)}
+          />
+        </ToolbarItem>
+        <ToolbarItem>
+          <Perspective
+            currentItem={dateRange}
+            id="dateRange"
+            label={intl.formatMessage(messages.dateRangeLabel)}
+            minWidth={225}
+            onSelected={handleOnDateRangeSelected}
+            options={getDateRangeOptions()}
+          />
+        </ToolbarItem>
+      </ToolbarContent>
+    </Toolbar>
   );
 };
 

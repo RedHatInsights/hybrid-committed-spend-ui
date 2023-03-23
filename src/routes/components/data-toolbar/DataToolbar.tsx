@@ -291,7 +291,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   }, [groupBy]);
 
   return (
-    <Toolbar clearAllFilters={onDelete as any} collapseListedFiltersBreakpoint="xl">
+    <Toolbar className="dataToolbarOverride" clearAllFilters={onDelete as any} collapseListedFiltersBreakpoint="xl">
       <ToolbarContent>
         <ToolbarToggleGroup breakpoint="xl" toggleIcon={<FilterIcon />}>
           <ToolbarGroup variant="filter-group">
