@@ -123,7 +123,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
         name: intl.formatDate(currentDate, { month: 'long' }),
         date: mapId,
         isSortable,
-        orderBy: 'actual_spend', // Todo: use 'actual_spend'?
+        orderBy: 'actual_spend',
       });
     }
 

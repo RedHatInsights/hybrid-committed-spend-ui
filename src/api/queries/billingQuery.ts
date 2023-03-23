@@ -7,17 +7,15 @@ export interface BillingFilters extends utils.Filters {
 type BillingGroupByValue = string | string[];
 
 interface BillingGroupBys {
-  cluster?: BillingGroupByValue;
-  node?: BillingGroupByValue;
-  project?: BillingGroupByValue;
+  affiliate?: BillingGroupByValue;
+  product?: BillingGroupByValue;
+  source_of_spend?: BillingGroupByValue;
 }
 
 interface BillingOrderBys {
-  account?: string;
-  region?: string;
-  service?: string;
-  cost?: string;
-  usage?: string;
+  affiliate?: string;
+  product?: string;
+  source_of_spend?: string;
 }
 
 export interface BillingQuery extends utils.Query {

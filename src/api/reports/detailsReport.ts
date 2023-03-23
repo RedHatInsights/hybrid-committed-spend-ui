@@ -8,7 +8,7 @@ export interface DetailsFilterReportData extends ReportData {
 }
 
 export interface DetailsFilterReportMeta extends ReportMeta {
-  count?: string;
+  count?: number;
 }
 
 export interface DetailsFilterReport extends Report {

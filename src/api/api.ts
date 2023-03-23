@@ -3,7 +3,7 @@ import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
 export interface PagedMetaData {
-  count?: number | string; // Todo: supports test data
+  count?: number;
 }
 
 export interface PagedLinks {

@@ -6,7 +6,7 @@ import { OptionType } from './option';
 export type DetailsOptionData = OptionData;
 
 export interface DetailsOptionMeta extends OptionMeta {
-  count?: string | number;
+  count?: number;
 }
 
 export interface DetailsOption extends Option {

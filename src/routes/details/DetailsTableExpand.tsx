@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import messages from 'locales/messages';
 import React, { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDetailsMapToProps } from 'routes/details/utils';
+import { useDetailsExpandMapToProps } from 'routes/details/utils';
 import { FetchStatus } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { compareDateYearAndMonth } from 'utils/dates';
@@ -195,11 +195,10 @@ const useMapToProps = ({
   startDate,
   sourceOfSpend,
 }: DetailsTableExpandOwnProps): DetailsTableExpandStateProps => {
-  const { report, reportFetchStatus } = useDetailsMapToProps({
+  const { report, reportFetchStatus } = useDetailsExpandMapToProps({
     endDate,
     groupBy,
     groupByValue,
-    isChildNode: true,
     isExpanded,
     secondaryGroupBy,
     startDate,
