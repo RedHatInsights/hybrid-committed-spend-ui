@@ -7,11 +7,13 @@ import { FilterInput } from './FilterInput';
 interface FilterTypeaheadOwnProps {
   ariaLabel?: string;
   category?: string;
+  endDate?: Date;
   filterPathsType: FilterPathsType;
   filterType: FilterType;
   isDisabled?: boolean;
   onSelect?: (value: string) => void;
   placeholder?: string;
+  startDate?: Date;
 }
 
 type FilterTypeaheadProps = FilterTypeaheadOwnProps;
@@ -21,11 +23,13 @@ type FilterTypeaheadProps = FilterTypeaheadOwnProps;
 const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({
   ariaLabel,
   category,
+  endDate,
   filterPathsType,
   filterType,
   isDisabled,
   onSelect,
   placeholder,
+  startDate,
 }) => {
   const [search, setSearch] = useState<string>(undefined);
 
@@ -46,6 +50,7 @@ const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({
 
   return (
     <FilterInput
+      endDate={endDate}
       ariaLabel={ariaLabel}
       category={category}
       isDisabled={isDisabled}
@@ -56,6 +61,7 @@ const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({
       filterType={filterType}
       placeholder={placeholder}
       search={search}
+      startDate={startDate}
     />
   );
 };

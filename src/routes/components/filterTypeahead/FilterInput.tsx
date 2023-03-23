@@ -27,6 +27,7 @@ import type { ThunkDispatch } from 'redux-thunk';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { filterActions, filterSelectors } from 'store/filters';
+import { formatDate } from 'utils/dates';
 import { useStateCallback } from 'utils/hooks';
 import { noop } from 'utils/noop';
 
@@ -35,6 +36,7 @@ import { styles } from './FilterTypeahead.styles';
 interface FilterInputOwnProps {
   ariaLabel?: string;
   category?: string;
+  endDate?: Date;
   filterPathsType: FilterPathsType;
   filterType: FilterType;
   isDisabled?: boolean;
@@ -43,6 +45,7 @@ interface FilterInputOwnProps {
   onSelect?: (value: string) => void;
   placeholder?: string;
   search?: string;
+  startDate?: Date;
 }
 
 interface FilterInputStateProps {
@@ -59,6 +62,7 @@ type FilterInputProps = FilterInputOwnProps & FilterInputStateProps & FilterInpu
 const FilterInput: React.FC<FilterInputProps> = ({
   ariaLabel,
   category,
+  endDate,
   filterPathsType,
   filterType,
   isDisabled,
@@ -67,6 +71,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
   onSelect,
   search,
   placeholder,
+  startDate,
 }) => {
   const [menuIsOpen, setMenuIsOpen] = useStateCallback(false);
   const intl = useIntl();
@@ -76,9 +81,11 @@ const FilterInput: React.FC<FilterInputProps> = ({
 
   const { filter, filterFetchStatus } = useMapToProps({
     category,
+    endDate,
     filterPathsType,
     filterType,
     search,
+    startDate,
   });
 
   // apply focus to the text input
@@ -226,11 +233,10 @@ const FilterInput: React.FC<FilterInputProps> = ({
   };
 
   const handleClearSearch = () => {
-    setMenuIsOpen(false, () => {
-      if (onClear) {
-        onClear();
-      }
-    });
+    setMenuIsOpen(false);
+    if (onClear) {
+      onClear();
+    }
   };
 
   const openMenu = () => {
@@ -246,9 +252,11 @@ const FilterInput: React.FC<FilterInputProps> = ({
 
 const useMapToProps = ({
   category,
+  endDate,
   filterPathsType,
   filterType,
   search,
+  startDate,
 }: FilterInputOwnProps): FilterInputStateProps => {
   const [searchTimeout, setSearchTimeout] = useState<any>(noop);
 
@@ -258,6 +266,7 @@ const useMapToProps = ({
     filter: {
       [category]: search,
     },
+    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
   } as any;
   const filterQueryString = getQuery(query);
 

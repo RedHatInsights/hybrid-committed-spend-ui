@@ -90,6 +90,7 @@ const Details: React.FC<DetailsProps> = () => {
   const getFilterToolbar = (isDisabled: boolean) => {
     return (
       <DetailsFilterToolbar
+        endDate={endDate}
         groupBy={groupBy}
         isDisabled={isDisabled}
         isExportDisabled={isDisabled || (report && report.meta && report.meta.count === 0)}
@@ -98,6 +99,7 @@ const Details: React.FC<DetailsProps> = () => {
         onFilterRemoved={handleOnFilterRemoved}
         pagination={getPagination(isDisabled)}
         query={query}
+        startDate={startDate}
       />
     );
   };
