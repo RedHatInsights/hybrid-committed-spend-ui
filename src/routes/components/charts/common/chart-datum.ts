@@ -64,6 +64,7 @@ export const enum DatumType {
   rolling,
 }
 
+// This transforms computed report items for line and area charts
 export function transformReport({
   datumType,
   report,
