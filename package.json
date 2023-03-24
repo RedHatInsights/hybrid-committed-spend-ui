@@ -43,12 +43,12 @@
   },
   "dependencies": {
     "@patternfly/patternfly": "4.224.2",
-    "@patternfly/react-charts": "6.94.18",
-    "@patternfly/react-core": "4.276.6",
+    "@patternfly/react-charts": "6.94.19",
+    "@patternfly/react-core": "4.276.8",
     "@patternfly/react-icons": "4.93.6",
-    "@patternfly/react-table": "4.112.38",
+    "@patternfly/react-table": "4.113.0",
     "@patternfly/react-tokens": "4.94.6",
-    "@redhat-cloud-services/frontend-components": "^3.9.32",
+    "@redhat-cloud-services/frontend-components": "^3.9.33",
     "@redhat-cloud-services/frontend-components-notifications": "^3.2.14",
     "@redhat-cloud-services/frontend-components-translations": "^3.2.6",
     "@redhat-cloud-services/frontend-components-utilities": "^3.3.14",
@@ -76,7 +76,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@types/react": "17.0.48",
-    "@types/react-dom": "^18.0.9",
+    "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
@@ -107,7 +107,6 @@
   },
   "overrides": {
     "eslint": "^8.36.0",
-    "eslint-plugin-rulesdir": "^0.2.1",
     "react-intl": "^6.3.2",
     "typescript": "^5.0.2"
   },
