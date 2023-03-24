@@ -49,7 +49,7 @@
     "@patternfly/react-table": "4.112.38",
     "@patternfly/react-tokens": "4.94.6",
     "@redhat-cloud-services/frontend-components": "^3.9.32",
-    "@redhat-cloud-services/frontend-components-notifications": "^3.2.13",
+    "@redhat-cloud-services/frontend-components-notifications": "^3.2.14",
     "@redhat-cloud-services/frontend-components-translations": "^3.2.6",
     "@redhat-cloud-services/frontend-components-utilities": "^3.3.14",
     "@unleash/proxy-client-react": "^3.5.2",
