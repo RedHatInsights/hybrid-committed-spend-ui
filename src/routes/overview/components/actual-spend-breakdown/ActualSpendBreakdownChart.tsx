@@ -5,12 +5,12 @@ import { chartStyles, styles } from './ActualSpendBreakdownChart.styles';
 
 interface ActualSpendBreakdownChartOwnProps {
   chartName?: string;
-  datums?: any[];
+  data?: any[];
 }
 
 export type ActualSpendBreakdownChartProps = ActualSpendBreakdownChartOwnProps;
 
-const ActualSpendBreakdownChart: React.FC<ActualSpendBreakdownChartProps> = ({ chartName, datums }) => {
+const ActualSpendBreakdownChart: React.FC<ActualSpendBreakdownChartProps> = ({ chartName, data }) => {
   const getChart = () => {
     return (
       <BreakdownChart
@@ -18,12 +18,12 @@ const ActualSpendBreakdownChart: React.FC<ActualSpendBreakdownChartProps> = ({ c
         containerHeight={chartStyles.chartContainerHeight}
         height={chartStyles.chartHeight}
         name={chartName}
-        top1stData={datums.length > 0 ? datums[0] : []}
-        top2ndData={datums.length > 1 ? datums[1] : []}
-        top3rdData={datums.length > 2 ? datums[2] : []}
-        top4thData={datums.length > 3 ? datums[3] : []}
-        top5thData={datums.length > 4 ? datums[4] : []}
-        top6thData={datums.length > 5 ? datums[5] : []}
+        top1stData={data.length > 0 ? data[0] : []}
+        top2ndData={data.length > 1 ? data[1] : []}
+        top3rdData={data.length > 2 ? data[2] : []}
+        top4thData={data.length > 3 ? data[3] : []}
+        top5thData={data.length > 4 ? data[4] : []}
+        top6thData={data.length > 5 ? data[5] : []}
       />
     );
   };
