@@ -35,7 +35,7 @@ export interface PagedResponseAlt<D = any, M = any> {
  */
 export function initApi({ version }: { version: string }) {
   const insights = (window as any).insights;
-  const env = insights.chrome.isProd() ? '' : '.dev';
+  const env = insights.chrome.isProd() ? '' : '.qa';
 
   axios.defaults.baseURL = `https://billing${env}.api.redhat.com/${version}/`;
   axios.interceptors.request.use(authInterceptor);
