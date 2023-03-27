@@ -150,9 +150,10 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
 
         // Add row cells
         cells.push({
-          value: item[reportItem]
-            ? formatCurrency(item[reportItem].value, item[reportItem].units)
-            : intl.formatMessage(messages.chartNoData),
+          value:
+            item[reportItem] && item[reportItem] !== null
+              ? formatCurrency(item[reportItem].value, item[reportItem].units)
+              : intl.formatMessage(messages.chartNoData),
         });
       });
 
