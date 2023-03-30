@@ -120,7 +120,7 @@ export function createReportDatum<T extends ComputedReportItem>({
     return computedItem.label;
   };
   const xVal = getXVal();
-  const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : 0;
+  const yVal = isFloat(value) ? parseFloat(value.toFixed(2)) : isInt(value) ? value : null;
   return {
     x: xVal,
     y: value === null ? null : yVal, // For displaying "no data" labels in chart tooltips\
