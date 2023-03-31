@@ -53,9 +53,10 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ widgetId }) => {
     );
 
   // Don't show excess spend unless greater than zero
-  const excessSpend = values && values.excess_committed_spend ? Number(values.excess_committed_spend.value) : undefined;
-  const excessActualSpend: string = excessSpend
-    ? formatCurrency(excessSpend, values.excess_committed_spend.units || 'USD')
+  const excessActualSpend =
+    values && values.excess_committed_spend ? Number(values.excess_committed_spend.value) : undefined;
+  const excessSpend: string = excessActualSpend
+    ? formatCurrency(excessActualSpend, values.excess_committed_spend.units || 'USD')
     : undefined;
 
   const percent = values && values.delta && values.delta.percent ? Number(values.delta.percent) : undefined;
@@ -88,7 +89,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ widgetId }) => {
     <ReportSummary
       bodyStyle={styles.body}
       fetchStatus={reportFetchStatus}
-      excessActualSpend={excessActualSpend}
+      excessSpend={excessSpend}
       title={widget.title}
     >
       <div>{dateRange}</div>

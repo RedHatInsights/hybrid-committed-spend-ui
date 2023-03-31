@@ -58,9 +58,9 @@ const ActualSpendBreakdownSummary: React.FC<ActualSpendBreakdownSummaryProps> = 
   const values = hasData && report.meta;
 
   // Don't show excess spend unless greater than zero
-  const excessSpend = values && values.excess_actual_spend ? Number(values.excess_actual_spend.value) : undefined;
-  const excessActualSpend: string = excessSpend
-    ? formatCurrency(excessSpend, values.excess_actual_spend.units || 'USD')
+  const excessActualSpend = values && values.excess_actual_spend ? Number(values.excess_actual_spend.value) : undefined;
+  const excessSpend: string = excessActualSpend
+    ? formatCurrency(excessActualSpend, values.excess_actual_spend.units || 'USD')
     : undefined;
 
   const getDetailsLink = () => {
@@ -76,9 +76,9 @@ const ActualSpendBreakdownSummary: React.FC<ActualSpendBreakdownSummaryProps> = 
   return (
     <ReportSummary
       detailsLink={getDetailsLink()}
-      excessActualSpend={excessActualSpend}
+      excessSpend={excessSpend}
       fetchStatus={[reportFetchStatus, summaryFetchStatus]}
-      showBreakdown
+      isExcluded
       title={widget.title}
     >
       {perspectiveComponent}
