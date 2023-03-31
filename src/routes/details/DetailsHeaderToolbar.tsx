@@ -19,6 +19,7 @@ import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { optionActions, optionSelectors } from 'store/options';
+import { formatDate } from 'utils/dates';
 
 interface DetailsHeaderToolbarOwnProps {
   consumptionDate?: Date;
@@ -67,6 +68,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   consumptionDate,
   contractLineStartDate,
   dateRange,
+  endDate,
   groupBy,
   onDateRangeSelected,
   onGroupBySelected,
@@ -76,60 +78,61 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   previousContractLineStartDate,
   secondaryGroupBy,
   sourceOfSpend,
+  startDate,
 }) => {
-  const { options } = useMapToProps();
+  const { options } = useMapToProps({ endDate, startDate });
   const intl = useIntl();
 
-  const formatDateRange = (startDate, endDate) => {
-    if (startDate === undefined || endDate === undefined) {
+  const formatDateRange = (start, end) => {
+    if (start === undefined || end === undefined) {
       return undefined;
     }
-    return intl.formatDateTimeRange(startDate, endDate, {
+    return intl.formatDateTimeRange(start, end, {
       month: 'long',
       year: 'numeric',
     });
   };
 
   const getContractedLastYearDateRange = () => {
-    const { endDate, startDate } = getDateRange({
+    const { endDate: end, startDate: start } = getDateRange({
       dateRange: DateRangeType.contractedLastYear,
       previousContractLineEndDate,
       previousContractLineStartDate,
     });
-    return formatDateRange(startDate, endDate);
+    return formatDateRange(start, end);
   };
 
   const getContractedYtdDateRange = () => {
-    const { endDate, startDate } = getDateRange({
+    const { endDate: end, startDate: start } = getDateRange({
       dateRange: DateRangeType.contractedYtd,
       consumptionDate,
       contractLineStartDate,
     });
-    return formatDateRange(startDate, endDate);
+    return formatDateRange(start, end);
   };
 
   const getLastNineMonthsDateRange = () => {
-    const { endDate, startDate } = getDateRange({
+    const { endDate: end, startDate: start } = getDateRange({
       dateRange: DateRangeType.lastNineMonths,
       consumptionDate,
     });
-    return formatDateRange(startDate, endDate);
+    return formatDateRange(start, end);
   };
 
   const getLastSixMonthsDateRange = () => {
-    const { endDate, startDate } = getDateRange({
+    const { endDate: end, startDate: start } = getDateRange({
       dateRange: DateRangeType.lastSixMonths,
       consumptionDate,
     });
-    return formatDateRange(startDate, endDate);
+    return formatDateRange(start, end);
   };
 
   const getLastThreeMonthsDateRange = () => {
-    const { endDate, startDate } = getDateRange({
+    const { endDate: end, startDate: start } = getDateRange({
       dateRange: DateRangeType.lastThreeMonths,
       consumptionDate,
     });
-    return formatDateRange(startDate, endDate);
+    return formatDateRange(start, end);
   };
 
   const getDateRangeOptions = () => {
@@ -307,11 +310,11 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   );
 };
 
-const useMapToProps = (): DetailsHeaderToolbarStateProps => {
+const useMapToProps = ({ endDate, startDate }): DetailsHeaderToolbarStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query = {
-    // TBD...
+    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
   };
 
   const optionsQueryString = getQuery(query);
@@ -325,10 +328,10 @@ const useMapToProps = (): DetailsHeaderToolbarStateProps => {
   );
 
   useEffect(() => {
-    if (optionsFetchStatus !== FetchStatus.inProgress) {
+    if (optionsFetchStatus !== FetchStatus.inProgress && endDate && startDate) {
       dispatch(optionActions.fetchOption(optionsPathsType, optionsType, optionsQueryString));
     }
-  }, [optionsQueryString]);
+  }, [optionsQueryString, endDate, startDate]);
 
   return {
     options,
