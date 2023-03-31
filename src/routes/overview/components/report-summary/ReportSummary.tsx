@@ -2,7 +2,7 @@ import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Card, CardBody, CardFooter, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { ExcessActualSpend } from 'routes/overview/components/excess-actual-spend';
+import { ExcessSpend } from 'routes/overview/components/excess-spend';
 import { FetchStatus } from 'store/common';
 import { skeletonWidth } from 'utils/skeleton';
 
@@ -12,9 +12,9 @@ interface ReportSummaryOwnProps {
   bodyStyle?: React.CSSProperties;
   children?: React.ReactNode;
   detailsLink?: React.ReactNode;
-  excessActualSpend?: string | React.ReactNode;
+  excessSpend?: string | React.ReactNode;
   fetchStatus: number | number[];
-  showBreakdown?: boolean;
+  isExcluded?: boolean;
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;
 }
@@ -26,9 +26,9 @@ const ReportSummary: React.FC<ReportSummaryProps> = ({
   children,
   detailsLink,
   fetchStatus,
-  excessActualSpend,
+  excessSpend,
+  isExcluded,
   title,
-  showBreakdown,
   subTitle,
 }) => {
   const intl = useIntl();
@@ -55,9 +55,9 @@ const ReportSummary: React.FC<ReportSummaryProps> = ({
             </Title>
             {Boolean(subTitle) && <p style={styles.subtitle}>{intl.formatMessage(subTitle)}</p>}
           </div>
-          {excessActualSpend && (
+          {excessSpend && (
             <div>
-              <ExcessActualSpend excessActualSpend={excessActualSpend} showBreakdown={showBreakdown} />
+              <ExcessSpend excessSpend={excessSpend} isExcluded={isExcluded} />
             </div>
           )}
         </div>

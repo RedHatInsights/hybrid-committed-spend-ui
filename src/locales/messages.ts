@@ -210,39 +210,39 @@ export default defineMessages({
     description: 'Oops!',
     id: 'errorStateUnexpectedTitle',
   },
-  excessActualSpendBreakdownDesc: {
-    defaultMessage:
-      'The previous year had an excess actual spend of {value}. That amount will not be reflected in these breakdowns',
-    description:
-      'The previous year had an excess actual spend of {value}. That amount will not be reflected in these breakdowns',
-    id: 'excessActualSpendBreakdownDesc',
-  },
-  excessActualSpendButtonAriaLabel: {
-    defaultMessage: 'A dialog with a description of actual spend roll over',
-    description: 'A dialog with a description of actual spend roll over',
-    id: 'excessActualSpendAriaLabel',
-  },
-  excessActualSpendDesc: {
-    defaultMessage:
-      "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
-    description:
-      "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
-    id: 'excessActualSpendDesc',
-  },
-  excessActualSpendExcluded: {
-    defaultMessage: 'Excess actual spend excluded',
-    description: 'Excess actual spend excluded',
-    id: 'excessActualSpendExcluded',
-  },
-  excessActualSpendIncluded: {
-    defaultMessage: 'Excess actual spend included',
-    description: 'Excess actual spend included',
-    id: 'excessActualSpendIncluded',
-  },
-  excessActualSpendPopoverAriaLabel: {
+  excessSpendAriaLabel: {
     defaultMessage: 'A description of actual spend roll over',
     description: 'A description of actual spend roll over',
-    id: 'excessActualSpendAriaLabel',
+    id: 'excessSpendAriaLabel',
+  },
+  excessSpendButtonAriaLabel: {
+    defaultMessage: 'A dialog with a description of actual spend roll over',
+    description: 'A dialog with a description of actual spend roll over',
+    id: 'excessSpendAriaLabel',
+  },
+  excessSpendExcluded: {
+    defaultMessage: 'Excess actual spend excluded',
+    description: 'Excess actual spend excluded',
+    id: 'excessSpendExcluded',
+  },
+  excessSpendExcludedDesc: {
+    defaultMessage:
+      'The previous year had an excess actual spend of {value}. That amount will not be reflected in these breakdowns',
+    description:
+      'The previous year had an excess actual spend of {value}. That amount will not be reflected in these breakdowns',
+    id: 'excessSpendExcludedDesc',
+  },
+  excessSpendIncluded: {
+    defaultMessage: 'Excess actual spend included',
+    description: 'Excess actual spend included',
+    id: 'excessSpendIncluded',
+  },
+  excessSpendIncludedDesc: {
+    defaultMessage:
+      "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
+    description:
+      "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
+    id: 'excessSpendIncludedDesc',
   },
   exploreMore: {
     defaultMessage: 'Explore more',
