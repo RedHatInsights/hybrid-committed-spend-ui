@@ -57,11 +57,11 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ widgetId }) => {
     const endDate = new Date(values.contract_line_end_date + 'T00:00:00');
     const startDate = new Date(values.consumption_date + 'T00:00:00');
 
-    // Workaround to set month properly
-    startDate.setDate(1);
-    startDate.setMonth(startDate.getMonth() + 1);
+    // Consumption date plus one day
+    startDate.setDate(startDate.getDate() + 1);
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
+      day: 'numeric',
       month: 'long',
       year: 'numeric',
     });

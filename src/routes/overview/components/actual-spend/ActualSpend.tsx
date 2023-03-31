@@ -67,6 +67,7 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ widgetId }) => {
     const startDate = new Date(values.contract_line_start_date + 'T00:00:00');
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {
+      day: 'numeric',
       month: 'long',
       year: 'numeric',
     });
