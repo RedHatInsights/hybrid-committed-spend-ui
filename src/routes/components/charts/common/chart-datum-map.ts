@@ -72,7 +72,10 @@ export function padChartDatums({ datums, startDate = getYear(1), endDate = getTo
   datums.map((items: any) => {
     const newItems = [];
 
-    for (let padDate = new Date(startDate.getTime()); padDate < endDate; padDate.setMonth(padDate.getMonth() + 1)) {
+    const padDate = new Date(startDate.getTime());
+    padDate.setDate(1); // Workaround to increment month properly
+
+    for (; padDate < endDate; padDate.setMonth(padDate.getMonth() + 1)) {
       const date = format(padDate, 'yyyy-MM');
       const chartDatum = items.find(val => val.key === date);
       if (chartDatum) {

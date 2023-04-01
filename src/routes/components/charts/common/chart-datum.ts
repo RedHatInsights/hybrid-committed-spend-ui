@@ -143,8 +143,12 @@ export function padChartDatums({
   if (!datums || datums.length === 0) {
     return result;
   }
+
+  const padDate = new Date(startDate.getTime());
+  padDate.setDate(1); // Workaround to increment month properly
+
   let prevChartDatum;
-  for (const padDate = new Date(startDate.getTime()); padDate < endDate; padDate.setMonth(padDate.getMonth() + 1)) {
+  for (; padDate < endDate; padDate.setMonth(padDate.getMonth() + 1)) {
     const date = format(padDate, 'yyyy-MM');
     const chartDatum = datums.find(val => val.key === date);
     if (chartDatum) {
