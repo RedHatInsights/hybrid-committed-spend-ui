@@ -1,4 +1,3 @@
-import { authInterceptor as insightsAuthInterceptor } from '@redhat-cloud-services/frontend-components-utilities/interceptors';
 import type { AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
@@ -39,7 +38,6 @@ export function initApi({ version }: { version: string }) {
 
   axios.defaults.baseURL = `https://billing${env}.api.redhat.com/${version}/`;
   axios.interceptors.request.use(authInterceptor);
-  axios.interceptors.request.use(insightsAuthInterceptor);
 }
 
 export function authInterceptor(reqConfig: AxiosRequestConfig) {
