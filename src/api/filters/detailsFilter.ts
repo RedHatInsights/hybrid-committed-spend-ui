@@ -24,6 +24,13 @@ export const FilterTypePaths: Partial<Record<FilterType, string>> = {
 
 export function runFilter(reportType: FilterType, query: string) {
   const path = FilterTypePaths[reportType];
-  const _query = query ? `?${query}` : '';
-  return axios.get<DetailsFilter>(`${path}${_query}`);
+  const queryString = query ? `?${query}` : '';
+  const fetch = () => axios.get<DetailsFilter>(`${path}?${queryString}`);
+
+  const insights = (window as any).insights;
+  if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
+    return insights.chrome.auth.getUser().then(() => fetch());
+  } else {
+    return fetch();
+  }
 }

@@ -3,17 +3,17 @@ import axios from 'axios';
 import type { Report, ReportData, ReportMeta } from './report';
 import { ReportType } from './report';
 
-export interface DetailsFilterReportData extends ReportData {
+export interface DetailsReportData extends ReportData {
   value?: string;
 }
 
-export interface DetailsFilterReportMeta extends ReportMeta {
+export interface DetailsReportMeta extends ReportMeta {
   count?: number;
 }
 
-export interface DetailsFilterReport extends Report {
-  meta: DetailsFilterReportMeta;
-  data: DetailsFilterReportData[];
+export interface DetailsReport extends Report {
+  meta: DetailsReportMeta;
+  data: DetailsReportData[];
 }
 
 export const ReportTypePaths: Partial<Record<ReportType, string>> = {
@@ -24,6 +24,13 @@ export const ReportTypePaths: Partial<Record<ReportType, string>> = {
 
 export function runReport(reportType: ReportType, query: string) {
   const path = ReportTypePaths[reportType];
-  const _query = query ? `?${query}` : '';
-  return axios.get<DetailsFilterReport>(`${path}${_query}`);
+  const queryString = query ? `?${query}` : '';
+  const fetch = () => axios.get<DetailsReport>(`${path}?${queryString}`);
+
+  const insights = (window as any).insights;
+  if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
+    return insights.chrome.auth.getUser().then(() => fetch());
+  } else {
+    return fetch();
+  }
 }

@@ -14,13 +14,13 @@ export const enum UserAccessType {
 
 // If the user-access API is called without a query parameter, all types are returned in the response
 export function fetchUserAccess(query: string) {
-  const insights = (window as any).insights;
   const queryString = query ? `?${query}` : '';
+  const fetch = () => axios.get<UserAccess>(`authorization/hcsEnrollment${queryString}`);
+
+  const insights = (window as any).insights;
   if (insights && insights.chrome && insights.chrome.auth && insights.chrome.auth.getUser) {
-    return insights.chrome.auth.getUser().then(() => {
-      return axios.get<UserAccess>(`authorization/hcsEnrollment${queryString}`);
-    });
+    return insights.chrome.auth.getUser().then(() => fetch());
   } else {
-    return axios.get<UserAccess>(`authorization/hcsEnrollment${queryString}`);
+    return fetch();
   }
 }
