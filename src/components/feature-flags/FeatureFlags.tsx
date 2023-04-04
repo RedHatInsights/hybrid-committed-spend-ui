@@ -48,7 +48,8 @@ const useFeatureFlags = () => {
       await updateContext({ userId }).then(() => {
         dispatch(
           featureFlagsActions.setFeatureFlags({
-            isDetailsFeatureEnabled: client.isEnabled(FeatureToggle.details),
+            // Todo: Save for future feature
+            isDetailsFeatureEnabled: client.isEnabled(FeatureToggle.details) || true,
           })
         );
       });

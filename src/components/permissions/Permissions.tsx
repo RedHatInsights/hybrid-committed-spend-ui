@@ -28,7 +28,7 @@ interface PermissionsStateProps {
 type PermissionsProps = PermissionsOwnProps;
 
 const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
-  const { isDetailsFeatureEnabled, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
+  const { isDetailsFeatureEnabled = true, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
   const pathname = usePathname();
 
   const hasPermissions = () => {
