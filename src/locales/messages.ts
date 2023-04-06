@@ -348,9 +348,9 @@ export default defineMessages({
   groupBy: {
     defaultMessage:
       '{value, select, ' +
-      'affiliate {Affiliates} ' +
+      'affiliate {Affiliate} ' +
       'none {None} ' +
-      'product {Products} ' +
+      'product {Product} ' +
       'source_of_spend {Source of spend} ' +
       'other {}}',
     description: 'Group by options for details table',
