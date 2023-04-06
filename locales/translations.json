@@ -56,7 +56,7 @@
   "filterByPlaceholder": "{value, select, affiliate {Filter by affiliate name} product {Filter by product name} source_of_spend {Filter by source of spend} other {}}",
   "filterByValues": "{value, select, affiliate {Affiliate} product {Product} source_of_spend {Source of spend} other {}}",
   "furtherGroupByLabel": "Further grouped by",
-  "groupBy": "{value, select, affiliate {Affiliates} none {None} product {Products} source_of_spend {Source of spend} other {}}",
+  "groupBy": "{value, select, affiliate {Affiliate} none {None} product {Product} source_of_spend {Source of spend} other {}}",
   "groupByLabel": "Grouped by",
   "groupByValueNames": "{groupBy, select, affiliate {Affiliate names} product {Product names} source_of_spend {Source of spend names} other {}}",
   "hcs": "Hybrid Committed Spend",
