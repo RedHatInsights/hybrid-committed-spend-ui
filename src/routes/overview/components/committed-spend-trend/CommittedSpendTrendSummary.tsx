@@ -130,6 +130,7 @@ const useMapToProps = ({
     reportFetchStatus: currentReportFetchStatus,
     startDate: currentStartDate,
   } = useReportMapDateRangeToProps({
+    consumptionDate,
     contractLineEndDate,
     contractLineStartDate,
     dateRange: DateRangeType.contractedYear,

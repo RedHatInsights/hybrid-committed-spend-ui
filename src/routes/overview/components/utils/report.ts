@@ -43,6 +43,7 @@ interface ReportStateProps {
 }
 
 export const useReportMapDateRangeToProps = ({
+  consumptionDate,
   contractLineEndDate,
   contractLineStartDate,
   dateRange,
@@ -63,6 +64,7 @@ export const useReportMapDateRangeToProps = ({
   });
 
   return useReportMapToProps({
+    consumptionDate,
     dateRange,
     endDate,
     limit,
@@ -75,6 +77,7 @@ export const useReportMapDateRangeToProps = ({
 };
 
 export const useReportMapToProps = ({
+  consumptionDate,
   dateRange,
   endDate,
   limit,
@@ -101,7 +104,7 @@ export const useReportMapToProps = ({
 
   const reportQueryString = getQuery({
     ...query,
-    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
+    ...(startDate && endDate && { ...formatDate({ consumptionDate, startDate, endDate }) }),
     dateRange: undefined,
   });
 

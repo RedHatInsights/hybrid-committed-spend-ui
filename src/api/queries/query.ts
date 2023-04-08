@@ -16,6 +16,7 @@ export interface Filters {
 export interface Query {
   account?: any;
   affiliate?: any;
+  consumptionDate?: any;
   dateRange?: any;
   endDate?: any;
   product?: any;
@@ -54,14 +55,18 @@ export function convertFilterBy(query: Query) {
   return newQuery;
 }
 
+function alphabeticalSort(a, b) {
+  return a.localeCompare(b);
+}
+
 // filter_by props are converted
 export function getQuery(query: Query) {
-  return stringify(convertFilterBy(query), { encode: false, indices: false });
+  return stringify(convertFilterBy(query), { encode: false, indices: false, sort: alphabeticalSort });
 }
 
 // filter_by props are not converted
 export function getQueryRoute(query: Query) {
-  return stringify(query, { encode: false, indices: false });
+  return stringify(query, { encode: false, indices: false, sort: alphabeticalSort });
 }
 
 // Returns given key without logical OR/AND prefix
@@ -111,6 +116,6 @@ export function parseGroupByPrefix(query: Query) {
 }
 
 export function parseQuery<T = any>(query: string): T {
-  const newQuery = parse(query, { ignoreQueryPrefix: true });
+  const newQuery: any = parse(query, { ignoreQueryPrefix: true });
   return parseFilterByPrefix(parseGroupByPrefix(newQuery));
 }

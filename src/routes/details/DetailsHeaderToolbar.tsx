@@ -314,7 +314,7 @@ const useMapToProps = ({ endDate, startDate }): DetailsHeaderToolbarStateProps =
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
   const query = {
-    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
+    ...(startDate && endDate && { ...formatDate({ startDate, endDate }) }),
   };
 
   const optionsQueryString = getQuery(query);

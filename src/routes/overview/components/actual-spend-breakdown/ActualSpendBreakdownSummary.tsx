@@ -111,6 +111,7 @@ const useMapToProps = ({
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
 
   const { endDate, report, reportError, reportFetchStatus, startDate } = useReportMapDateRangeToProps({
+    consumptionDate,
     contractLineEndDate,
     contractLineStartDate,
     dateRange: DateRangeType.contractedYear,
