@@ -131,7 +131,7 @@ export const useDetailsMapToProps = ({
       ...(query.filter ? query.filter : {}),
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
     },
-    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
+    ...(startDate && endDate && { ...formatDate({ startDate, endDate }) }),
     sourceOfSpend: undefined,
     dateRange: undefined,
   };
@@ -216,7 +216,7 @@ export const useDetailsExpandMapToProps = ({
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
       ...(secondaryGroupBy && { limit: 1000, offset: undefined }), // Children are not paginated
     },
-    ...(startDate && endDate && { ...formatDate(startDate, endDate) }),
+    ...(startDate && endDate && { ...formatDate({ startDate, endDate }) }),
     sourceOfSpend: undefined,
     dateRange: undefined,
   };

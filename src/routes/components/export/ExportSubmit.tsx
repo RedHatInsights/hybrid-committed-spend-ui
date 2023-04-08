@@ -73,7 +73,7 @@ const ExportSubmit: React.FC<ExportSubmitProps> = ({
   };
 
   const getFileName = () => {
-    const { endDate: endDateStr, startDate: startDateStr } = formatDate(startDate, endDate, true);
+    const { endDate: endDateStr, startDate: startDateStr } = formatDate({ startDate, endDate });
 
     // File name format: '<groupBy>_<secondaryGroupBy>_<start-date>_<end-date>',
     const fileName = intl.formatMessage(messages.exportFileName, {

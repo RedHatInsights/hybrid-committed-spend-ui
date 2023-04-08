@@ -5,6 +5,13 @@ export interface DateType {
   startDate: Date;
 }
 
+export interface FormatDate {
+  consumptionDate?: Date;
+  startDate?: Date;
+  endDate?: Date;
+  isFormatted?: boolean;
+}
+
 export const compareDateYearAndMonth = (a: Date, b: Date) => {
   if (a.getFullYear() > b.getFullYear()) {
     return 1;
@@ -45,13 +52,15 @@ export const getYear = (offset: number) => {
   return today;
 };
 
-export const formatDate = (startDate: Date, endDate: Date, isFormatted = true) => {
+export const formatDate = ({ consumptionDate, startDate, endDate, isFormatted = true }: FormatDate) => {
   return isFormatted
     ? {
+        consumptionDate: consumptionDate ? format(consumptionDate, 'yyyy-MM-dd') : undefined,
         endDate: endDate ? format(endDate, 'yyyy-MM-dd') : undefined,
         startDate: startDate ? format(startDate, 'yyyy-MM-dd') : undefined,
       }
     : {
+        consumptionDate,
         endDate,
         startDate,
       };
@@ -65,14 +74,14 @@ export const getContractedLastYear = (
   if (previousContractLineStartDate === undefined || previousContractLineEndDate === undefined) {
     return getUndefinedDates();
   }
-  return formatDate(previousContractLineStartDate, previousContractLineEndDate, isFormatted);
+  return formatDate({ startDate: previousContractLineStartDate, endDate: previousContractLineEndDate, isFormatted });
 };
 
 export const getContractedYear = (contractLineStartDate: Date, contractLineEndDate: Date, isFormatted: boolean) => {
   if (contractLineStartDate === undefined || contractLineEndDate === undefined) {
     return getUndefinedDates();
   }
-  return formatDate(contractLineStartDate, contractLineEndDate, isFormatted);
+  return formatDate({ startDate: contractLineStartDate, endDate: contractLineEndDate, isFormatted });
 };
 
 export const getContractedYtd = (contractLineStartDate: Date, consumptionDate: Date, isFormatted: boolean) => {
@@ -85,7 +94,7 @@ export const getContractedYtd = (contractLineStartDate: Date, consumptionDate: D
   if (!consumptionDate) {
     endDate.setMonth(endDate.getMonth() - 1);
   }
-  return formatDate(startDate, endDate, isFormatted);
+  return formatDate({ startDate, endDate, isFormatted });
 };
 
 // Returns 9 months, including today's date
@@ -118,7 +127,7 @@ export const getLastMonthsDate = (consumptionDate: Date, offset: number, isForma
     endDate.setMonth(endDate.getMonth() - 1);
   }
   startDate.setMonth(endDate.getMonth() - offset);
-  return formatDate(startDate, endDate, isFormatted);
+  return formatDate({ startDate, endDate, isFormatted });
 };
 
 export const getUndefinedDates = () => {
