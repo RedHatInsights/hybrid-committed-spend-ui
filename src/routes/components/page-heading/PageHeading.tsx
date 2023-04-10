@@ -109,11 +109,9 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
 const useMapToProps = (): PageHeadingStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const query = {
+  const reportQueryString = getQuery({
     // TBD...
-  };
-
-  const reportQueryString = getQuery(query);
+  });
   const reportPathsType = ReportPathsType.accountSummary;
   const reportType = ReportType.details;
   const report = useSelector((state: RootState) =>

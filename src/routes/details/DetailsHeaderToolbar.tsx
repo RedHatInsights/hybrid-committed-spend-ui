@@ -313,11 +313,9 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
 const useMapToProps = ({ endDate, startDate }): DetailsHeaderToolbarStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const query = {
+  const optionsQueryString = getQuery({
     ...(startDate && endDate && { ...formatDate({ startDate, endDate }) }),
-  };
-
-  const optionsQueryString = getQuery(query);
+  });
   const optionsPathsType = OptionPathsType.detailsOption;
   const optionsType = OptionType.all;
   const options = useSelector((state: RootState) =>
