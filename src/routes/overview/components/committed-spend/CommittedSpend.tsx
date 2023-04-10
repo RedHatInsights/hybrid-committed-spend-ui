@@ -86,11 +86,9 @@ const useMapToProps = ({ widgetId }: CommittedSpendOwnProps): CommittedSpendStat
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const query = {
+  const reportQueryString = getQuery({
     // TBD...
-  };
-
-  const reportQueryString = getQuery(query);
+  });
   const report = useSelector((state: RootState) =>
     reportSelectors.selectReport(state, widget.reportPathsType, widget.reportType, reportQueryString)
   );

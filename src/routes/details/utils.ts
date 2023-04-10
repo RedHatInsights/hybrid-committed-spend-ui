@@ -85,7 +85,6 @@ export const useDetailsMapDateRangeToProps = ({
   });
 
   return useDetailsMapToProps({
-    dateRange,
     endDate,
     groupBy,
     groupByValue,
@@ -99,7 +98,6 @@ export const useDetailsMapDateRangeToProps = ({
 
 // Intended to be used with table rows at the root level
 export const useDetailsMapToProps = ({
-  dateRange,
   endDate,
   groupBy,
   groupByValue,
@@ -114,16 +112,7 @@ export const useDetailsMapToProps = ({
   const location = useLocation();
   const queryFromRoute = parseQuery<Query>(location.search);
 
-  const query = {
-    sourceOfSpend,
-    groupBy: {
-      [groupBy]: groupByValue ? groupByValue : '*',
-    },
-    ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
-    ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
-    ...(queryFromRoute.orderBy && { orderBy: queryFromRoute.orderBy }),
-    dateRange,
-  };
+  const query = { ...queryFromRoute };
 
   const reportQuery = {
     ...query,
@@ -131,9 +120,12 @@ export const useDetailsMapToProps = ({
       ...(query.filter ? query.filter : {}),
       ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
     },
+    filter_by: query.filter_by,
+    groupBy: {
+      [groupBy]: groupByValue ? groupByValue : '*',
+    },
+    orderBy: query.orderBy,
     ...(startDate && endDate && { ...formatDate({ startDate, endDate }) }),
-    sourceOfSpend: undefined,
-    dateRange: undefined,
   };
 
   // Add secondaryGroupBy for export API request
@@ -179,7 +171,7 @@ export const useDetailsMapToProps = ({
 
 // Intended to be used with expanded table rows
 export const useDetailsExpandMapToProps = ({
-  dateRange,
+  // dateRange,
   endDate,
   groupBy,
   groupByValue,
@@ -194,8 +186,15 @@ export const useDetailsExpandMapToProps = ({
   const location = useLocation();
   const queryFromRoute = parseQuery<Query>(location.search);
 
-  const query = {
-    sourceOfSpend,
+  const query = { ...queryFromRoute };
+
+  const reportQuery = {
+    filter: {
+      ...(query.filter ? query.filter : {}),
+      ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
+      ...(secondaryGroupBy && { limit: 1000, offset: undefined }), // Children are not paginated
+    },
+    filter_by: query.filter_by,
     groupBy: {
       [groupBy]: groupByValue ? groupByValue : '*',
       ...(secondaryGroupBy &&
@@ -203,22 +202,8 @@ export const useDetailsExpandMapToProps = ({
           [secondaryGroupBy]: '*', // Required for export and child nodes
         }),
     },
-    ...(queryFromRoute.filter && { filter: queryFromRoute.filter }),
-    ...(queryFromRoute.filter_by && { filter_by: queryFromRoute.filter_by }),
-    ...(queryFromRoute.orderBy && { orderBy: queryFromRoute.orderBy }),
-    dateRange,
-  };
-
-  const reportQuery = {
-    ...query,
-    filter: {
-      ...(query.filter ? query.filter : {}),
-      ...(sourceOfSpend !== SourceOfSpendType.all && { source_of_spend: getSourceOfSpendFilter(sourceOfSpend) }),
-      ...(secondaryGroupBy && { limit: 1000, offset: undefined }), // Children are not paginated
-    },
+    orderBy: query.orderBy,
     ...(startDate && endDate && { ...formatDate({ startDate, endDate }) }),
-    sourceOfSpend: undefined,
-    dateRange: undefined,
   };
 
   // When sorting secondaryGroupBy names, don't use orderBy[product]=*

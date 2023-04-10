@@ -54,10 +54,9 @@ export const getAccountSummaryDates = (summary: AccountSummaryReport): AccountSu
 export const useAccountSummaryMapToProps = (deps = []): AccountSummaryStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const query = {
+  const summaryQueryString = getQuery({
     // TBD...
-  };
-  const summaryQueryString = getQuery(query);
+  });
 
   const reportPathsType = ReportPathsType.accountSummary;
   const reportType = ReportType.details;

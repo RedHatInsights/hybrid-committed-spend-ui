@@ -1,4 +1,3 @@
-import type { Query } from 'api/queries';
 import { getQuery } from 'api/queries';
 import type { Report } from 'api/reports/report';
 import type { ReportPathsType, ReportType } from 'api/reports/report';
@@ -34,7 +33,6 @@ interface ReportOwnProps {
 
 interface ReportStateProps {
   endDate?: Date;
-  query: Query;
   report: Report;
   reportError: AxiosError;
   reportFetchStatus: FetchStatus;
@@ -89,7 +87,7 @@ export const useReportMapToProps = ({
 }: ReportOwnProps): ReportStateProps => {
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
 
-  const query = {
+  const reportQueryString = getQuery({
     ...(perspective && {
       groupBy: {
         [perspective]: '*',
@@ -99,13 +97,7 @@ export const useReportMapToProps = ({
       ...(limit && { limit }),
       resolution,
     },
-    dateRange,
-  };
-
-  const reportQueryString = getQuery({
-    ...query,
     ...(startDate && endDate && { ...formatDate({ consumptionDate, startDate, endDate }) }),
-    dateRange: undefined,
   });
 
   const report = useSelector((state: RootState) =>
@@ -126,7 +118,6 @@ export const useReportMapToProps = ({
 
   return {
     endDate,
-    query,
     report,
     reportError,
     reportFetchStatus,
