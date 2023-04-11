@@ -517,24 +517,6 @@
         "value": ". That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals."
       }
     ],
-    "exploreMore": [
-      {
-        "type": 0,
-        "value": "Explore more"
-      }
-    ],
-    "exportAggregateType": [
-      {
-        "type": 0,
-        "value": "Aggregate type"
-      }
-    ],
-    "exportAll": [
-      {
-        "type": 0,
-        "value": "Export all"
-      }
-    ],
     "exportDataType": [
       {
         "options": {
@@ -962,12 +944,6 @@
         "value": "value"
       }
     ],
-    "furtherGroupByLabel": [
-      {
-        "type": 0,
-        "value": "Further grouped by"
-      }
-    ],
     "groupBy": [
       {
         "options": {
@@ -1214,16 +1190,6 @@
         "value": "Secondary group by"
       }
     ],
-    "selected": [
-      {
-        "type": 1,
-        "value": "value"
-      },
-      {
-        "type": 0,
-        "value": " selected"
-      }
-    ],
     "sourceOfSpendLabel": [
       {
         "type": 0,
@@ -1333,52 +1299,6 @@
       {
         "type": 0,
         "value": "Suggestions"
-      }
-    ],
-    "toolBarBulkSelectAll": [
-      {
-        "type": 0,
-        "value": "Select all ("
-      },
-      {
-        "type": 1,
-        "value": "value"
-      },
-      {
-        "type": 0,
-        "value": " items)"
-      }
-    ],
-    "toolBarBulkSelectAriaDeselect": [
-      {
-        "type": 0,
-        "value": "Deselect all items"
-      }
-    ],
-    "toolBarBulkSelectAriaSelect": [
-      {
-        "type": 0,
-        "value": "Select all items"
-      }
-    ],
-    "toolBarBulkSelectNone": [
-      {
-        "type": 0,
-        "value": "Select none (0 items)"
-      }
-    ],
-    "toolBarBulkSelectPage": [
-      {
-        "type": 0,
-        "value": "Select page ("
-      },
-      {
-        "type": 1,
-        "value": "value"
-      },
-      {
-        "type": 0,
-        "value": " items)"
       }
     ],
     "viewDetails": [
