@@ -244,21 +244,6 @@ export default defineMessages({
       "The previous year had an excess actual spend of {value}. That amount has been rolled over into this current's year actual spend and is reflected in the Actual spend YTD totals.",
     id: 'excessSpendIncludedDesc',
   },
-  exploreMore: {
-    defaultMessage: 'Explore more',
-    description: 'Explore more',
-    id: 'exploreMore',
-  },
-  exportAggregateType: {
-    defaultMessage: 'Aggregate type',
-    description: 'Aggregate type',
-    id: 'exportAggregateType',
-  },
-  exportAll: {
-    defaultMessage: 'Export all',
-    description: 'Export all',
-    id: 'exportAll',
-  },
   exportDataType: {
     defaultMessage: '{value, select, json {Data shown in table} raw {Raw (unfiltered) data} other {}}',
     description: 'Export data type',
@@ -339,11 +324,6 @@ export default defineMessages({
       'other {}}',
     description: 'Filter by values',
     id: 'filterByValues',
-  },
-  furtherGroupByLabel: {
-    defaultMessage: 'Further grouped by',
-    description: 'Further grouped by dropdown label',
-    id: 'furtherGroupByLabel',
   },
   groupBy: {
     defaultMessage:
@@ -457,11 +437,6 @@ export default defineMessages({
     description: 'Secondary group by dropdown label',
     id: 'secondaryGroupByLabel',
   },
-  selected: {
-    defaultMessage: '{value} selected',
-    description: '{value} selected',
-    id: 'selected',
-  },
   sourceOfSpendLabel: {
     defaultMessage: 'View',
     description: 'Sources of spend dropdown label',
@@ -489,31 +464,6 @@ export default defineMessages({
     defaultMessage: 'Suggestions',
     description: 'Suggestions',
     id: 'suggestions',
-  },
-  toolBarBulkSelectAll: {
-    defaultMessage: 'Select all ({value} items)',
-    description: 'Select all ({value} items)',
-    id: 'toolBarBulkSelectAll',
-  },
-  toolBarBulkSelectAriaDeselect: {
-    defaultMessage: 'Deselect all items',
-    description: 'Deselect all items',
-    id: 'toolBarBulkSelectAriaDeselect',
-  },
-  toolBarBulkSelectAriaSelect: {
-    defaultMessage: 'Select all items',
-    description: 'Select all items',
-    id: 'toolBarBulkSelectAriaSelect',
-  },
-  toolBarBulkSelectNone: {
-    defaultMessage: 'Select none (0 items)',
-    description: 'Select none (0 items)',
-    id: 'toolBarBulkSelectNone',
-  },
-  toolBarBulkSelectPage: {
-    defaultMessage: 'Select page ({value} items)',
-    description: 'Select page ({value} items)',
-    id: 'toolBarBulkSelectPage',
   },
   viewDetails: {
     defaultMessage: 'View details',
