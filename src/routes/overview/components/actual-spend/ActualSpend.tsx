@@ -16,6 +16,7 @@ import { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
+import { getToday } from 'utils/dates';
 import { formatCurrency, formatPercentage } from 'utils/format';
 
 import { styles } from './ActualSpend.styles';
@@ -63,8 +64,8 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ widgetId }) => {
   const percentage: string | React.ReactNode = percent !== undefined ? formatPercentage(percent) : <EmptyValueState />;
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
-  if (values && values.contract_line_start_date && values.consumption_date) {
-    const endDate = new Date(values.consumption_date + 'T00:00:00');
+  if (values && values.contract_line_start_date) {
+    const endDate = new Date(getToday());
     const startDate = new Date(values.contract_line_start_date + 'T00:00:00');
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {

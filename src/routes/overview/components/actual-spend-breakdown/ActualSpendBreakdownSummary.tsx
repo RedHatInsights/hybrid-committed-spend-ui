@@ -15,8 +15,10 @@ import type { RootState } from 'store';
 import type { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
+import { getToday } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
+import { ResolutionType } from './ActualSpendBreakdown';
 import { ActualSpendBreakdownTransform } from './ActualSpendBreakdownTransform';
 
 interface ActualSpendBreakdownSummaryOwnProps {
@@ -109,9 +111,10 @@ const useMapToProps = ({
   } = getAccountSummaryDates(summary);
 
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
+  const today = resolution === ResolutionType.cumulative ? getToday() : consumptionDate; // Adjust consumption date only for cumulative data
 
   const { endDate, report, reportError, reportFetchStatus, startDate } = useReportMapDateRangeToProps({
-    consumptionDate,
+    consumptionDate: today > consumptionDate ? today : consumptionDate, // Use today's date if consumption date is stale
     contractLineEndDate,
     contractLineStartDate,
     dateRange: DateRangeType.contractedYear,

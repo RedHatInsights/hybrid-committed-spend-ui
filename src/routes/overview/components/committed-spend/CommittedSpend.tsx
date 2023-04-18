@@ -14,6 +14,7 @@ import { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { reportActions, reportSelectors } from 'store/reports';
+import { getToday } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
 import { styles } from './CommittedSpend.styles';
@@ -53,11 +54,11 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ widgetId }) => {
     );
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
-  if (values && values.contract_line_end_date && values.consumption_date) {
+  if (values && values.contract_line_end_date) {
     const endDate = new Date(values.contract_line_end_date + 'T00:00:00');
-    const startDate = new Date(values.consumption_date + 'T00:00:00');
+    const startDate = getToday();
 
-    // Consumption date plus one day
+    // Show today's date plus one day
     startDate.setDate(startDate.getDate() + 1);
 
     dateRange = intl.formatDateTimeRange(startDate, endDate, {

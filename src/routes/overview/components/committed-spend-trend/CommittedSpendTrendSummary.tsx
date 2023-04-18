@@ -15,6 +15,7 @@ import type { RootState } from 'store';
 import type { FetchStatus } from 'store/common';
 import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
+import { getToday } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
 
 import { PerspectiveType } from './CommittedSpendTrend';
@@ -27,7 +28,6 @@ interface CommittedSpendTrendSummaryOwnProps {
 }
 
 interface CommittedSpendTrendSummaryStateProps {
-  consumptionDate?: Date;
   currentEndDate?: Date;
   currentReport?: Report;
   currentReportFetchStatus?: FetchStatus;
@@ -122,6 +122,7 @@ const useMapToProps = ({
   } = getAccountSummaryDates(summary);
 
   const widget = useSelector((state: RootState) => dashboardSelectors.selectWidget(state, widgetId));
+  const today = getToday();
 
   const {
     endDate: currentEndDate,
@@ -130,7 +131,7 @@ const useMapToProps = ({
     reportFetchStatus: currentReportFetchStatus,
     startDate: currentStartDate,
   } = useReportMapDateRangeToProps({
-    consumptionDate,
+    consumptionDate: today > consumptionDate ? today : consumptionDate, // Use today's date if consumption date is stale
     contractLineEndDate,
     contractLineStartDate,
     dateRange: DateRangeType.contractedYear,
@@ -153,7 +154,6 @@ const useMapToProps = ({
   });
 
   return {
-    consumptionDate,
     currentEndDate,
     currentStartDate,
     currentReport,
