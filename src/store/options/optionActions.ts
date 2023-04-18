@@ -8,7 +8,7 @@ import type { RootState } from 'store/rootReducer';
 import { createAction } from 'typesafe-actions';
 
 import { getFetchId } from './optionCommon';
-import { selectOption, selectOptionFetchStatus } from './optionSelectors';
+import { selectOption, selectOptionError, selectOptionFetchStatus } from './optionSelectors';
 
 const expirationMS = 30 * 60 * 1000; // 30 minutes
 
@@ -52,8 +52,9 @@ function isOptionExpired(
   optionQueryString: string
 ) {
   const option = selectOption(state, optionPathsType, optionType, optionQueryString);
+  const fetchError = selectOptionError(state, optionPathsType, optionType, optionQueryString);
   const fetchStatus = selectOptionFetchStatus(state, optionPathsType, optionType, optionQueryString);
-  if (fetchStatus === FetchStatus.inProgress) {
+  if (fetchError || fetchStatus === FetchStatus.inProgress) {
     return false;
   }
 
