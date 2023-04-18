@@ -8,7 +8,7 @@ import type { RootState } from 'store/rootReducer';
 import { createAction } from 'typesafe-actions';
 
 import { getFetchId } from './filterCommon';
-import { selectFilter, selectFilterFetchStatus } from './filterSelectors';
+import { selectFilter, selectFilterError, selectFilterFetchStatus } from './filterSelectors';
 
 const expirationMS = 30 * 60 * 1000; // 30 minutes
 
@@ -52,8 +52,9 @@ function isFilterExpired(
   filterQueryString: string
 ) {
   const filter = selectFilter(state, filterPathsType, filterType, filterQueryString);
+  const fetchError = selectFilterError(state, filterPathsType, filterType, filterQueryString);
   const fetchStatus = selectFilterFetchStatus(state, filterPathsType, filterType, filterQueryString);
-  if (fetchStatus === FetchStatus.inProgress) {
+  if (fetchError || fetchStatus === FetchStatus.inProgress) {
     return false;
   }
 

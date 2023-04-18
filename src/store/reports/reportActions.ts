@@ -7,7 +7,7 @@ import type { RootState } from 'store/rootReducer';
 import { createAction } from 'typesafe-actions';
 
 import { getFetchId } from './reportCommon';
-import { selectReport, selectReportFetchStatus } from './reportSelectors';
+import { selectReport, selectReportError, selectReportFetchStatus } from './reportSelectors';
 
 const expirationMS = 30 * 60 * 1000; // 30 minutes
 
@@ -51,8 +51,9 @@ function isReportExpired(
   reportQueryString: string
 ) {
   const report = selectReport(state, reportPathsType, reportType, reportQueryString);
+  const fetchError = selectReportError(state, reportPathsType, reportType, reportQueryString);
   const fetchStatus = selectReportFetchStatus(state, reportPathsType, reportType, reportQueryString);
-  if (fetchStatus === FetchStatus.inProgress) {
+  if (fetchError || fetchStatus === FetchStatus.inProgress) {
     return false;
   }
 

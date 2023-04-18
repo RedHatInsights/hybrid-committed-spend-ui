@@ -76,7 +76,6 @@ export const useReportMapDateRangeToProps = ({
 
 export const useReportMapToProps = ({
   consumptionDate,
-  dateRange,
   endDate,
   limit,
   perspective,
