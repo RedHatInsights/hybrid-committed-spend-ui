@@ -16,7 +16,7 @@
   "chartThresholdSpendNoDataLegendLabel": "Committed spend (no data)",
   "chartThresholdSpendTooltip": "Committed spend",
   "chartTooltipTitle": "{value}",
-  "committedSpendPerspectiveValuescommittedSpendTrendPerspectiveValues": "{value, select, actual {Actual spend} previous_over_actual {Previous year over actual spend} other {}}",
+  "committedSpendTrendPerspectiveValues": "{value, select, actual {Actual spend} previous_over_actual {Previous year over actual spend} other {}}",
   "consumptionDate": "Consumption date: {date}",
   "contractDate": "Contract dates: {dateRange}",
   "currencyAbbreviations": "{symbol, select, billion {{value} B} million {{value} M} quadrillion {{value} q} thousand {{value} K} trillion {{value} t} other {}}",
