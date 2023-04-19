@@ -99,7 +99,7 @@ export default defineMessages({
       'previous_over_actual {Previous year over actual spend} ' +
       'other {}}',
     description: 'Committed spend trend perspective values',
-    id: 'committedSpendPerspectiveValuescommittedSpendTrendPerspectiveValues',
+    id: 'committedSpendTrendPerspectiveValues',
   },
   consumptionDate: {
     defaultMessage: 'Consumption date: {date}',

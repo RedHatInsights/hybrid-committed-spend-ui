@@ -212,7 +212,7 @@
         "value": "value"
       }
     ],
-    "committedSpendPerspectiveValuescommittedSpendTrendPerspectiveValues": [
+    "committedSpendTrendPerspectiveValues": [
       {
         "options": {
           "actual": {
