@@ -13,11 +13,11 @@ import messages from '../locales/data.json';
 import App from './App';
 import { configureStore } from './store';
 
-const store = configureStore({
+const hcsStore = configureStore({
   // session: {
   //   token: getToken(),
   // },
-});
+} as any);
 
 const AppEntry = () => {
   const locale = getLocale();
@@ -30,7 +30,7 @@ const AppEntry = () => {
   /* eslint-disable no-console */
   return (
     <IntlProvider defaultLocale="en" locale={locale} messages={messages[locale]} onError={console.log}>
-      <Provider store={store as any}>
+      <Provider store={hcsStore as any}>
         <App />
       </Provider>
     </IntlProvider>
