@@ -13,10 +13,6 @@ import messages from '../locales/data.json';
 import App from './App';
 import { configureStore } from './store';
 
-initApi({
-  version: 'v1',
-});
-
 const store = configureStore({
   // session: {
   //   token: getToken(),
@@ -25,6 +21,11 @@ const store = configureStore({
 
 const AppEntry = () => {
   const locale = getLocale();
+
+  // Initialize here https://issues.redhat.com/browse/RHCLOUD-25573
+  initApi({
+    version: 'v1',
+  });
 
   /* eslint-disable no-console */
   return (
