@@ -277,7 +277,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
                     {cells.map((item, cellIndex) =>
                       cellIndex === 0 ? (
                         <Th
-                          className="firstColumn"
+                          className="stickyColumn"
                           dataLabel={columns[cellIndex]}
                           expand={
                             secondaryGroupBy && secondaryGroupBy !== GroupByType.none
