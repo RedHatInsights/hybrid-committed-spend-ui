@@ -7,6 +7,7 @@ import {
   InnerScrollContainer,
   SortByDirection,
   TableComposable,
+  TableVariant,
   Tbody,
   Td,
   Th,
@@ -231,6 +232,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
           aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
           className="tableOverride"
           gridBreakPoint=""
+          variant={TableVariant.compact}
         >
           <Thead>
             <Tr>
@@ -275,7 +277,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
                     {cells.map((item, cellIndex) =>
                       cellIndex === 0 ? (
                         <Th
-                          className="firstColumn"
+                          className="stickyColumn"
                           dataLabel={columns[cellIndex]}
                           expand={
                             secondaryGroupBy && secondaryGroupBy !== GroupByType.none

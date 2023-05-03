@@ -1,9 +1,5 @@
 @import url("~@patternfly/patternfly/base/patternfly-variables.css");
 
-.firstColumn {
-  --pf-c-table--cell--Width: 1%;
-}
-
 .tableOverride {
   &.pf-c-table {
     tbody th {
@@ -19,8 +15,8 @@
       padding-right: 20px;
     }
     .pf-c-table__expandable-row {
-      --pf-c-table--cell--PaddingTop: var(--pf-c-table--tbody--cell--PaddingTop);
-      --pf-c-table--cell--PaddingBottom: var(--pf-c-table--tbody--cell--PaddingBottom);
+      --pf-c-table--cell--PaddingTop: var(--pf-c-table--m-compact--cell--PaddingTop);
+      --pf-c-table--cell--PaddingBottom: var(--pf-c-table--m-compact--cell--PaddingBottom);
       &.pf-m-expanded > :first-child {
         --pf-c-table--cell--PaddingLeft: 72px;
         // --pf-c-table__expandable-row--after--BorderLeftWidth: 0; // Left blue line for expanded rows
@@ -31,6 +27,9 @@
     .pf-c-table__sticky-column {
       z-index: 99;
     }
+  }
+  .stickyColumn {
+    --pf-c-table--cell--Width: 1%;
   }
 }
 
