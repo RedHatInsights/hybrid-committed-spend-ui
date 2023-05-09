@@ -127,11 +127,11 @@ const Details: React.FC<DetailsProps> = () => {
   };
 
   const getPaginationProps = () => {
-    const count = report && report.meta && report.meta.count !== undefined ? report.meta.count : 0;
+    const count = report && report.meta && report.meta.count !== undefined ? Number(report.meta.count) : 0;
     const limit =
-      report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 0;
+      report && report.meta && report.meta.filter && report.meta.filter.limit ? Number(report.meta.filter.limit) : 0;
     const offset =
-      report && report.meta && report.meta.filter && report.meta.filter.offset ? report.meta.filter.offset : 0;
+      report && report.meta && report.meta.filter && report.meta.filter.offset ? Number(report.meta.filter.offset) : 0;
     const page = limit > 0 ? offset / limit + 1 : 1;
 
     return { count, limit, offset, page };
