@@ -8,7 +8,6 @@ import { routes } from 'Routes';
 import { Loading, NotAuthorized, NotAvailable, NotViewable } from 'routes/state';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
-import { featureFlagsSelectors } from 'store/feature-flags';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
 import { formatPath, usePathname } from 'utils/paths';
 import { hasHcsDataVisibility, hasHcsDeal } from 'utils/userAccess';
@@ -18,7 +17,6 @@ interface PermissionsOwnProps {
 }
 
 interface PermissionsStateProps {
-  isDetailsFeatureEnabled?: boolean;
   userAccess: UserAccess;
   userAccessError: AxiosError;
   userAccessFetchStatus: FetchStatus;
@@ -28,7 +26,7 @@ interface PermissionsStateProps {
 type PermissionsProps = PermissionsOwnProps;
 
 const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
-  const { isDetailsFeatureEnabled = true, userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
+  const { userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
   const pathname = usePathname();
 
   const hasPermissions = () => {
@@ -39,7 +37,7 @@ const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
 
     switch (pathname) {
       case formatPath(routes.details.path):
-        return hasDeal && isDetailsFeatureEnabled;
+        return hasDeal;
       case formatPath(routes.overview.path):
         return hasDeal;
       default:
@@ -65,10 +63,6 @@ const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
 };
 
 const useMapToProps = (): PermissionsStateProps => {
-  const isDetailsFeatureEnabled = useSelector((state: RootState) =>
-    featureFlagsSelectors.selectIsDetailsFeatureEnabled(state)
-  );
-
   const userAccessQueryString = getUserAccessQuery(userAccessQuery);
   const userAccess = useSelector((state: RootState) =>
     userAccessSelectors.selectUserAccess(state, UserAccessType.all, userAccessQueryString)
@@ -81,7 +75,6 @@ const useMapToProps = (): PermissionsStateProps => {
   );
 
   return {
-    isDetailsFeatureEnabled,
     userAccess,
     userAccessError,
     userAccessFetchStatus,

@@ -8,12 +8,12 @@ export type FeatureFlagsAction = ActionType<typeof setFeatureFlags | typeof rese
 
 export type FeatureFlagsState = Readonly<{
   hasFeatureFlags: boolean;
-  isDetailsFeatureEnabled: boolean;
+  isBillingStageFeatureEnabled: boolean;
 }>;
 
 export const defaultState: FeatureFlagsState = {
   hasFeatureFlags: false,
-  isDetailsFeatureEnabled: false,
+  isBillingStageFeatureEnabled: false,
 };
 
 export const stateKey = 'featureFlags';
@@ -24,7 +24,7 @@ export function featureFlagsReducer(state = defaultState, action: FeatureFlagsAc
       return {
         ...state,
         hasFeatureFlags: true,
-        isDetailsFeatureEnabled: action.payload.isDetailsFeatureEnabled,
+        isBillingStageFeatureEnabled: action.payload.isBillingStageFeatureEnabled,
       };
 
     default:

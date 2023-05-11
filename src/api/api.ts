@@ -32,9 +32,15 @@ export interface PagedResponseAlt<D = any, M = any> {
  * billing.stage.api.redhat.com
  * billing.api.redhat.com
  */
-export function initApi({ version }: { version: string }) {
+export function initApi({
+  isBillingStageFeatureEnabled = false,
+  version,
+}: {
+  isBillingStageFeatureEnabled: boolean;
+  version: string;
+}) {
   const insights = (window as any).insights;
-  const env = insights.chrome.isProd() ? '' : '.qa';
+  const env = insights.chrome.isProd() ? '' : isBillingStageFeatureEnabled ? '.stage' : '.qa';
 
   axios.defaults.baseURL = `https://billing${env}.api.redhat.com/${version}/`;
   axios.interceptors.request.use(authInterceptor);
