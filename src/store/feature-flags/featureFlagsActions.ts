@@ -1,7 +1,7 @@
 import { createAction } from 'typesafe-actions';
 
 export interface FeatureFlagsActionMeta {
-  isDetailsFeatureEnabled?: boolean;
+  isBillingStageFeatureEnabled?: boolean;
 }
 
 export const setFeatureFlags = createAction('feature/init_feature_flags')<FeatureFlagsActionMeta>();
