@@ -213,21 +213,33 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
     return categoryOptions ? categoryOptions : getDefaultCategoryOptions();
   };
 
+  // Remove invalid chars -- see https://issues.redhat.com/browse/HCS-199
+  const cleanInput = (value: string) => {
+    const val = value.replace(/;/g, '');
+    return val;
+  };
+
   const handleOnCategoryInputChange = (value: string) => {
-    setCategoryInput(value);
+    const val = cleanInput(value);
+    setCategoryInput(val);
   };
 
   const onCategoryInput = (event, key) => {
-    if ((event && event.key && event.key !== 'Enter') || categoryInput.trim() === '') {
+    if (event && event.key && event.key !== 'Enter') {
       return;
     }
 
-    const filter = getFilter(currentCategory, categoryInput);
+    const val = cleanInput(categoryInput);
+    if (val.trim() === '') {
+      return;
+    }
+
+    const filter = getFilter(currentCategory, val);
     const prevItems = filters[key] ? filters[key] : [];
     const newFilters = {
       ...filters,
       [currentCategory]:
-        prevItems && (prevItems as Filter[]).find(item => item.value === categoryInput)
+        prevItems && (prevItems as Filter[]).find(item => item.value === val)
           ? prevItems
           : prevItems
           ? [...(prevItems as Filter[]), filter]
@@ -241,12 +253,17 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   };
 
   const onCategoryInputSelect = (value, key) => {
-    const filter = getFilter(currentCategory, value);
+    const val = cleanInput(value);
+    if (val.trim() === '') {
+      return;
+    }
+
+    const filter = getFilter(currentCategory, val);
     const prevItems = filters[key] ? filters[key] : [];
     const newFilters = {
       ...filters,
       [currentCategory]:
-        prevItems && (prevItems as Filter[]).find(item => item.value === value)
+        prevItems && (prevItems as Filter[]).find(item => item.value === val)
           ? prevItems
           : prevItems
           ? [...(prevItems as Filter[]), filter]
