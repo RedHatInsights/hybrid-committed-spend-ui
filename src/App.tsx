@@ -59,10 +59,10 @@ const App = () => {
     );
   }
   return (
-    <>
+    <div className="pf-v5-c-page" style={{ display: 'contents' }}>
       <NotificationsPortal />
       <Routes />
-    </>
+    </div>
   );
 };
 

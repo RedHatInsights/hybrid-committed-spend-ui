@@ -171,10 +171,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
     });
 
     setColumns(newColumns);
-    // setRows(newRows);
-    if (!newRows) {
-      setRows(newRows);
-    }
+    setRows(newRows);
   };
 
   const getEmptyState = () => {
