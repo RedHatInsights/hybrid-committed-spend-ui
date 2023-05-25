@@ -1,9 +1,9 @@
 @import url("~@patternfly/patternfly/base/patternfly-variables.css");
 
 .tableOverride {
-  &.pf-c-table {
+  &.pf-v5-c-table {
     tbody th {
-      .pf-c-table__tree-view-main {
+      .pf-v5-c-table__tree-view-main {
         margin-left: 0;
         padding-left: 0;
       }
@@ -14,22 +14,22 @@
     tbody tr > :first-child {
       padding-right: 20px;
     }
-    .pf-c-table__expandable-row {
-      --pf-c-table--cell--PaddingTop: var(--pf-c-table--m-compact--cell--PaddingTop);
-      --pf-c-table--cell--PaddingBottom: var(--pf-c-table--m-compact--cell--PaddingBottom);
+    .pf-v5-c-table__expandable-row {
+      --pf-v5-c-table--cell--PaddingTop: var(--pf-v5-c-table--m-compact--cell--PaddingTop);
+      --pf-v5-c-table--cell--PaddingBottom: var(--pf-v5-c-table--m-compact--cell--PaddingBottom);
       &.pf-m-expanded > :first-child {
-        --pf-c-table--cell--PaddingLeft: 72px;
-        // --pf-c-table__expandable-row--after--BorderLeftWidth: 0; // Left blue line for expanded rows
+        --pf-v5-c-table--cell--PaddingLeft: 72px;
+        // --pf-v5-c-table__expandable-row--after--BorderLeftWidth: 0; // Left blue line for expanded rows
       }
     }
 
     // Alternative workaround to overriding toolbar style
-    .pf-c-table__sticky-column {
+    .pf-v5-c-table__sticky-column {
       z-index: 99;
     }
   }
   .stickyColumn {
-    --pf-c-table--cell--Width: 1%;
+    --pf-v5-c-table--cell--Width: 1%;
   }
 }
 

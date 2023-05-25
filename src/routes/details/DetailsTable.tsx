@@ -1,12 +1,19 @@
 import './DetailsTable.scss';
 
-import { Bullseye, EmptyState, EmptyStateBody, EmptyStateIcon, Spinner } from '@patternfly/react-core';
+import {
+  Bullseye,
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateHeader,
+  EmptyStateIcon,
+  Spinner,
+} from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
 import type { ThProps } from '@patternfly/react-table';
 import {
   InnerScrollContainer,
   SortByDirection,
-  TableComposable,
+  Table,
   TableVariant,
   Tbody,
   Td,
@@ -164,7 +171,10 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
     });
 
     setColumns(newColumns);
-    setRows(newRows);
+    // setRows(newRows);
+    if (!newRows) {
+      setRows(newRows);
+    }
   };
 
   const getEmptyState = () => {
@@ -177,7 +187,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
     }
     return (
       <EmptyState>
-        <EmptyStateIcon icon={CalculatorIcon} />
+        <EmptyStateHeader icon={<EmptyStateIcon icon={CalculatorIcon} />} />
         <EmptyStateBody>{intl.formatMessage(messages.detailsEmptyState)}</EmptyStateBody>
       </EmptyState>
     );
@@ -228,11 +238,12 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
   return (
     <React.Fragment>
       <InnerScrollContainer>
-        <TableComposable
+        <Table
           aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
           className="tableOverride"
           gridBreakPoint=""
           variant={TableVariant.compact}
+          data-codemods="true"
         >
           <Thead>
             <Tr>
@@ -315,7 +326,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
               ))
             )}
           </Tbody>
-        </TableComposable>
+        </Table>
       </InnerScrollContainer>
       {Boolean(rows.length === 0) && <div style={styles.emptyState}>{getEmptyState()}</div>}
     </React.Fragment>

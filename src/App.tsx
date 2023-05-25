@@ -40,6 +40,16 @@ const App = () => {
     updateDocumentTitle(pkg.insights.appname);
   }, []);
 
+  // PatternFly v5 testing
+  // useLayoutEffect(() => {
+  //   setTimeout(() => {
+  //     const nodes = document.querySelectorAll("*[class*='pf-c']");
+  //     nodes.forEach(el => {
+  //       el.className = el.className.replace(/pf-c/g, 'pf-v5-c');
+  //     });
+  //   }, 1000);
+  // }, []);
+
   // Wait to ensure billing.stage.api.redhat.com APIs are called before defaulting to billing.qa.api.redhat.com domain
   if (!isProd() && !hasFeatureFlags) {
     return (

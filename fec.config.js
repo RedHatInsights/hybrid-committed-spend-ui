@@ -36,7 +36,9 @@ module.exports = {
   debug: true,
   interceptChromeConfig: false, // Change to false after your app is registered in configuration files
   proxyVerbose: true,
-  sassPrefix: `.${moduleName}`,
+  // sassPrefix: `.${moduleName}`,
+  sassPrefix: 'body',
+  bundlePfModules: true,
   stats,
   useCache: true,
   useProxy: true,
@@ -56,6 +58,15 @@ module.exports = {
      * Package can be re-enabled for sharing once chrome starts providing global routing package to all applications
      */
     // exclude: ['react-router-dom'],
+    // exclude: [
+    //   '@patternfly/patternfly',
+    //   '@patternfly/react-charts',
+    //   '@patternfly/react-core',
+    //   '@patternfly/react-icons',
+    //   '@patternfly/react-styles',
+    //   '@patternfly/react-table',
+    //   '@patternfly/react-tokens',
+    // ],
     exposes: {
       './RootApp': path.resolve(__dirname, './src/AppEntry.tsx'),
     },

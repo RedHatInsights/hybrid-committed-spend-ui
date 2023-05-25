@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
-import type { SelectOptionObject } from '@patternfly/react-core';
-import { Select, SelectOption, SelectVariant, Title } from '@patternfly/react-core';
+import { Title } from '@patternfly/react-core';
+import type { SelectOptionObject } from '@patternfly/react-core/deprecated';
+import { Select, SelectOption, SelectVariant } from '@patternfly/react-core/deprecated';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 
