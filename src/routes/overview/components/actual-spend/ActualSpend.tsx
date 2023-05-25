@@ -1,4 +1,4 @@
-import { ArrowDownIcon } from '@patternfly/react-icons';
+import ArrowDownIcon from '@patternfly/react-icons/dist/dynamic/icons/arrow-down-icon';
 import { ArrowUpIcon } from '@patternfly/react-icons/dist/esm/icons/arrow-up-icon';
 import { getQuery } from 'api/queries';
 import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';

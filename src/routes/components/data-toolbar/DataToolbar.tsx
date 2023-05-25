@@ -5,6 +5,7 @@ import {
   Button,
   ButtonVariant,
   InputGroup,
+  InputGroupItem,
   TextInput,
   Toolbar,
   ToolbarContent,
@@ -166,41 +167,43 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         showToolbarItem={currentCategory === categoryOption.key}
       >
         <InputGroup>
-          {isFilterTypeValid(filterPathsType, categoryOption.key as FilterType) ? (
-            <FilterTypeahead
-              endDate={endDate}
-              aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
-              category={currentCategory}
-              filterPathsType={filterPathsType}
-              filterType={categoryOption.key as FilterType}
-              isDisabled={disabled}
-              onSelect={value => onCategoryInputSelect(value, categoryOption.key)}
-              placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
-              startDate={startDate}
-            />
-          ) : (
-            <>
-              <TextInput
+          <InputGroupItem>
+            {isFilterTypeValid(filterPathsType, categoryOption.key as FilterType) ? (
+              <FilterTypeahead
+                endDate={endDate}
                 aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
-                name={`category-input-${categoryOption.key}`}
-                id={`category-input-${categoryOption.key}`}
+                category={currentCategory}
+                filterPathsType={filterPathsType}
+                filterType={categoryOption.key as FilterType}
                 isDisabled={disabled}
-                onChange={handleOnCategoryInputChange}
-                onKeyDown={evt => onCategoryInput(evt, categoryOption.key)}
+                onSelect={value => onCategoryInputSelect(value, categoryOption.key)}
                 placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
-                type="search"
-                value={categoryInput}
+                startDate={startDate}
               />
-              <Button
-                isDisabled={disabled}
-                variant={ButtonVariant.control}
-                aria-label={intl.formatMessage(messages.filterByButtonAriaLabel, { value: categoryOption.key })}
-                onClick={evt => onCategoryInput(evt, categoryOption.key)}
-              >
-                <SearchIcon />
-              </Button>
-            </>
-          )}
+            ) : (
+              <>
+                <TextInput
+                  aria-label={intl.formatMessage(messages.filterByInputAriaLabel, { value: categoryOption.key })}
+                  name={`category-input-${categoryOption.key}`}
+                  id={`category-input-${categoryOption.key}`}
+                  isDisabled={disabled}
+                  onChange={(_evt, value) => handleOnCategoryInputChange(value)}
+                  onKeyDown={evt => onCategoryInput(evt, categoryOption.key)}
+                  placeholder={intl.formatMessage(messages.filterByPlaceholder, { value: categoryOption.key })}
+                  type="search"
+                  value={categoryInput}
+                />
+                <Button
+                  isDisabled={disabled}
+                  variant={ButtonVariant.control}
+                  aria-label={intl.formatMessage(messages.filterByButtonAriaLabel, { value: categoryOption.key })}
+                  onClick={evt => onCategoryInput(evt, categoryOption.key)}
+                >
+                  <SearchIcon />
+                </Button>
+              </>
+            )}
+          </InputGroupItem>
         </InputGroup>
       </ToolbarFilter>
     );
@@ -317,7 +320,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
           </ToolbarGroup>
         </ToolbarToggleGroup>
         <ToolbarGroup>{getExportButton()}</ToolbarGroup>
-        <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+        <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
           {pagination}
         </ToolbarItem>
       </ToolbarContent>

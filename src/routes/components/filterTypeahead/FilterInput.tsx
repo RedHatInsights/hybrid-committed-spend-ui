@@ -123,13 +123,11 @@ const FilterInput: React.FC<FilterInputProps> = ({
   const getMenu = () => {
     return (
       <div ref={menuRef}>
-        {search && search.length && (
-          <Menu onSelect={handleOnMenuSelect} onKeyDown={handleOnMenuKeyDown}>
-            <MenuContent>
-              <MenuList>{getMenuItems()}</MenuList>
-            </MenuContent>
-          </Menu>
-        )}
+        <Menu onSelect={handleOnMenuSelect} onKeyDown={handleOnMenuKeyDown}>
+          <MenuContent>
+            <MenuList>{getMenuItems()}</MenuList>
+          </MenuContent>
+        </Menu>
       </div>
     );
   };
