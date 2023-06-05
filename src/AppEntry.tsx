@@ -1,5 +1,4 @@
 import IntlProvider from '@redhat-cloud-services/frontend-components-translations/Provider';
-import { initApi } from 'api/api';
 import { getLocale } from 'components/i18n';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -21,11 +20,6 @@ const hcsStore = configureStore({
 
 const AppEntry = () => {
   const locale = getLocale();
-
-  // Initialize here https://issues.redhat.com/browse/RHCLOUD-25573
-  initApi({
-    version: 'v1',
-  });
 
   /* eslint-disable no-console */
   return (
