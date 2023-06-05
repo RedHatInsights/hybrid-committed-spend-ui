@@ -5,7 +5,7 @@ import { featureFlagsActions } from 'store/feature-flags';
 
 // eslint-disable-next-line no-shadow
 export const enum FeatureToggle {
-  details = 'hybrid-committed-spend.ui.details',
+  billingStage = 'hybrid-committed-spend.ui.billing-stage', // Toggle to enable billing.stage APIs for demos
 }
 
 // The FeatureFlags component saves feature flags in store for places where Unleash hooks not available
@@ -48,8 +48,7 @@ const useFeatureFlags = () => {
       await updateContext({ userId }).then(() => {
         dispatch(
           featureFlagsActions.setFeatureFlags({
-            // Todo: Save for future feature
-            isDetailsFeatureEnabled: client.isEnabled(FeatureToggle.details) || true,
+            isBillingStageFeatureEnabled: client.isEnabled(FeatureToggle.billingStage),
           })
         );
       });

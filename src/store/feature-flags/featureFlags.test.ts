@@ -14,8 +14,8 @@ test('default state', async () => {
   expect(selectors.selectFeatureFlagsState(store.getState())).toMatchSnapshot();
 });
 
-test('sample feature is enabled', async () => {
+test('Billing stage feature is enabled', async () => {
   const store = createUIStore();
-  store.dispatch(actions.setFeatureFlags({ isDetailsFeatureEnabled: true }));
-  expect(featureFlagsSelectors.selectIsDetailsFeatureEnabled(store.getState())).toBe(true);
+  store.dispatch(actions.setFeatureFlags({ isBillingStageFeatureEnabled: true }));
+  expect(featureFlagsSelectors.selectIsBillingStageFeatureEnabled(store.getState())).toBe(true);
 });
