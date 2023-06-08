@@ -81,6 +81,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
                 dateRange:
                   contractStartDate && contractEndDate
                     ? intl.formatDateTimeRange(contractStartDate, contractEndDate, {
+                        day: 'numeric',
                         month: 'long',
                         year: 'numeric',
                       })
