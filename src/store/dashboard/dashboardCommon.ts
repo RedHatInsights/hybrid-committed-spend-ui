@@ -2,7 +2,7 @@ import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import type { BillingFilters, BillingQuery } from 'api/queries';
 import { getBillingQuery } from 'api/queries';
 import type { ReportPathsType, ReportType } from 'api/reports/report';
-import type React from 'react';
+import type { FC, LazyExoticComponent } from 'react';
 
 export const dashboardStateKey = 'dashboard';
 export const dashboardDefaultFilters: BillingFilters = {
@@ -18,7 +18,7 @@ export const enum DashboardSize {
 }
 
 export interface DashboardWidget {
-  component: React.ReactNode;
+  component: LazyExoticComponent<FC<any>>;
   chartName: string;
   filter?: any;
   id: number;
