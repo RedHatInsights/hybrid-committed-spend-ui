@@ -1,6 +1,7 @@
 import type { FilterPathsType, FilterType } from 'api/filters/filter';
 import type { FormEvent } from 'react';
 import React, { useState } from 'react';
+import { cleanInput } from 'routes/utils/common';
 
 import { FilterInput } from './FilterInput';
 
@@ -38,7 +39,8 @@ const FilterTypeahead: React.FC<FilterTypeaheadProps> = ({
   };
 
   const handleOnSearch = (evt: FormEvent, value: string) => {
-    setSearch(value);
+    const val = cleanInput(value);
+    setSearch(val);
   };
 
   const handleOnSelect = (value: string) => {
