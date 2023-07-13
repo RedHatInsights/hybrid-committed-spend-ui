@@ -25,6 +25,7 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { FilterTypeahead } from 'routes/components/filterTypeahead';
+import { cleanInput } from 'routes/utils/common';
 import type { Filter } from 'routes/utils/filter';
 import { usePrevious, useStateCallback } from 'utils/hooks';
 
@@ -211,12 +212,6 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
 
   const getCategoryOptions = (): ToolbarChipGroup[] => {
     return categoryOptions ? categoryOptions : getDefaultCategoryOptions();
-  };
-
-  // Remove invalid chars -- see https://issues.redhat.com/browse/HCS-199
-  const cleanInput = (value: string) => {
-    const val = value.replace(/;/g, '');
-    return val;
   };
 
   const handleOnCategoryInputChange = (value: string) => {
