@@ -81,7 +81,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/parser": "^6.1.0",
     "aphrodite": "^2.4.0",
     "copy-webpack-plugin": "^11.0.0",
     "eslint": "^8.44.0",
