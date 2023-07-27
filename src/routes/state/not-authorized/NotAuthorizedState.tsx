@@ -3,7 +3,7 @@ import messages from 'locales/messages';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { routes } from 'Routes';
-import { formatPath } from 'utils/paths';
+import { useFormatPath } from 'utils/paths';
 
 interface NotAuthorizedStateOwnProps {
   pathname?: string;
@@ -12,6 +12,7 @@ interface NotAuthorizedStateOwnProps {
 type NotAuthorizedStateProps = NotAuthorizedStateOwnProps;
 
 const NotAuthorizedState: React.FC<NotAuthorizedStateProps> = ({ pathname }) => {
+  const formatPath = useFormatPath;
   const intl = useIntl();
 
   let msg;

@@ -4,7 +4,7 @@ import messages from 'locales/messages';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { routes } from 'Routes';
-import { formatPath } from 'utils/paths';
+import { useFormatPath } from 'utils/paths';
 
 interface NotViewableStateOwnProps {
   pathname?: string;
@@ -13,6 +13,7 @@ interface NotViewableStateOwnProps {
 type NotViewableStateProps = NotViewableStateOwnProps;
 
 const NotViewableState: React.FC<NotViewableStateProps> = ({ pathname }) => {
+  const formatPath = useFormatPath;
   const intl = useIntl();
 
   let title;
