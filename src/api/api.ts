@@ -39,10 +39,15 @@ export function initApi({
   isBillingStageFeatureEnabled: boolean;
   version: string;
 }) {
-  const insights = (window as any).insights;
-  const env = insights.chrome.isProd() ? '' : isBillingStageFeatureEnabled ? '.stage' : '.qa';
+  // Use Consoledot proxy for billing.api.redhat.com and billing.qa.api.redhat.com
+  let baseURL = '/api/billing';
 
-  axios.defaults.baseURL = `https://billing${env}.api.redhat.com/${version}/`;
+  if (isBillingStageFeatureEnabled) {
+    // baseURL = 'https://billing.stage.api.redhat.com';
+    baseURL = '/api/billing'; // TEST
+  }
+
+  axios.defaults.baseURL = `${baseURL}/${version}/`;
   axios.interceptors.request.use(authInterceptor);
 }
 
