@@ -2,6 +2,43 @@ apiVersion: v1
 data:
   hcs.json: |-
     {
+      "__inputs": [
+        {
+          "name": "DS_CRCS02UE1-PROMETHEUS",
+          "label": "crcs02ue1-prometheus",
+          "description": "",
+          "type": "datasource",
+          "pluginId": "prometheus",
+          "pluginName": "Prometheus"
+        }
+      ],
+      "__elements": {},
+      "__requires": [
+        {
+          "type": "grafana",
+          "id": "grafana",
+          "name": "Grafana",
+          "version": "9.3.8"
+        },
+        {
+          "type": "panel",
+          "id": "graph",
+          "name": "Graph (old)",
+          "version": ""
+        },
+        {
+          "type": "datasource",
+          "id": "prometheus",
+          "name": "Prometheus",
+          "version": "1.0.0"
+        },
+        {
+          "type": "panel",
+          "id": "stat",
+          "name": "Stat",
+          "version": ""
+        }
+      ],
       "annotations": {
         "list": [
           {
@@ -27,7 +64,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 197307,
+      "id": null,
       "links": [],
       "liveNow": false,
       "panels": [
@@ -99,7 +136,7 @@ data:
                 "uid": "$datasource"
               },
               "editorMode": "code",
-              "expr": "sum(increase(caddy_http_requests_total{job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[30d]))",
+              "expr": "sum(increase(caddy_http_requests_total{job=\"[[frontend]]\",namespace=\"[[namespace]]\"}[30d]))",
               "instant": true,
               "refId": "A"
             }
@@ -166,16 +203,16 @@ data:
                 "uid": "$datasource"
               },
               "editorMode": "code",
-              "expr": "sum by(code) (rate(promhttp_metric_handler_requests_total{job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) > 0",
+              "expr": "sum by(job, namespace) (rate(caddy_http_request_errors_total{job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) >0",
               "hide": false,
-              "legendFormat": "{{code}}",
+              "legendFormat": "2XX",
               "range": true,
               "refId": "D"
             }
           ],
           "thresholds": [],
           "timeRegions": [],
-          "title": "Status code proportions",
+          "title": "Error rate",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -361,7 +398,7 @@ data:
                 "uid": "$datasource"
               },
               "editorMode": "code",
-              "expr": "(sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"0.5\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
+              "expr": "(sum by(job, namespace) (rate(caddy_http_response_duration_seconds_bucket{le=\"0.5\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
               "legendFormat": "Less than 500ms",
               "range": true,
               "refId": "A"
@@ -371,7 +408,7 @@ data:
                 "uid": "$datasource"
               },
               "editorMode": "code",
-              "expr": "(sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"1.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"0.5\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
+              "expr": "(sum by(job, namespace) (rate(caddy_http_response_duration_seconds_bucket{le=\"1.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(exported_service, environment) (rate(caddy_http_response_duration_seconds_bucket{le=\"0.5\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
               "legendFormat": "500 - 1000ms",
               "range": true,
               "refId": "B"
@@ -381,8 +418,8 @@ data:
                 "uid": "$datasource"
               },
               "editorMode": "code",
-              "expr": "(sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"2.5\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"1.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
-              "legendFormat": "1000 - 2500ms",
+              "expr": "(sum by(job, namespace) (rate(caddy_http_response_duration_seconds_bucket{le=\"2.5\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(exported_service, environment) (rate(caddy_http_response_duration_seconds_bucket{le=\"5.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
+              "legendFormat": "5000 - 2500ms",
               "range": true,
               "refId": "C"
             },
@@ -391,8 +428,8 @@ data:
                 "uid": "$datasource"
               },
               "editorMode": "code",
-              "expr": "(sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"5.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"2.5\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
-              "legendFormat": "5000 - 2500ms",
+              "expr": "(sum by(job, namespace) (rate(caddy_http_response_duration_seconds_bucket{le=\"10.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(exported_service, environment) (rate(caddy_http_response_duration_seconds_bucket{le=\"5.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
+              "legendFormat": "10000 - 5000ms",
               "range": true,
               "refId": "D"
             },
@@ -401,20 +438,10 @@ data:
                 "uid": "$datasource"
               },
               "editorMode": "code",
-              "expr": "(sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"10.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"5.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
-              "legendFormat": "5000 - 1000ms",
-              "range": true,
-              "refId": "E"
-            },
-            {
-              "datasource": {
-                "uid": "$datasource"
-              },
-              "editorMode": "code",
-              "expr": "(sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"+Inf\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(job) (rate(caddy_http_response_duration_seconds_bucket{le=\"10.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
+              "expr": "(sum by(job, namespace) (rate(caddy_http_response_duration_seconds_bucket{le=\"+Inf\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m])) - sum by(exported_service, environment) (rate(caddy_http_response_duration_seconds_bucket{le=\"10.0\", job=\"[[frontend]]\", namespace=\"[[namespace]]\"}[5m]))) > 0",
               "legendFormat": "> 10000ms",
               "range": true,
-              "refId": "I"
+              "refId": "E"
             }
           ],
           "thresholds": [],
@@ -548,7 +575,7 @@ data:
         "list": [
           {
             "current": {
-              "selected": false,
+              "selected": true,
               "text": "crcs02ue1-prometheus",
               "value": "crcs02ue1-prometheus"
             },
@@ -566,40 +593,10 @@ data:
             "type": "datasource"
           },
           {
-            "current": {
-              "selected": false,
-              "text": "hybrid-committed-spend",
-              "value": "hybrid-committed-spend"
-            },
+            "current": {},
             "datasource": {
               "type": "prometheus",
-              "uid": "${datasource}"
-            },
-            "definition": "label_values(caddy_http_requests_total, job)",
-            "hide": 0,
-            "includeAll": false,
-            "multi": false,
-            "name": "frontend",
-            "options": [],
-            "query": {
-              "query": "label_values(caddy_http_requests_total, job)",
-              "refId": "StandardVariableQuery"
-            },
-            "refresh": 1,
-            "regex": "",
-            "skipUrlSync": false,
-            "sort": 0,
-            "type": "query"
-          },
-          {
-            "current": {
-              "selected": false,
-              "text": "frontends-beta",
-              "value": "frontends-beta"
-            },
-            "datasource": {
-              "type": "prometheus",
-              "uid": "${datasource}"
+              "uid": "${DS_CRCS02UE1-PROMETHEUS}"
             },
             "definition": "label_values(caddy_http_requests_total, namespace)",
             "hide": 0,
@@ -609,6 +606,28 @@ data:
             "options": [],
             "query": {
               "query": "label_values(caddy_http_requests_total, namespace)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "current": {},
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_CRCS02UE1-PROMETHEUS}"
+            },
+            "definition": "label_values(caddy_http_requests_total, job)",
+            "hide": 0,
+            "includeAll": false,
+            "multi": false,
+            "name": "frontend",
+            "options": [],
+            "query": {
+              "query": "label_values(caddy_http_requests_total, job)",
               "refId": "StandardVariableQuery"
             },
             "refresh": 1,
@@ -650,8 +669,8 @@ data:
       },
       "timezone": "",
       "title": "Frontend SLO Dashboard",
-      "uid": "slo-dashboard",
-      "version": 5,
+      "uid": "MygIAX3Vk",
+      "version": 3,
       "weekStart": ""
     }
 kind: ConfigMap
