@@ -2,7 +2,6 @@ import { ReportPathsType, ReportType } from 'api/reports/report';
 import messages from 'locales/messages';
 import { lazy } from 'react';
 import { routes } from 'Routes';
-import { formatPath } from 'utils/paths';
 
 import type { DashboardWidget } from './dashboardCommon';
 import { DashboardSize } from './dashboardCommon';
@@ -32,7 +31,7 @@ export const actualSpendBreakdownWidget: DashboardWidget = {
   title: messages.dashboardActualSpendBreakdownTitle,
   reportPathsType: ReportPathsType.details,
   reportType: ReportType.actualSpend,
-  viewAllPath: formatPath(routes.details.path),
+  viewAllPath: routes.details.path,
 };
 
 export const committedSpendWidget: DashboardWidget = {
@@ -52,5 +51,5 @@ export const committedSpendTrendWidget: DashboardWidget = {
   title: messages.dashboardCommitmentSpendTrendTitle,
   reportPathsType: ReportPathsType.details,
   reportType: ReportType.committedSpend,
-  viewAllPath: formatPath(routes.details.path),
+  viewAllPath: routes.details.path,
 };

@@ -14,7 +14,7 @@ import { EmptyValueState } from 'routes/components/state/empty-value';
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { reportActions, reportSelectors } from 'store/reports';
-import { formatPath, usePathname } from 'utils/paths';
+import { useFormatPath, usePathname } from 'utils/paths';
 
 import { styles } from './PageHeading.styles';
 
@@ -33,6 +33,7 @@ type PageHeadingProps = PageHeadingOwnProps;
 
 const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
   const { report, reportFetchStatus } = useMapToProps();
+  const formatPath = useFormatPath;
   const pathname = usePathname();
   const intl = useIntl();
 

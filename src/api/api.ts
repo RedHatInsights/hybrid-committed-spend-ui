@@ -25,12 +25,17 @@ export interface PagedResponseAlt<D = any, M = any> {
 }
 
 /*
- * Potential API environments
+ * API environments:
  *
+ * billing.api.redhat.com (prod)
+ * billing.qa.api.redhat.com (default)
+ * billing.stage.api.redhat.com (UAT testing)
  * billing.dev.api.redhat.com
- * billing.qa.api.redhat.com
- * billing.stage.api.redhat.com
- * billing.api.redhat.com
+ *
+ * ConsoleDot proxies:
+ *
+ * console.redhat.com/api/billing -> billing.api.redhat.com
+ * console.stage.redhat.com/api/billing -> billing.qa.api.redhat.com
  */
 export function initApi({
   isBillingStageFeatureEnabled = false,
@@ -40,9 +45,12 @@ export function initApi({
   version: string;
 }) {
   const insights = (window as any).insights;
-  const env = insights.chrome.isProd() ? '' : isBillingStageFeatureEnabled ? '.stage' : '.qa';
+  const isStageAPI = isBillingStageFeatureEnabled && !insights.chrome.isProd();
 
-  axios.defaults.baseURL = `https://billing${env}.api.redhat.com/${version}/`;
+  // Use proxy for billing.api.redhat.com and billing.qa.api.redhat.com -- see https://issues.redhat.com/browse/HCS-222
+  const baseURL = isStageAPI ? 'https://billing.stage.api.redhat.com' : '/api/billing';
+
+  axios.defaults.baseURL = `${baseURL}/${version}/`;
   axios.interceptors.request.use(authInterceptor);
 }
 
