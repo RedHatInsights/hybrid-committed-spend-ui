@@ -2,7 +2,7 @@ import messages from 'locales/messages';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { routes } from 'Routes';
-import { formatPath, usePathname } from 'utils/paths';
+import { useFormatPath, usePathname } from 'utils/paths';
 
 interface PageTitleOwnProps {
   children?: React.ReactNode;
@@ -11,6 +11,7 @@ interface PageTitleOwnProps {
 type PageTitleProps = PageTitleOwnProps;
 
 const PageTitle: React.FC<PageTitleProps> = ({ children = null }) => {
+  const formatPath = useFormatPath;
   const pathname = usePathname();
   const intl = useIntl();
 
