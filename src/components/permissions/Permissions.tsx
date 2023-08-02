@@ -9,7 +9,7 @@ import { Loading, NotAuthorized, NotAvailable, NotViewable } from 'routes/state'
 import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
-import { formatPath, usePathname } from 'utils/paths';
+import { useFormatPath, usePathname } from 'utils/paths';
 import { hasHcsDataVisibility, hasHcsDeal } from 'utils/userAccess';
 
 interface PermissionsOwnProps {
@@ -27,6 +27,7 @@ type PermissionsProps = PermissionsOwnProps;
 
 const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
   const { userAccess, userAccessError, userAccessFetchStatus } = useMapToProps();
+  const formatPath = useFormatPath;
   const pathname = usePathname();
 
   const hasPermissions = () => {

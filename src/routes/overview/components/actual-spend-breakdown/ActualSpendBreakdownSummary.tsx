@@ -17,6 +17,7 @@ import type { DashboardWidget } from 'store/dashboard';
 import { dashboardSelectors } from 'store/dashboard';
 import { getToday } from 'utils/dates';
 import { formatCurrency } from 'utils/format';
+import { useFormatPath } from 'utils/paths';
 
 import { ResolutionType } from './ActualSpendBreakdown';
 import { ActualSpendBreakdownTransform } from './ActualSpendBreakdownTransform';
@@ -54,6 +55,7 @@ const ActualSpendBreakdownSummary: React.FC<ActualSpendBreakdownSummaryProps> = 
     resolution,
     widgetId,
   });
+  const formatPath = useFormatPath;
   const intl = useIntl();
 
   const hasData = report && report.meta;
@@ -67,7 +69,7 @@ const ActualSpendBreakdownSummary: React.FC<ActualSpendBreakdownSummaryProps> = 
 
   const getDetailsLink = () => {
     if (widget.viewAllPath) {
-      const href = `${widget.viewAllPath}?${getQuery({
+      const href = `${formatPath(widget.viewAllPath)}?${getQuery({
         // TBD...
       })}`;
       return <Link to={href}>{intl.formatMessage(messages.viewDetails)}</Link>;
