@@ -23,19 +23,20 @@ usage()
 {
 cat <<- EEOOFF
 
-    This script will release the selected branch by merging the following branches
+    This script will merge the following branches and create a pull request (default) or push upstream
 
     stage-stage is merged from stage-beta
     prod-beta is merged from stage-stable
     prod-stable is merged from prod-beta
 
-    sh [-x] $SCRIPT [-h] -<b|p|s>
+    sh [-x] $SCRIPT [-h|u] -<b|p|s>
 
     OPTIONS:
     h       Display this message
     b       Prod beta
     p       Prod stable
     s       Stage stable
+    u       Push to upstream
 
 EEOOFF
 }
@@ -53,18 +54,40 @@ merge()
 {
   cd $UI_DIR
 
+  echo "\n*** Checkout $BRANCH"
   git checkout $BRANCH
 
+  echo "\n*** Fetch origin $REMOTE_BRANCH"
   git fetch origin $REMOTE_BRANCH
+
+  echo "\n*** Merge origin/$REMOTE_BRANCH"
   git merge origin/$REMOTE_BRANCH --commit --no-edit --no-ff
+}
+
+# Use gh in a non-interactive way -- see https://github.com/cli/cli/issues/1718
+pullRequest()
+{
+  NEW_BRANCH="release/${BRANCH}.$$"
+
+  git branch -m $NEW_BRANCH
+
+  echo "\n*** Pushing $NEW_BRANCH..."
+  git push -u origin HEAD
+
+  COMMIT=`git rev-parse HEAD`
+  TITLE="Deployment commit for $BRANCH"
+  BODY="Merge main branch to stage-stable. Replace namespace \`ref\` in app-interface repo with commit $COMMIT"
+
+  gh pr create -t "$TITLE" -b "$BODY"
 }
 
 push()
 {
-  read -p "You are pushing to the $BRANCH branch. Continue?" YN
+  echo ""
+  read -p "*** You are pushing to the $BRANCH branch. Continue?" YN
 
   case $YN in
-    [Yy]* ) git push -u origin $BRANCH;;
+    [Yy]* ) echo "\n*** Pushing $BRANCH..."; git push -u origin $BRANCH;;
     [Nn]* ) exit 0;;
     * ) echo "Please answer yes or no."; push;;
   esac
@@ -74,7 +97,7 @@ push()
 {
   default
 
-  while getopts hbps c; do
+  while getopts hbpsu c; do
     case $c in
       b) BRANCH=$PROD_BETA_BRANCH
          REMOTE_BRANCH=$STAGE_STABLE_BRANCH;;
@@ -82,6 +105,7 @@ push()
          REMOTE_BRANCH=$PROD_BETA_BRANCH;;
       s) BRANCH=$STAGE_STABLE_BRANCH
          REMOTE_BRANCH=$MAIN_BRANCH;;
+      u) PUSH=true;;
       h) usage; exit 0;;
       \?) usage; exit 1;;
     esac
@@ -92,15 +116,19 @@ push()
     exit 1
   fi
 
-  echo "\nMerging $BRANCH from $REMOTE_BRANCH\n"
+  echo "\n*** Releasing $REMOTE_BRANCH to $BRANCH...\n"
 
   clone
   merge
 
   if [ "$?" -eq 0 ]; then
-    push
+    if [ -n "$PUSH" ]; then
+      push
+    else
+      pullRequest
+    fi
   else
-    echo "Cannot not push. No changes or check for conflicts"
+    echo "\n*** Cannot not push. No changes or check for conflicts"
   fi
 
   rm -rf $TMP_DIR
