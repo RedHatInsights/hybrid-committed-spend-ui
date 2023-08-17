@@ -65,10 +65,15 @@ const ExportSubmit: React.FC<ExportSubmitProps> = ({
   const dispatch: ThunkDispatch<RootState, any, AnyAction> = useDispatch();
   const intl = useIntl();
 
+  const fetchReport = () => {
+    setFetchExportClicked(true);
+    dispatch(exportActions.exportReport(reportPathsType, reportType, exportQueryString));
+  };
+
   const getExport = () => {
     if (exportReport && exportFetchStatus === FetchStatus.complete) {
       fileDownload(exportReport.data, getFileName(), 'text/csv');
-      handleClose();
+      handleOnClose();
     }
   };
 
@@ -86,15 +91,10 @@ const ExportSubmit: React.FC<ExportSubmitProps> = ({
     return `${fileName}.csv`;
   };
 
-  const handleClose = () => {
+  const handleOnClose = () => {
     if (onClose) {
       onClose(false);
     }
-  };
-
-  const handleFetchReport = () => {
-    setFetchExportClicked(true);
-    dispatch(exportActions.exportReport(reportPathsType, reportType, exportQueryString));
   };
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const ExportSubmit: React.FC<ExportSubmitProps> = ({
     <Button
       isDisabled={disabled || exportFetchStatus === FetchStatus.inProgress}
       key="confirm"
-      onClick={handleFetchReport}
+      onClick={fetchReport}
       variant={ButtonVariant.primary}
     >
       {intl.formatMessage(messages.exportGenerate)}

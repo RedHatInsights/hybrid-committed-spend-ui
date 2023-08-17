@@ -104,12 +104,12 @@ const FilterInput: React.FC<FilterInputProps> = ({
               value={search}
               onChange={onSearchChanged}
               onFocus={openMenu}
-              onKeyDown={handleTextInputKeyDown}
+              onKeyDown={handleOnTextInputKeyDown}
               placeholder={placeholder}
             />
             {search && search.length && (
               <TextInputGroupUtilities>
-                <Button variant="plain" onClick={handleClearSearch} aria-label="Clear button and input">
+                <Button variant="plain" onClick={handleOnClear} aria-label="Clear button and input">
                   <TimesIcon />
                 </Button>
               </TextInputGroupUtilities>
@@ -124,7 +124,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
     return (
       <div ref={menuRef}>
         {search && search.length && (
-          <Menu onSelect={handleMenuSelect} onKeyDown={handleMenuKeyDown}>
+          <Menu onSelect={handleOnMenuSelect} onKeyDown={handleOnMenuKeyDown}>
             <MenuContent>
               <MenuList>{getMenuItems()}</MenuList>
             </MenuContent>
@@ -172,7 +172,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
   };
 
   // Close menu when a click occurs outside the menu or text input group
-  const handleMenuClick = event => {
+  const handleOnMenuClick = event => {
     if (
       menuRef.current &&
       textInputGroupRef.current &&
@@ -184,7 +184,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
   };
 
   // Enable keyboard only usage while focused on the menu
-  const handleMenuKeyDown = event => {
+  const handleOnMenuKeyDown = event => {
     if (event.key === 'Escape' || event.key === 'Tab') {
       event.preventDefault();
       focusTextInput();
@@ -193,7 +193,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
   };
 
   // Add the text of the selected item
-  const handleMenuSelect = event => {
+  const handleOnMenuSelect = event => {
     event.stopPropagation();
 
     const value = event.target.innerText || search;
@@ -208,10 +208,10 @@ const FilterInput: React.FC<FilterInputProps> = ({
   };
 
   // Enable keyboard only usage while focused on the text input
-  const handleTextInputKeyDown = event => {
+  const handleOnTextInputKeyDown = event => {
     switch (event.key) {
       case 'Enter':
-        handleMenuSelect(event);
+        handleOnMenuSelect(event);
         break;
       case 'Escape':
       case 'Tab':
@@ -232,7 +232,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
     }
   };
 
-  const handleClearSearch = () => {
+  const handleOnClear = () => {
     setMenuIsOpen(false);
     if (onClear) {
       onClear();
@@ -246,7 +246,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
   };
 
   return (
-    <Popper trigger={getInputGroup()} popper={getMenu()} isVisible={menuIsOpen} onDocumentClick={handleMenuClick} />
+    <Popper trigger={getInputGroup()} popper={getMenu()} isVisible={menuIsOpen} onDocumentClick={handleOnMenuClick} />
   );
 };
 

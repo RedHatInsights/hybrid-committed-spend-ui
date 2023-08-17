@@ -283,7 +283,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         <Button
           aria-label="Export data"
           isDisabled={isDisabled || isExportDisabled}
-          onClick={handleExportClicked}
+          onClick={handleOnExportClicked}
           variant={ButtonVariant.plain}
         >
           <ExportIcon />
@@ -292,7 +292,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
     );
   };
 
-  const handleExportClicked = () => {
+  const handleOnExportClicked = () => {
     if (onExportClicked) {
       onExportClicked();
     }
