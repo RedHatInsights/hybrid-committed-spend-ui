@@ -171,18 +171,6 @@ const FilterInput: React.FC<FilterInputProps> = ({
     return options;
   };
 
-  // Close menu when a click occurs outside the menu or text input group
-  const handleOnMenuClick = event => {
-    if (
-      menuRef.current &&
-      textInputGroupRef.current &&
-      !menuRef.current.contains(event.target) &&
-      !textInputGroupRef.current.contains(event.target)
-    ) {
-      setMenuIsOpen(false);
-    }
-  };
-
   // Enable keyboard only usage while focused on the menu
   const handleOnMenuKeyDown = event => {
     if (event.key === 'Escape' || event.key === 'Tab') {
@@ -205,6 +193,18 @@ const FilterInput: React.FC<FilterInputProps> = ({
         onSelect(value);
       }
     });
+  };
+
+  // Close menu when a click occurs outside the menu or text input group
+  const handleOnPopperClick = event => {
+    if (
+      menuRef.current &&
+      textInputGroupRef.current &&
+      !menuRef.current.contains(event.target) &&
+      !textInputGroupRef.current.contains(event.target)
+    ) {
+      setMenuIsOpen(false);
+    }
   };
 
   // Enable keyboard only usage while focused on the text input
@@ -246,7 +246,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
   };
 
   return (
-    <Popper trigger={getInputGroup()} popper={getMenu()} isVisible={menuIsOpen} onDocumentClick={handleOnMenuClick} />
+    <Popper trigger={getInputGroup()} popper={getMenu()} isVisible={menuIsOpen} onDocumentClick={handleOnPopperClick} />
   );
 };
 
