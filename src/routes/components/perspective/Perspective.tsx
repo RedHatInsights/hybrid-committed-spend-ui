@@ -67,8 +67,8 @@ const Perspective: React.FC<PerspectiveProps> = ({
         id={id}
         isDisabled={isDisabled}
         isOpen={isSelectOpen}
-        onSelect={handleSelect}
-        onToggle={handleToggle}
+        onSelect={handleOnSelect}
+        onToggle={handleOnToggle}
         selections={selection}
         variant={SelectVariant.single}
       >
@@ -84,14 +84,14 @@ const Perspective: React.FC<PerspectiveProps> = ({
     );
   };
 
-  const handleSelect = (event: React.MouseEvent | React.ChangeEvent, selection: SelectOptionObject) => {
+  const handleOnSelect = (event: React.MouseEvent | React.ChangeEvent, selection: SelectOptionObject) => {
     if (onSelected) {
       onSelected((selection as PerspectiveOption).value);
     }
     setIsSelectOpen(false);
   };
 
-  const handleToggle = isOpen => {
+  const handleOnToggle = isOpen => {
     setIsSelectOpen(isOpen);
   };
 

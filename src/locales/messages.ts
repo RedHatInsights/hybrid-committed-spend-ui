@@ -180,6 +180,11 @@ export default defineMessages({
     description: 'Hybrid Committed Spend Details',
     id: 'detailsTitle',
   },
+  docs: {
+    defaultMessage: 'https://access.redhat.com/documentation/en-us/hybrid_committed_spend/2023',
+    description: 'https://access.redhat.com/documentation/en-us/hybrid_committed_spend/2023',
+    id: 'docs',
+  },
   emptyFilterStateSubtitle: {
     defaultMessage: 'Sorry, no data with the given filter was found.',
     description: 'Sorry, no data with the given filter was found.',
@@ -356,6 +361,11 @@ export default defineMessages({
     description: 'Hybrid Committed Spend',
     id: 'hcs',
   },
+  hcsDocumentation: {
+    defaultMessage: 'Hybrid Committed Spend Documentation',
+    description: 'Hybrid Committed Spend Documentation',
+    id: 'hcsDocumentation',
+  },
   loadingStateDesc: {
     defaultMessage: 'Searching for your sources. Do not refresh the browser',
     description: 'Searching for your sources. Do not refresh the browser',
@@ -377,15 +387,13 @@ export default defineMessages({
     id: 'noResultsFound',
   },
   notViewable: {
-    defaultMessage: 'Committed Spend data is not available to be viewed',
-    description: 'Committed Spend data is not available to be viewed',
+    defaultMessage: 'Committed Spend data is not viewable',
+    description: 'Committed Spend data is not viewable',
     id: 'notViewable',
   },
   notViewableDesc: {
-    defaultMessage:
-      'Committed Spend data is not viewable at this time. If you need access to this data, please contact your account manager.',
-    description:
-      'Committed Spend data is not viewable at this time. If you need access to this data, please contact your account manager.',
+    defaultMessage: 'If you need access to this data, please contact your account manager.',
+    description: 'If you need access to this data, please contact your account manager.',
     id: 'notViewableDesc',
   },
   outOf: {
