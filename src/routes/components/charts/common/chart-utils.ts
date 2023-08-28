@@ -124,7 +124,7 @@ export const getTooltipLabel = (datum: any, formatter: Formatter, formatOptions:
   return dy !== undefined ? dy : intl.formatMessage(messages.chartNoData);
 };
 
-export const getResizeObserver = (containerRef: HTMLDivElement, handleResize: () => void) => {
+export const getResizeObserver = (containerRef: HTMLDivElement, handleOnResize: () => void) => {
   const containerElement = containerRef;
   const { ResizeObserver } = window as any;
   let _navToggle;
@@ -137,16 +137,16 @@ export const getResizeObserver = (containerRef: HTMLDivElement, handleResize: ()
         if (!Array.isArray(entries) || !entries.length) {
           return;
         }
-        handleResize();
+        handleOnResize();
       });
     });
     resizeObserver.observe(containerElement);
     _resizeObserver = () => resizeObserver.unobserve(containerElement);
   } else {
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    _resizeObserver = () => window.removeEventListener('resize', handleResize);
-    _navToggle = insights.chrome.on('NAVIGATION_TOGGLE', setTimeout(handleResize, 500));
+    handleOnResize();
+    window.addEventListener('resize', handleOnResize);
+    _resizeObserver = () => window.removeEventListener('resize', handleOnResize);
+    _navToggle = insights.chrome.on('NAVIGATION_TOGGLE', setTimeout(handleOnResize, 500));
   }
 
   return () => {

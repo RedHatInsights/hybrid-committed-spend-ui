@@ -147,7 +147,7 @@ const TrendChart: React.FC<TrendChartProps> = ({
       chartNames: getChartNames(series),
       isHidden: index => isSeriesHidden(hiddenSeries, index),
       legendName: `${name}-legend`,
-      onLegendClick: props => handleLegendClick(props.index),
+      onLegendClick: props => handleOnLegendClick(props.index),
     });
     return result;
   };
@@ -184,12 +184,12 @@ const TrendChart: React.FC<TrendChartProps> = ({
   };
 
   // Hide each data series individually
-  const handleLegendClick = (index: number) => {
+  const handleOnLegendClick = (index: number) => {
     const newHiddenSeries = initHiddenSeries(series, hiddenSeries, index);
     setHiddenSeries(newHiddenSeries);
   };
 
-  const handleResize = () => {
+  const handleOnResize = () => {
     const { clientWidth = 0 } = containerRef.current || {};
 
     if (clientWidth !== width) {
@@ -284,7 +284,7 @@ const TrendChart: React.FC<TrendChartProps> = ({
   }, [currentData, thresholdData]);
 
   useEffect(() => {
-    const unobserve = getResizeObserver(containerRef.current, handleResize);
+    const unobserve = getResizeObserver(containerRef.current, handleOnResize);
     return () => {
       if (unobserve) {
         unobserve();
