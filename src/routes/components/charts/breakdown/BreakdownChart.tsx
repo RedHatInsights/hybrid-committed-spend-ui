@@ -196,7 +196,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
       isDataHidden: data => isDataHidden(series, hiddenSeries, data),
       isHidden: index => isSeriesHidden(hiddenSeries, index),
       legendName: `${name}-legend`,
-      onLegendClick: props => handleLegendClick(props.index),
+      onLegendClick: props => handleOnLegendClick(props.index),
     });
     return result;
   };
@@ -237,12 +237,12 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   };
 
   // Hide each data series individually
-  const handleLegendClick = (index: number) => {
+  const handleOnLegendClick = (index: number) => {
     const newHiddenSeries = initHiddenSeries(series, hiddenSeries, index);
     setHiddenSeries(newHiddenSeries);
   };
 
-  const handleResize = () => {
+  const handleOnResize = () => {
     const { clientWidth = 0 } = containerRef.current || {};
 
     if (clientWidth !== width) {
@@ -383,7 +383,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   }, [top1stData, top2ndData, top3rdData, top4thData, top5thData]);
 
   useEffect(() => {
-    const unobserve = getResizeObserver(containerRef.current, handleResize);
+    const unobserve = getResizeObserver(containerRef.current, handleOnResize);
     return () => {
       if (unobserve) {
         unobserve();
