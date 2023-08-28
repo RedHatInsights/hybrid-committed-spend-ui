@@ -435,6 +435,12 @@
         "value": "Hybrid Committed Spend Details"
       }
     ],
+    "docs": [
+      {
+        "type": 0,
+        "value": "https://access.redhat.com/documentation/en-us/hybrid_committed_spend/2023"
+      }
+    ],
     "emptyFilterStateSubtitle": [
       {
         "type": 0,
@@ -1034,6 +1040,12 @@
         "value": "Hybrid Committed Spend"
       }
     ],
+    "hcsDocumentation": [
+      {
+        "type": 0,
+        "value": "Hybrid Committed Spend Documentation"
+      }
+    ],
     "loadingStateDesc": [
       {
         "type": 0,
@@ -1081,13 +1093,13 @@
     "notViewable": [
       {
         "type": 0,
-        "value": "Committed Spend data is not available to be viewed"
+        "value": "Committed Spend data is not viewable"
       }
     ],
     "notViewableDesc": [
       {
         "type": 0,
-        "value": "Committed Spend data is not viewable at this time. If you need access to this data, please contact your account manager."
+        "value": "If you need access to this data, please contact your account manager."
       }
     ],
     "outOf": [
