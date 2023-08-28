@@ -85,7 +85,7 @@
     "@typescript-eslint/parser": "^6.4.1",
     "aphrodite": "^2.4.0",
     "copy-webpack-plugin": "^11.0.0",
-    "eslint": "^8.47.0",
+    "eslint": "^8.48.0",
     "eslint-plugin-formatjs": "^4.10.3",
     "eslint-plugin-jest-dom": "^5.1.0",
     "eslint-plugin-jsdoc": "^46.5.0",
@@ -108,7 +108,7 @@
     "webpack-bundle-analyzer": "^4.9.0"
   },
   "overrides": {
-    "eslint": "^8.47.0",
+    "eslint": "^8.48.0",
     "react-intl": "^6.4.4"
   },
   "insights": {
