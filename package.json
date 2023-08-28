@@ -74,7 +74,7 @@
     "@formatjs/cli": "^6.1.3",
     "@redhat-cloud-services/eslint-config-redhat-cloud-services": "^1.3.0",
     "@redhat-cloud-services/frontend-components-config": "^5.1.1",
-    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.4",
     "@types/react": "^18.2.21",
