@@ -11,6 +11,8 @@ const hasAccess = (userAccess: UserAccess, userAccessType) => {
       return userAccess.hcsDataVisibility;
     case UserAccessType.deal:
       return userAccess.hcsDeal;
+    case UserAccessType.viewer:
+      return userAccess.hcsViewer;
     default:
       return false;
   }
@@ -24,4 +26,9 @@ export const hasHcsDataVisibility = (userAccess: UserAccess) => {
 // Returns true if user has HCS enrollment
 export const hasHcsDeal = (userAccess: UserAccess) => {
   return hasAccess(userAccess, UserAccessType.deal);
+};
+
+// Returns true if user has the HCS viewer role
+export const hasHcsViewer = (userAccess: UserAccess) => {
+  return hasAccess(userAccess, UserAccessType.viewer);
 };
