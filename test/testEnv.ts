@@ -6,7 +6,7 @@ export interface Global {
   insights: any;
 }
 
-declare var global: Global;
+declare let global: Global;
 
 global.insights = {
   chrome: {
