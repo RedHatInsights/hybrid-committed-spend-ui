@@ -10,7 +10,7 @@ import type { RootState } from 'store';
 import { FetchStatus } from 'store/common';
 import { userAccessQuery, userAccessSelectors } from 'store/user-access';
 import { useFormatPath, usePathname } from 'utils/paths';
-import { hasHcsDataVisibility, hasHcsDeal } from 'utils/userAccess';
+import { hasHcsDataVisibility, hasHcsDeal, hasHcsViewer } from 'utils/userAccess';
 
 interface PermissionsOwnProps {
   children?: React.ReactNode;
@@ -35,12 +35,13 @@ const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
       return false;
     }
     const hasDeal = hasHcsDeal(userAccess);
+    const hasViewer = hasHcsViewer(userAccess);
 
     switch (pathname) {
       case formatPath(routes.details.path):
-        return hasDeal;
+        return hasDeal && hasViewer;
       case formatPath(routes.overview.path):
-        return hasDeal;
+        return hasDeal && hasViewer;
       default:
         return false;
     }
