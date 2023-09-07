@@ -42,13 +42,9 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ widgetId }) => {
   const hasData = report && report.data && report.data.length;
   const values = hasData && report.data[0];
 
-  // Todo: we shouldn't have to check for "null" strings here -- see HCS-150
   const actualCommittedSpend: string | React.ReactNode =
-    values &&
-    values.actual_committed_spend &&
-    values.actual_committed_spend.value &&
-    values.actual_committed_spend.value !== 'null' ? (
-      formatCurrency(Number(values.actual_committed_spend.value), values.actual_committed_spend.units || 'USD')
+    values && values.actual_committed_spend && values.actual_committed_spend.value ? (
+      formatCurrency(values.actual_committed_spend.value, values.actual_committed_spend.units || 'USD')
     ) : (
       <EmptyValueState />
     );
