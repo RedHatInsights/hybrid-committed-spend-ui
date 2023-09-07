@@ -1,8 +1,12 @@
 import { global_Color_200 } from '@patternfly/react-tokens/dist/js/global_Color_200';
 import { global_FontSize_xs } from '@patternfly/react-tokens/dist/js/global_FontSize_xs';
+import { global_spacer_lg } from '@patternfly/react-tokens/dist/js/global_spacer_lg';
 import { global_spacer_md } from '@patternfly/react-tokens/dist/js/global_spacer_md';
 
 export const styles = {
+  alertContainer: {
+    marginBottom: global_spacer_lg.var,
+  },
   cardFooter: {
     display: 'flex',
     justifyContent: 'center',

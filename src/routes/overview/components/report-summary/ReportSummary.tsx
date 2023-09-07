@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
-import { Card, CardBody, CardFooter, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
+import { Alert, Card, CardBody, CardFooter, CardTitle, Skeleton, Title, TitleSizes } from '@patternfly/react-core';
+import messages from 'locales/messages';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { ExcessSpend } from 'routes/overview/components/excess-spend';
@@ -14,6 +15,7 @@ interface ReportSummaryOwnProps {
   detailsLink?: React.ReactNode;
   excessSpend?: string | React.ReactNode;
   fetchStatus: number | number[];
+  isDataVisibilitySummaryOnly?: boolean;
   isExcluded?: boolean;
   subTitle?: MessageDescriptor;
   title: MessageDescriptor;
@@ -27,6 +29,7 @@ const ReportSummary: React.FC<ReportSummaryProps> = ({
   detailsLink,
   fetchStatus,
   excessSpend,
+  isDataVisibilitySummaryOnly,
   isExcluded,
   title,
   subTitle,
@@ -63,6 +66,13 @@ const ReportSummary: React.FC<ReportSummaryProps> = ({
         </div>
       </CardTitle>
       <CardBody style={bodyStyle}>
+        {isDataVisibilitySummaryOnly && (
+          <div style={styles.alertContainer}>
+            <Alert isInline variant="info" title={intl.formatMessage(messages.breakdownAlertTitle)}>
+              <p>{intl.formatMessage(messages.breakdownAlertDesc)}</p>
+            </Alert>
+          </div>
+        )}
         {isLoading() ? (
           <>
             <Skeleton width="16%" />

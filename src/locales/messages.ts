@@ -27,6 +27,18 @@ export default defineMessages({
     description: 'Actual spend breakdown data values',
     id: 'actualSpendBreakdownResolutionValues',
   },
+  breakdownAlertDesc: {
+    defaultMessage:
+      'The sum of breakdowns shown might not equal to the actual spend total. To understand more, consult your account team.',
+    description:
+      'The sum of breakdowns shown might not equal to the actual spend total. To understand more, consult your account team.',
+    id: 'breakdownAlertDesc',
+  },
+  breakdownAlertTitle: {
+    defaultMessage: 'Sum of breakdowns might not equal to actual spend',
+    description: 'Sum of breakdowns might not equal to actual spend',
+    id: 'breakdownAlertTitle',
+  },
   cancel: {
     defaultMessage: 'Cancel',
     description: 'Cancel',

@@ -1,4 +1,4 @@
-import { Bullseye, PageSection, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
+import { Alert, Bullseye, PageSection, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import type { Query } from 'api/queries';
 import { getQueryRoute, parseQuery } from 'api/queries';
 import type { Report } from 'api/reports/report';
@@ -25,6 +25,7 @@ import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
 import { FetchStatus } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { useStateCallback } from 'utils/hooks';
+import { isHcsDataVisibilitySummaryOnly, useUserAccessMapToProps } from 'utils/userAccess';
 
 import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
@@ -61,6 +62,7 @@ type DetailsProps = DetailsOwnProps;
 const Details: React.FC<DetailsProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { userAccess } = useUserAccessMapToProps();
   const [dateRange, setDateRange] = useStateCallback(useDefaultDateRange());
   const [groupBy, setGroupBy] = useStateCallback(useDefaultGroupBy());
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -300,6 +302,13 @@ const Details: React.FC<DetailsProps> = () => {
   return (
     <React.Fragment>
       <PageHeading>
+        {isHcsDataVisibilitySummaryOnly(userAccess) && (
+          <div style={styles.alertContainer}>
+            <Alert isInline variant="info" title={intl.formatMessage(messages.breakdownAlertTitle)}>
+              <p>{intl.formatMessage(messages.breakdownAlertDesc)}</p>
+            </Alert>
+          </div>
+        )}
         <DetailsHeaderToolbar
           consumptionDate={consumptionDate}
           contractLineStartDate={contractLineStartDate}

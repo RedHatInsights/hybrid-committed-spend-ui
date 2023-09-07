@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export interface UserAccess {
-  hcsDataVisibility?: boolean;
+  hcsDataVisibility?: number;
   hcsDeal?: boolean;
   hcsViewer?: boolean;
 }
