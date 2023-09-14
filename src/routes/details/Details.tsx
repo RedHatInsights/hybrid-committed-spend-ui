@@ -47,6 +47,7 @@ interface DetailsStateProps {
   contractLineStartDate?: Date;
   endDate?: Date;
   exportQueryString?: string;
+  hasReportErrors?: boolean;
   previousContractLineEndDate?: Date;
   previousContractLineStartDate?: Date;
   query?: Query;
@@ -55,6 +56,7 @@ interface DetailsStateProps {
   reportFetchStatus?: FetchStatus;
   reportQueryString?: string;
   startDate?: Date;
+  summaryError?: AxiosError;
 }
 
 type DetailsProps = DetailsOwnProps;
@@ -82,6 +84,7 @@ const Details: React.FC<DetailsProps> = () => {
     reportError,
     reportFetchStatus,
     startDate,
+    summaryError,
   } = useMapToProps({
     dateRange,
     groupBy,
@@ -295,7 +298,7 @@ const Details: React.FC<DetailsProps> = () => {
   const computedItems = getComputedItems();
   const isDisabled = computedItems.length === 0;
 
-  if (reportError) {
+  if (reportError || summaryError) {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
@@ -378,7 +381,7 @@ const useQueryFromRoute = () => {
 };
 
 const useMapToProps = ({ dateRange, groupBy, secondaryGroupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
-  const { summary } = useAccountSummaryMapToProps();
+  const { summary, summaryError } = useAccountSummaryMapToProps();
   const {
     consumptionDate,
     contractLineEndDate,
@@ -413,6 +416,7 @@ const useMapToProps = ({ dateRange, groupBy, secondaryGroupBy, sourceOfSpend }: 
     reportFetchStatus,
     reportQueryString,
     startDate,
+    summaryError,
   };
 };
 
