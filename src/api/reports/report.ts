@@ -2,7 +2,7 @@ import type { PagedMetaData, PagedResponse } from 'api/api';
 
 export interface ReportValue {
   units?: string;
-  value?: string;
+  value?: number;
 }
 
 export interface ReportItem {

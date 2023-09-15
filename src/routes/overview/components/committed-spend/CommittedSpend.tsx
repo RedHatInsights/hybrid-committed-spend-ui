@@ -42,13 +42,13 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ widgetId }) => {
 
   const committedSpend: string | React.ReactNode =
     values && values.committed_spend && values.committed_spend.value ? (
-      formatCurrency(Number(values.committed_spend.value), values.committed_spend.units)
+      formatCurrency(values.committed_spend.value, values.committed_spend.units)
     ) : (
       <EmptyValueState />
     );
   const remainingCommittedSpend: string | React.ReactNode =
     values && values.remaining_committed_spend && values.remaining_committed_spend.value ? (
-      formatCurrency(Number(values.remaining_committed_spend.value), values.remaining_committed_spend.units)
+      formatCurrency(values.remaining_committed_spend.value, values.remaining_committed_spend.units)
     ) : (
       <EmptyValueState />
     );
