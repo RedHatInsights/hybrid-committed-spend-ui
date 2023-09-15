@@ -23,6 +23,7 @@ import { ResolutionType } from './ActualSpendBreakdown';
 import { ActualSpendBreakdownTransform } from './ActualSpendBreakdownTransform';
 
 interface ActualSpendBreakdownSummaryOwnProps {
+  isDataVisibilitySummaryOnly?: boolean;
   perspective?: string;
   perspectiveComponent?: ReactNode;
   resolution?: string;
@@ -44,6 +45,7 @@ interface ActualSpendBreakdownSummaryStateProps {
 export type ActualSpendBreakdownSummaryProps = ActualSpendBreakdownSummaryOwnProps;
 
 const ActualSpendBreakdownSummary: React.FC<ActualSpendBreakdownSummaryProps> = ({
+  isDataVisibilitySummaryOnly,
   perspective,
   perspectiveComponent,
   resolution,
@@ -82,6 +84,7 @@ const ActualSpendBreakdownSummary: React.FC<ActualSpendBreakdownSummaryProps> = 
       detailsLink={getDetailsLink()}
       excessSpend={excessSpend}
       fetchStatus={[reportFetchStatus, summaryFetchStatus]}
+      isDataVisibilitySummaryOnly={isDataVisibilitySummaryOnly}
       isExcluded
       title={widget.title}
     >
