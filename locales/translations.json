@@ -3,6 +3,8 @@
   "accountNumber": "Account number: {value}",
   "actualSpendBreakdownPerspectiveValues": "{value, select, affiliate {Top 3 affiliates of spend} product {Top 3 products of spend} source_of_spend {Top 3 sources of spend} other {}}",
   "actualSpendBreakdownResolutionValues": "{value, select, monthly {Monthly} cumulative {Cumulative} other {}}",
+  "breakdownAlertDesc": "The sum of breakdowns shown might not equal to the actual spend total. To understand more, consult your account team.",
+  "breakdownAlertTitle": "Sum of breakdowns might not equal to actual spend",
   "cancel": "Cancel",
   "chartCurrentSpendLegendLabel": "Actual spend YTD ({dateRange})",
   "chartCurrentSpendNoDataLegendLabel": "Actual spend YTD (no data)",
