@@ -1,4 +1,4 @@
-import { Bullseye, PageSection, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
+import { Alert, Bullseye, PageSection, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
 import type { Query } from 'api/queries';
 import { getQueryRoute, parseQuery } from 'api/queries';
 import type { Report } from 'api/reports/report';
@@ -25,6 +25,7 @@ import { addFilterToQuery, removeFilterFromQuery } from 'routes/utils/filter';
 import { FetchStatus } from 'store/common';
 import { getUnsortedComputedReportItems } from 'utils/computedReport/getComputedReportItems';
 import { useStateCallback } from 'utils/hooks';
+import { isHcsDataVisibilitySummaryOnly, useUserAccessMapToProps } from 'utils/userAccess';
 
 import { styles } from './Details.styles';
 import { DetailsFilterToolbar } from './DetailsFilterToolbar';
@@ -46,6 +47,7 @@ interface DetailsStateProps {
   contractLineStartDate?: Date;
   endDate?: Date;
   exportQueryString?: string;
+  hasReportErrors?: boolean;
   previousContractLineEndDate?: Date;
   previousContractLineStartDate?: Date;
   query?: Query;
@@ -54,6 +56,7 @@ interface DetailsStateProps {
   reportFetchStatus?: FetchStatus;
   reportQueryString?: string;
   startDate?: Date;
+  summaryError?: AxiosError;
 }
 
 type DetailsProps = DetailsOwnProps;
@@ -61,6 +64,7 @@ type DetailsProps = DetailsOwnProps;
 const Details: React.FC<DetailsProps> = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { userAccess } = useUserAccessMapToProps();
   const [dateRange, setDateRange] = useStateCallback(useDefaultDateRange());
   const [groupBy, setGroupBy] = useStateCallback(useDefaultGroupBy());
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -80,6 +84,7 @@ const Details: React.FC<DetailsProps> = () => {
     reportError,
     reportFetchStatus,
     startDate,
+    summaryError,
   } = useMapToProps({
     dateRange,
     groupBy,
@@ -293,13 +298,20 @@ const Details: React.FC<DetailsProps> = () => {
   const computedItems = getComputedItems();
   const isDisabled = computedItems.length === 0;
 
-  if (reportError) {
+  if (reportError || summaryError) {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
   return (
     <React.Fragment>
       <PageHeading>
+        {isHcsDataVisibilitySummaryOnly(userAccess) && (
+          <div style={styles.alertContainer}>
+            <Alert isInline variant="info" title={intl.formatMessage(messages.breakdownAlertTitle)}>
+              <p>{intl.formatMessage(messages.breakdownAlertDesc)}</p>
+            </Alert>
+          </div>
+        )}
         <DetailsHeaderToolbar
           consumptionDate={consumptionDate}
           contractLineStartDate={contractLineStartDate}
@@ -369,7 +381,7 @@ const useQueryFromRoute = () => {
 };
 
 const useMapToProps = ({ dateRange, groupBy, secondaryGroupBy, sourceOfSpend }: DetailsOwnProps): DetailsStateProps => {
-  const { summary } = useAccountSummaryMapToProps();
+  const { summary, summaryError } = useAccountSummaryMapToProps();
   const {
     consumptionDate,
     contractLineEndDate,
@@ -404,6 +416,7 @@ const useMapToProps = ({ dateRange, groupBy, secondaryGroupBy, sourceOfSpend }: 
     reportFetchStatus,
     reportQueryString,
     startDate,
+    summaryError,
   };
 };
 
