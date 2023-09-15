@@ -1,6 +1,7 @@
 import messages from 'locales/messages';
 import React, { useState } from 'react';
 import { Perspective } from 'routes/components/perspective';
+import { isHcsDataVisibilitySummaryOnly, useUserAccessMapToProps } from 'utils/userAccess';
 
 import { ActualSpendBreakdownSummary } from './ActualSpendBreakdownSummary';
 
@@ -38,6 +39,7 @@ const perspectiveOptions = [
 const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ widgetId }) => {
   const [perspective, setPerspective] = useState(PerspectiveType.sourceOfSpend);
   const [resolution, setResolution] = useState(ResolutionType.monthly);
+  const { userAccess } = useUserAccessMapToProps();
 
   const getPerspective = () => {
     return (
@@ -59,6 +61,7 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ widgetI
 
   return (
     <ActualSpendBreakdownSummary
+      isDataVisibilitySummaryOnly={isHcsDataVisibilitySummaryOnly(userAccess)}
       perspective={perspective}
       perspectiveComponent={getPerspective()}
       resolution={resolution}

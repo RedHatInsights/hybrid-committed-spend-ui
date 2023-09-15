@@ -82,6 +82,18 @@
         "value": "value"
       }
     ],
+    "breakdownAlertDesc": [
+      {
+        "type": 0,
+        "value": "The sum of breakdowns shown might not equal to the actual spend total. To understand more, consult your account team."
+      }
+    ],
+    "breakdownAlertTitle": [
+      {
+        "type": 0,
+        "value": "Sum of breakdowns might not equal to actual spend"
+      }
+    ],
     "cancel": [
       {
         "type": 0,
