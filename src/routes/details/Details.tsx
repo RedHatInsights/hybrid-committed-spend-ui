@@ -155,7 +155,7 @@ const Details: React.FC<DetailsProps> = () => {
         page={page}
         perPage={limit}
         titles={{
-          paginationTitle: intl.formatMessage(messages.paginationTitle, {
+          paginationAriaLabel: intl.formatMessage(messages.paginationTitle, {
             title: intl.formatMessage(messages.detailsTitle),
             placement: isBottom ? 'bottom' : 'top',
           }),
