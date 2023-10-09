@@ -39,28 +39,25 @@ const ActualSpend: React.FC<ActualSpendProps> = ({ widgetId }) => {
   const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
   const intl = useIntl();
 
-  const hasData = report && report.data && report.data.length;
-  const values = hasData && report.data[0];
+  const values = report?.data?.length && report.data[0];
 
-  const actualCommittedSpend: string | React.ReactNode =
-    values && values.actual_committed_spend && values.actual_committed_spend.value ? (
-      formatCurrency(values.actual_committed_spend.value, values.actual_committed_spend.units || 'USD')
-    ) : (
-      <EmptyValueState />
-    );
+  const actualCommittedSpend: string | React.ReactNode = values?.actual_committed_spend?.value ? (
+    formatCurrency(values.actual_committed_spend.value, values.actual_committed_spend.units || 'USD')
+  ) : (
+    <EmptyValueState />
+  );
 
   // Don't show excess spend unless greater than zero
-  const excessActualSpend =
-    values && values.excess_committed_spend ? Number(values.excess_committed_spend.value) : undefined;
+  const excessActualSpend = values?.excess_committed_spend ? Number(values.excess_committed_spend.value) : undefined;
   const excessSpend: string = excessActualSpend
     ? formatCurrency(excessActualSpend, values.excess_committed_spend.units || 'USD')
     : undefined;
 
-  const percent = values && values.delta && values.delta.percent ? Number(values.delta.percent) : undefined;
+  const percent = values?.delta?.percent !== undefined ? Number(values.delta.percent) : undefined;
   const percentage: string | React.ReactNode = percent !== undefined ? formatPercentage(percent) : <EmptyValueState />;
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
-  if (values && values.contract_line_start_date) {
+  if (values?.contract_line_start_date) {
     const endDate = new Date(getToday());
     const startDate = new Date(values.contract_line_start_date + 'T00:00:00');
 
