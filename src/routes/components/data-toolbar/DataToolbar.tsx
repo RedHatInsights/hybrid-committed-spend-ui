@@ -94,7 +94,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
       }
     };
 
-    if (query && query.filter_by) {
+    if (query?.filter_by) {
       Object.keys(query.filter_by).forEach(key => {
         const values = Array.isArray(query.filter_by[key]) ? [...query.filter_by[key]] : [query.filter_by[key]];
         parseFilters(key, values);
@@ -135,9 +135,9 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   const onDelete = (type: any, chip: any) => {
     // Todo: workaround for https://github.com/patternfly/patternfly-react/issues/3552
     // This prevents us from using a localized string, if necessary
-    const _type = type && type.key ? type.key : type;
+    const _type = type?.key ? type.key : type;
     if (_type) {
-      const id = chip && chip.key ? chip.key : chip;
+      const id = chip?.key ? chip.key : chip;
       let filter;
       if (filters[_type]) {
         const newFilters = cloneDeep(filters);
@@ -223,7 +223,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   };
 
   const onCategoryInput = (event, key) => {
-    if (event && event.key && event.key !== 'Enter') {
+    if (event?.key && event.key !== 'Enter') {
       return;
     }
 

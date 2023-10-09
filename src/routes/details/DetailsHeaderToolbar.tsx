@@ -166,7 +166,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   const getGroupByOptions = (includeNoneOption = true) => {
     const newOptions = includeNoneOption ? cloneDeep(groupByOptions) : [];
 
-    if (options && options.data && options.data.group_by) {
+    if (options?.data?.group_by) {
       options.data.group_by.forEach(item => {
         switch (item.code) {
           case GroupByType.affiliate:
@@ -189,7 +189,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   const getSourceOfSpendOptions = () => {
     const newOptions = cloneDeep(sourceOfSpendOptions);
 
-    if (options && options.data && options.data.source_of_spend) {
+    if (options?.data?.source_of_spend) {
       options.data.source_of_spend.forEach(item => {
         switch (item.code) {
           case SourceOfSpendType.aws:

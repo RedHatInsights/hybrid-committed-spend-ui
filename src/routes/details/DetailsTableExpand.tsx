@@ -123,7 +123,7 @@ const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
 
       items.map(item => {
         if (!value) {
-          value = item && item.label && item.label !== null ? item.label : null;
+          value = item?.label && item.label !== null ? item.label : null;
         }
 
         // Add row cells

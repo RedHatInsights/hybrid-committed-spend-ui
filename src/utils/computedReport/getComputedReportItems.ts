@@ -82,7 +82,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
   const itemMap = new Map();
 
   const visitDataPoint = (dataPoint: ReportData) => {
-    if (dataPoint && dataPoint.values) {
+    if (dataPoint?.values) {
       dataPoint.values.forEach((val: any) => {
         let id = val.id ? val.id : val[idKey];
         if (!id) {
@@ -97,7 +97,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
         const sourceOfSpend = val.source_of_spend;
 
         let label = val[idKey];
-        if (report.meta && report.meta.others && (id === 'Other' || id === 'Others')) {
+        if (report?.meta?.others && (id === 'Other' || id === 'Others')) {
           // Add count to "Others" label
           label = intl.formatMessage(messages.chartOthers, { count: report.meta.others });
         }
@@ -158,7 +158,7 @@ export function getUnsortedComputedReportItems<R extends Report, T extends Repor
       }
     }
   };
-  if (report && report.data) {
+  if (report?.data) {
     report.data.forEach(visitDataPoint);
   }
   return Array.from(itemMap.values());

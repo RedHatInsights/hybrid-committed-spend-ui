@@ -37,24 +37,21 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ widgetId }) => {
   const { report, reportFetchStatus, widget } = useMapToProps({ widgetId });
   const intl = useIntl();
 
-  const hasData = report && report.data && report.data.length;
-  const values = hasData && report.data[0];
+  const values = report?.data?.length && report.data[0];
 
-  const committedSpend: string | React.ReactNode =
-    values && values.committed_spend && values.committed_spend.value ? (
-      formatCurrency(values.committed_spend.value, values.committed_spend.units)
-    ) : (
-      <EmptyValueState />
-    );
-  const remainingCommittedSpend: string | React.ReactNode =
-    values && values.remaining_committed_spend && values.remaining_committed_spend.value ? (
-      formatCurrency(values.remaining_committed_spend.value, values.remaining_committed_spend.units)
-    ) : (
-      <EmptyValueState />
-    );
+  const committedSpend: string | React.ReactNode = values?.committed_spend?.value ? (
+    formatCurrency(values.committed_spend.value, values.committed_spend.units)
+  ) : (
+    <EmptyValueState />
+  );
+  const remainingCommittedSpend: string | React.ReactNode = values?.remaining_committed_spend?.value ? (
+    formatCurrency(values.remaining_committed_spend.value, values.remaining_committed_spend.units)
+  ) : (
+    <EmptyValueState />
+  );
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
-  if (values && values.contract_line_end_date) {
+  if (values?.contract_line_end_date) {
     const endDate = new Date(values.contract_line_end_date + 'T00:00:00');
     const startDate = getToday();
 

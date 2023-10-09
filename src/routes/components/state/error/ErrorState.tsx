@@ -22,7 +22,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, icon = ErrorCircleOIcon 
   let title = intl.formatMessage(messages.errorStateUnexpectedTitle);
   let subTitle = intl.formatMessage(messages.errorStateUnexpectedDesc);
 
-  if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
+  if (error?.response && (error.response.status === 401 || error.response.status === 403)) {
     icon = LockIcon;
     title = intl.formatMessage(messages.errorStateNotAuthorizedTitle);
     subTitle = intl.formatMessage(messages.errorStateNotAuthorizedDesc);

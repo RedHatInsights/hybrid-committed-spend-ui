@@ -90,7 +90,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
 
   // apply focus to the text input
   const focusTextInput = () => {
-    textInputGroupRef && textInputGroupRef.current.querySelector('input').focus();
+    textInputGroupRef?.current?.querySelector('input').focus();
   };
 
   const getInputGroup = () => {
@@ -107,7 +107,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
               onKeyDown={handleOnTextInputKeyDown}
               placeholder={placeholder}
             />
-            {search && search.length && (
+            {search?.length && (
               <TextInputGroupUtilities>
                 <Button variant="plain" onClick={handleOnClear} aria-label="Clear button and input">
                   <TimesIcon />
@@ -156,7 +156,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
 
   const getOptions = (): ToolbarChipGroup[] => {
     const options = [];
-    if (filter && filter.data && filter.data.length > 0 && filterFetchStatus !== FetchStatus.inProgress) {
+    if (filter?.data?.length > 0 && filterFetchStatus !== FetchStatus.inProgress) {
       filter.data.map(item => {
         if (item.value && item.value !== null) {
           options.push({
@@ -219,7 +219,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
       case 'ArrowUp':
       case 'ArrowDown':
         // Allow focus on the menu and navigate using the arrow keys
-        if (menuRef && menuRef.current) {
+        if (menuRef?.current) {
           const firstElement = menuRef.current.querySelector('li > button:not(:disabled)');
           firstElement && (firstElement as any).focus();
         }

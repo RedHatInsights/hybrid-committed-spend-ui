@@ -74,7 +74,7 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ widgetId }) =
 
 const useMapToProps = (): CommittedSpendTrendStateProps => {
   const { summary } = useAccountSummaryMapToProps();
-  const values = summary && summary.data && summary.data.length && summary.data[0];
+  const values = summary?.data?.length && summary.data[0];
 
   const hasPreviousContractLineEndDate = values && values.previous_contract_line_end_date !== null;
   const hasPreviousContractLineStartDate = values && values.previous_contract_line_start_date !== null;
