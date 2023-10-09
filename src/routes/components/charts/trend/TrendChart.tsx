@@ -33,10 +33,9 @@ import { formatCurrencyAbbreviation } from 'utils/format';
 import { styles } from './TrendChart.styles';
 
 interface TrendChartOwnProps {
-  adjustContainerHeight?: boolean;
+  baseHeight?: number;
   containerHeight?: number;
   currentData?: any;
-  height?: number;
   name?: string;
   padding?: any;
   previousData?: any;
@@ -49,25 +48,19 @@ interface TrendChartOwnProps {
 type TrendChartProps = TrendChartOwnProps;
 
 const TrendChart: React.FC<TrendChartProps> = ({
-  adjustContainerHeight,
-  containerHeight,
+  baseHeight,
   currentData,
   formatter,
   formatOptions,
-  height,
   name,
-  padding = {
-    bottom: 75,
-    left: 55,
-    right: 40,
-    top: 8,
-  },
+  padding,
   previousData,
   thresholdData,
   title,
 }) => {
   const [containerRef] = useState(React.createRef<HTMLDivElement>());
   const [cursorVoronoiContainer, setCursorVoronoiContainer] = useState<any>();
+  const [extraHeight, setExtraHeight] = useState(0);
   const [hiddenSeries, setHiddenSeries] = useState(new Set<number>());
   const [series, setSeries] = useState<ChartSeries[]>();
   const [units, setUnits] = useState('USD');
@@ -96,18 +89,6 @@ const TrendChart: React.FC<TrendChartProps> = ({
       : undefined;
   };
 
-  const getAdjustedContainerHeight = () => {
-    let adjustedContainerHeight = containerHeight;
-    if (adjustContainerHeight) {
-      if (width > 950 && width < 1150) {
-        adjustedContainerHeight += 25;
-      } else if (width <= 950) {
-        adjustedContainerHeight += 50;
-      }
-    }
-    return adjustedContainerHeight;
-  };
-
   const getChart = (serie: ChartSeries, index: number) => {
     return (
       <ChartArea
@@ -131,12 +112,7 @@ const TrendChart: React.FC<TrendChartProps> = ({
         labels={({ datum }) => getTooltipLabel(datum, formatter, formatOptions)}
         mouseFollowTooltips
         voronoiDimension="x"
-        voronoiPadding={{
-          bottom: 75,
-          left: 55,
-          right: 40,
-          top: 8,
-        }}
+        voronoiPadding={getPadding()}
       />
     );
   };
@@ -152,13 +128,16 @@ const TrendChart: React.FC<TrendChartProps> = ({
     return result;
   };
 
+  const getHeight = () => {
+    return baseHeight + extraHeight;
+  };
+
   const getLegend = () => {
     return (
       <ChartLegend
         data={getLegendData(series, hiddenSeries)}
         gutter={20}
         height={25}
-        itemsPerRow={width < 550 ? 1 : undefined}
         name={`${name}-legend`}
         responsive={false}
         y={240}
@@ -181,6 +160,23 @@ const TrendChart: React.FC<TrendChartProps> = ({
       }
     }
     return 'USD';
+  };
+
+  const getPadding = () => {
+    return padding
+      ? padding
+      : {
+          bottom: 75 + extraHeight, // Maintain chart aspect ratio
+          left: 55,
+          right: 40,
+          top: 8,
+        };
+  };
+
+  const handleLegendAllowWrap = value => {
+    if (value !== extraHeight) {
+      setExtraHeight(value);
+    }
   };
 
   // Hide each data series individually
@@ -292,6 +288,8 @@ const TrendChart: React.FC<TrendChartProps> = ({
     };
   }, [containerRef]);
 
+  const chartHeight = getHeight();
+
   return (
     <>
       {title && (
@@ -299,19 +297,19 @@ const TrendChart: React.FC<TrendChartProps> = ({
           {title}
         </Title>
       )}
-      <div className="chartOverride" ref={containerRef} style={{ height: getAdjustedContainerHeight() }}>
-        <div style={{ height, width }}>
+      <div className="chartOverride" ref={containerRef}>
+        <div style={{ height: chartHeight }}>
           <Chart
             containerComponent={cloneContainer()}
             domain={getDomain(series, hiddenSeries)}
             events={getEvents()}
-            height={height}
-            legendAllowWrap
+            height={chartHeight}
+            legendAllowWrap={handleLegendAllowWrap}
             legendComponent={getLegend()}
             legendData={getLegendData(series, hiddenSeries)}
             legendPosition="bottom-left"
             name={name}
-            padding={padding}
+            padding={getPadding()}
             theme={ChartTheme}
             width={width}
           >
