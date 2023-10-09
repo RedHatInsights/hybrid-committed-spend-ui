@@ -153,7 +153,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
 
       items.map(item => {
         if (!value) {
-          value = item && item.label && item.label !== null ? item.label : null;
+          value = item?.label && item.label !== null ? item.label : null;
         }
 
         // Add row cells
@@ -175,7 +175,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
   };
 
   const getEmptyState = () => {
-    if (query && query.filter_by) {
+    if (query?.filter_by) {
       for (const val of Object.values(query.filter_by)) {
         if (val !== '*') {
           return <EmptyFilterState filter={val as string} showMargin={false} />;
@@ -194,11 +194,11 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
     let direction;
 
     const column = columns[index];
-    const hasOrderBy = query && query.orderBy && query.orderBy[column.orderBy];
-    const hasOrderByDate = query && query.orderBy && query.orderBy.date;
+    const hasOrderBy = query?.orderBy && query.orderBy[column.orderBy];
+    const hasOrderByDate = query?.orderBy?.date;
 
     if (hasOrderBy && hasOrderByDate) {
-      if (column.orderBy && column.date && query.orderBy.date === column.date) {
+      if (query?.orderBy?.date === column.date) {
         direction = query.orderBy[column.orderBy];
       }
     } else if (hasOrderBy) {
