@@ -74,7 +74,7 @@
     "victory-core": "^36.6.11"
   },
   "devDependencies": {
-    "@formatjs/cli": "^6.2.0",
+    "@formatjs/cli": "^6.2.1",
     "@redhat-cloud-services/eslint-config-redhat-cloud-services": "^2.0.3",
     "@redhat-cloud-services/frontend-components-config": "^6.0.5",
     "@redhat-cloud-services/tsc-transform-imports": "^1.0.4",
