@@ -38,7 +38,7 @@ module.exports = {
   proxyVerbose: true,
   sassPrefix: `.${moduleName}`,
   // sassPrefix: 'body', // For PF v5 testing only
-  // bundlePfModules: true, // For PF v5 testing only
+  // bundlePfModules: true, // See https://console.stage.redhat.com/platform-docs/frontend-components/proxies/webpack-proxy#includePFcssmodulesinyourbundle
   stats,
   useCache: true,
   useProxy: true,
@@ -87,11 +87,10 @@ module.exports = {
   },
   routes: {
     /**
-     * Cloud services config routes, typically localhost:8889
+     * Chrome services backend config routes, typically localhost:8000
      */
     ...(process.env.CLOUD_SERVICES_CONFIG_PORT && {
-      '/config': { host: `http://localhost:${process.env.CLOUD_SERVICES_CONFIG_PORT}` },
-      '/beta/config': { host: `http://localhost:${process.env.CLOUD_SERVICES_CONFIG_PORT}` },
+      '/api/chrome-service/v1/static': { host: `http://localhost:${process.env.CLOUD_SERVICES_CONFIG_PORT}` },
     }),
   },
 };
