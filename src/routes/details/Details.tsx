@@ -98,7 +98,7 @@ const Details: React.FC<DetailsProps> = () => {
         endDate={endDate}
         groupBy={groupBy}
         isDisabled={isDisabled}
-        isExportDisabled={isDisabled || (report && report.meta && report.meta.count === 0)}
+        isExportDisabled={isDisabled || report?.meta?.count === 0}
         onExportClicked={handleOnExportModalOpen}
         onFilterAdded={handleOnFilterAdded}
         onFilterRemoved={handleOnFilterRemoved}
@@ -132,11 +132,9 @@ const Details: React.FC<DetailsProps> = () => {
   };
 
   const getPaginationProps = () => {
-    const count = report && report.meta && report.meta.count !== undefined ? Number(report.meta.count) : 0;
-    const limit =
-      report && report.meta && report.meta.filter && report.meta.filter.limit ? Number(report.meta.filter.limit) : 0;
-    const offset =
-      report && report.meta && report.meta.filter && report.meta.filter.offset ? Number(report.meta.filter.offset) : 0;
+    const count = report?.meta?.count !== undefined ? Number(report.meta.count) : 0;
+    const limit = report?.meta?.filter?.limit ? Number(report.meta.filter.limit) : 0;
+    const offset = report?.meta?.filter?.offset ? Number(report.meta.filter.offset) : 0;
     const page = limit > 0 ? offset / limit + 1 : 1;
 
     return { count, limit, offset, page };
@@ -155,7 +153,7 @@ const Details: React.FC<DetailsProps> = () => {
         page={page}
         perPage={limit}
         titles={{
-          paginationTitle: intl.formatMessage(messages.paginationTitle, {
+          paginationAriaLabel: intl.formatMessage(messages.paginationTitle, {
             title: intl.formatMessage(messages.detailsTitle),
             placement: isBottom ? 'bottom' : 'top',
           }),
@@ -258,8 +256,7 @@ const Details: React.FC<DetailsProps> = () => {
   };
 
   const handleOnSetPage = (event, pageNumber) => {
-    const limit =
-      report && report.meta && report.meta.filter && report.meta.filter.limit ? report.meta.filter.limit : 10;
+    const limit = report?.meta?.filter?.limit ? report.meta.filter.limit : 10;
     const offset = pageNumber * limit - limit;
 
     const newQuery = { ...JSON.parse(JSON.stringify(query)) };

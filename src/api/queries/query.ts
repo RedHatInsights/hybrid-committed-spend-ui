@@ -32,7 +32,7 @@ export interface Query {
 
 // Converts filter_by props to filter props
 export function convertFilterBy(query: Query) {
-  if (!(query && query.filter_by)) {
+  if (!query?.filter_by) {
     return query;
   }
   const newQuery = {
@@ -86,7 +86,7 @@ function parseKey(val: string) {
 
 // Returns query without filter_by prefix
 export function parseFilterByPrefix(query: Query) {
-  if (!(query && query.filter_by)) {
+  if (!query?.filter_by) {
     return query;
   }
   const newQuery = {
@@ -101,7 +101,7 @@ export function parseFilterByPrefix(query: Query) {
 }
 
 export function parseGroupByPrefix(query: Query) {
-  if (!(query && query.groupBy)) {
+  if (!query?.groupBy) {
     return query;
   }
   const newQuery = {
