@@ -26,21 +26,20 @@ interface AccountSummaryStateProps {
 }
 
 export const getAccountSummaryDates = (summary: AccountSummaryReport): AccountSummaryDateProps => {
-  const values = summary && summary.data && summary.data.length && summary.data[0];
-  const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
-  const contractLineEndDate =
-    values && values.contract_line_end_date ? new Date(values.contract_line_end_date + 'T00:00:00') : undefined;
-  const contractLineStartDate =
-    values && values.contract_line_start_date ? new Date(values.contract_line_start_date + 'T00:00:00') : undefined;
-  const previousContractLineEndDate =
-    values && values.previous_contract_line_end_date
-      ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
-      : undefined;
-  const previousContractLineStartDate =
-    values && values.previous_contract_line_start_date
-      ? new Date(values.previous_contract_line_start_date + 'T00:00:00')
-      : undefined;
+  const values = summary?.data?.length && summary.data[0];
+  const consumptionDate = values?.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
+  const contractLineEndDate = values?.contract_line_end_date
+    ? new Date(values.contract_line_end_date + 'T00:00:00')
+    : undefined;
+  const contractLineStartDate = values?.contract_line_start_date
+    ? new Date(values.contract_line_start_date + 'T00:00:00')
+    : undefined;
+  const previousContractLineEndDate = values?.previous_contract_line_end_date
+    ? new Date(values.previous_contract_line_end_date + 'T00:00:00')
+    : undefined;
+  const previousContractLineStartDate = values?.previous_contract_line_start_date
+    ? new Date(values.previous_contract_line_start_date + 'T00:00:00')
+    : undefined;
 
   return {
     consumptionDate,

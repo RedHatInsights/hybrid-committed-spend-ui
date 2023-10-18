@@ -1,5 +1,5 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
-import { EmptyState, EmptyStateBody, EmptyStateIcon, Title, TitleSizes } from '@patternfly/react-core';
+import { EmptyState, EmptyStateBody, EmptyStateHeader, EmptyStateIcon } from '@patternfly/react-core';
 import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import type { Query } from 'api/queries/query';
 import { parseQuery } from 'api/queries/query';
@@ -108,9 +108,7 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
     >
       <EmptyState>
         {getIcon()}
-        <Title headingLevel="h2" size={TitleSizes.lg}>
-          {intl.formatMessage(title)}
-        </Title>
+        <EmptyStateHeader titleText={<>{intl.formatMessage(title)}</>} headingLevel="h2" />
         <EmptyStateBody>{intl.formatMessage(subTitle)}</EmptyStateBody>
       </EmptyState>
     </div>

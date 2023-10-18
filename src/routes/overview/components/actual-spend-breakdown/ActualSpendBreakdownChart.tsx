@@ -14,9 +14,7 @@ const ActualSpendBreakdownChart: React.FC<ActualSpendBreakdownChartProps> = ({ c
   const getChart = () => {
     return (
       <BreakdownChart
-        adjustContainerHeight
-        containerHeight={chartStyles.chartContainerHeight}
-        height={chartStyles.chartHeight}
+        baseHeight={chartStyles.chartHeight}
         name={chartName}
         top1stData={data.length > 0 ? data[0] : []}
         top2ndData={data.length > 1 ? data[1] : []}

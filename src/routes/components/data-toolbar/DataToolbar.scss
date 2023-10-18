@@ -3,14 +3,14 @@
 // Workaround for https://github.com/patternfly/patternfly-react/issues/4477
 // and https://github.com/patternfly/patternfly-react/issues/6371
 .selectOverride {
-  &.pf-c-select {
+  &.pf-v5-c-select {
     min-width: 250px;
   }
 }
 
-.pf-c-toolbar {
+.pf-v5-c-toolbar {
   &.dataToolbarOverride {
     // Alternative workaround to overriding table sticky style
-    // --pf-c-toolbar--ZIndex: auto; z-index: 301;
+    // --pf-v5-c-toolbar--ZIndex: auto; z-index: 301;
   }
 }

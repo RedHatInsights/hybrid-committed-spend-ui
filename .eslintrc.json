@@ -134,6 +134,8 @@
         "react/no-unescaped-entities": ["error", { "forbid": [">", "}"]}],
         "react/no-unknown-property": ["error", { "ignore": ["key"]}],
         "react/prop-types": 0,
+        "rulesdir/disallow-pf-migrated-components": "off",
+        "rulesdir/forbid-pf-relative-imports": "off",
         "simple-import-sort/imports": "error",
         "spaced-comment": "error",
         "testing-library/await-async-queries": "error",

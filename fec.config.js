@@ -37,6 +37,8 @@ module.exports = {
   interceptChromeConfig: false, // Change to false after your app is registered in configuration files
   proxyVerbose: true,
   sassPrefix: `.${moduleName}`,
+  // sassPrefix: 'body', // For PF v5 testing only
+  // bundlePfModules: true, // See https://console.stage.redhat.com/platform-docs/frontend-components/proxies/webpack-proxy#includePFcssmodulesinyourbundle
   stats,
   useCache: true,
   useProxy: true,
@@ -60,9 +62,9 @@ module.exports = {
       './RootApp': path.resolve(__dirname, './src/AppEntry.tsx'),
     },
     shared: [
-      { 'react-redux': { requiredVersion: dependencies['react-redux'] } },
-      { 'react-router-dom': { import: false, requiredVersion: '*', singleton: true } },
-      { '@unleash/proxy-client-react': { requiredVersion: '*', singleton: true } },
+      { 'react-redux': { version: dependencies['react-redux'] } },
+      { 'react-router-dom': { version: dependencies['react-router-dom'], import: false, singleton: true } },
+      { '@unleash/proxy-client-react': { version: dependencies['@unleash/proxy-client-react'], singleton: true } },
     ],
   },
   /**
@@ -85,11 +87,10 @@ module.exports = {
   },
   routes: {
     /**
-     * Cloud services config routes, typically localhost:8889
+     * Chrome services backend config routes, typically localhost:8000
      */
     ...(process.env.CLOUD_SERVICES_CONFIG_PORT && {
-      '/config': { host: `http://localhost:${process.env.CLOUD_SERVICES_CONFIG_PORT}` },
-      '/beta/config': { host: `http://localhost:${process.env.CLOUD_SERVICES_CONFIG_PORT}` },
+      '/api/chrome-service/v1/static': { host: `http://localhost:${process.env.CLOUD_SERVICES_CONFIG_PORT}` },
     }),
   },
 };

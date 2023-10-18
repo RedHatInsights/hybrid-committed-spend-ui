@@ -68,13 +68,12 @@ const CommittedSpendTrendSummary: React.FC<CommittedSpendTrendSummaryProps> = ({
   const formatPath = useFormatPath;
   const intl = useIntl();
 
-  const hasData = currentReport && currentReport.meta;
-  const values = hasData && currentReport.meta;
+  const values = currentReport?.meta && currentReport.meta;
 
   // Don't show excess spend unless greater than zero
-  const excessActualSpend = values && values.excess_actual_spend ? Number(values.excess_actual_spend.value) : undefined;
+  const excessActualSpend = values?.excess_actual_spend ? Number(values.excess_actual_spend.value) : undefined;
   const excessSpend: string = excessActualSpend
-    ? formatCurrency(excessActualSpend, values.excess_actual_spend.units || 'USD')
+    ? formatCurrency(excessActualSpend, values?.excess_actual_spend?.units || 'USD')
     : undefined;
 
   const getDetailsLink = () => {

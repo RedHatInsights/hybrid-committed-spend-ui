@@ -1,11 +1,11 @@
 @import url("~@patternfly/patternfly/base/patternfly-variables.css");
 
-.pf-c-toolbar {
+.pf-v5-c-toolbar {
   &.detailsHeaderToolbarOverride {
     // Alternative workaround to overriding table sticky style
-    // --pf-c-toolbar--ZIndex: auto; z-index: 302;
+    // --pf-v5-c-toolbar--ZIndex: auto; z-index: 302;
 
-    .pf-c-toolbar__content {
+    .pf-v5-c-toolbar__content {
       padding: 0;
     }
     padding: 0;
