@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
-import type { SelectOptionObject } from '@patternfly/react-core';
-import { Select, SelectOption, SelectVariant, Title } from '@patternfly/react-core';
+import { Title } from '@patternfly/react-core';
+import type { SelectOptionObject } from '@patternfly/react-core/deprecated';
+import { Select, SelectOption, SelectVariant } from '@patternfly/react-core/deprecated';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 
@@ -67,8 +68,8 @@ const Perspective: React.FC<PerspectiveProps> = ({
         id={id}
         isDisabled={isDisabled}
         isOpen={isSelectOpen}
-        onSelect={handleOnSelect}
-        onToggle={handleOnToggle}
+        onSelect={(_evt, value) => handleOnSelect(value)}
+        onToggle={(_evt, isExpanded) => handleOnToggle(isExpanded)}
         selections={selection}
         variant={SelectVariant.single}
       >
@@ -84,7 +85,7 @@ const Perspective: React.FC<PerspectiveProps> = ({
     );
   };
 
-  const handleOnSelect = (event: React.MouseEvent | React.ChangeEvent, selection: SelectOptionObject) => {
+  const handleOnSelect = (selection: SelectOptionObject) => {
     if (onSelected) {
       onSelected((selection as PerspectiveOption).value);
     }
