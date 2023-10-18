@@ -21,10 +21,8 @@ const CommittedSpendTrendOverChart: React.FC<CommittedSpendTrendOverChartProps> 
 }) => {
   return (
     <TrendChart
-      adjustContainerHeight
-      containerHeight={chartStyles.chartContainerHeight}
+      baseHeight={chartStyles.chartHeight}
       currentData={currentData}
-      height={chartStyles.chartHeight}
       name={chartName}
       previousData={previousData}
       thresholdData={thresholdData}

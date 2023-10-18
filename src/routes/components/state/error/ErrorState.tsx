@@ -1,4 +1,10 @@
-import { EmptyState, EmptyStateBody, EmptyStateIcon, EmptyStateVariant, Title } from '@patternfly/react-core';
+import {
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateHeader,
+  EmptyStateIcon,
+  EmptyStateVariant,
+} from '@patternfly/react-core';
 import { ErrorCircleOIcon } from '@patternfly/react-icons/dist/esm/icons/error-circle-o-icon';
 import { LockIcon } from '@patternfly/react-icons/dist/esm/icons/lock-icon';
 import type { AxiosError } from 'axios';
@@ -16,18 +22,15 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, icon = ErrorCircleOIcon 
   let title = intl.formatMessage(messages.errorStateUnexpectedTitle);
   let subTitle = intl.formatMessage(messages.errorStateUnexpectedDesc);
 
-  if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
+  if (error?.response && (error.response.status === 401 || error.response.status === 403)) {
     icon = LockIcon;
     title = intl.formatMessage(messages.errorStateNotAuthorizedTitle);
     subTitle = intl.formatMessage(messages.errorStateNotAuthorizedDesc);
   }
 
   return (
-    <EmptyState variant={EmptyStateVariant.large} className="pf-m-redhat-font">
-      <EmptyStateIcon icon={icon} />
-      <Title headingLevel="h5" size="lg">
-        {title}
-      </Title>
+    <EmptyState variant={EmptyStateVariant.lg} className="pf-m-redhat-font">
+      <EmptyStateHeader titleText={<>{title}</>} icon={<EmptyStateIcon icon={icon} />} headingLevel="h5" />
       <EmptyStateBody>{subTitle}</EmptyStateBody>
     </EmptyState>
   );

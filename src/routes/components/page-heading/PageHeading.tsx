@@ -37,8 +37,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
   const pathname = usePathname();
   const intl = useIntl();
 
-  const hasData = report && report.data && report.data.length;
-  const values = hasData && report.data[0];
+  const values = report?.data?.length && report.data[0];
 
   const emptyValue = (
     <div style={styles.emptyValue}>
@@ -46,14 +45,13 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
     </div>
   );
 
-  const accountName: string | React.ReactNode = values && values.account_name ? values.account_name : emptyValue;
-  const accountNumber: string | React.ReactNode = values && values.account_number ? values.account_number : emptyValue;
-  const contractStartDate =
-    values && values.contract_start_date ? new Date(values.contract_start_date + 'T00:00:00') : undefined;
-  const contractEndDate =
-    values && values.contract_end_date ? new Date(values.contract_end_date + 'T00:00:00') : undefined;
-  const consumptionDate =
-    values && values.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
+  const accountName: string | React.ReactNode = values?.account_name ? values.account_name : emptyValue;
+  const accountNumber: string | React.ReactNode = values?.account_number ? values.account_number : emptyValue;
+  const contractStartDate = values?.contract_start_date
+    ? new Date(values.contract_start_date + 'T00:00:00')
+    : undefined;
+  const contractEndDate = values?.contract_end_date ? new Date(values.contract_end_date + 'T00:00:00') : undefined;
+  const consumptionDate = values?.consumption_date ? new Date(values.consumption_date + 'T00:00:00') : undefined;
 
   const getPageTitle = () => {
     switch (pathname) {
