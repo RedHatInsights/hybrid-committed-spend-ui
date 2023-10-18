@@ -1,12 +1,19 @@
 import './DetailsTable.scss';
 
-import { Bullseye, EmptyState, EmptyStateBody, EmptyStateIcon, Spinner } from '@patternfly/react-core';
+import {
+  Bullseye,
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateHeader,
+  EmptyStateIcon,
+  Spinner,
+} from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
 import type { ThProps } from '@patternfly/react-table';
 import {
   InnerScrollContainer,
   SortByDirection,
-  TableComposable,
+  Table,
   TableVariant,
   Tbody,
   Td,
@@ -146,7 +153,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
 
       items.map(item => {
         if (!value) {
-          value = item && item.label && item.label !== null ? item.label : null;
+          value = item?.label && item.label !== null ? item.label : null;
         }
 
         // Add row cells
@@ -168,7 +175,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
   };
 
   const getEmptyState = () => {
-    if (query && query.filter_by) {
+    if (query?.filter_by) {
       for (const val of Object.values(query.filter_by)) {
         if (val !== '*') {
           return <EmptyFilterState filter={val as string} showMargin={false} />;
@@ -177,7 +184,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
     }
     return (
       <EmptyState>
-        <EmptyStateIcon icon={CalculatorIcon} />
+        <EmptyStateHeader icon={<EmptyStateIcon icon={CalculatorIcon} />} />
         <EmptyStateBody>{intl.formatMessage(messages.detailsEmptyState)}</EmptyStateBody>
       </EmptyState>
     );
@@ -187,11 +194,11 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
     let direction;
 
     const column = columns[index];
-    const hasOrderBy = query && query.orderBy && query.orderBy[column.orderBy];
-    const hasOrderByDate = query && query.orderBy && query.orderBy.date;
+    const hasOrderBy = query?.orderBy && query.orderBy[column.orderBy];
+    const hasOrderByDate = query?.orderBy?.date;
 
     if (hasOrderBy && hasOrderByDate) {
-      if (column.orderBy && column.date && query.orderBy.date === column.date) {
+      if (query?.orderBy?.date === column.date) {
         direction = query.orderBy[column.orderBy];
       }
     } else if (hasOrderBy) {
@@ -228,11 +235,12 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
   return (
     <React.Fragment>
       <InnerScrollContainer>
-        <TableComposable
+        <Table
           aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
           className="tableOverride"
           gridBreakPoint=""
           variant={TableVariant.compact}
+          data-codemods="true"
         >
           <Thead>
             <Tr>
@@ -315,7 +323,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
               ))
             )}
           </Tbody>
-        </TableComposable>
+        </Table>
       </InnerScrollContainer>
       {Boolean(rows.length === 0) && <div style={styles.emptyState}>{getEmptyState()}</div>}
     </React.Fragment>
