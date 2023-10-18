@@ -45,7 +45,7 @@ export function initApi({
   version: string;
 }) {
   const insights = (window as any).insights;
-  const isStageAPI = isBillingStageFeatureEnabled && !insights.chrome.isProd();
+  const isStageAPI = isBillingStageFeatureEnabled && !insights?.chrome?.isProd();
 
   // Use proxy for billing.api.redhat.com and billing.qa.api.redhat.com -- see https://issues.redhat.com/browse/HCS-222
   const baseURL = isStageAPI ? 'https://billing.stage.api.redhat.com' : '/api/billing';

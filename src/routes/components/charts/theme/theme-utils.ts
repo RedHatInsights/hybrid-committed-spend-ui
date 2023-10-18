@@ -1,8 +1,8 @@
-import { ChartThemeColor, mergeTheme } from '@patternfly/react-charts';
+import { ChartThemeColor, getCustomTheme } from '@patternfly/react-charts';
 
 import { default as ChartTheme } from './theme-hcs';
 
 // Applies theme color and variant to base theme
-const getTheme = () => mergeTheme(ChartThemeColor.default, ChartTheme);
+const getTheme = () => getCustomTheme(ChartThemeColor.default, ChartTheme);
 
 export default getTheme;

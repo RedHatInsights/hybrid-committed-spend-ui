@@ -34,11 +34,9 @@ import { formatCurrencyAbbreviation } from 'utils/format';
 import { styles } from './BreakdownChart.styles';
 
 interface BreakdownChartOwnProps {
-  adjustContainerHeight?: boolean;
-  containerHeight?: number;
+  baseHeight?: number;
   formatOptions?: FormatOptions;
   formatter?: Formatter;
-  height?: number;
   legendItemsPerRow?: number;
   name?: string;
   padding?: any;
@@ -53,18 +51,11 @@ interface BreakdownChartOwnProps {
 type BreakdownChartProps = BreakdownChartOwnProps;
 
 const BreakdownChart: React.FC<BreakdownChartProps> = ({
-  adjustContainerHeight,
-  containerHeight,
+  baseHeight,
   formatter,
   formatOptions,
-  height,
   name,
-  padding = {
-    bottom: 75,
-    left: 55,
-    right: 40,
-    top: 8,
-  },
+  padding,
   top1stData,
   top2ndData,
   top3rdData,
@@ -74,6 +65,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
 }) => {
   const [containerRef] = useState(React.createRef<HTMLDivElement>());
   const [cursorVoronoiContainer, setCursorVoronoiContainer] = useState<any>();
+  const [extraHeight, setExtraHeight] = useState(0);
   const [hiddenSeries, setHiddenSeries] = useState(new Set<number>());
   const [series, setSeries] = useState<ChartSeries[]>();
   const [units, setUnits] = useState('USD');
@@ -100,16 +92,6 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           ),
         } as any)
       : undefined;
-  };
-
-  const getAdjustedContainerHeight = () => {
-    let adjustedContainerHeight = containerHeight;
-    if (adjustContainerHeight) {
-      if (width < 550) {
-        adjustedContainerHeight += 25;
-      }
-    }
-    return adjustedContainerHeight;
   };
 
   // If bar width exceeds max and domainPadding is true, extra width is returned to help center bars horizontally
@@ -159,12 +141,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         labels={({ datum }) => getTooltipLabel(datum, formatter, formatOptions)}
         mouseFollowTooltips
         voronoiDimension="x"
-        voronoiPadding={{
-          bottom: 75,
-          left: 55,
-          right: 40,
-          top: 8,
-        }}
+        voronoiPadding={getPadding()}
       />
     );
   };
@@ -201,6 +178,10 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
     return result;
   };
 
+  const getHeight = () => {
+    return baseHeight + extraHeight;
+  };
+
   const getLegend = () => {
     return (
       <ChartLegend
@@ -212,6 +193,17 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
         y={240}
       />
     );
+  };
+
+  const getPadding = () => {
+    return padding
+      ? padding
+      : {
+          bottom: 75 + extraHeight, // Maintain chart aspect ratio
+          left: 55,
+          right: 40,
+          top: 8,
+        };
   };
 
   const getTruncatedString = (str: string) => {
@@ -234,6 +226,12 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
       }
     }
     return 'USD';
+  };
+
+  const handleLegendAllowWrap = value => {
+    if (value !== extraHeight) {
+      setExtraHeight(value);
+    }
   };
 
   // Hide each data series individually
@@ -392,23 +390,24 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   }, [containerRef]);
 
   const barWidth = getBarWidth();
+  const chartHeight = getHeight();
 
   // Note: For tooltip values to match properly, chart groups must be rendered in the order given as legend data
   return (
-    <div className="chartOverride" ref={containerRef} style={{ height: getAdjustedContainerHeight() }}>
-      <div style={{ height, width }}>
+    <div className="chartOverride" ref={containerRef}>
+      <div style={{ height: chartHeight }}>
         <Chart
           containerComponent={cloneContainer()}
           domain={getDomain()}
           domainPadding={30}
           events={getEvents()}
-          height={height}
-          legendAllowWrap
+          height={chartHeight}
+          legendAllowWrap={handleLegendAllowWrap}
           legendComponent={getLegend()}
           legendData={getLegendData(series, hiddenSeries)}
           legendPosition="bottom-left"
           name={name}
-          padding={padding}
+          padding={getPadding()}
           theme={ChartTheme}
           themeColor={ChartThemeColor.multiOrdered}
           width={width}
