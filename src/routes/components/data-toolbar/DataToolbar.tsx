@@ -240,8 +240,8 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         prevItems && (prevItems as Filter[]).find(item => item.value === val)
           ? prevItems
           : prevItems
-          ? [...(prevItems as Filter[]), filter]
-          : [filter],
+            ? [...(prevItems as Filter[]), filter]
+            : [filter],
     };
 
     setCategoryInput('');
@@ -264,8 +264,8 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
         prevItems && (prevItems as Filter[]).find(item => item.value === val)
           ? prevItems
           : prevItems
-          ? [...(prevItems as Filter[]), filter]
-          : [filter],
+            ? [...(prevItems as Filter[]), filter]
+            : [filter],
     };
 
     setCategoryInput('');
