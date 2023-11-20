@@ -76,7 +76,7 @@
     "victory-core": "^36.6.12"
   },
   "devDependencies": {
-    "@formatjs/cli": "^6.2.3",
+    "@formatjs/cli": "^6.2.4",
     "@formatjs/ecma402-abstract": "^1.17.4",
     "@formatjs/icu-messageformat-parser": "^2.7.2",
     "@redhat-cloud-services/eslint-config-redhat-cloud-services": "^2.0.3",
