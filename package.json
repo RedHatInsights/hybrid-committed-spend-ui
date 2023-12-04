@@ -92,7 +92,7 @@
     "@typescript-eslint/parser": "^6.13.1",
     "aphrodite": "^2.4.0",
     "copy-webpack-plugin": "^11.0.0",
-    "eslint": "^8.54.0",
+    "eslint": "^8.55.0",
     "eslint-plugin-formatjs": "^4.11.3",
     "eslint-plugin-jest-dom": "^5.1.0",
     "eslint-plugin-jsdoc": "^46.9.0",
