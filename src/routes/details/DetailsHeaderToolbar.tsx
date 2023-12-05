@@ -204,6 +204,9 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
           case SourceOfSpendType.consulting:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.consulting });
             break;
+          case SourceOfSpendType.embedded:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.embedded });
+            break;
           case SourceOfSpendType.gcp:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
             break;
@@ -213,8 +216,14 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
           case SourceOfSpendType.on_demand:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.on_demand });
             break;
+          case SourceOfSpendType.oem:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oem });
+            break;
           case SourceOfSpendType.oci:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oci });
+            break;
+          case SourceOfSpendType.svp:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.svp });
             break;
           case SourceOfSpendType.training:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.training });
