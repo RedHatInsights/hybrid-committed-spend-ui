@@ -3,10 +3,6 @@
 [![AGPLv3][license-badge]][license]
 [![Build Status][build-badge]][build]
 
-# hybrid-committed-spend
-
-React.js app for Red Hat Hybrid Committed Spend.
-
 User interface is based on Red Hat cloud service frontend components and Patternfly [![Patternfly][pf-logo]][patternfly]
 
 To submit an issue, please visit https://issues.redhat.com/projects/HCS/issues
@@ -44,7 +40,7 @@ npm build
 npm test
 ```
 
-## Running Koku UI against a hosted Koku API, using webpack proxy
+## Running Hybrid Committed Spend UI against a hosted Billing API, using webpack proxy
 Note that this approach currently supports the Insights stage-beta, stage-stable, prod-beta, and prod-stable environments.
 
 1. Start development server
@@ -63,7 +59,7 @@ Follow the prompts that follow.
 https://stage.foo.redhat.com:1337/beta/business-services/hybrid-committed-spend
 ```
 
-### Running Koku UI with local Cloud Services Backend
+### Running Hybrid Committed Spend UI with local Cloud Services Backend
 
 See https://github.com/RedHatInsights/chrome-service-backend/blob/main/docs/cloud-services-config.md#serving-files-locally
 
@@ -83,9 +79,11 @@ This [release][release-doc] doc describes how to release Hybrid Committed Spend 
 
 [build]: https://app.travis-ci.com/github/RedHatInsights/hybrid-committed-spend-ui
 [build-badge]: https://img.shields.io/travis/RedHatInsights/hybrid-committed-spend-ui.svg?style=for-the-badge
-[koku-readme]: https://github.com/project-koku/koku#readme
 [license-badge]: https://img.shields.io/github/license/RedHatInsights/hybrid-committed-spend-ui.svg?longCache=true&style=for-the-badge
 [license]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/LICENSE
+[nodejs]: https://nodejs.org/en/
+[patch-etc-hosts]: https://github.com/RedHatInsights/insights-proxy/blob/master/scripts/patch-etc-hosts.sh
 [pf-logo]: https://www.patternfly.org/v4/images/logo.4189e7eb1a0741ea2b3b51b80d33c4cb.svg
 [patternfly]: https://www.patternfly.org/
 [release-doc]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/RELEASE.md
+[npm]: https://https://www.npmjs.com/
