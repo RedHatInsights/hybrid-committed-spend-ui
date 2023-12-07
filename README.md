@@ -3,6 +3,8 @@
 [![AGPLv3][license-badge]][license]
 [![Build Status][build-badge]][build]
 
+React.js app for Red Hat Hybrid Committed Spend.
+
 User interface is based on Red Hat cloud service frontend components and Patternfly [![Patternfly][pf-logo]][patternfly]
 
 To submit an issue, please visit https://issues.redhat.com/projects/HCS/issues
@@ -73,7 +75,7 @@ make dev-static-node
 npm start:csb
 ```
 
-## Deploying
+## Releasing Hybrid Committed Spend UI
 
 This [release][release-doc] doc describes how to release Hybrid Committed Spend UI to each staging environment.
 
