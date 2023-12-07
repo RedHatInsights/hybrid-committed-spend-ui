@@ -1,4 +1,4 @@
-# Hybrid Committed Spend
+# Hybrid Committed Spend UI
 
 [![AGPLv3][license-badge]][license]
 [![Build Status][build-badge]][build]
@@ -11,45 +11,75 @@ User interface is based on Red Hat cloud service frontend components and Pattern
 
 To submit an issue, please visit https://issues.redhat.com/projects/HCS/issues
 
-## Initial etc/hosts setup
+## Requirements
+* [NodeJS v18.15+][nodejs]
+* [npm v9.5+][npm]
 
-In order to access the https://[env].foo.redhat.com in your browser, you have to add entries to your `/etc/hosts` file. This is a **one-time** setup that has to be done only once (unless you modify hosts) on each machine.
+## Setup /etc/hosts entries (do this once)
 
-To setup the hosts file run following command:
+Edit the /etc/hosts file and add the following entries
 ```
-npm run patch:hosts
-```
-
-If this command throws an error run it as a `sudo`:
-```
-sudo npm run patch:hosts
+127.0.0.1 prod.foo.redhat.com
+127.0.0.1 stage.foo.redhat.com
 ```
 
-## Getting started
+Alternatively, run the [patch-etc-hosts.sh][patch-etc-hosts] script from the insights-proxy repo
+```
+sudo bash scripts/patch-etc-hosts.sh
+```
 
-1. ```npm install```
+## Getting Started
+1. Install requirements listed above.
+2. Setup /etc/hosts entries listed above.
+3. Clone the repository, and open a terminal in the base of this project.
+4. Run the command `npm install` to install all the dependencies.
 
-2. ```npm run start```
+## Building
+```
+npm build
+```
 
-3. Open browser in URL listed in the terminal output. For example:
+## Testing
+```
+npm test
+```
 
+## Running Koku UI against a hosted Koku API, using webpack proxy
+Note that this approach currently supports the Insights stage-beta, stage-stable, prod-beta, and prod-stable environments.
+
+1. Start development server
+```
+npm start
+```
+
+Follow the prompts that follow.
+
+* Do you want to use local api? `no`
+* Which platform environment you want to use `stage`
+* Which Chrome environment you want to use? `beta`
+
+2. Open the following URL
 ```
 https://stage.foo.redhat.com:1337/beta/business-services/hybrid-committed-spend
 ```
 
-### Testing
+### Running Koku UI with local Cloud Services Backend
 
-`npm run verify` will run `npm run lint` (eslint) and `npm test` (Jest)
+See https://github.com/RedHatInsights/chrome-service-backend/blob/main/docs/cloud-services-config.md#serving-files-locally
 
-## Testing UI changes locally with Cloud Services Config
+1. Serve files locally from Cloud Services Backend repo
+```
+make dev-static-node
+```
 
-See https://github.com/RedHatInsights/cloud-services-config#testing-your-changes-locally
-
-```npm run start:csc```
+2. Start development server in Hybrid Committed Spend repo
+```
+npm start:csb
+```
 
 ## Deploying
 
-This [release][release-doc] doc describes how to release the UI to each staging environment.
+This [release][release-doc] doc describes how to release Hybrid Committed Spend UI to each staging environment.
 
 [build]: https://app.travis-ci.com/github/RedHatInsights/hybrid-committed-spend-ui
 [build-badge]: https://img.shields.io/travis/RedHatInsights/hybrid-committed-spend-ui.svg?style=for-the-badge
