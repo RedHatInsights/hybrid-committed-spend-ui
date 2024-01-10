@@ -4,7 +4,7 @@ import messages from 'locales/messages';
 import type { FormatOptions, Formatter } from 'utils/format';
 import type { DomainTuple, VictoryStyleInterface } from 'victory-core';
 
-import { getMaxMinValues, getTooltipContent } from './chart-datum';
+import { getMaxMinValues, getTooltipContent, isFloat, isInt } from './chart-datum';
 
 export interface ChartData {
   childName?: string;
@@ -88,6 +88,16 @@ export const getLegendData = (series: ChartSeries[], hiddenSeries: Set<number>, 
     return data;
   });
   return result;
+};
+
+export const getTickFormat = (t: string, month: 'long' | 'short' = 'short', year: 'numeric' = undefined) => {
+  if (isFloat(t) || isInt(t) || t?.trim().length === 0) {
+    return t;
+  }
+  return intl.formatDate(`${t}T00:00:00`, {
+    month,
+    ...(year && ({ year } as any)),
+  });
 };
 
 export const getTickValues = (series: ChartSeries[]) => {

@@ -1,10 +1,10 @@
-# Releasing Hybrid Committed Spend
+# Releasing Hybrid Committed Spend UI
 
-This doc describes how to release the UI to each staging environment. Note that this should be done in order for testing purposes; stage-stable, prod-beta, and finally prod-stable
+This doc describes how to release Hybrid Committed Spend UI to each staging environment. Note that this should be done in order for testing purposes; stage-stable, prod-beta, and finally prod-stable
 
 ## Release script
 
-Using our script ensures that code is always pulled from the correct branches. For example, we always pull from: 
+The release script creates a PR with a unique SHA, used for a namespace \`ref\` in the app-interface repo. The script also ensures that code is always pulled from the correct branches. For example, we always:
 
 1. Pull from master when pushing to stage-stable
 2. Pull from stage-stable when pushing to prod-beta
@@ -28,19 +28,31 @@ sh scripts/release-branch.sh -b
 sh scripts/release-branch.sh -p
 ```
 
-## Travis build
+## Deployment
 
-Whenever a branch is merged, our Travis script automatically builds and pushes a bundle to our RedHatInsights build repo.
+After all PRs have been merged, update the \`hybrid-committed-spend-frontend\` resource in https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/data/services/insights/hybrid-committed-spend/deploy.yml
 
-To view our Travis build, see https://app.travis-ci.com/github/RedHatInsights/hybrid-committed-spend-ui/builds
+Use the latest commit of each branch to update namespaces \`ref\` in the app-interface repo. Don't use a merge commit, SHAs must be unique when images are created for each branch.
 
-## RedHatInsights build repo
-
-After each successfully Travis build, you should see a new commit here https://github.com/RedHatInsights/hybrid-committed-spend-ui-build.
-
-At this point, the Insights pipeline takes over and the bundle should be available shortly in the expected staging environment. 
-
-Depending on how many builds are queued, this could take a few minutes or hours. Typically, the prod-stable environment is updated within 15-30 min.
+```
+- name: hybrid-committed-spend-frontend
+  ...
+    # Stage Stable Deployment
+  - namespace:
+      $ref: /services/insights/frontend-operator/namespaces/stage-frontends.yml
+    ref: 4b19fba6c54b6679a7be5010b9d97a5aab1fd48c // Replace with latest SHA for stage-beta branch
+    ...
+    # Prod Beta Deployment
+  - namespace:
+      $ref: /services/insights/frontend-operator/namespaces/prod-beta-frontends.yml
+    ref: 13f34a18f2c97faa814228fa38b5f5d32bed2ba3 // Replace with latest SHA for prod-beta branch
+    ...
+    # Prod Stable Deployment
+  - namespace:
+      $ref: /services/insights/frontend-operator/namespaces/prod-frontends.yml
+    ref: fbb0a70816dd656dbf6cb06654ed3c5d7e1ab379 // Replace with latest SHA for prod-stable branch
+    ...
+```
 
 ## Testing
 
@@ -54,6 +66,6 @@ Please ensure expected changes have been updated before releasing to the next st
 
 ## Troubleshooting
 
-If a staging environment has not updated as expected, it's best to ask questions in the forum-consoledot-ui channel of http://coreos.slack.com.
+If a staging environment has not updated as expected, it's best to ask questions in the forum-consoledot-ui or proj-fecontainer-migration channels of http://coreos.slack.com.
 
 Alternatively, open a Jira issue under the "ConsoleDot Platform (console.redhat.com) (RHCLOUD)" project category. For an example, see https://issues.redhat.com/browse/RHCLOUD-18259
