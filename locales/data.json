@@ -1263,6 +1263,14 @@
               }
             ]
           },
+          "embedded": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Embedded"
+              }
+            ]
+          },
           "gcp": {
             "value": [
               {
@@ -1287,6 +1295,14 @@
               }
             ]
           },
+          "oem": {
+            "value": [
+              {
+                "type": 0,
+                "value": "OEM"
+              }
+            ]
+          },
           "on_demand": {
             "value": [
               {
@@ -1297,6 +1313,14 @@
           },
           "other": {
             "value": []
+          },
+          "svp": {
+            "value": [
+              {
+                "type": 0,
+                "value": "SVP"
+              }
+            ]
           },
           "training": {
             "value": [
