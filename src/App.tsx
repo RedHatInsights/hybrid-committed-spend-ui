@@ -7,7 +7,6 @@ import { notificationsReducer } from '@redhat-cloud-services/frontend-components
 import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import type { Reducer } from 'redux';
 
 import pkg from '../package.json';
 import { initApi } from './api';
@@ -34,7 +33,7 @@ const App = () => {
 
   useEffect(() => {
     const registry = getRegistry();
-    registry.register({ notifications: notificationsReducer as Reducer });
+    registry.register({ notifications: notificationsReducer as any });
 
     // You can use directly the name of your app
     updateDocumentTitle(pkg.insights.appname);

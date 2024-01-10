@@ -13,13 +13,14 @@ import { Title } from '@patternfly/react-core';
 import messages from 'locales/messages';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { getCostRangeString, isFloat, isInt } from 'routes/components/charts/common/chart-datum';
+import { getCostRangeString } from 'routes/components/charts/common/chart-datum';
 import type { ChartSeries } from 'routes/components/charts/common/chart-utils';
 import {
   getChartNames,
   getDomain,
   getLegendData,
   getResizeObserver,
+  getTickFormat,
   getTickValues,
   getTooltipLabel,
   initHiddenSeries,
@@ -320,15 +321,7 @@ const TrendChart: React.FC<TrendChartProps> = ({
             <ChartAxis
               fixLabelOverlap
               style={styles.xAxis}
-              tickFormat={t => {
-                if (isFloat(t) || isInt(t)) {
-                  return t;
-                }
-                return intl.formatDate(`${t}T00:00:00`, {
-                  month: previousData ? 'long' : 'short',
-                  ...(!previousData && ({ year: 'numeric' } as any)),
-                });
-              }}
+              tickFormat={t => getTickFormat(t, previousData ? 'long' : 'short')}
               tickValues={getTickValues(series)}
             />
             <ChartAxis dependentAxis style={styles.yAxis} tickFormat={getTickValue} />
