@@ -1,21 +1,15 @@
 import { ReportPathsType, ReportType } from 'api/reports/report';
 import messages from 'locales/messages';
-import { lazy } from 'react';
 import { routes } from 'Routes';
 
 import type { DashboardWidget } from './dashboardCommon';
-import { DashboardSize } from './dashboardCommon';
-
-const ActualSpend = lazy(() => import('routes/overview/components/actual-spend'));
-const ActualSpendBreakdown = lazy(() => import('routes/overview/components/actual-spend-breakdown'));
-const CommittedSpend = lazy(() => import('routes/overview/components/committed-spend'));
-const CommittedSpendTrend = lazy(() => import('routes/overview/components/committed-spend-trend'));
+import { DashboardComponent, DashboardSize } from './dashboardCommon';
 
 let currrentId = 0;
 const getId = () => currrentId++;
 
 export const actualSpendWidget: DashboardWidget = {
-  component: ActualSpend,
+  component: DashboardComponent.ActualSpend,
   chartName: 'actualSpend',
   id: getId(),
   title: messages.dashboardActualSpendTitle,
@@ -25,7 +19,7 @@ export const actualSpendWidget: DashboardWidget = {
 };
 
 export const actualSpendBreakdownWidget: DashboardWidget = {
-  component: ActualSpendBreakdown,
+  component: DashboardComponent.ActualSpendBreakdown,
   chartName: 'actualSpendBreakdown',
   id: getId(),
   title: messages.dashboardActualSpendBreakdownTitle,
@@ -35,7 +29,7 @@ export const actualSpendBreakdownWidget: DashboardWidget = {
 };
 
 export const committedSpendWidget: DashboardWidget = {
-  component: CommittedSpend,
+  component: DashboardComponent.CommittedSpend,
   chartName: 'committedSpend',
   id: getId(),
   title: messages.dashboardCommitmentSpendTitle,
@@ -45,7 +39,7 @@ export const committedSpendWidget: DashboardWidget = {
 };
 
 export const committedSpendTrendWidget: DashboardWidget = {
-  component: CommittedSpendTrend,
+  component: DashboardComponent.CommittedSpendTrend,
   chartName: 'committedSpendTrend',
   id: getId(),
   title: messages.dashboardCommitmentSpendTrendTitle,

@@ -2,7 +2,6 @@ import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import type { BillingFilters, BillingQuery } from 'api/queries';
 import { getBillingQuery } from 'api/queries';
 import type { ReportPathsType, ReportType } from 'api/reports/report';
-import type { LazyExoticComponent } from 'react';
 
 export const dashboardStateKey = 'dashboard';
 export const dashboardDefaultFilters: BillingFilters = {
@@ -17,8 +16,16 @@ export const enum DashboardSize {
   half = 'half',
 }
 
+// eslint-disable-next-line no-shadow
+export const enum DashboardComponent {
+  ActualSpend,
+  ActualSpendBreakdown,
+  CommittedSpend,
+  CommittedSpendTrend,
+}
+
 export interface DashboardWidget {
-  component: LazyExoticComponent<React.FC<any>>;
+  component: DashboardComponent;
   chartName: string;
   filter?: any;
   id: number;
