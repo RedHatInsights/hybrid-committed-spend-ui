@@ -14,12 +14,13 @@ import {
 import messages from 'locales/messages';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { getMaxValue, isFloat, isInt } from 'routes/components/charts/common/chart-datum';
+import { getMaxValue } from 'routes/components/charts/common/chart-datum';
 import type { ChartSeries } from 'routes/components/charts/common/chart-utils';
 import {
   getChartNames,
   getLegendData,
   getResizeObserver,
+  getTickFormat,
   getTickValues,
   getTooltipLabel,
   initHiddenSeries,
@@ -420,15 +421,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           <ChartAxis
             fixLabelOverlap
             style={styles.xAxis}
-            tickFormat={t => {
-              if (isFloat(t) || isInt(t)) {
-                return t;
-              }
-              return intl.formatDate(`${t}T00:00:00`, {
-                month: 'short',
-                year: 'numeric',
-              });
-            }}
+            tickFormat={t => getTickFormat(t, 'short', 'numeric')}
             tickValues={getTickValues(series)}
           />
           <ChartAxis dependentAxis style={styles.yAxis} tickFormat={getTickValue} />
