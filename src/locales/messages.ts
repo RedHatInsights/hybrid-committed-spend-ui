@@ -470,10 +470,13 @@ export default defineMessages({
       'azure {Azure} ' +
       'ccsp {CCSP} ' +
       'consulting {Consulting} ' +
+      'embedded {Embedded} ' +
       'gcp {Google Cloud Platform} ' +
       'miscellaneous {Miscellaneous} ' +
       'oci {Oracle Cloud Infrastructure} ' +
+      'oem {OEM} ' +
       'on_demand {On-demand subscriptions} ' +
+      'svp {SVP} ' +
       'training {Training} ' +
       'yearly_subscriptions {Yearly subscriptions} ' +
       'other {}}',
