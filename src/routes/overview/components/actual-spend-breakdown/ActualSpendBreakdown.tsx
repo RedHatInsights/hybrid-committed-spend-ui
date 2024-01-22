@@ -1,6 +1,7 @@
 import messages from 'locales/messages';
 import React, { useState } from 'react';
 import { Perspective } from 'routes/components/perspective';
+import type { SelectWrapperOption } from 'routes/components/selectWrapper';
 import { isHcsDataVisibilitySummaryOnly, useUserAccessMapToProps } from 'utils/userAccess';
 
 import { ActualSpendBreakdownSummary } from './ActualSpendBreakdownSummary';
@@ -42,21 +43,36 @@ const ActualSpendBreakdownBase: React.FC<ActualSpendBreakdownProps> = ({ widgetI
   const { userAccess } = useUserAccessMapToProps();
 
   const getPerspective = () => {
-    return (
-      <Perspective currentItem={perspective} onSelected={handleOnPerspectiveSelected} options={perspectiveOptions} />
-    );
+    return <Perspective currentItem={perspective} onSelect={handleOnPerspectiveSelect} options={perspectiveOptions} />;
   };
 
   const getResolution = () => {
-    return <Perspective currentItem={resolution} onSelected={handleOnResolutionSelected} options={resolutionOptions} />;
+    return <Perspective currentItem={resolution} onSelect={handleOnResolutionSelect} options={resolutionOptions} />;
   };
 
-  const handleOnPerspectiveSelected = value => {
-    setPerspective(value);
+  const handleOnPerspectiveSelect = (_evt, selection: SelectWrapperOption) => {
+    switch (selection.value) {
+      case PerspectiveType.affiliate:
+        setPerspective(PerspectiveType.affiliate);
+        break;
+      case PerspectiveType.product:
+        setPerspective(PerspectiveType.product);
+        break;
+      case PerspectiveType.sourceOfSpend:
+        setPerspective(PerspectiveType.sourceOfSpend);
+        break;
+    }
   };
 
-  const handleOnResolutionSelected = value => {
-    setResolution(value);
+  const handleOnResolutionSelect = (_evt, selection: SelectWrapperOption) => {
+    switch (selection.value) {
+      case ResolutionType.cumulative:
+        setResolution(ResolutionType.cumulative);
+        break;
+      case ResolutionType.monthly:
+        setResolution(ResolutionType.monthly);
+        break;
+    }
   };
 
   return (
