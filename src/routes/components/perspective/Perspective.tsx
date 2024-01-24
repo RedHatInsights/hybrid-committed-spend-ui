@@ -62,29 +62,11 @@ const Perspective: React.FC<PerspectiveProps> = ({
           id={id}
           isDisabled={isDisabled}
           onSelect={onSelect}
+          options={selectOptions}
           selection={selection}
-          selectOptions={selectOptions}
         />
       </>
     );
-    // <Select
-    //   id={id}
-    //   isDisabled={isDisabled}
-    //   isOpen={isSelectOpen}
-    //   onSelect={(_evt, value) => handleOnSelect(value)}
-    //   onToggle={(_evt, isExpanded) => handleOnToggle(isExpanded)}
-    //   selections={selection}
-    //   variant={SelectVariant.single}
-    // >
-    //   {selectOptions.map((option, index) => (
-    //     <SelectOption
-    //       key={`${id}-${index}-${option.value}`}
-    //       description={option.description}
-    //       value={option}
-    //       isDisabled={option.isDisabled}
-    //     />
-    //   ))}
-    // </Select>
   };
 
   return (
