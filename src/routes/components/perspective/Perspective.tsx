@@ -56,16 +56,13 @@ const Perspective: React.FC<PerspectiveProps> = ({
     const selection = selectOptions.find(option => option.value === currentItem);
 
     return (
-      <>
-        TEST
-        <SelectWrapper
-          id={id}
-          isDisabled={isDisabled}
-          onSelect={onSelect}
-          options={selectOptions}
-          selection={selection}
-        />
-      </>
+      <SelectWrapper
+        id={id}
+        isDisabled={isDisabled}
+        onSelect={onSelect}
+        options={selectOptions}
+        selection={selection}
+      />
     );
   };
 

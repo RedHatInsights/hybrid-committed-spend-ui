@@ -64,3 +64,4 @@ dist/
 report.*.json
 locales/*[en|de|fr].json
 .vscode/
+.swc
