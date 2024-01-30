@@ -1,4 +1,4 @@
-import NotAuthorized from '@redhat-cloud-services/frontend-components/NotAuthorized';
+import NotAuthorized from '@patternfly/react-component-groups/dist/esm/NotAuthorized';
 import messages from 'locales/messages';
 import React from 'react';
 import { useIntl } from 'react-intl';

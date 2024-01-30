@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
+import type { SelectWrapperOption } from 'routes/components/selectWrapper';
 import { useAccountSummaryMapToProps } from 'routes/utils/accountSummary';
 
 import { CommittedSpendTrendSummary } from './CommittedSpendTrendSummary';
@@ -49,16 +50,19 @@ const CommittedSpendTrend: React.FC<CommittedSpendTrendProps> = ({ widgetId }) =
 
   const getPerspective = () => {
     return (
-      <Perspective
-        currentItem={perspective}
-        onSelected={handleOnPerspectiveSelected}
-        options={getPerspectiveOptions()}
-      />
+      <Perspective currentItem={perspective} onSelect={handleOnPerspectiveSelect} options={getPerspectiveOptions()} />
     );
   };
 
-  const handleOnPerspectiveSelected = value => {
-    setPerspective(value);
+  const handleOnPerspectiveSelect = (_evt, selection: SelectWrapperOption) => {
+    switch (selection.value) {
+      case PerspectiveType.actual:
+        setPerspective(PerspectiveType.actual);
+        break;
+      case PerspectiveType.previous_over_actual:
+        setPerspective(PerspectiveType.previous_over_actual);
+        break;
+    }
   };
 
   useEffect(() => {
