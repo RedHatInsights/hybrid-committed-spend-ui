@@ -26,7 +26,7 @@ const mockFilter: Filter = {
   },
 } as any;
 
-const filterType = FilterType.billing;
+const filterType = FilterType.affiliate;
 const filterPathsType = FilterPathsType.detailsFilter;
 const filterQueryString = 'filterQueryString';
 
