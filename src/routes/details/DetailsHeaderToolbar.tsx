@@ -14,6 +14,7 @@ import type { AnyAction } from 'redux';
 import type { ThunkDispatch } from 'redux-thunk';
 import { Perspective } from 'routes/components/perspective';
 import type { PerspectiveOption } from 'routes/components/perspective/Perspective';
+import type { SelectWrapperOption } from 'routes/components/selectWrapper';
 import { GroupByType, SourceOfSpendType } from 'routes/details/types';
 import { DateRangeType, getDateRange } from 'routes/utils/dateRange';
 import type { RootState } from 'store';
@@ -31,10 +32,10 @@ interface DetailsHeaderToolbarOwnProps {
   groupBy?: string;
   hasPreviousData?: boolean;
   isExportDisabled?: boolean;
-  onDateRangeSelected(value: string);
-  onGroupBySelected(value: string);
-  onSecondaryGroupBySelected(value: string);
-  onSourceOfSpendSelected(value: string);
+  onDateRangeSelect(event, selection: SelectWrapperOption);
+  onGroupBySelect(event, selection: SelectWrapperOption);
+  onSecondaryGroupBySelect(event, selection: SelectWrapperOption);
+  onSourceOfSpendSelect(event, selection: SelectWrapperOption);
   secondaryGroupBy?: string;
   sourceOfSpend?: string;
   startDate?: Date;
@@ -70,10 +71,10 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   dateRange,
   endDate,
   groupBy,
-  onDateRangeSelected,
-  onGroupBySelected,
-  onSecondaryGroupBySelected,
-  onSourceOfSpendSelected,
+  onDateRangeSelect,
+  onGroupBySelect,
+  onSecondaryGroupBySelect,
+  onSourceOfSpendSelect,
   previousContractLineEndDate,
   previousContractLineStartDate,
   secondaryGroupBy,
@@ -247,30 +248,6 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
     });
   };
 
-  const handleOnDateRangeSelected = value => {
-    if (onDateRangeSelected) {
-      onDateRangeSelected(value);
-    }
-  };
-
-  const handleOnGroupBySelected = value => {
-    if (onGroupBySelected) {
-      onGroupBySelected(value);
-    }
-  };
-
-  const handleOnSecondaryGroupBySelected = value => {
-    if (onSecondaryGroupBySelected) {
-      onSecondaryGroupBySelected(value);
-    }
-  };
-
-  const handleOnSourceOfSpendSelected = value => {
-    if (onSourceOfSpendSelected) {
-      onSourceOfSpendSelected(value);
-    }
-  };
-
   return (
     <Toolbar className="detailsHeaderToolbarOverride">
       <ToolbarContent>
@@ -280,7 +257,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
             id="sourceOfSpendType"
             label={intl.formatMessage(messages.sourceOfSpendLabel)}
             minWidth={200}
-            onSelected={handleOnSourceOfSpendSelected}
+            onSelect={onSourceOfSpendSelect}
             options={getSourceOfSpendOptions()}
           />
         </ToolbarItem>
@@ -290,7 +267,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
             id="groupBy"
             label={intl.formatMessage(messages.groupByLabel)}
             minWidth={200}
-            onSelected={handleOnGroupBySelected}
+            onSelect={onGroupBySelect}
             options={getGroupByOptions(false)}
           />
         </ToolbarItem>
@@ -300,7 +277,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
             id="secondaryGroupBy"
             label={intl.formatMessage(messages.secondaryGroupByLabel)}
             minWidth={200}
-            onSelected={handleOnSecondaryGroupBySelected}
+            onSelect={onSecondaryGroupBySelect}
             options={getGroupByOptions().filter(option => option.value !== groupBy)}
           />
         </ToolbarItem>
@@ -310,7 +287,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
             id="dateRange"
             label={intl.formatMessage(messages.dateRangeLabel)}
             minWidth={225}
-            onSelected={handleOnDateRangeSelected}
+            onSelect={onDateRangeSelect}
             options={getDateRangeOptions()}
           />
         </ToolbarItem>

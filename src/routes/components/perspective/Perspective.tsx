@@ -1,9 +1,9 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
 import { Title } from '@patternfly/react-core';
-import type { SelectOptionObject } from '@patternfly/react-core/deprecated';
-import { Select, SelectOption, SelectVariant } from '@patternfly/react-core/deprecated';
-import React, { useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
+import type { SelectWrapperOption } from 'routes/components/selectWrapper';
+import { SelectWrapper } from 'routes/components/selectWrapper';
 
 import { styles } from './Perspective.styles';
 
@@ -14,20 +14,13 @@ export interface PerspectiveOption {
   value: string;
 }
 
-interface PerspectiveOptionExt extends SelectOptionObject {
-  description?: string;
-  isDisabled?: boolean;
-  toString(): string; // label
-  value?: string;
-}
-
 interface PerspectiveOwnProps {
   currentItem?: string;
   id?: string;
   isDisabled?: boolean;
   label?: string;
   minWidth?: number | string;
-  onSelected(value: string);
+  onSelect(event, selection: SelectWrapperOption);
   options?: PerspectiveOption[];
 }
 
@@ -39,14 +32,13 @@ const Perspective: React.FC<PerspectiveProps> = ({
   isDisabled,
   label,
   minWidth,
-  onSelected,
+  onSelect,
   options,
 }) => {
-  const [isSelectOpen, setIsSelectOpen] = useState(false);
   const intl = useIntl();
 
-  const getSelectOptions = (): PerspectiveOptionExt[] => {
-    const selectOptions: PerspectiveOptionExt[] = [];
+  const getSelectOptions = (): SelectWrapperOption[] => {
+    const selectOptions: SelectWrapperOption[] = [];
 
     options.map(option => {
       selectOptions.push({
@@ -61,39 +53,17 @@ const Perspective: React.FC<PerspectiveProps> = ({
 
   const getSelect = () => {
     const selectOptions = getSelectOptions();
-    const selection = selectOptions.find((option: PerspectiveOptionExt) => option.value === currentItem);
+    const selection = selectOptions.find(option => option.value === currentItem);
 
     return (
-      <Select
+      <SelectWrapper
         id={id}
         isDisabled={isDisabled}
-        isOpen={isSelectOpen}
-        onSelect={(_evt, value) => handleOnSelect(value)}
-        onToggle={(_evt, isExpanded) => handleOnToggle(isExpanded)}
-        selections={selection}
-        variant={SelectVariant.single}
-      >
-        {selectOptions.map((option, index) => (
-          <SelectOption
-            key={`${id}-${index}-${option.value}`}
-            description={option.description}
-            value={option}
-            isDisabled={option.isDisabled}
-          />
-        ))}
-      </Select>
+        onSelect={onSelect}
+        options={selectOptions}
+        selection={selection}
+      />
     );
-  };
-
-  const handleOnSelect = (selection: SelectOptionObject) => {
-    if (onSelected) {
-      onSelected((selection as PerspectiveOption).value);
-    }
-    setIsSelectOpen(false);
-  };
-
-  const handleOnToggle = isOpen => {
-    setIsSelectOpen(isOpen);
   };
 
   return (

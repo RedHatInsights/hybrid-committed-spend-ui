@@ -10,6 +10,7 @@ import { useIntl } from 'react-intl';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ExportModal } from 'routes/components/export';
 import { PageHeading } from 'routes/components/page-heading';
+import type { SelectWrapperOption } from 'routes/components/selectWrapper';
 import {
   getDateRangeType,
   getGroupByType,
@@ -189,11 +190,11 @@ const Details: React.FC<DetailsProps> = () => {
     />
   );
 
-  const handleOnDateRangeSelected = value => {
-    setDateRange(value, () => {
+  const handleOnDateRangeSelect = (_evt, selection: SelectWrapperOption) => {
+    setDateRange(selection.value, () => {
       const newQuery = {
         ...JSON.parse(JSON.stringify(query)),
-        dateRange: value,
+        dateRange: selection.value,
       };
       navigate(getRouteForQuery(newQuery, true), { replace: true });
     });
@@ -217,14 +218,14 @@ const Details: React.FC<DetailsProps> = () => {
     navigate(getRouteForQuery(newQuery, true), { replace: true });
   };
 
-  const handleOnGroupBySelected = value => {
+  const handleOnGroupBySelect = (_evt, selection: SelectWrapperOption) => {
     handleOnFilterRemoved(null); // Clear all
     setSecondaryGroupBy(GroupByType.none);
-    setGroupBy(value, () => {
+    setGroupBy(selection.value, () => {
       const newQuery = {
         ...JSON.parse(JSON.stringify(query)),
         groupBy: {
-          [value]: '*',
+          [selection.value]: '*',
         },
         secondaryGroupBy: undefined,
         filter_by: undefined,
@@ -243,12 +244,12 @@ const Details: React.FC<DetailsProps> = () => {
     navigate(filteredQuery, { replace: true });
   };
 
-  const handleOnSecondaryGroupBySelected = value => {
-    setSecondaryGroupBy(value, () => {
+  const handleOnSecondaryGroupBySelect = (_evt, selection: SelectWrapperOption) => {
+    setSecondaryGroupBy(selection.value, () => {
       const newQuery = {
         ...JSON.parse(JSON.stringify(query)),
         secondaryGroupBy: {
-          [value]: '*',
+          [selection.value]: '*',
         },
       };
       navigate(getRouteForQuery(newQuery, true), { replace: true });
@@ -280,12 +281,12 @@ const Details: React.FC<DetailsProps> = () => {
     navigate(filteredQuery, { replace: true });
   };
 
-  const handleOnSourceOfSpendSelected = value => {
+  const handleOnSourceOfSpendSelect = (_evt, selection: SelectWrapperOption) => {
     setSecondaryGroupBy(GroupByType.none);
-    setSourceOfSpend(value, () => {
+    setSourceOfSpend(selection.value, () => {
       const newQuery = {
         ...JSON.parse(JSON.stringify(query)),
-        sourceOfSpend: value,
+        sourceOfSpend: selection.value,
         secondaryGroupBy: undefined,
       };
       navigate(getRouteForQuery(newQuery, true), { replace: true });
@@ -315,10 +316,10 @@ const Details: React.FC<DetailsProps> = () => {
           dateRange={dateRange}
           endDate={endDate}
           groupBy={groupBy}
-          onDateRangeSelected={handleOnDateRangeSelected}
-          onGroupBySelected={handleOnGroupBySelected}
-          onSecondaryGroupBySelected={handleOnSecondaryGroupBySelected}
-          onSourceOfSpendSelected={handleOnSourceOfSpendSelected}
+          onDateRangeSelect={handleOnDateRangeSelect}
+          onGroupBySelect={handleOnGroupBySelect}
+          onSecondaryGroupBySelect={handleOnSecondaryGroupBySelect}
+          onSourceOfSpendSelect={handleOnSourceOfSpendSelect}
           previousContractLineEndDate={previousContractLineEndDate}
           previousContractLineStartDate={previousContractLineStartDate}
           secondaryGroupBy={secondaryGroupBy}
