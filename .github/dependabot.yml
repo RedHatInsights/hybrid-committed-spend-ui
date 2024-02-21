@@ -14,3 +14,14 @@ updates:
       prefix: "(chore)"
     pull-request-branch-name:
       separator: "_"
+    groups:
+      lint-dependencies:
+        patterns:
+          - "*eslint*"
+      test-dependencies:
+        patterns:
+          - "*jest*"
+          - "@testing-library*"
+      ci-dependencies:
+        patterns:
+          - "*" # update remaining deps in single PR
