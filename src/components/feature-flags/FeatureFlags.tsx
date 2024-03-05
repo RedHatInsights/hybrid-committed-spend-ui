@@ -8,17 +8,27 @@ export const enum FeatureToggle {
   billingStage = 'hybrid-committed-spend.ui.billing-stage', // Toggle to enable billing.stage APIs for demos
 }
 
+const useIsFlagEnabled = (flag: FeatureToggle) => {
+  const client = useUnleashClient();
+  return client.isEnabled(flag);
+};
+
+export const useIsBillingStageFeatureEnabled = () => {
+  return useIsFlagEnabled(FeatureToggle.billingStage);
+};
+
 // The FeatureFlags component saves feature flags in store for places where Unleash hooks not available
 const useFeatureFlags = () => {
-  const client = useUnleashClient();
+  const isBillingStageFeatureEnabled = useIsBillingStageFeatureEnabled();
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     // Workaround for code that doesn't use hooks
-    const flags = {
-      isBillingStageFeatureEnabled: client.isEnabled(FeatureToggle.billingStage),
-    };
-    dispatch(featureFlagsActions.setFeatureFlags(flags));
+    dispatch(
+      featureFlagsActions.setFeatureFlags({
+        isBillingStageFeatureEnabled,
+      })
+    );
   });
 };
 
