@@ -81,13 +81,14 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
           labelComponent: (
             <ChartLegendTooltip
               legendData={getLegendData(series, hiddenSeries, true)}
-              title={datum =>
-                intl.formatMessage(messages.chartTooltipTitle, {
-                  value: intl.formatDate(`${datum.x}T00:00:00`, {
-                    month: 'long',
-                    year: 'numeric',
-                  }),
-                })
+              title={
+                (datum =>
+                  intl.formatMessage(messages.chartTooltipTitle, {
+                    value: intl.formatDate(`${datum.x}T00:00:00`, {
+                      month: 'long',
+                      year: 'numeric',
+                    }),
+                  })) as any
               }
             />
           ),
