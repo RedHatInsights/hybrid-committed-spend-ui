@@ -76,14 +76,13 @@ const TrendChart: React.FC<TrendChartProps> = ({
           labelComponent: (
             <ChartLegendTooltip
               legendData={getLegendData(series, hiddenSeries, true)}
-              title={
-                (datum =>
-                  intl.formatMessage(messages.chartTooltipTitle, {
-                    value: intl.formatDate(`${datum.key}T00:00:00`, {
-                      month: 'long',
-                      ...(!previousData && ({ year: 'numeric' } as any)),
-                    }),
-                  })) as any
+              title={datum =>
+                intl.formatMessage(messages.chartTooltipTitle, {
+                  value: intl.formatDate(`${datum.key}T00:00:00`, {
+                    month: 'long',
+                    ...(!previousData && ({ year: 'numeric' } as any)),
+                  }),
+                })
               }
             />
           ),
