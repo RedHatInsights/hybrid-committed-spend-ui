@@ -10,24 +10,25 @@ import { useSelector } from 'react-redux';
 
 import pkg from '../package.json';
 import { initApi } from './api';
-import { useFeatureFlags } from './components/feature-flags';
+import { useFeatureToggle } from './components/feature-toggle';
 import { Routes } from './Routes';
 import type { RootState } from './store';
-import { featureFlagsSelectors } from './store/feature-flags';
+import { featureToggleSelectors } from './store/feature-toggle';
 
 const App = () => {
   const { isProd, updateDocumentTitle } = useChrome();
 
-  const hasFeatureFlags = useSelector((state: RootState) => featureFlagsSelectors.selectHasFeatureFlags(state));
-  const isBillingStageFeatureEnabled = useSelector((state: RootState) =>
-    featureFlagsSelectors.selectIsBillingStageFeatureEnabled(state)
+  const hasFeatureToggle = useSelector((state: RootState) => featureToggleSelectors.selectHasFeatureToggle(state));
+  const isBillingStageFlagEnabled = useSelector((state: RootState) =>
+    featureToggleSelectors.selectIsBillingStageFlagEnabled(state)
   );
 
-  useFeatureFlags();
+  // Initialize Unleash feature toggles
+  useFeatureToggle();
 
   // Initialize here https://issues.redhat.com/browse/RHCLOUD-25573
   initApi({
-    isBillingStageFeatureEnabled,
+    isBillingStageFlagEnabled,
     version: 'v1',
   });
 
@@ -40,7 +41,7 @@ const App = () => {
   }, []);
 
   // Wait to ensure billing.stage.api.redhat.com APIs are called before defaulting to billing.qa.api.redhat.com domain
-  if (!isProd() && !hasFeatureFlags) {
+  if (!isProd() && !hasFeatureToggle) {
     return (
       <Bullseye>
         <Spinner size="lg" />
