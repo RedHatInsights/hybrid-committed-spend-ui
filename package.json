@@ -73,7 +73,7 @@
     "redux-promise-middleware": "^6.2.0",
     "redux-thunk": "^3.1.0",
     "typesafe-actions": "^5.1.0",
-    "victory-core": "^36.9.1"
+    "victory-core": "^37.0.0"
   },
   "devDependencies": {
     "@formatjs/cli": "^6.2.7",
@@ -88,7 +88,7 @@
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
-    "@types/react": "^18.2.66",
+    "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.13",
