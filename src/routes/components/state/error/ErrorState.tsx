@@ -30,7 +30,7 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, icon = ErrorCircleOIcon 
 
   return (
     <EmptyState variant={EmptyStateVariant.lg} className="pf-m-redhat-font">
-      <EmptyStateHeader titleText={<>{title}</>} icon={<EmptyStateIcon icon={icon} />} headingLevel="h5" />
+      <EmptyStateHeader titleText={title} icon={<EmptyStateIcon icon={icon} />} headingLevel="h5" />
       <EmptyStateBody>{subTitle}</EmptyStateBody>
     </EmptyState>
   );
