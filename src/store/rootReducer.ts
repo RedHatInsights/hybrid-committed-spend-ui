@@ -8,13 +8,13 @@ import { reportReducer, reportStateKey } from 'store/reports';
 import { userAccessReducer, userAccessStateKey } from 'store/user-access';
 import type { StateType } from 'typesafe-actions';
 
-import { featureFlagsReducer, featureFlagsStateKey } from './feature-flags';
+import { featureToggleReducer, featureToggleStateKey } from './feature-toggle';
 export type RootState = StateType<typeof rootReducer>;
 
 export const rootReducer = combineReducers({
   [dashboardStateKey]: dashboardReducer,
   [exportStateKey]: exportReducer,
-  [featureFlagsStateKey]: featureFlagsReducer,
+  [featureToggleStateKey]: featureToggleReducer,
   [filterStateKey]: filterReducer,
   [optionStateKey]: optionReducer,
   [reportStateKey]: reportReducer,

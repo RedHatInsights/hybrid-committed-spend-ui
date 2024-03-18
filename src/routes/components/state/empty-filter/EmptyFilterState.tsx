@@ -108,7 +108,7 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
     >
       <EmptyState>
         {getIcon()}
-        <EmptyStateHeader titleText={<>{intl.formatMessage(title)}</>} headingLevel="h2" />
+        <EmptyStateHeader titleText={intl.formatMessage(title)} headingLevel="h2" />
         <EmptyStateBody>{intl.formatMessage(subTitle)}</EmptyStateBody>
       </EmptyState>
     </div>
