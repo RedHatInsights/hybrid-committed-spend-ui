@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance } from 'api';
 
 import type { Option, OptionData, OptionMeta } from './option';
 import { OptionType } from './option';
@@ -21,5 +21,5 @@ export const OptionTypePaths: Partial<Record<OptionType, string>> = {
 export function runOption(reportType: OptionType, query: string) {
   const path = OptionTypePaths[reportType];
   const queryString = query ? `?${query}` : '';
-  return axios.get<DetailsOption>(`${path}${queryString}`);
+  return axiosInstance.get<DetailsOption>(`${path}${queryString}`);
 }
