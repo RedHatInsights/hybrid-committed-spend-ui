@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance } from 'api';
 
 import type { Filter, FilterData, FilterMeta } from './filter';
 import { FilterType } from './filter';
@@ -25,5 +25,5 @@ export const FilterTypePaths: Partial<Record<FilterType, string>> = {
 export function runFilter(reportType: FilterType, query: string) {
   const path = FilterTypePaths[reportType];
   const queryString = query ? `?${query}` : '';
-  return axios.get<DetailsFilter>(`${path}${queryString}`);
+  return axiosInstance.get<DetailsFilter>(`${path}${queryString}`);
 }
