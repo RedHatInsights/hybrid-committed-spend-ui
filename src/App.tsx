@@ -26,11 +26,8 @@ const App = () => {
   // Initialize Unleash feature toggles
   useFeatureToggle();
 
-  // Initialize here https://issues.redhat.com/browse/RHCLOUD-25573
-  initApi({
-    isBillingStageFlagEnabled,
-    version: 'v1',
-  });
+  // Initialize Axios base URL
+  initApi({ isBillingStageFlagEnabled });
 
   useEffect(() => {
     const registry = getRegistry();
