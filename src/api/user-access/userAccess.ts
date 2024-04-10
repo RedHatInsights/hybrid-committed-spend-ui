@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance } from 'api';
 
 export interface UserAccess {
   hcsDataVisibility?: number;
@@ -17,5 +17,5 @@ export const enum UserAccessType {
 // If the user-access API is called without a query parameter, all types are returned in the response
 export function fetchUserAccess(query: string) {
   const queryString = query ? `?${query}` : '';
-  return axios.get<UserAccess>(`authorization/hcsEnrollment${queryString}`);
+  return axiosInstance.get<UserAccess>(`authorization/hcsEnrollment${queryString}`);
 }
