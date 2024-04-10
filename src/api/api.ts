@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig } from 'axios';
+import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
 
 export interface PagedMetaData {
@@ -37,26 +37,23 @@ export interface PagedResponseAlt<D = any, M = any> {
  * console.redhat.com/api/billing -> billing.api.redhat.com
  * console.stage.redhat.com/api/billing -> billing.qa.api.redhat.com
  */
-export function initApi({
-  isBillingStageFlagEnabled = false,
-  version,
-}: {
-  isBillingStageFlagEnabled: boolean;
-  version: string;
-}) {
+export function initApi({ isBillingStageFlagEnabled }: { isBillingStageFlagEnabled: boolean }) {
+  if (!axiosInstance) {
+    return;
+  }
+
   const insights = (window as any).insights;
   const isStageAPI = isBillingStageFlagEnabled && !insights?.chrome?.isProd();
 
   // Use proxy for billing.api.redhat.com and billing.qa.api.redhat.com -- see https://issues.redhat.com/browse/HCS-222
-  const baseURL = isStageAPI ? 'https://billing.stage.api.redhat.com' : '/api/billing';
-
-  axios.defaults.baseURL = `${baseURL}/${version}/`;
-  axios.interceptors.request.use(authInterceptor);
+  if (isStageAPI) {
+    axiosInstance.defaults.baseURL = `https://billing.stage.api.redhat.com/v1/`;
+  }
 }
 
 export function authInterceptor(reqConfig: AxiosRequestConfig) {
   const insights = (window as any).insights;
-  return insights.chrome.auth.getToken().then(token => {
+  return insights?.chrome?.auth?.getToken().then(token => {
     if (!token) {
       return reqConfig;
     }
@@ -70,3 +67,15 @@ export function authInterceptor(reqConfig: AxiosRequestConfig) {
     };
   });
 }
+
+// Create an Axios instance
+//
+// Note: Setting global defaults may affect the base URL in Cost Management, HCS, and OCM, when navigating between apps
+// See https://issues.redhat.com/browse/RHCLOUD-25573
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: '/api/billing/v1/',
+});
+
+axiosInstance.interceptors.request.use(authInterceptor);
+
+export default axiosInstance;

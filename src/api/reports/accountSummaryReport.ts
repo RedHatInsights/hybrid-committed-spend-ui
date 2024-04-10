@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance } from 'api';
 
 import type { Report, ReportData, ReportMeta, ReportValue } from './report';
 import { ReportType } from './report';
@@ -37,5 +37,5 @@ export const ReportTypePaths: Partial<Record<ReportType, string>> = {
 export function runReport(reportType: ReportType, query: string) {
   const path = ReportTypePaths[reportType];
   const queryString = query ? `?${query}` : '';
-  return axios.get<AccountSummaryReport>(`${path}${queryString}`);
+  return axiosInstance.get<AccountSummaryReport>(`${path}${queryString}`);
 }
