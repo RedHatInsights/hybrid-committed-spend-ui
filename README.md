@@ -1,7 +1,7 @@
 # Hybrid Committed Spend UI
 
 [![Apache 2.0][license-badge]](https://github.com/RedHatInsights/hybrid-committed-spend-ui/blob/main/LICENSE)
-[![CI Status][build-badge]](https://github.com/RedHatInsights/hybrid-committed-spend-ui/actions/workflows/tag_release.yml)
+[![CI Status][build-badge]](https://github.com/RedHatInsights/hybrid-committed-spend-ui/actions/workflows/ci.yml?query=branch%3Amain)
 [![codecov][codecov-badge]](https://codecov.io/gh/RedHatInsights/hybrid-committed-spend-ui)
 
 React.js app for Red Hat Hybrid Committed Spend.
@@ -83,7 +83,7 @@ npm start:csb
 
 This [release][release-doc] doc describes how to release Hybrid Committed Spend UI to each staging environment.
 
-[build-badge]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/actions/workflows/tag_release.yml/badge.svg
+[build-badge]: https://github.com/RedHatInsights/hybrid-committed-spend-ui/actions/workflows/ci.yml/badge.svg?branch=main
 [codecov-badge]: https://codecov.io/gh/RedHatInsights/hybrid-committed-spend-ui/graph/badge.svg?token=1hjFIy1cRe
 [Jira]: https://issues.redhat.com/projects/HCS/
 [license-badge]: https://img.shields.io/github/license/RedHatInsights/hybrid-committed-spend-ui.svg?longCache=true
