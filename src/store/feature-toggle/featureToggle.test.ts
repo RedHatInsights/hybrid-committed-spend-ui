@@ -16,6 +16,6 @@ test('default state', async () => {
 
 test('Billing stage feature is enabled', async () => {
   const store = createUIStore();
-  store.dispatch(actions.setFeatureToggle({ isBillingStageFlagEnabled: true }));
-  expect(featureToggleSelectors.selectIsBillingStageFlagEnabled(store.getState())).toBe(true);
+  store.dispatch(actions.setFeatureToggle({ isBillingStageToggleEnabled: true }));
+  expect(featureToggleSelectors.selectIsBillingStageToggleEnabled(store.getState())).toBe(true);
 });

@@ -3,7 +3,7 @@
 exports[`default state 1`] = `
 {
   "hasFeatureToggle": false,
-  "isBillingStageFlagEnabled": false,
-  "isDebugFlagEnabled": false,
+  "isBillingStageToggleEnabled": false,
+  "isDebugToggleEnabled": false,
 }
 `;
