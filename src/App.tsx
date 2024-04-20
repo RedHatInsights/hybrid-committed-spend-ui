@@ -19,15 +19,15 @@ const App = () => {
   const { isProd, updateDocumentTitle } = useChrome();
 
   const hasFeatureToggle = useSelector((state: RootState) => featureToggleSelectors.selectHasFeatureToggle(state));
-  const isBillingStageFlagEnabled = useSelector((state: RootState) =>
-    featureToggleSelectors.selectIsBillingStageFlagEnabled(state)
+  const isBillingStageToggleEnabled = useSelector((state: RootState) =>
+    featureToggleSelectors.selectIsBillingStageToggleEnabled(state)
   );
 
   // Initialize Unleash feature toggles
   useFeatureToggle();
 
   // Initialize Axios base URL
-  initApi({ isBillingStageFlagEnabled });
+  initApi({ isBillingStageToggleEnabled });
 
   useEffect(() => {
     const registry = getRegistry();
