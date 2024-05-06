@@ -65,7 +65,7 @@
     "qs": "^6.12.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-intl": "^6.6.5",
+    "react-intl": "^6.6.6",
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.23.0",
     "redux": "^5.0.1",
@@ -76,12 +76,12 @@
     "victory-core": "^37.0.2"
   },
   "devDependencies": {
-    "@formatjs/cli": "^6.2.9",
+    "@formatjs/cli": "^6.2.10",
     "@formatjs/ecma402-abstract": "^1.18.2",
     "@formatjs/icu-messageformat-parser": "^2.7.6",
     "@redhat-cloud-services/eslint-config-redhat-cloud-services": "^2.0.4",
     "@redhat-cloud-services/frontend-components-config": "^6.0.12",
-    "@redhat-cloud-services/tsc-transform-imports": "^1.0.9",
+    "@redhat-cloud-services/tsc-transform-imports": "^1.0.10",
     "@swc/core": "^1.4.17",
     "@swc/jest": "^0.2.36",
     "@testing-library/jest-dom": "^6.4.2",
