@@ -15,11 +15,11 @@ const useIsToggleEnabled = (toggle: FeatureToggle) => {
   return client.isEnabled(toggle);
 };
 
-export const useIsBillingStageFlagEnabled = () => {
+export const useIsBillingStageToggleEnabled = () => {
   return useIsToggleEnabled(FeatureToggle.billingStage);
 };
 
-export const useIsDebugFlagEnabled = () => {
+export const useIsDebugToggleEnabled = () => {
   return useIsToggleEnabled(FeatureToggle.debug);
 };
 
@@ -28,8 +28,8 @@ const useFeatureToggle = () => {
   const dispatch = useDispatch();
   const { auth } = useChrome();
 
-  const isBillingStageFlagEnabled = useIsBillingStageFlagEnabled();
-  const isDebugFlagEnabled = useIsDebugFlagEnabled();
+  const isBillingStageToggleEnabled = useIsBillingStageToggleEnabled();
+  const isDebugToggleEnabled = useIsDebugToggleEnabled();
 
   const fetchUser = callback => {
     auth.getUser().then(user => {
@@ -41,15 +41,15 @@ const useFeatureToggle = () => {
     // Workaround for code that doesn't use hooks
     dispatch(
       featureToggleActions.setFeatureToggle({
-        isBillingStageFlagEnabled,
-        isDebugFlagEnabled,
+        isBillingStageToggleEnabled,
+        isDebugToggleEnabled,
       })
     );
-    if (isDebugFlagEnabled) {
+    if (isDebugToggleEnabled) {
       // eslint-disable-next-line no-console
       fetchUser(identity => console.log('User identity:', identity));
     }
-  }, [isBillingStageFlagEnabled, isDebugFlagEnabled]);
+  }, [isBillingStageToggleEnabled, isDebugToggleEnabled]);
 };
 
 export default useFeatureToggle;

@@ -2,16 +2,16 @@ import { PageSection } from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import React from 'react';
 
-import { NotViewableState } from './NotViewableState';
+import { NotViewerState } from './NotViewerState';
 
-interface NotViewableOwnProps {
+interface NotViewerOwnProps {
   pathname?: string;
   title?: string;
 }
 
-type NotViewableProps = NotViewableOwnProps;
+type NotViewerProps = NotViewerOwnProps;
 
-const NotViewable = ({ pathname, title }: NotViewableProps) => {
+const NotViewer = ({ pathname, title }: NotViewerProps) => {
   return (
     <>
       {title && (
@@ -20,10 +20,10 @@ const NotViewable = ({ pathname, title }: NotViewableProps) => {
         </PageHeader>
       )}
       <PageSection>
-        <NotViewableState pathname={pathname} />
+        <NotViewerState pathname={pathname} />
       </PageSection>
     </>
   );
 };
 
-export default NotViewable;
+export default NotViewer;
