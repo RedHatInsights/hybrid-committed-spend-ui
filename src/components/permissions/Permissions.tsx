@@ -1,6 +1,6 @@
 import React from 'react';
 import { routes } from 'Routes';
-import { Loading, NotAuthorized, NotAvailable, NotViewable } from 'routes/state';
+import { Loading, NotAuthorized, NotAvailable, NotDeal, NotViewer, NotVisible } from 'routes/state';
 import { FetchStatus } from 'store/common';
 import { useFormatPath, usePathname } from 'utils/paths';
 import { hasHcsDataVisibility, hasHcsDeal, hasHcsViewer, useUserAccessMapToProps } from 'utils/userAccess';
@@ -38,12 +38,16 @@ const Permissions: React.FC<PermissionsProps> = ({ children = null }) => {
 
   if (userAccessFetchStatus === FetchStatus.inProgress) {
     result = <Loading />;
+  } else if (userAccessError?.response?.request?.status === 401) {
+    result = <NotAuthorized pathname={pathname} />;
   } else if (userAccessError) {
     result = <NotAvailable />;
   } else if (userAccessFetchStatus === FetchStatus.complete && !hasHcsDeal(userAccess)) {
-    result = <NotAuthorized pathname={pathname} />;
+    result = <NotDeal pathname={pathname} />;
   } else if (userAccessFetchStatus === FetchStatus.complete && !hasHcsDataVisibility(userAccess)) {
-    result = <NotViewable pathname={pathname} />;
+    result = <NotVisible pathname={pathname} />;
+  } else if (userAccessFetchStatus === FetchStatus.complete && !hasHcsViewer(userAccess)) {
+    result = <NotViewer pathname={pathname} />;
   } else if (hasPermissions()) {
     result = <>{children}</>;
   }

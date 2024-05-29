@@ -398,15 +398,35 @@ export default defineMessages({
     description: 'No results found',
     id: 'noResultsFound',
   },
-  notViewable: {
-    defaultMessage: 'Committed Spend data is not viewable',
-    description: 'Committed Spend data is not viewable',
-    id: 'notViewable',
+  notDeal: {
+    defaultMessage: 'This organization does not participate in a Hybrid Committed Spend program.',
+    description: 'This organization does not participate in a Hybrid Committed Spend program.',
+    id: 'notDeal',
   },
-  notViewableDesc: {
+  notDealDesc: {
+    defaultMessage: 'Contact your Red Hat account representative for more information.',
+    description: 'Contact your Red Hat account representative for more information.',
+    id: 'notDealDesc',
+  },
+  notViewer: {
+    defaultMessage: 'You do not have permissions to view Hybrid Committed Spend',
+    description: 'You do not have permissions to view Hybrid Committed Spend',
+    id: 'notViewer',
+  },
+  notViewerDesc: {
+    defaultMessage: 'Please contact your account manager to assign a viewer role.',
+    description: 'Please contact your account manager to assign a viewer role.',
+    id: 'notViewerDesc',
+  },
+  notVisible: {
+    defaultMessage: 'Hybrid Committed Spend data is not visible',
+    description: 'Hybrid Committed Spend data is not visible',
+    id: 'notVisible',
+  },
+  notVisibleDesc: {
     defaultMessage: 'If you need access to this data, please contact your account manager.',
     description: 'If you need access to this data, please contact your account manager.',
-    id: 'notViewableDesc',
+    id: 'notVisibleDesc',
   },
   outOf: {
     defaultMessage: 'out of {value}',

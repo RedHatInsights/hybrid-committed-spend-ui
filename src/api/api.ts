@@ -37,13 +37,13 @@ export interface PagedResponseAlt<D = any, M = any> {
  * console.redhat.com/api/billing -> billing.api.redhat.com
  * console.stage.redhat.com/api/billing -> billing.qa.api.redhat.com
  */
-export function initApi({ isBillingStageFlagEnabled }: { isBillingStageFlagEnabled: boolean }) {
+export function initApi({ isBillingStageToggleEnabled }: { isBillingStageToggleEnabled: boolean }) {
   if (!axiosInstance) {
     return;
   }
 
   const insights = (window as any).insights;
-  const isStageAPI = isBillingStageFlagEnabled && !insights?.chrome?.isProd();
+  const isStageAPI = isBillingStageToggleEnabled && !insights?.chrome?.isProd();
 
   // Use proxy for billing.api.redhat.com and billing.qa.api.redhat.com -- see https://issues.redhat.com/browse/HCS-222
   if (isStageAPI) {
