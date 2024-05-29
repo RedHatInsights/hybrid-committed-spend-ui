@@ -6,15 +6,15 @@ import { useIntl } from 'react-intl';
 import { routes } from 'Routes';
 import { useFormatPath } from 'utils/paths';
 
-import { styles } from './NotViewable.styles';
+import { styles } from './NotVisible.styles';
 
-interface NotViewableStateOwnProps {
+interface NotVisibleStateOwnProps {
   pathname?: string;
 }
 
-type NotViewableStateProps = NotViewableStateOwnProps;
+type NotVisibleStateProps = NotVisibleStateOwnProps;
 
-const NotViewableState: React.FC<NotViewableStateProps> = ({ pathname }) => {
+const NotVisibleState: React.FC<NotVisibleStateProps> = ({ pathname }) => {
   const formatPath = useFormatPath;
   const intl = useIntl();
 
@@ -25,8 +25,8 @@ const NotViewableState: React.FC<NotViewableStateProps> = ({ pathname }) => {
     case formatPath(routes.details.path):
     case formatPath(routes.overview.path):
     default:
-      desc = messages.notViewableDesc;
-      title = messages.notViewable;
+      desc = messages.notVisibleDesc;
+      title = messages.notVisible;
       break;
   }
   return (
@@ -46,4 +46,4 @@ const NotViewableState: React.FC<NotViewableStateProps> = ({ pathname }) => {
   );
 };
 
-export { NotViewableState };
+export { NotVisibleState };

@@ -1,8 +1,8 @@
 import { createAction } from 'typesafe-actions';
 
 export interface FeatureToggleActionMeta {
-  isBillingStageFlagEnabled?: boolean;
-  isDebugFlagEnabled?: boolean;
+  isBillingStageToggleEnabled?: boolean;
+  isDebugToggleEnabled?: boolean;
 }
 
 export const setFeatureToggle = createAction('feature/init_feature_toggle')<FeatureToggleActionMeta>();
