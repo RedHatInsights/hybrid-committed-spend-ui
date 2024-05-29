@@ -8,14 +8,14 @@ export type FeatureToggleAction = ActionType<typeof setFeatureToggle | typeof re
 
 export type FeatureToggleState = Readonly<{
   hasFeatureToggle: boolean;
-  isBillingStageFlagEnabled: boolean;
-  isDebugFlagEnabled: boolean;
+  isBillingStageToggleEnabled: boolean;
+  isDebugToggleEnabled: boolean;
 }>;
 
 export const defaultState: FeatureToggleState = {
   hasFeatureToggle: false,
-  isBillingStageFlagEnabled: false,
-  isDebugFlagEnabled: false,
+  isBillingStageToggleEnabled: false,
+  isDebugToggleEnabled: false,
 };
 
 export const stateKey = 'featureToggle';
@@ -26,8 +26,8 @@ export function featureToggleReducer(state = defaultState, action: FeatureToggle
       return {
         ...state,
         hasFeatureToggle: true,
-        isBillingStageFlagEnabled: action.payload.isBillingStageFlagEnabled,
-        isDebugFlagEnabled: action.payload.isDebugFlagEnabled,
+        isBillingStageToggleEnabled: action.payload.isBillingStageToggleEnabled,
+        isDebugToggleEnabled: action.payload.isDebugToggleEnabled,
       };
 
     default:

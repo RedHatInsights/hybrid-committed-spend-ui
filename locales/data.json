@@ -1102,13 +1102,37 @@
         "value": "No results found"
       }
     ],
-    "notViewable": [
+    "notDeal": [
       {
         "type": 0,
-        "value": "Committed Spend data is not viewable"
+        "value": "This organization does not participate in a Hybrid Committed Spend program."
       }
     ],
-    "notViewableDesc": [
+    "notDealDesc": [
+      {
+        "type": 0,
+        "value": "Contact your Red Hat account representative for more information."
+      }
+    ],
+    "notViewer": [
+      {
+        "type": 0,
+        "value": "You do not have permissions to Hybrid Committed Spend"
+      }
+    ],
+    "notViewerDesc": [
+      {
+        "type": 0,
+        "value": "Please contact your account manager to assign a viewer role."
+      }
+    ],
+    "notVisible": [
+      {
+        "type": 0,
+        "value": "Hybrid Committed Spend data is not visible"
+      }
+    ],
+    "notVisibleDesc": [
       {
         "type": 0,
         "value": "If you need access to this data, please contact your account manager."
