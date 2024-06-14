@@ -24,8 +24,6 @@ interface UserAccessStateProps {
  * 30 Summary only (alert shown for limited data)
  * 50 Full (all data)
  */
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const hasAccess = (userAccess: UserAccess, userAccessType) => {
   if (!userAccess) {
     return false;
