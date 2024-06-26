@@ -450,7 +450,7 @@
     "docs": [
       {
         "type": 0,
-        "value": "https://access.redhat.com/documentation/en-us/hybrid_committed_spend/2023"
+        "value": "https://docs.redhat.com/en/documentation/hybrid_committed_spend/1-latest/html/getting_started_with_hybrid_committed_spend"
       }
     ],
     "emptyFilterStateSubtitle": [
@@ -1117,7 +1117,7 @@
     "notViewer": [
       {
         "type": 0,
-        "value": "You do not have permissions to Hybrid Committed Spend"
+        "value": "You do not have permissions to view Hybrid Committed Spend"
       }
     ],
     "notViewerDesc": [

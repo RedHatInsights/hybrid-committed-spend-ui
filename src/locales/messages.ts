@@ -192,8 +192,9 @@ export default defineMessages({
     id: 'detailsTitle',
   },
   docs: {
-    defaultMessage: 'https://access.redhat.com/documentation/en-us/hybrid_committed_spend/2023',
-    description: 'https://access.redhat.com/documentation/en-us/hybrid_committed_spend/2023',
+    defaultMessage:
+      'https://docs.redhat.com/en/documentation/hybrid_committed_spend/1-latest/html/getting_started_with_hybrid_committed_spend',
+    description: 'Getting started with hybrid committed spend',
     id: 'docs',
   },
   emptyFilterStateSubtitle: {
