@@ -10,13 +10,11 @@ export const dashboardDefaultFilters: BillingFilters = {
   resolution: 'daily',
 };
 
-// eslint-disable-next-line no-shadow
 export const enum DashboardSize {
   full = 'full',
   half = 'half',
 }
 
-// eslint-disable-next-line no-shadow
 export const enum DashboardComponent {
   ActualSpend,
   ActualSpendBreakdown,

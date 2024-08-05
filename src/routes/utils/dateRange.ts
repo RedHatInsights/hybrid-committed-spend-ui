@@ -9,7 +9,6 @@ import {
 } from 'utils/dates';
 
 // The date range drop down has the options below (if today is Jan 18th…)
-// eslint-disable-next-line no-shadow
 export const enum DateRangeType {
   contractedYear = 'contracted_year', // Current year for tables
   contractedYtd = 'contracted_ytd', // Current month (Jan 1 - Dec 31)
