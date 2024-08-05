@@ -6,7 +6,6 @@ export interface UserAccess {
   hcsViewer?: boolean;
 }
 
-// eslint-disable-next-line no-shadow
 export const enum UserAccessType {
   all = 'all',
   dataVisibility = 'dataVisibility',
