@@ -21,7 +21,7 @@ spec:
     - name: revision
       value: '{{revision}}'
     - name: output-image
-      value: quay.io/redhat-user-workloads/hcs-frontend-tenant/hcs-ui:{{revision}}
+      value: quay.io/redhat-user-workloads/hcs-frontend-tenant/hcs-ui/hcs-ui:{{revision}}
     - name: dockerfile
       value: ./Dockerfile
   pipelineSpec:
