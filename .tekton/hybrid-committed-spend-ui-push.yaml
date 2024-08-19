@@ -10,9 +10,9 @@ metadata:
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: hcs-ui
-    appstudio.openshift.io/component: hybrid-committed-spend-ui
+    appstudio.openshift.io/component: hcs-ui
     pipelines.appstudio.openshift.io/type: build
-  name: hybrid-committed-spend-ui-on-push
+  name: hcs-ui-on-push
   namespace: hcs-frontend-tenant
 spec:
   params:
@@ -21,7 +21,7 @@ spec:
     - name: revision
       value: '{{revision}}'
     - name: output-image
-      value: quay.io/redhat-user-workloads/hcs-frontend-tenant/hcs-ui/hybrid-committed-spend-ui:{{revision}}
+      value: quay.io/redhat-user-workloads/hcs-frontend-tenant/hcs-ui:{{revision}}
     - name: dockerfile
       value: ./Dockerfile
   pipelineSpec:
