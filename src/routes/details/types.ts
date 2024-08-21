@@ -1,7 +1,6 @@
 import type { Query } from 'api/queries';
 import { DateRangeType } from 'routes/utils/dateRange';
 
-// eslint-disable-next-line no-shadow
 export enum GroupByType {
   account = 'account',
   affiliate = 'affiliate',
@@ -10,7 +9,6 @@ export enum GroupByType {
   sourceOfSpend = 'source_of_spend',
 }
 
-// eslint-disable-next-line no-shadow
 export enum SourceOfSpendType {
   all = 'all',
   aws = 'aws',

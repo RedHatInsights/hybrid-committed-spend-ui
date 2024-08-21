@@ -18,7 +18,6 @@ interface CommittedSpendTrendStateProps {
 
 export type CommittedSpendTrendProps = CommittedSpendTrendOwnProps;
 
-// eslint-disable-next-line no-shadow
 export enum PerspectiveType {
   actual = 'actual',
   previous_over_actual = 'previous_over_actual',

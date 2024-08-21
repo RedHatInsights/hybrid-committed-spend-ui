@@ -1,0 +1,6 @@
+{
+  "ignorePaths": [
+    "**/.archive/**",
+    "**/node_modules/**"
+  ]
+}
