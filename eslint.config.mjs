@@ -101,7 +101,6 @@ export default [{
     rules: {
         '@typescript-eslint/adjacent-overload-signatures': 'error',
         '@typescript-eslint/array-type': 'error',
-        '@typescript-eslint/ban-types': 'error',
         '@typescript-eslint/camelcase': 'off',
         '@typescript-eslint/consistent-type-assertions': 'error',
         '@typescript-eslint/consistent-type-definitions': 'error',
@@ -112,8 +111,10 @@ export default [{
         '@typescript-eslint/indent': 'off',
         '@typescript-eslint/no-empty-function': 'off',
         '@typescript-eslint/no-empty-interface': 'off',
+        '@typescript-eslint/no-empty-object-type': 'off',
         '@typescript-eslint/no-misused-new': 'error',
         '@typescript-eslint/no-namespace': 'error',
+        '@typescript-eslint/no-unused-expressions': 'warn',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/prefer-for-of': 'error',
         '@typescript-eslint/prefer-function-type': 'error',

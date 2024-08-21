@@ -37,16 +37,14 @@ export interface ReportMeta extends PagedMetaData {
   others?: number;
 }
 
-export interface Report extends PagedResponse<ReportData, ReportMeta> {}
+export type Report = PagedResponse<ReportData, ReportMeta>;
 
-// eslint-disable-next-line no-shadow
 export const enum ReportType {
   actualSpend = 'actualSpend',
   committedSpend = 'committedSpend',
   details = 'details',
 }
 
-// eslint-disable-next-line no-shadow
 export const enum ReportPathsType {
   accountSummary = 'accountSummary',
   details = 'details',

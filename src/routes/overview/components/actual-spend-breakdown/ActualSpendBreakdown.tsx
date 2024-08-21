@@ -13,13 +13,11 @@ interface ActualSpendBreakdownOwnProps {
 
 export type ActualSpendBreakdownProps = ActualSpendBreakdownOwnProps;
 
-// eslint-disable-next-line no-shadow
 export enum ResolutionType {
   cumulative = 'cumulative',
   monthly = 'monthly',
 }
 
-// eslint-disable-next-line no-shadow
 export enum PerspectiveType {
   affiliate = 'affiliate',
   product = 'product',
