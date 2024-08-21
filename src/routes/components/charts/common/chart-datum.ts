@@ -52,13 +52,11 @@ export interface PadData {
 }
 
 // The computed report cost or usage item
-// eslint-disable-next-line no-shadow
 export const enum ComputedReportItemType {
   actualSpend = 'actualSpend',
   committedSpend = 'committedSpend',
 }
 
-// eslint-disable-next-line no-shadow
 export const enum DatumType {
   cumulative,
   rolling,
