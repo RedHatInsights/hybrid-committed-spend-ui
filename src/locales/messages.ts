@@ -44,18 +44,18 @@ export default defineMessages({
     id: 'cancel',
   },
   chartCurrentSpendLegendLabel: {
-    defaultMessage: 'Actual spend YTD ({dateRange})',
-    description: 'Actual spend YTD ({dateRange})',
+    defaultMessage: 'Current commitment spend ({dateRange})',
+    description: 'Current commitment spend ({dateRange})',
     id: 'chartCurrentSpendLegendLabel',
   },
   chartCurrentSpendNoDataLegendLabel: {
-    defaultMessage: 'Actual spend YTD (no data)',
-    description: 'Actual spend YTD (no data)',
+    defaultMessage: 'Current commitment spend (no data)',
+    description: 'Current commitment spend (no data)',
     id: 'chartCurrentSpendNoDataLegendLabel',
   },
   chartCurrentSpendTooltip: {
-    defaultMessage: 'Actual spend YTD',
-    description: 'Actual spend YTD',
+    defaultMessage: 'Current commitment spend',
+    description: 'Current commitment spend',
     id: 'chartCurrentSpendTooltip',
   },
   chartNoData: {
@@ -69,18 +69,18 @@ export default defineMessages({
     id: 'chartOthers',
   },
   chartPreviousSpendLegendLabel: {
-    defaultMessage: 'Previous year spend ({dateRange})',
-    description: 'Previous year spend ({dateRange})',
+    defaultMessage: 'Previous commitment spend ({dateRange})',
+    description: 'Previous commitment spend ({dateRange})',
     id: 'chartPreviousSpendLegendLabel',
   },
   chartPreviousSpendNoDataLegendLabel: {
-    defaultMessage: 'Previous year spend (no data)',
-    description: 'Previous year spend (no data)',
+    defaultMessage: 'Previous commitment spend (no data)',
+    description: 'Previous commitment spend (no data)',
     id: 'chartPreviousSpendNoDataLegendLabel',
   },
   chartPreviousSpendTooltip: {
-    defaultMessage: 'Previous year spend',
-    description: 'Previous year spend',
+    defaultMessage: 'Previous commitment spend',
+    description: 'Previous commitment spend',
     id: 'chartPreviousSpendTooltip',
   },
   chartThresholdSpendLegendLabel: {
@@ -106,8 +106,8 @@ export default defineMessages({
   committedSpendTrendPerspectiveValues: {
     defaultMessage:
       '{value, select, ' +
-      'actual {Actual spend} ' +
-      'previous_over_actual {Previous year over actual spend} ' +
+      'actual {Current spend} ' +
+      'previous_over_actual {Previous commitment period over current spend} ' +
       'other {}}',
     description: 'Committed spend trend perspective values',
     id: 'committedSpendTrendPerspectiveValues',
@@ -140,8 +140,8 @@ export default defineMessages({
     id: 'dashboardActualSpendBreakdownTitle',
   },
   dashboardActualSpendTitle: {
-    defaultMessage: 'Actual spend contract YTD',
-    description: 'Actual spend contract YTD',
+    defaultMessage: 'Current commitment period spend',
+    description: 'Current commitment period spend',
     id: 'dashboardActualSpendTitle',
   },
   dashboardCommitmentSpendTitle: {
@@ -157,8 +157,8 @@ export default defineMessages({
   dateRange: {
     defaultMessage:
       '{value, select, ' +
-      'contracted_ytd {Contracted YTD} ' +
-      'contracted_last_year {Past contracted year} ' +
+      'contracted_ytd {Current commitment period} ' +
+      'contracted_last_year {Past commitment period} ' +
       'last_nine_months {Last 9 months} ' +
       'last_six_months {Last 6 months} ' +
       'last_three_months {Last 3 months} ' +

@@ -4,7 +4,6 @@ import { useLayoutEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { featureToggleActions } from 'store/feature-toggle';
 
-// eslint-disable-next-line no-shadow
 export const enum FeatureToggle {
   billingStage = 'hybrid-committed-spend.ui.billing-stage', // Toggle to enable billing.stage APIs for demos
   debug = 'hybrid-committed-spend.ui.debug',

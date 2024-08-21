@@ -103,7 +103,7 @@
     "chartCurrentSpendLegendLabel": [
       {
         "type": 0,
-        "value": "Actual spend YTD ("
+        "value": "Current commitment spend ("
       },
       {
         "type": 1,
@@ -117,13 +117,13 @@
     "chartCurrentSpendNoDataLegendLabel": [
       {
         "type": 0,
-        "value": "Actual spend YTD (no data)"
+        "value": "Current commitment spend (no data)"
       }
     ],
     "chartCurrentSpendTooltip": [
       {
         "type": 0,
-        "value": "Actual spend YTD"
+        "value": "Current commitment spend"
       }
     ],
     "chartNoData": [
@@ -169,7 +169,7 @@
     "chartPreviousSpendLegendLabel": [
       {
         "type": 0,
-        "value": "Previous year spend ("
+        "value": "Previous commitment spend ("
       },
       {
         "type": 1,
@@ -183,13 +183,13 @@
     "chartPreviousSpendNoDataLegendLabel": [
       {
         "type": 0,
-        "value": "Previous year spend (no data)"
+        "value": "Previous commitment spend (no data)"
       }
     ],
     "chartPreviousSpendTooltip": [
       {
         "type": 0,
-        "value": "Previous year spend"
+        "value": "Previous commitment spend"
       }
     ],
     "chartThresholdSpendLegendLabel": [
@@ -231,7 +231,7 @@
             "value": [
               {
                 "type": 0,
-                "value": "Actual spend"
+                "value": "Current spend"
               }
             ]
           },
@@ -242,7 +242,7 @@
             "value": [
               {
                 "type": 0,
-                "value": "Previous year over actual spend"
+                "value": "Previous commitment period over current spend"
               }
             ]
           }
@@ -351,7 +351,7 @@
     "dashboardActualSpendTitle": [
       {
         "type": 0,
-        "value": "Actual spend contract YTD"
+        "value": "Current commitment period spend"
       }
     ],
     "dashboardCommitmentSpendTitle": [
@@ -373,7 +373,7 @@
             "value": [
               {
                 "type": 0,
-                "value": "Past contracted year"
+                "value": "Past commitment period"
               }
             ]
           },
@@ -381,7 +381,7 @@
             "value": [
               {
                 "type": 0,
-                "value": "Contracted YTD"
+                "value": "Current commitment period"
               }
             ]
           },
