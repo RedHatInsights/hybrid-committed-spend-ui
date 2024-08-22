@@ -30,19 +30,22 @@ const NotDealState: React.FC<NotDealStateProps> = ({ pathname }) => {
       break;
   }
   return (
-    <NotAuthorized
-      actions={
-        <div style={styles.docs}>
-          <a href={intl.formatMessage(messages.docs)} rel="noreferrer" target="_blank">
-            {intl.formatMessage(messages.hcsDocumentation)}
-          </a>
-        </div>
-      }
-      description={intl.formatMessage(desc)}
-      icon={PauseCircleIcon}
-      showReturnButton={false}
-      title={intl.formatMessage(title)}
-    />
+    <>
+      <NotAuthorized
+        actions={
+          <div style={styles.docs}>
+            <a href={intl.formatMessage(messages.docs)} rel="noreferrer" target="_blank">
+              {intl.formatMessage(messages.hcsDocumentation)}
+            </a>
+          </div>
+        }
+        description={intl.formatMessage(desc)}
+        icon={PauseCircleIcon}
+        showReturnButton={false}
+        title={intl.formatMessage(title)}
+      />
+      +
+    </>
   );
 };
 
