@@ -59,7 +59,7 @@
     "@redhat-cloud-services/frontend-components-utilities": "^4.0.17",
     "@reduxjs/toolkit": "^2.2.7",
     "@unleash/proxy-client-react": "^4.3.1",
-    "axios": "^1.7.5",
+    "axios": "^1.7.6",
     "classnames": "^2.5.1",
     "js-file-download": "^0.4.12",
     "qs": "^6.13.0",
@@ -73,10 +73,10 @@
     "redux-promise-middleware": "^6.2.0",
     "redux-thunk": "^3.1.0",
     "typesafe-actions": "^5.1.0",
-    "victory-core": "37.0.2",
-    "victory-create-container": "37.0.2",
-    "victory-cursor-container": "37.0.2",
-    "victory-voronoi-container": "37.0.2"
+    "victory-core": "37.1.0",
+    "victory-create-container": "37.1.0",
+    "victory-cursor-container": "37.1.0",
+    "victory-voronoi-container": "37.1.0"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
