@@ -44,7 +44,7 @@ const NotVisibleState: React.FC<NotVisibleStateProps> = ({ pathname }) => {
         showReturnButton={false}
         title={intl.formatMessage(title)}
       />
-      +
+      .
     </>
   );
 };
