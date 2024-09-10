@@ -1,11 +1,11 @@
+// Todo: Uncomment for use with non-shared PatternFly packages
+// import '@patternfly/patternfly/patternfly.css';
+import '@patternfly/patternfly/patternfly-addons.css';
+
 import IntlProvider from '@redhat-cloud-services/frontend-components-translations/Provider';
 import { getLocale } from 'components/i18n';
 import React from 'react';
 import { Provider } from 'react-redux';
-
-// Todo: Uncomment for use with non-shared PatternFly packages
-require.resolve('@patternfly/patternfly/patternfly.css');
-require.resolve('@patternfly/patternfly/patternfly-addons.css');
 
 // eslint-disable-next-line no-restricted-imports
 import messages from '../locales/data.json';
