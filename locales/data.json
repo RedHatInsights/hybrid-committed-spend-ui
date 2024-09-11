@@ -1287,6 +1287,14 @@
               }
             ]
           },
+          "direct": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Direct"
+              }
+            ]
+          },
           "embedded": {
             "value": [
               {
@@ -1300,6 +1308,14 @@
               {
                 "type": 0,
                 "value": "Google Cloud Platform"
+              }
+            ]
+          },
+          "indirect": {
+            "value": [
+              {
+                "type": 0,
+                "value": "Indirect"
               }
             ]
           },
