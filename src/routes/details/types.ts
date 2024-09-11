@@ -86,8 +86,12 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'CCSP';
     case SourceOfSpendType.consulting:
       return 'Consulting';
+    case SourceOfSpendType.direct:
+      return 'Direct';
     case SourceOfSpendType.gcp:
       return 'Google Cloud Platform';
+    case SourceOfSpendType.indirect:
+      return 'Indirect';
     case SourceOfSpendType.miscellaneous:
       return 'Miscellaneous';
     case SourceOfSpendType.oci:
@@ -100,7 +104,7 @@ export function getSourceOfSpendFilter(sourceOfSpendType): string {
       return 'Yearly subscriptions';
     case SourceOfSpendType.all:
     default:
-      return 'All sources of spend';
+      return undefined;
   }
 }
 
@@ -114,8 +118,12 @@ export function getSourceOfSpendType(sourceOfSpendType: SourceOfSpendType): stri
       return 'ccsp';
     case SourceOfSpendType.consulting:
       return 'consulting';
+    case SourceOfSpendType.direct:
+      return 'direct';
     case SourceOfSpendType.gcp:
       return 'gcp';
+    case SourceOfSpendType.indirect:
+      return 'indirect';
     case SourceOfSpendType.miscellaneous:
       return 'miscellaneous';
     case SourceOfSpendType.oci:
