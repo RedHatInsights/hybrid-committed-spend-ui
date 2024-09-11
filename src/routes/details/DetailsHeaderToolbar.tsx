@@ -190,7 +190,7 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   const getSourceOfSpendOptions = () => {
     const newOptions = cloneDeep(sourceOfSpendOptions);
 
-    if (options?.data?.source_of_spend) {
+    if (options?.data?.source_of_spend.length > 0) {
       options.data.source_of_spend.forEach(item => {
         switch (item.code.toLowerCase()) {
           case SourceOfSpendType.aws:
