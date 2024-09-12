@@ -126,6 +126,7 @@ export const useDetailsMapToProps = ({
     },
     orderBy: query.orderBy,
     ...(startDate && endDate && { ...formatDate({ startDate, endDate }) }),
+    sourceOfSpend: undefined, // Not supported by API
   };
 
   // Add secondaryGroupBy for export API request

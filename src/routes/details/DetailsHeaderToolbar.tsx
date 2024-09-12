@@ -190,53 +190,57 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   const getSourceOfSpendOptions = () => {
     const newOptions = cloneDeep(sourceOfSpendOptions);
 
-    if (options?.data?.source_of_spend) {
-      options.data.source_of_spend.forEach(item => {
-        switch (item.code) {
-          case SourceOfSpendType.aws:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.aws });
-            break;
-          case SourceOfSpendType.azure:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.azure });
-            break;
-          case SourceOfSpendType.ccsp:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.ccsp });
-            break;
-          case SourceOfSpendType.consulting:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.consulting });
-            break;
-          case SourceOfSpendType.embedded:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.embedded });
-            break;
-          case SourceOfSpendType.gcp:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
-            break;
-          case SourceOfSpendType.miscellaneous:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.miscellaneous });
-            break;
-          case SourceOfSpendType.on_demand:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.on_demand });
-            break;
-          case SourceOfSpendType.oem:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oem });
-            break;
-          case SourceOfSpendType.oci:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oci });
-            break;
-          case SourceOfSpendType.svp:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.svp });
-            break;
-          case SourceOfSpendType.training:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.training });
-            break;
-          case SourceOfSpendType.yearlySubscriptions:
-            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.yearlySubscriptions });
-            break;
-          default:
-            break;
-        }
-      });
-    }
+    options?.data?.source_of_spend?.forEach(item => {
+      switch (item.code.toLowerCase()) {
+        case SourceOfSpendType.aws:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.aws });
+          break;
+        case SourceOfSpendType.azure:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.azure });
+          break;
+        case SourceOfSpendType.ccsp:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.ccsp });
+          break;
+        case SourceOfSpendType.consulting:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.consulting });
+          break;
+        case SourceOfSpendType.direct:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.direct });
+          break;
+        case SourceOfSpendType.embedded:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.embedded });
+          break;
+        case SourceOfSpendType.gcp:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
+          break;
+        case SourceOfSpendType.indirect:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.indirect });
+          break;
+        case SourceOfSpendType.miscellaneous:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.miscellaneous });
+          break;
+        case SourceOfSpendType.on_demand:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.on_demand });
+          break;
+        case SourceOfSpendType.oem:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oem });
+          break;
+        case SourceOfSpendType.oci:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.oci });
+          break;
+        case SourceOfSpendType.svp:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.svp });
+          break;
+        case SourceOfSpendType.training:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.training });
+          break;
+        case SourceOfSpendType.yearlySubscriptions:
+          newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.yearlySubscriptions });
+          break;
+        default:
+          break;
+      }
+    });
     return newOptions.sort((a: any, b: any) => {
       if (a.value > b.value) {
         return 1;
