@@ -490,8 +490,10 @@ export default defineMessages({
       'azure {Azure} ' +
       'ccsp {CCSP} ' +
       'consulting {Consulting} ' +
+      'direct {Direct} ' +
       'embedded {Embedded} ' +
       'gcp {Google Cloud Platform} ' +
+      'indirect {Indirect} ' +
       'miscellaneous {Miscellaneous} ' +
       'oci {Oracle Cloud Infrastructure} ' +
       'oem {OEM} ' +
