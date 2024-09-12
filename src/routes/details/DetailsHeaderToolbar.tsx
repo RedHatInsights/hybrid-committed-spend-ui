@@ -190,9 +190,9 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
   const getSourceOfSpendOptions = () => {
     const newOptions = cloneDeep(sourceOfSpendOptions);
 
-    if (options?.data?.source_of_spend) {
+    if (options?.data?.source_of_spend.length > 0) {
       options.data.source_of_spend.forEach(item => {
-        switch (item.code) {
+        switch (item.code.toLowerCase()) {
           case SourceOfSpendType.aws:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.aws });
             break;
@@ -205,11 +205,17 @@ const DetailsHeaderToolbar: React.FC<DetailsToolbarProps> = ({
           case SourceOfSpendType.consulting:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.consulting });
             break;
+          case SourceOfSpendType.direct:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.direct });
+            break;
           case SourceOfSpendType.embedded:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.embedded });
             break;
           case SourceOfSpendType.gcp:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.gcp });
+            break;
+          case SourceOfSpendType.indirect:
+            newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.indirect });
             break;
           case SourceOfSpendType.miscellaneous:
             newOptions.push({ label: messages.sourceOfSpendValues, value: SourceOfSpendType.miscellaneous });
