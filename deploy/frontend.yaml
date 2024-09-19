@@ -42,4 +42,4 @@ parameters:
   - name: IMAGE_TAG
     required: true
   - name: IMAGE
-    value: quay.io/cloudservices/hybrid-committed-spend-frontend
+    value: quay.io/redhat-services-prod/rh-hcs-tenant/hcs-frontend
