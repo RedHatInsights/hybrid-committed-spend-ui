@@ -242,7 +242,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   };
 
   const handleOnResize = () => {
-    const { clientWidth = 0 } = containerRef.current || {};
+    const { clientWidth = 0 } = containerRef?.current || {};
 
     if (clientWidth !== width) {
       setWidth(clientWidth);
@@ -382,7 +382,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   }, [top1stData, top2ndData, top3rdData, top4thData, top5thData]);
 
   useEffect(() => {
-    const unobserve = getResizeObserver(containerRef.current, handleOnResize);
+    const unobserve = getResizeObserver(containerRef?.current, handleOnResize);
     return () => {
       if (unobserve) {
         unobserve();
