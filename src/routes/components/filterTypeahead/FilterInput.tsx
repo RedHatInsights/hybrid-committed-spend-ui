@@ -196,10 +196,10 @@ const FilterInput: React.FC<FilterInputProps> = ({
   // Close menu when a click occurs outside the menu or text input group
   const handleOnPopperClick = event => {
     if (
-      menuRef.current &&
-      textInputGroupRef.current &&
-      !menuRef.current.contains(event.target) &&
-      !textInputGroupRef.current.contains(event.target)
+      menuRef?.current &&
+      textInputGroupRef?.current &&
+      !menuRef?.current.contains(event.target) &&
+      !textInputGroupRef?.current.contains(event.target)
     ) {
       setMenuIsOpen(false);
     }

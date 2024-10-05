@@ -143,7 +143,7 @@ const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
   };
 
   useEffect(() => {
-    if (isMounted.current) {
+    if (isMounted?.current) {
       initDatum();
     }
   }, [JSON.stringify(report)]);
