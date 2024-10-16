@@ -9,3 +9,5 @@ export const selectHasFeatureToggle = (state: RootState) => selectFeatureToggleS
 export const selectIsBillingStageToggleEnabled = (state: RootState) =>
   selectFeatureToggleState(state).isBillingStageToggleEnabled;
 export const selectIsDebugToggleEnabled = (state: RootState) => selectFeatureToggleState(state).isDebugToggleEnabled;
+export const selectIsOverridePermissionsToggleEnabled = (state: RootState) =>
+  selectFeatureToggleState(state).isOverridePermissionsToggleEnabled;

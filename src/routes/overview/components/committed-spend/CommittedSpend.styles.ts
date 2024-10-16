@@ -1,4 +1,4 @@
-import global_FontSize_3xl from '@patternfly/react-tokens/dist/js/global_FontSize_3xl';
+import t_global_font_size_3xl from '@patternfly/react-tokens/dist/js/t_global_font_size_3xl';
 import type React from 'react';
 
 export const styles = {
@@ -10,7 +10,7 @@ export const styles = {
     justifyContent: 'center',
   },
   value: {
-    fontSize: global_FontSize_3xl.var,
+    fontSize: t_global_font_size_3xl.var,
   },
   valueContainer: {
     display: 'flex',
