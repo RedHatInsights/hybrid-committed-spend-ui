@@ -19,7 +19,7 @@ const NotDeal = ({ pathname, title }: NotDealProps) => {
           <PageHeaderTitle title={title} />
         </PageHeader>
       )}
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <NotDealState pathname={pathname} />
       </PageSection>
     </>

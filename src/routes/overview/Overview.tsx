@@ -1,4 +1,5 @@
 import { Bullseye, PageSection, Spinner } from '@patternfly/react-core';
+import { useIsOverridePermissionsToggleEnabled } from 'components/feature-toggle';
 import messages from 'locales/messages';
 import React, { lazy, Suspense } from 'react';
 import { useIntl } from 'react-intl';
@@ -22,16 +23,19 @@ type OverviewProps = OverviewOwnProps;
 
 const Overview: React.FC<OverviewProps> = () => {
   const { hasReportErrors } = useMapToProps({});
+  const isOverridePermissionsToggleEnabled = useIsOverridePermissionsToggleEnabled();
   const intl = useIntl();
 
-  if (hasReportErrors) {
+  if (hasReportErrors && !isOverridePermissionsToggleEnabled) {
     const title = intl.formatMessage(messages.overviewTitle);
     return <NotAvailable title={title} />;
   }
 
   return (
     <React.Fragment>
-      <PageHeading />
+      <PageSection>
+        <PageHeading />
+      </PageSection>
       <PageSection>
         <Suspense
           fallback={
