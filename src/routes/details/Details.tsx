@@ -1,9 +1,19 @@
-import { Alert, Bullseye, PageSection, Pagination, PaginationVariant, Spinner } from '@patternfly/react-core';
+import {
+  Alert,
+  Bullseye,
+  Card,
+  CardBody,
+  PageSection,
+  Pagination,
+  PaginationVariant,
+  Spinner,
+} from '@patternfly/react-core';
 import type { Query } from 'api/queries';
 import { getQueryRoute, parseQuery } from 'api/queries';
 import type { Report } from 'api/reports/report';
 import { ReportPathsType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
+import { useIsOverridePermissionsToggleEnabled } from 'components/feature-toggle';
 import messages from 'locales/messages';
 import React, { lazy, Suspense, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -71,6 +81,7 @@ const Details: React.FC<DetailsProps> = () => {
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [secondaryGroupBy, setSecondaryGroupBy] = useStateCallback(useDefaultSecondaryGroupBy());
   const [sourceOfSpend, setSourceOfSpend] = useStateCallback(useDefaultSourceOfSpend());
+  const isOverridePermissionsToggleEnabled = useIsOverridePermissionsToggleEnabled();
   const intl = useIntl();
 
   const {
@@ -296,37 +307,39 @@ const Details: React.FC<DetailsProps> = () => {
   const computedItems = getComputedItems();
   const isDisabled = computedItems.length === 0;
 
-  if (reportError || summaryError) {
+  if ((reportError || summaryError) && !isOverridePermissionsToggleEnabled) {
     const title = intl.formatMessage(messages.detailsTitle);
     return <NotAvailable title={title} />;
   }
   return (
     <React.Fragment>
-      <PageHeading>
-        {isHcsDataVisibilitySummaryOnly(userAccess) && (
-          <div style={styles.alertContainer}>
-            <Alert isInline variant="info" title={intl.formatMessage(messages.breakdownAlertTitle)}>
-              <p>{intl.formatMessage(messages.breakdownAlertDesc)}</p>
-            </Alert>
-          </div>
-        )}
-        <DetailsHeaderToolbar
-          consumptionDate={consumptionDate}
-          contractLineStartDate={contractLineStartDate}
-          dateRange={dateRange}
-          endDate={endDate}
-          groupBy={groupBy}
-          onDateRangeSelect={handleOnDateRangeSelect}
-          onGroupBySelect={handleOnGroupBySelect}
-          onSecondaryGroupBySelect={handleOnSecondaryGroupBySelect}
-          onSourceOfSpendSelect={handleOnSourceOfSpendSelect}
-          previousContractLineEndDate={previousContractLineEndDate}
-          previousContractLineStartDate={previousContractLineStartDate}
-          secondaryGroupBy={secondaryGroupBy}
-          sourceOfSpend={sourceOfSpend}
-          startDate={startDate}
-        />
-      </PageHeading>
+      <PageSection style={styles.headerContainer}>
+        <PageHeading>
+          {isHcsDataVisibilitySummaryOnly(userAccess) && (
+            <div style={styles.alertContainer}>
+              <Alert isInline variant="info" title={intl.formatMessage(messages.breakdownAlertTitle)}>
+                <p>{intl.formatMessage(messages.breakdownAlertDesc)}</p>
+              </Alert>
+            </div>
+          )}
+          <DetailsHeaderToolbar
+            consumptionDate={consumptionDate}
+            contractLineStartDate={contractLineStartDate}
+            dateRange={dateRange}
+            endDate={endDate}
+            groupBy={groupBy}
+            onDateRangeSelect={handleOnDateRangeSelect}
+            onGroupBySelect={handleOnGroupBySelect}
+            onSecondaryGroupBySelect={handleOnSecondaryGroupBySelect}
+            onSourceOfSpendSelect={handleOnSourceOfSpendSelect}
+            previousContractLineEndDate={previousContractLineEndDate}
+            previousContractLineStartDate={previousContractLineStartDate}
+            secondaryGroupBy={secondaryGroupBy}
+            sourceOfSpend={sourceOfSpend}
+            startDate={startDate}
+          />
+        </PageHeading>
+      </PageSection>
       <PageSection>
         <Suspense
           fallback={
@@ -335,16 +348,20 @@ const Details: React.FC<DetailsProps> = () => {
             </Bullseye>
           }
         >
-          {getFilterToolbar(isDisabled)}
-          {getExportModal()}
-          {!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress ? (
-            <Loading />
-          ) : (
-            <React.Fragment>
-              <div>{getTable()}</div>
-              <div style={styles.pagination}>{getPagination(isDisabled, true)}</div>
-            </React.Fragment>
-          )}
+          <Card>
+            <CardBody>
+              {getFilterToolbar(isDisabled)}
+              {getExportModal()}
+              {!reportFetchStatus || reportFetchStatus === FetchStatus.inProgress ? (
+                <Loading />
+              ) : (
+                <React.Fragment>
+                  {getTable()}
+                  <div style={styles.pagination}>{getPagination(isDisabled, true)}</div>
+                </React.Fragment>
+              )}
+            </CardBody>
+          </Card>
         </Suspense>
       </PageSection>
     </React.Fragment>
