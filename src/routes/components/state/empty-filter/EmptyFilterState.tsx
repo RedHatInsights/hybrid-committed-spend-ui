@@ -1,5 +1,5 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
-import { EmptyState, EmptyStateBody, EmptyStateHeader, EmptyStateIcon } from '@patternfly/react-core';
+import { EmptyState, EmptyStateBody } from '@patternfly/react-core';
 import { SearchIcon } from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import type { Query } from 'api/queries/query';
 import { parseQuery } from 'api/queries/query';
@@ -44,7 +44,7 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
     return <img style={imgs[index]} />;
   };
 
-  const getIcon = () => {
+  const getItem = () => {
     const trim = (val: string) => val.replace(/\s+/g, '').toLowerCase();
     const filterTest1 = (val: string) => trim(val) === atob('cmVkaGF0');
     const filterTest2 = (val: string) => trim(val) === atob('a29rdQ==');
@@ -95,9 +95,11 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
     } else if (showAltIcon2) {
       return <ImgScroll />;
     } else {
-      return <EmptyStateIcon icon={icon} />;
+      return null;
     }
   };
+
+  const item = getItem();
 
   return (
     <div
@@ -106,9 +108,8 @@ const EmptyFilterState: React.FC<EmptyFilterStateProps> = ({
         ...(showMargin ? styles.containerMargin : {}),
       }}
     >
-      <EmptyState>
-        {getIcon()}
-        <EmptyStateHeader titleText={intl.formatMessage(title)} headingLevel="h2" />
+      <EmptyState headingLevel="h2" icon={!item ? icon : undefined} titleText={intl.formatMessage(title)}>
+        {item}
         <EmptyStateBody>{intl.formatMessage(subTitle)}</EmptyStateBody>
       </EmptyState>
     </div>

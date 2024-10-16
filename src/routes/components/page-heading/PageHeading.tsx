@@ -1,4 +1,4 @@
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import { Title, TitleSizes } from '@patternfly/react-core';
 import { getQuery } from 'api/queries';
 import type { AccountSummaryReport } from 'api/reports/accountSummaryReport';
 import { ReportPathsType, ReportType } from 'api/reports/report';
@@ -64,9 +64,11 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
   };
 
   return (
-    <PageHeader>
+    <header>
       <div style={styles.headingContent}>
-        <PageHeaderTitle title={intl.formatMessage(getPageTitle())} />
+        <Title headingLevel="h1" style={styles.title} size={TitleSizes['2xl']}>
+          {intl.formatMessage(getPageTitle())}
+        </Title>
         {reportFetchStatus !== FetchStatus.inProgress && (
           <div>
             <div style={styles.headingContentRight}>
@@ -102,7 +104,7 @@ const PageHeading: React.FC<PageHeadingProps> = ({ children }) => {
         )}
       </div>
       {children}
-    </PageHeader>
+    </header>
   );
 };
 

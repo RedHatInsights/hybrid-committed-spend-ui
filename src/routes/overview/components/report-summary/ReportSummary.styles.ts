@@ -1,11 +1,11 @@
-import { global_Color_200 } from '@patternfly/react-tokens/dist/js/global_Color_200';
-import { global_FontSize_xs } from '@patternfly/react-tokens/dist/js/global_FontSize_xs';
-import { global_spacer_lg } from '@patternfly/react-tokens/dist/js/global_spacer_lg';
-import { global_spacer_md } from '@patternfly/react-tokens/dist/js/global_spacer_md';
+import { t_global_font_size_xs } from '@patternfly/react-tokens/dist/js/t_global_font_size_xs';
+import { t_global_spacer_lg } from '@patternfly/react-tokens/dist/js/t_global_spacer_lg';
+import { t_global_spacer_md } from '@patternfly/react-tokens/dist/js/t_global_spacer_md';
+import { t_global_text_color_200 } from '@patternfly/react-tokens/dist/js/t_global_text_color_200';
 
 export const styles = {
   alertContainer: {
-    marginBottom: global_spacer_lg.var,
+    marginBottom: t_global_spacer_lg.var,
   },
   cardFooter: {
     display: 'flex',
@@ -13,19 +13,19 @@ export const styles = {
   },
   chartSkeleton: {
     height: '125px',
-    marginBottom: global_spacer_md.var,
-    marginTop: global_spacer_md.var,
+    marginBottom: t_global_spacer_md.var,
+    marginTop: t_global_spacer_md.var,
   },
   legendSkeleton: {
-    marginTop: global_spacer_md.var,
+    marginTop: t_global_spacer_md.var,
   },
   reportSummary: {
     height: '100%',
   },
   subtitle: {
     display: 'inline-block',
-    fontSize: global_FontSize_xs.var,
-    color: global_Color_200.var,
+    fontSize: t_global_font_size_xs.var,
+    color: t_global_text_color_200.var,
     marginBottom: 0,
   },
   titleContainer: {
