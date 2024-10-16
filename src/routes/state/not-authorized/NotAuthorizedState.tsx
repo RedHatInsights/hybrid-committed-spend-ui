@@ -1,4 +1,4 @@
-import NotAuthorized from '@patternfly/react-component-groups/dist/esm/NotAuthorized';
+import UnauthorizedAccess from '@patternfly/react-component-groups/dist/esm/UnauthorizedAccess';
 import messages from 'locales/messages';
 import React from 'react';
 import { useIntl } from 'react-intl';
@@ -24,7 +24,7 @@ const NotAuthorizedState: React.FC<NotAuthorizedStateProps> = ({ pathname }) => 
       msg = messages.hcs;
       break;
   }
-  return <NotAuthorized serviceName={intl.formatMessage(msg)} />;
+  return <UnauthorizedAccess serviceName={intl.formatMessage(msg)} />;
 };
 
 export { NotAuthorizedState };

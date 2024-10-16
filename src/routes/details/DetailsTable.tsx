@@ -1,13 +1,6 @@
 import './DetailsTable.scss';
 
-import {
-  Bullseye,
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateHeader,
-  EmptyStateIcon,
-  Spinner,
-} from '@patternfly/react-core';
+import { Bullseye, EmptyState, EmptyStateBody, Spinner } from '@patternfly/react-core';
 import { CalculatorIcon } from '@patternfly/react-icons/dist/esm/icons/calculator-icon';
 import type { ThProps } from '@patternfly/react-table';
 import {
@@ -183,8 +176,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
       }
     }
     return (
-      <EmptyState>
-        <EmptyStateHeader icon={<EmptyStateIcon icon={CalculatorIcon} />} />
+      <EmptyState icon={CalculatorIcon} titleText={undefined}>
         <EmptyStateBody>{intl.formatMessage(messages.detailsEmptyState)}</EmptyStateBody>
       </EmptyState>
     );

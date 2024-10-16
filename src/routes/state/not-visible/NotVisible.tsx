@@ -19,7 +19,7 @@ const NotVisible = ({ pathname, title }: NotVisibleProps) => {
           <PageHeaderTitle title={title} />
         </PageHeader>
       )}
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <NotVisibleState pathname={pathname} />
       </PageSection>
     </>
