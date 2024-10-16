@@ -38,14 +38,18 @@ const ExcessSpend: React.FC<ExcessSpendProps> = ({ excessSpend, isExcluded }) =>
           </>
         }
       >
-        <Button aria-label={intl.formatMessage(messages.excessSpendButtonAriaLabel)} variant={ButtonVariant.plain}>
-          <span style={styles.infoContainer}>
-            <InfoCircleIcon />
-            <span style={styles.infoLabel}>
-              {intl.formatMessage(isExcluded ? messages.excessSpendExcluded : messages.excessSpendIncluded)}
+        <Button
+          icon={
+            <span style={styles.infoContainer}>
+              <InfoCircleIcon />
+              <span style={styles.infoLabel}>
+                {intl.formatMessage(isExcluded ? messages.excessSpendExcluded : messages.excessSpendIncluded)}
+              </span>
             </span>
-          </span>
-        </Button>
+          }
+          aria-label={intl.formatMessage(messages.excessSpendButtonAriaLabel)}
+          variant={ButtonVariant.plain}
+        />
       </Popover>
     </span>
   );
