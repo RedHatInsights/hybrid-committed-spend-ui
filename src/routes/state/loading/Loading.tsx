@@ -16,7 +16,7 @@ const Loading = ({ title }: LoadingProps) => {
           <PageHeaderTitle title={title} />
         </PageHeader>
       )}
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Bullseye>
           <Spinner size="lg" />
         </Bullseye>
