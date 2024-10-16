@@ -1,9 +1,9 @@
 import './App.scss';
 
+import NotificationsPortal from '@ausuliv/frontend-components-notifications/NotificationPortal';
+import { notificationsReducer } from '@ausuliv/frontend-components-notifications/redux';
 import { Bullseye, Spinner } from '@patternfly/react-core';
 import { useChrome } from '@redhat-cloud-services/frontend-components/useChrome';
-import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
-import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
