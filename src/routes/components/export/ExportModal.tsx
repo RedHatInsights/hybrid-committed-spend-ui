@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
-import { Alert, Button, ButtonVariant, Form, FormGroup, Grid, GridItem, Modal, Radio } from '@patternfly/react-core';
+import { Alert, Button, ButtonVariant, Form, FormGroup, Grid, GridItem, Radio } from '@patternfly/react-core';
+import { Modal } from '@patternfly/react-core/deprecated';
 import type { ReportPathsType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
