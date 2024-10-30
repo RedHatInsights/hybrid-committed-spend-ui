@@ -26,7 +26,7 @@ interface SelectWrapperOwnProps {
 
 type SelectWrapperProps = SelectWrapperOwnProps;
 
-const SelectWrapper: React.FC<SelectWrapperProps> = ({
+export const SelectWrapper: React.FC<SelectWrapperProps> = ({
   ariaLabel,
   className,
   id,
@@ -104,5 +104,3 @@ const SelectWrapper: React.FC<SelectWrapperProps> = ({
     </div>
   );
 };
-
-export default SelectWrapper;
