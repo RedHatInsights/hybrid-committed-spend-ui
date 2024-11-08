@@ -1,1 +1,1 @@
-export { default as SelectWrapper, SelectWrapperOption } from './selectWrapper';
+export * from './selectWrapper';
