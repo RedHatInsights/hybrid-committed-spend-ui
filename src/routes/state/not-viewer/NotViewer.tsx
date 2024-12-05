@@ -19,7 +19,7 @@ const NotViewer = ({ pathname, title }: NotViewerProps) => {
           <PageHeaderTitle title={title} />
         </PageHeader>
       )}
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <NotViewerState pathname={pathname} />
       </PageSection>
     </>
