@@ -239,6 +239,7 @@ const Details: React.FC<DetailsProps> = () => {
     newQuery.filter = {
       ...query.filter,
       limit: perPage,
+      offset: 0,
     };
     const filteredQuery = getRouteForQuery(newQuery, true);
     navigate(filteredQuery, { replace: true });
