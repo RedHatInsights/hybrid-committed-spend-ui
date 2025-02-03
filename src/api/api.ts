@@ -27,15 +27,10 @@ export interface PagedResponseAlt<D = any, M = any> {
 /*
  * API environments:
  *
- * billing.api.redhat.com (prod)
- * billing.qa.api.redhat.com (default)
- * billing.stage.api.redhat.com (UAT testing)
- * billing.dev.api.redhat.com
- *
- * ConsoleDot proxies:
- *
- * console.redhat.com/api/billing -> billing.api.redhat.com
- * console.stage.redhat.com/api/billing -> billing.qa.api.redhat.com
+ * billing.api.redhat.com/v1/ (prod)
+ * billing.qa.api.redhat.com/v1/ (UI development)
+ * billing.stage.api.redhat.com/v1/ (UAT testing)
+ * billing.dev.api.redhat.com/v1/ (Backend development)
  */
 export function initApi({ isBillingStageToggleEnabled }: { isBillingStageToggleEnabled: boolean }) {
   if (!axiosInstance) {
@@ -43,9 +38,14 @@ export function initApi({ isBillingStageToggleEnabled }: { isBillingStageToggleE
   }
 
   const insights = (window as any).insights;
-  const isStageAPI = isBillingStageToggleEnabled && !insights?.chrome?.isProd();
+  const isProd = insights?.chrome?.isProd();
+  const isStageAPI = isBillingStageToggleEnabled && !isProd;
 
-  // Use proxy for billing.api.redhat.com and billing.qa.api.redhat.com -- see https://issues.redhat.com/browse/HCS-222
+  /**
+   * The stage API is used with users created for UAT testing
+   *
+   * Use proxy for billing.api.redhat.com and billing.qa.api.redhat.com -- see https://issues.redhat.com/browse/HCS-222
+   */
   if (isStageAPI) {
     axiosInstance.defaults.baseURL = `https://billing.stage.api.redhat.com/v1/`;
   }
@@ -68,12 +68,22 @@ export function authInterceptor(reqConfig: AxiosRequestConfig) {
   });
 }
 
-// Create an Axios instance
-//
-// Note: Setting global defaults may affect the base URL in Cost Management, HCS, and OCM, when navigating between apps
-// See https://issues.redhat.com/browse/RHCLOUD-25573
+/**
+ * Create an Axios instance
+ *
+ * Note: Setting global defaults may affect the base URL in Cost Management, HCS, and OCM, when navigating between apps
+ * See https://issues.redhat.com/browse/RHCLOUD-25573
+ */
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: '/api/billing/v1/',
+  /**
+   * ConsoleDot proxies:
+   *
+   * console.stage.redhat.com/api/billing -> billing.qa.redhat.com (billing.qa.api.redhat.com)
+   * console.redhat.com/api/billing -> billing.redhat.com (billing.api.redhat.com)
+   *
+   * See Sources UI: https://github.com/RedHatInsights/sources-ui/pull/1269
+   */
+  baseURL: `/api/billing/v1/`, // Note: Request URLs coming out of stage.foo should be stage.foo, never console.stage
 });
 
 axiosInstance.interceptors.request.use(authInterceptor);
