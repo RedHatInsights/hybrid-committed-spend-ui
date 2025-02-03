@@ -39,16 +39,18 @@ const CommittedSpend: React.FC<CommittedSpendProps> = ({ widgetId }) => {
 
   const values = report?.data?.length && report.data[0];
 
-  const committedSpend: string | React.ReactNode = values?.committed_spend?.value ? (
-    formatCurrency(values.committed_spend.value, values.committed_spend.units)
-  ) : (
-    <EmptyValueState />
-  );
-  const remainingCommittedSpend: string | React.ReactNode = values?.remaining_committed_spend?.value ? (
-    formatCurrency(values.remaining_committed_spend.value, values.remaining_committed_spend.units)
-  ) : (
-    <EmptyValueState />
-  );
+  const committedSpend: string | React.ReactNode =
+    values?.committed_spend?.value >= 0 ? (
+      formatCurrency(values.committed_spend.value, values.committed_spend.units)
+    ) : (
+      <EmptyValueState />
+    );
+  const remainingCommittedSpend: string | React.ReactNode =
+    values?.remaining_committed_spend?.value >= 0 ? (
+      formatCurrency(values.remaining_committed_spend.value, values.remaining_committed_spend.units)
+    ) : (
+      <EmptyValueState />
+    );
 
   let dateRange: string | React.ReactNode = <EmptyValueState />;
   if (values?.contract_line_end_date) {
