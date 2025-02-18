@@ -1,4 +1,4 @@
-import type { ToolbarChipGroup } from '@patternfly/react-core';
+import type { ToolbarLabelGroup } from '@patternfly/react-core';
 import {
   Button,
   Divider,
@@ -109,9 +109,12 @@ const FilterInput: React.FC<FilterInputProps> = ({
             />
             {search?.length && (
               <TextInputGroupUtilities>
-                <Button variant="plain" onClick={handleOnClear} aria-label="Clear button and input">
-                  <TimesIcon />
-                </Button>
+                <Button
+                  icon={<TimesIcon />}
+                  variant="plain"
+                  onClick={handleOnClear}
+                  aria-label="Clear button and input"
+                />
               </TextInputGroupUtilities>
             )}
           </TextInputGroup>
@@ -154,7 +157,7 @@ const FilterInput: React.FC<FilterInputProps> = ({
     return menuItems;
   };
 
-  const getOptions = (): ToolbarChipGroup[] => {
+  const getOptions = (): ToolbarLabelGroup[] => {
     const options = [];
     if (filter?.data?.length > 0 && filterFetchStatus !== FetchStatus.inProgress) {
       filter.data.map(item => {
