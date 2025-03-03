@@ -8,7 +8,7 @@ import {
   ChartLegendTooltip,
   createContainer,
   getInteractiveLegendEvents,
-} from '@patternfly/react-charts';
+} from '@patternfly/react-charts/victory';
 import { Title } from '@patternfly/react-core';
 import messages from 'locales/messages';
 import React, { useEffect, useMemo, useState } from 'react';
