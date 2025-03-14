@@ -1,5 +1,18 @@
 import type { MessageDescriptor } from '@formatjs/intl/src/types';
-import { Alert, Button, ButtonVariant, Form, FormGroup, Grid, GridItem, Modal, Radio } from '@patternfly/react-core';
+import {
+  Alert,
+  Button,
+  ButtonVariant,
+  Form,
+  FormGroup,
+  Grid,
+  GridItem,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Radio,
+} from '@patternfly/react-core';
 import type { ReportPathsType } from 'api/reports/report';
 import type { AxiosError } from 'axios';
 import messages from 'locales/messages';
@@ -62,13 +75,38 @@ const ExportModal: React.FC<ExportModalProps> = ({
   };
 
   return (
-    <Modal
-      style={styles.modal}
-      isOpen={isOpen}
-      onClose={handleOnClose}
-      title={intl.formatMessage(messages.exportTitle)}
-      variant="small"
-      actions={[
+    <Modal style={styles.modal} isOpen={isOpen} onClose={handleOnClose} variant="small">
+      <ModalHeader title={intl.formatMessage(messages.exportTitle)} />
+      <ModalBody>
+        {error && <Alert variant="danger" style={styles.alert} title={intl.formatMessage(messages.exportError)} />}
+        <div style={styles.title}>
+          <span>{intl.formatMessage(messages.exportHeading, { groupBy })}</span>
+        </div>
+        {showDataTypes && (
+          <Form style={styles.form}>
+            <Grid hasGutter md={6}>
+              <GridItem span={12}>
+                <FormGroup fieldId="formatType" label={intl.formatMessage(messages.exportDataTypeTitle)} isRequired>
+                  {dataTypeOptions.map((option, index) => (
+                    <Radio
+                      key={index}
+                      id={`formatType-${index}`}
+                      isValid={option.value !== undefined}
+                      label={intl.formatMessage(option.label, { value: option.value })}
+                      value={option.value}
+                      checked={dataType === option.value}
+                      name="formatType"
+                      onChange={handleOnDataTypeChange}
+                      aria-label={intl.formatMessage(option.label, { value: option.value })}
+                    />
+                  ))}
+                </FormGroup>
+              </GridItem>
+            </Grid>
+          </Form>
+        )}
+      </ModalBody>
+      <ModalFooter>
         <ExportSubmit
           dataType={dataType}
           endDate={endDate}
@@ -80,39 +118,11 @@ const ExportModal: React.FC<ExportModalProps> = ({
           reportQueryString={reportQueryString}
           secondaryGroupBy={secondaryGroupBy}
           startDate={startDate}
-        />,
+        />
         <Button key="cancel" onClick={handleOnClose} variant={ButtonVariant.link}>
           {intl.formatMessage(messages.cancel)}
-        </Button>,
-      ]}
-    >
-      {error && <Alert variant="danger" style={styles.alert} title={intl.formatMessage(messages.exportError)} />}
-      <div style={styles.title}>
-        <span>{intl.formatMessage(messages.exportHeading, { groupBy })}</span>
-      </div>
-      {showDataTypes && (
-        <Form style={styles.form}>
-          <Grid hasGutter md={6}>
-            <GridItem span={12}>
-              <FormGroup fieldId="formatType" label={intl.formatMessage(messages.exportDataTypeTitle)} isRequired>
-                {dataTypeOptions.map((option, index) => (
-                  <Radio
-                    key={index}
-                    id={`formatType-${index}`}
-                    isValid={option.value !== undefined}
-                    label={intl.formatMessage(option.label, { value: option.value })}
-                    value={option.value}
-                    checked={dataType === option.value}
-                    name="formatType"
-                    onChange={handleOnDataTypeChange}
-                    aria-label={intl.formatMessage(option.label, { value: option.value })}
-                  />
-                ))}
-              </FormGroup>
-            </GridItem>
-          </Grid>
-        </Form>
-      )}
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };
