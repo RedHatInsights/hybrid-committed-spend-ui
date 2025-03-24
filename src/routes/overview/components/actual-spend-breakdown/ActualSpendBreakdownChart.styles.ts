@@ -1,4 +1,4 @@
-import global_spacer_lg from '@patternfly/react-tokens/dist/js/global_spacer_lg';
+import t_global_spacer_lg from '@patternfly/react-tokens/dist/js/t_global_spacer_lg';
 
 export const chartStyles = {
   chartHeight: 265,
@@ -6,6 +6,6 @@ export const chartStyles = {
 
 export const styles = {
   chartContainer: {
-    marginTop: global_spacer_lg.var,
+    marginTop: t_global_spacer_lg.var,
   },
 };

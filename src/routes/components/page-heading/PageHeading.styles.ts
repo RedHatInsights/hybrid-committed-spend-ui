@@ -1,9 +1,9 @@
-import global_FontSize_xs from '@patternfly/react-tokens/dist/js/global_FontSize_xs';
+import t_global_font_size_xs from '@patternfly/react-tokens/dist/js/t_global_font_size_xs';
 import type React from 'react';
 
 export const styles = {
   emptyValue: {
-    marginLeft: global_FontSize_xs.var,
+    marginLeft: t_global_font_size_xs.var,
   },
   headingContent: {
     display: 'flex',

@@ -1,4 +1,4 @@
-import { Bullseye, PageSection, Spinner } from '@patternfly/react-core';
+import { Card, CardBody, PageSection, Spinner } from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import React from 'react';
 
@@ -16,10 +16,12 @@ const Loading = ({ title }: LoadingProps) => {
           <PageHeaderTitle title={title} />
         </PageHeader>
       )}
-      <PageSection>
-        <Bullseye>
-          <Spinner size="lg" />
-        </Bullseye>
+      <PageSection hasBodyWrapper={false}>
+        <Card>
+          <CardBody>
+            <Spinner size="lg" />
+          </CardBody>
+        </Card>
       </PageSection>
     </>
   );
