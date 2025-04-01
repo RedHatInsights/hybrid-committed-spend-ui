@@ -1,6 +1,6 @@
-import global_FontSize_3xl from '@patternfly/react-tokens/dist/js/global_FontSize_3xl';
-import global_spacer_2xl from '@patternfly/react-tokens/dist/js/global_spacer_2xl';
-import global_spacer_sm from '@patternfly/react-tokens/dist/js/global_spacer_sm';
+import t_global_font_size_3xl from '@patternfly/react-tokens/dist/js/t_global_font_size_3xl';
+import t_global_spacer_2xl from '@patternfly/react-tokens/dist/js/t_global_spacer_2xl';
+import t_global_spacer_sm from '@patternfly/react-tokens/dist/js/t_global_spacer_sm';
 import type React from 'react';
 
 export const styles = {
@@ -12,7 +12,7 @@ export const styles = {
     minHeight: '125px',
   },
   percentage: {
-    paddingLeft: global_spacer_sm.var,
+    paddingLeft: t_global_spacer_sm.var,
   },
   percentContainer: {
     display: 'flex',
@@ -20,9 +20,9 @@ export const styles = {
   },
   value: {
     alignSelf: 'end',
-    marginRight: global_spacer_2xl.var,
+    marginRight: t_global_spacer_2xl.var,
     marginTop: '10px',
-    fontSize: global_FontSize_3xl.var,
+    fontSize: t_global_font_size_3xl.var,
   },
   valueContainer: {
     display: 'flex',

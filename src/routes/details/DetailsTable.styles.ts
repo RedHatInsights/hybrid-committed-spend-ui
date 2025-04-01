@@ -1,13 +1,13 @@
-import global_BackgroundColor_light_100 from '@patternfly/react-tokens/dist/js/global_BackgroundColor_light_100';
-import global_spacer_3xl from '@patternfly/react-tokens/dist/js/global_spacer_3xl';
+import t_global_background_color_100 from '@patternfly/react-tokens/dist/js/t_global_background_color_100';
+import t_global_spacer_3xl from '@patternfly/react-tokens/dist/js/t_global_spacer_3xl';
 import type React from 'react';
 
 export const styles = {
   emptyState: {
-    backgroundColor: global_BackgroundColor_light_100.value,
+    backgroundColor: t_global_background_color_100.value,
     display: 'flex',
     justifyContent: 'center',
-    paddingTop: global_spacer_3xl.value,
+    paddingTop: t_global_spacer_3xl.value,
     height: '35vh',
     width: '100%',
   },

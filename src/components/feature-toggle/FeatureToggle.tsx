@@ -7,6 +7,7 @@ import { featureToggleActions } from 'store/feature-toggle';
 export const enum FeatureToggle {
   billingStage = 'hybrid-committed-spend.ui.billing-stage', // Toggle to enable billing.stage APIs for demos
   debug = 'hybrid-committed-spend.ui.debug',
+  overridePermissions = 'hybrid-committed-spend.ui.override-permissions', // Toggle to override permissions for testing
 }
 
 const useIsToggleEnabled = (toggle: FeatureToggle) => {
@@ -22,6 +23,10 @@ export const useIsDebugToggleEnabled = () => {
   return useIsToggleEnabled(FeatureToggle.debug);
 };
 
+export const useIsOverridePermissionsToggleEnabled = () => {
+  return useIsToggleEnabled(FeatureToggle.overridePermissions);
+};
+
 // The FeatureToggle component saves feature toggles in store for places where Unleash hooks not available
 const useFeatureToggle = () => {
   const dispatch = useDispatch();
@@ -29,6 +34,7 @@ const useFeatureToggle = () => {
 
   const isBillingStageToggleEnabled = useIsBillingStageToggleEnabled();
   const isDebugToggleEnabled = useIsDebugToggleEnabled();
+  const isOverridePermissionsToggleEnabled = useIsOverridePermissionsToggleEnabled();
 
   const fetchUser = callback => {
     auth.getUser().then(user => {
@@ -42,13 +48,14 @@ const useFeatureToggle = () => {
       featureToggleActions.setFeatureToggle({
         isBillingStageToggleEnabled,
         isDebugToggleEnabled,
+        isOverridePermissionsToggleEnabled,
       })
     );
     if (isDebugToggleEnabled) {
       // eslint-disable-next-line no-console
       fetchUser(identity => console.log('User identity:', identity));
     }
-  }, [isBillingStageToggleEnabled, isDebugToggleEnabled]);
+  }, [isBillingStageToggleEnabled, isDebugToggleEnabled, isOverridePermissionsToggleEnabled]);
 };
 
 export default useFeatureToggle;

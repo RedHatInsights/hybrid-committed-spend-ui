@@ -1,5 +1,5 @@
+import UnauthorizedAccess from '@patternfly/react-component-groups/dist/esm/UnauthorizedAccess';
 import { PauseCircleIcon } from '@patternfly/react-icons/dist/esm/icons/pause-circle-icon';
-import NotAuthorized from '@redhat-cloud-services/frontend-components/NotAuthorized';
 import messages from 'locales/messages';
 import React from 'react';
 import { useIntl } from 'react-intl';
@@ -30,18 +30,18 @@ const NotVisibleState: React.FC<NotVisibleStateProps> = ({ pathname }) => {
       break;
   }
   return (
-    <NotAuthorized
-      actions={
+    <UnauthorizedAccess
+      bodyText={intl.formatMessage(desc)}
+      icon={PauseCircleIcon}
+      primaryAction={
         <div style={styles.docs}>
           <a href={intl.formatMessage(messages.docs)} rel="noreferrer" target="_blank">
             {intl.formatMessage(messages.hcsDocumentation)}
           </a>
         </div>
       }
-      description={intl.formatMessage(desc)}
-      icon={PauseCircleIcon}
       showReturnButton={false}
-      title={intl.formatMessage(title)}
+      titleText={intl.formatMessage(title)}
     />
   );
 };

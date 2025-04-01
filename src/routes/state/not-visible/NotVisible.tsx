@@ -1,4 +1,4 @@
-import { PageSection } from '@patternfly/react-core';
+import { Card, CardBody, PageSection } from '@patternfly/react-core';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import React from 'react';
 
@@ -19,8 +19,12 @@ const NotVisible = ({ pathname, title }: NotVisibleProps) => {
           <PageHeaderTitle title={title} />
         </PageHeader>
       )}
-      <PageSection>
-        <NotVisibleState pathname={pathname} />
+      <PageSection hasBodyWrapper={false}>
+        <Card>
+          <CardBody>
+            <NotVisibleState pathname={pathname} />
+          </CardBody>
+        </Card>
       </PageSection>
     </>
   );

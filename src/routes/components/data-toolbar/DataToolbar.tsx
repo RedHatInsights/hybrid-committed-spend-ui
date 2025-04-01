@@ -1,6 +1,6 @@
 import './DataToolbar.scss';
 
-import type { ToolbarChipGroup } from '@patternfly/react-core';
+import type { ToolbarLabelGroup } from '@patternfly/react-core';
 import {
   Button,
   ButtonVariant,
@@ -36,7 +36,7 @@ interface Filters {
 
 interface DataToolbarOwnProps {
   endDate?: Date;
-  categoryOptions?: ToolbarChipGroup[]; // Options for category menu
+  categoryOptions?: ToolbarLabelGroup[]; // Options for category menu
   filterPathsType?: FilterPathsType;
   groupBy?: string; // Sync category selection with groupBy value
   isDisabled?: boolean;
@@ -155,14 +155,14 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   };
 
   // Category input
-  const getCategoryInput = (categoryOption: ToolbarChipGroup) => {
+  const getCategoryInput = (categoryOption: ToolbarLabelGroup) => {
     const disabled = isDisabled && !hasFilters();
 
     return (
       <ToolbarFilter
         categoryName={categoryOption}
-        chips={getChips(filters[categoryOption.key] as Filter[])}
-        deleteChip={onDelete}
+        labels={getChips(filters[categoryOption.key] as Filter[])}
+        deleteLabel={onDelete}
         key={categoryOption.key}
         showToolbarItem={currentCategory === categoryOption.key}
       >
@@ -194,13 +194,12 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
                   value={categoryInput}
                 />
                 <Button
+                  icon={<SearchIcon />}
                   isDisabled={disabled}
                   variant={ButtonVariant.control}
                   aria-label={intl.formatMessage(messages.filterByButtonAriaLabel, { value: categoryOption.key })}
                   onClick={evt => onCategoryInput(evt, categoryOption.key)}
-                >
-                  <SearchIcon />
-                </Button>
+                ></Button>
               </>
             )}
           </InputGroupItem>
@@ -209,11 +208,11 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
     );
   };
 
-  const getDefaultCategoryOptions = (): ToolbarChipGroup[] => {
+  const getDefaultCategoryOptions = (): ToolbarLabelGroup[] => {
     return [{ name: intl.formatMessage(messages.names, { count: 1 }), key: 'name' }];
   };
 
-  const getCategoryOptions = (): ToolbarChipGroup[] => {
+  const getCategoryOptions = (): ToolbarLabelGroup[] => {
     return categoryOptions ? categoryOptions : getDefaultCategoryOptions();
   };
 
@@ -279,18 +278,17 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
   const getExportButton = () => {
     return (
       <ToolbarItem
-        spacer={{
-          default: 'spacerNone',
+        gap={{
+          default: 'gapNone',
         }}
       >
         <Button
+          icon={<ExportIcon />}
           aria-label="Export data"
           isDisabled={isDisabled || isExportDisabled}
           onClick={handleOnExportClicked}
           variant={ButtonVariant.plain}
-        >
-          <ExportIcon />
-        </Button>
+        />
       </ToolbarItem>
     );
   };
@@ -320,7 +318,7 @@ const DataToolbar: React.FC<DataToolbarProps> = ({
           </ToolbarGroup>
         </ToolbarToggleGroup>
         <ToolbarGroup>{getExportButton()}</ToolbarGroup>
-        <ToolbarItem align={{ default: 'alignRight' }} variant="pagination">
+        <ToolbarItem align={{ default: 'alignEnd' }} variant="pagination">
           {pagination}
         </ToolbarItem>
       </ToolbarContent>
