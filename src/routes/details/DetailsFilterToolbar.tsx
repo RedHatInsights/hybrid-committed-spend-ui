@@ -1,4 +1,4 @@
-import type { ToolbarChipGroup } from '@patternfly/react-core';
+import type { ToolbarLabelGroup } from '@patternfly/react-core';
 import { FilterPathsType } from 'api/filters/filter';
 import type { Query } from 'api/queries';
 import messages from 'locales/messages';
@@ -35,7 +35,7 @@ const DetailsFilterToolbar: React.FC<DetailsFilterToolbarProps> = ({
   startDate,
 }) => {
   const intl = useIntl();
-  const getCategoryOptions = (): ToolbarChipGroup[] => {
+  const getCategoryOptions = (): ToolbarLabelGroup[] => {
     return [
       { name: intl.formatMessage(messages.filterByValues, { value: 'product' }), key: 'product' },
       { name: intl.formatMessage(messages.filterByValues, { value: 'affiliate' }), key: 'affiliate' },
