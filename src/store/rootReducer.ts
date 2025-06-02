@@ -1,4 +1,3 @@
-import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { combineReducers } from 'redux';
 import { dashboardReducer, dashboardStateKey } from 'store/dashboard';
 import { exportReducer, exportStateKey } from 'store/export';
@@ -19,5 +18,4 @@ export const rootReducer = combineReducers({
   [optionStateKey]: optionReducer,
   [reportStateKey]: reportReducer,
   [userAccessStateKey]: userAccessReducer,
-  notifications: notificationsReducer,
 });
