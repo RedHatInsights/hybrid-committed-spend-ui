@@ -2,9 +2,8 @@ import './App.scss';
 
 import { Bullseye, Spinner } from '@patternfly/react-core';
 import { useChrome } from '@redhat-cloud-services/frontend-components/useChrome';
-import NotificationsPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
-import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
-import { getRegistry } from '@redhat-cloud-services/frontend-components-utilities/Registry';
+import NotificationsProvider from '@redhat-cloud-services/frontend-components-notifications/NotificationsProvider';
+import { createStore } from '@redhat-cloud-services/frontend-components-notifications/state';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -17,6 +16,7 @@ import { featureToggleSelectors } from './store/feature-toggle';
 
 const App = () => {
   const { isProd, updateDocumentTitle } = useChrome();
+  const store = createStore();
 
   const hasFeatureToggle = useSelector((state: RootState) => featureToggleSelectors.selectHasFeatureToggle(state));
   const isBillingStageToggleEnabled = useSelector((state: RootState) =>
@@ -30,9 +30,6 @@ const App = () => {
   initApi({ isBillingStageToggleEnabled });
 
   useEffect(() => {
-    const registry = getRegistry();
-    registry.register({ notifications: notificationsReducer as any });
-
     // You can use directly the name of your app
     updateDocumentTitle(pkg.insights.appname);
   }, []);
@@ -46,10 +43,11 @@ const App = () => {
     );
   }
   return (
-    <>
-      <NotificationsPortal />
-      <Routes />
-    </>
+    <div>
+      <NotificationsProvider store={store}>
+        <Routes />
+      </NotificationsProvider>
+    </div>
   );
 };
 
