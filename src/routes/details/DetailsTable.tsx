@@ -231,6 +231,7 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
           aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
           className="tableOverride"
           gridBreakPoint=""
+          hasAnimations
           variant={TableVariant.compact}
           data-codemods="true"
         >
