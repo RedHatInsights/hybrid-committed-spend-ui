@@ -162,7 +162,7 @@ const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
         </Tr>
       ) : (
         rows.map((cells, rowIndex) => (
-          <Tr key={`row-${rowIndex}`} isExpanded={isExpanded}>
+          <Tr isExpandable isExpanded={isExpanded} key={`row-${rowIndex}`}>
             {cells.map((item, cellIndex) =>
               cellIndex === 0 ? (
                 <Th
