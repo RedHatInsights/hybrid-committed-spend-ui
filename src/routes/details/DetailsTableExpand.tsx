@@ -1,5 +1,5 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
-import { Td, Th, Tr } from '@patternfly/react-table';
+import { ExpandableRowContent, Td, Th, Tr } from '@patternfly/react-table';
 import type { Query } from 'api/queries';
 import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
@@ -162,7 +162,7 @@ const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
         </Tr>
       ) : (
         rows.map((cells, rowIndex) => (
-          <Tr key={`row-${rowIndex}`} isExpanded={isExpanded}>
+          <Tr isExpanded={isExpanded} key={`row-${rowIndex}`}>
             {cells.map((item, cellIndex) =>
               cellIndex === 0 ? (
                 <Th
@@ -171,11 +171,11 @@ const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
                   isStickyColumn
                   key={`expanded-cell-${cellIndex}-${rowIndex}`}
                 >
-                  {item.value}
+                  <ExpandableRowContent>{item.value}</ExpandableRowContent>
                 </Th>
               ) : (
                 <Td dataLabel={columns[cellIndex]} key={`cell-${rowIndex}-${cellIndex}`}>
-                  {item.value}
+                  <ExpandableRowContent>{item.value}</ExpandableRowContent>
                 </Td>
               )
             )}
