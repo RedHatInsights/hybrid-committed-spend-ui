@@ -231,6 +231,8 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
           aria-label={intl.formatMessage(messages.detailsTableAriaLabel)}
           className="tableOverride"
           gridBreakPoint=""
+          hasAnimations
+          isExpandable
           variant={TableVariant.compact}
           data-codemods="true"
         >
@@ -271,48 +273,55 @@ const DetailsTable: React.FC<DetailsTableProps> = ({
                 </Td>
               </Tr>
             ) : (
-              rows.map((cells, rowIndex) => (
-                <React.Fragment key={`row-${rowIndex}`}>
-                  <Tr>
-                    {cells.map((item, cellIndex) =>
-                      cellIndex === 0 ? (
-                        <Th
-                          className="stickyColumn"
-                          dataLabel={columns[cellIndex]}
-                          expand={
-                            secondaryGroupBy && secondaryGroupBy !== GroupByType.none
-                              ? {
-                                  areAllExpanded: !isRowExpanded(`row-${rowIndex}`),
-                                  collapseAllAriaLabel: intl.formatMessage(messages.detailsTableSelectAriaLabel) as '', // Todo: Workaround for https://github.com/patternfly/patternfly-react/issues/8330
-                                  onToggle: () => updateExpandedRows(`row-${rowIndex}`),
-                                }
-                              : undefined
-                          }
-                          hasRightBorder
-                          isStickyColumn
-                          key={`cell-${rowIndex}-${cellIndex}`}
-                        >
-                          {item.value}
-                        </Th>
-                      ) : (
-                        <Td dataLabel={columns[cellIndex]} key={`cell-${rowIndex}-${cellIndex}`}>
-                          {item.value}
-                        </Td>
-                      )
-                    )}
-                  </Tr>
-                  <DetailsTableExpand
-                    columns={columns}
-                    endDate={endDate}
-                    groupBy={groupBy}
-                    groupByValue={cells[0].value}
-                    isExpanded={isRowExpanded(`row-${rowIndex}`)}
-                    secondaryGroupBy={secondaryGroupBy}
-                    sourceOfSpend={sourceOfSpend}
-                    startDate={startDate}
-                  />
-                </React.Fragment>
-              ))
+              rows.map((cells, rowIndex) => {
+                const rowId = `row-${rowIndex}`;
+                const isExpanded = isRowExpanded(rowId);
+                return (
+                  <Tbody isExpanded={isExpanded} key={rowId}>
+                    <Tr isContentExpanded={isExpanded} isControlRow key={`${rowId}-${rowIndex}`}>
+                      {cells.map((item, cellIndex) =>
+                        cellIndex === 0 ? (
+                          <Th
+                            className="stickyColumn"
+                            dataLabel={columns[cellIndex]}
+                            expand={
+                              secondaryGroupBy && secondaryGroupBy !== GroupByType.none
+                                ? {
+                                    areAllExpanded: !isRowExpanded(rowId),
+                                    collapseAllAriaLabel: intl.formatMessage(
+                                      messages.detailsTableSelectAriaLabel
+                                    ) as '', // Todo: Workaround for https://github.com/patternfly/patternfly-react/issues/8330
+                                    onToggle: () => updateExpandedRows(rowId),
+                                  }
+                                : undefined
+                            }
+                            hasRightBorder
+                            isStickyColumn
+                            key={`cell-${rowIndex}-${cellIndex}`}
+                          >
+                            {item.value}
+                          </Th>
+                        ) : (
+                          <Td dataLabel={columns[cellIndex]} key={`cell-${rowIndex}-${cellIndex}`}>
+                            {item.value}
+                          </Td>
+                        )
+                      )}
+                    </Tr>
+                    <DetailsTableExpand
+                      columns={columns}
+                      endDate={endDate}
+                      groupBy={groupBy}
+                      groupByValue={cells[0].value}
+                      isExpanded={isExpanded}
+                      rowId={rowId}
+                      secondaryGroupBy={secondaryGroupBy}
+                      sourceOfSpend={sourceOfSpend}
+                      startDate={startDate}
+                    />
+                  </Tbody>
+                );
+              })
             )}
           </Tbody>
         </Table>

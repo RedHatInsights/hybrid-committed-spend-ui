@@ -1,5 +1,5 @@
 import { Bullseye, Spinner } from '@patternfly/react-core';
-import { Td, Th, Tr } from '@patternfly/react-table';
+import { ExpandableRowContent, Td, Th, Tr } from '@patternfly/react-table';
 import type { Query } from 'api/queries';
 import type { Report } from 'api/reports/report';
 import type { AxiosError } from 'axios';
@@ -22,6 +22,7 @@ interface DetailsTableExpandOwnProps {
   groupBy?: string;
   groupByValue?: string;
   isExpanded?: boolean;
+  rowId?: string;
   secondaryGroupBy?: string;
   sourceOfSpend?: string;
   startDate?: Date;
@@ -55,6 +56,7 @@ const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
   groupBy,
   groupByValue,
   isExpanded,
+  rowId = 'row-',
   secondaryGroupBy,
   startDate,
   sourceOfSpend,
@@ -162,20 +164,20 @@ const DetailsTableExpand: React.FC<DetailsTableExpandProps> = ({
         </Tr>
       ) : (
         rows.map((cells, rowIndex) => (
-          <Tr key={`row-${rowIndex}`} isExpanded={isExpanded}>
+          <Tr isExpanded={isExpanded} key={`${rowId}-${rowIndex}`}>
             {cells.map((item, cellIndex) =>
               cellIndex === 0 ? (
                 <Th
                   dataLabel={columns[cellIndex]}
                   hasRightBorder
                   isStickyColumn
-                  key={`expanded-cell-${cellIndex}-${rowIndex}`}
+                  key={`${rowId}-${rowIndex}-${cellIndex}`}
                 >
-                  {item.value}
+                  <ExpandableRowContent>{item.value}</ExpandableRowContent>
                 </Th>
               ) : (
-                <Td dataLabel={columns[cellIndex]} key={`cell-${rowIndex}-${cellIndex}`}>
-                  {item.value}
+                <Td dataLabel={columns[cellIndex]} key={`${rowId}-${rowIndex}-${cellIndex}`}>
+                  <ExpandableRowContent>{item.value}</ExpandableRowContent>
                 </Td>
               )
             )}
