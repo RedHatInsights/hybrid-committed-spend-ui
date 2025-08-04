@@ -60,7 +60,7 @@
     "@redhat-cloud-services/frontend-components-translations": "^4.0.6",
     "@redhat-cloud-services/frontend-components-utilities": "^6.1.1",
     "@reduxjs/toolkit": "^2.8.2",
-    "@unleash/proxy-client-react": "^5.0.0",
+    "@unleash/proxy-client-react": "^5.0.1",
     "axios": "^1.11.0",
     "js-file-download": "^0.4.12",
     "qs": "^6.14.0",
@@ -79,7 +79,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.3.1",
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.31.0",
+    "@eslint/js": "^9.32.0",
     "@formatjs/cli": "^6.7.2",
     "@formatjs/ecma402-abstract": "^2.3.4",
     "@formatjs/fast-memoize": "^2.2.7",
@@ -89,7 +89,7 @@
     "@redhat-cloud-services/tsc-transform-imports": "^1.0.25",
     "@swc/core": "^1.13.2",
     "@swc/jest": "^0.2.39",
-    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
@@ -105,7 +105,7 @@
     "eslint-plugin-formatjs": "^5.4.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-jest-dom": "^5.5.0",
-    "eslint-plugin-jsdoc": "^51.4.1",
+    "eslint-plugin-jsdoc": "^52.0.2",
     "eslint-plugin-markdown": "^5.1.0",
     "eslint-plugin-prettier": "^5.5.3",
     "eslint-plugin-react": "^7.37.5",
@@ -124,9 +124,9 @@
     "rimraf": "^6.0.1",
     "stylelint-config-recommended-scss": "^15.0.1",
     "swc_mut_cjs_exports": "^10.7.0",
-    "ts-jest": "^29.4.0",
+    "ts-jest": "^29.4.1",
     "ts-patch": "^3.3.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "overrides": {
     "react-intl": "^7.1.11",
