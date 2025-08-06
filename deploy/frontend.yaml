@@ -10,7 +10,7 @@ objects:
     metadata:
       name: hybrid-committed-spend
     spec:
-      feoConfigEnabled: true
+      feoConfigEnabled: false
       searchEntries:
         - id: 'hybrid-committed-spend'
           title: 'Hybrid Committed Spend'
