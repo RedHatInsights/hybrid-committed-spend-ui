@@ -10,7 +10,7 @@ objects:
     metadata:
       name: hybrid-committed-spend
     spec:
-      feoConfigEnabled: false
+      feoConfigEnabled: true
       searchEntries:
         - id: 'hybrid-committed-spend'
           title: 'Hybrid Committed Spend'
@@ -23,20 +23,20 @@ objects:
           bundleId: 'subscriptions'
           position: 100
           navItems:
-            - id: 'hybrid-committed-spend.overview'
-              title: 'Overview'
-              href: '/subscriptions/hybrid-committed-spend'
+            - id: 'hybrid-committed-spend.nav'
+              title: 'Hybrid Committed Spend'
+              expandable: true
               permissions:
                 - method: 'hasPermissions'
                   args:
                     - - "hybrid-committed-spend:reports:read"
-            - id: 'hybrid-committed-spend.details'
-              title: 'Details'
-              href: '/subscriptions/hybrid-committed-spend/details'
-              permissions:
-                - method: 'hasPermissions'
-                  args:
-                    - - "hybrid-committed-spend:reports:read"
+              routes:
+                - id: 'hybrid-committed-spend.overview'
+                  title: 'Overview'
+                  href: '/subscriptions/hybrid-committed-spend'
+                - id: 'hybrid-committed-spend.details'
+                  title: 'Details'
+                  href: '/subscriptions/hybrid-committed-spend/details'
       API:
         versions:
           - v1
