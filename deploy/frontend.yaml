@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/RedHatInsights/frontend-components/refs/heads/master/packages/config-utils/src/feo/spec/frontend-crd.schema.json
+---
 apiVersion: v1
 kind: Template
 metadata:
@@ -8,34 +10,50 @@ objects:
     metadata:
       name: hybrid-committed-spend
     spec:
-      envName: ${ENV_NAME}
-      title: 'Hybrid Committed Spend'
-      routePrefix: business-services
-      deploymentRepo: https://github.com/RedHatInsights/hybrid-committed-spend-ui
+      feoConfigEnabled: true
+      searchEntries:
+        - id: 'hybrid-committed-spend'
+          title: 'Hybrid Committed Spend'
+          href: '/subscriptions/hybrid-committed-spend'
+          description: 'Gain perspective on your hybrid committed spend profile with contract information, drawdown, and balance, as well as spend trends and breakdowns.'
+          alt_title:
+            - 'Hybrid Committed Spend'
+      bundleSegments:
+        - segmentId: 'hybrid-committed-spend'
+          bundleId: 'subscriptions'
+          position: 100
+          navItems:
+            - id: 'hybrid-committed-spend.nav'
+              title: 'Hybrid Committed Spend'
+              expandable: true
+              permissions:
+                - method: 'hasPermissions'
+                  args:
+                    - - "hybrid-committed-spend:reports:read"
+              routes:
+                - id: 'hybrid-committed-spend.overview'
+                  title: 'Overview'
+                  href: '/subscriptions/hybrid-committed-spend'
+                - id: 'hybrid-committed-spend.details'
+                  title: 'Details'
+                  href: '/subscriptions/hybrid-committed-spend/details'
       API:
         versions:
           - v1
+      envName: ${ENV_NAME}
+      title: 'Hybrid Committed Spend'
+      deploymentRepo: https://github.com/RedHatInsights/hybrid-committed-spend-ui
       frontend:
         paths:
           - /apps/hybrid-committed-spend
       image: ${IMAGE}:${IMAGE_TAG}
-      navItems:
-        - title: 'Hybrid Committed Spend'
-          expandable: true
-          routes:
-            - appId: 'hcs'
-              title: 'Overview'
-              href: '/business-services/hybrid-committed-spend'
-            - appId: 'hybrid-committed-spend'
-              title: 'Details'
-              href: '/business-services/hybrid-committed-spend/details'
       module:
         manifestLocation: "/apps/hybrid-committed-spend/fed-mods.json"
         modules:
           - id: 'hybrid-committed-spend'
             module: "./RootApp"
             routes:
-              - pathname: /business-services/hybrid-committed-spend
+              - pathname: /subscriptions/hybrid-committed-spend
 parameters:
   - name: ENV_NAME
     required: true
