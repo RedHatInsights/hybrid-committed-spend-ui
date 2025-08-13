@@ -32,7 +32,7 @@ objects:
                     - - "hybrid-committed-spend:reports:read"
               routes:
                 - id: 'hybrid-committed-spend.overview'
-                  title: '0verview'
+                  title: 'Overview'
                   href: '/subscriptions/hybrid-committed-spend'
                 - id: 'hybrid-committed-spend.details'
                   title: 'Details'
