@@ -100,7 +100,7 @@
     "@types/redux-logger": "^3.0.13",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
-    "copy-webpack-plugin": "^13.0.0",
+    "copy-webpack-plugin": "^13.0.1",
     "eslint": "^9.33.0",
     "eslint-plugin-formatjs": "^5.4.0",
     "eslint-plugin-react-hooks": "^5.2.0",
