@@ -35,7 +35,7 @@ test('fetch userAccess success', async () => {
   const userAccessQueryString = getUserAccessQuery(billingUserAccessQuery);
   const store = createProdvidersStore();
   store.dispatch(actions.fetchUserAccess(UserAccessType.all, userAccessQueryString));
-  expect(fetchUserAccessMock).toBeCalled();
+  expect(fetchUserAccessMock).toHaveBeenCalled();
   expect(selectors.selectUserAccessFetchStatus(store.getState(), UserAccessType.all, userAccessQueryString)).toBe(
     FetchStatus.inProgress
   );
@@ -52,7 +52,7 @@ test('fetch userAccess failure', async () => {
   const error = Symbol('getUserAccess error');
   fetchUserAccessMock.mockReturnValueOnce(Promise.reject(error));
   store.dispatch(actions.fetchUserAccess(UserAccessType.all, userAccessQueryString));
-  expect(fetchUserAccessMock).toBeCalled();
+  expect(fetchUserAccessMock).toHaveBeenCalled();
   expect(selectors.selectUserAccessFetchStatus(store.getState(), UserAccessType.all, userAccessQueryString)).toBe(
     FetchStatus.inProgress
   );

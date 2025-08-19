@@ -44,7 +44,7 @@ test('default state', () => {
 test('fetch option success', async () => {
   const store = createOptionsStore();
   store.dispatch(actions.fetchOption(optionPathsType, optionType, optionQueryString));
-  expect(runOptionMock).toBeCalled();
+  expect(runOptionMock).toHaveBeenCalled();
   expect(selectors.selectOptionFetchStatus(store.getState(), optionPathsType, optionType, optionQueryString)).toBe(
     FetchStatus.inProgress
   );
@@ -61,7 +61,7 @@ test('fetch option failure', async () => {
   const error = Symbol('option error');
   runOptionMock.mockRejectedValueOnce(error);
   store.dispatch(actions.fetchOption(optionPathsType, optionType, optionQueryString));
-  expect(runOption).toBeCalled();
+  expect(runOption).toHaveBeenCalled();
   expect(selectors.selectOptionFetchStatus(store.getState(), optionPathsType, optionType, optionQueryString)).toBe(
     FetchStatus.inProgress
   );
