@@ -44,7 +44,7 @@ test('default state', () => {
 test('fetch filter success', async () => {
   const store = createFiltersStore();
   store.dispatch(actions.fetchFilter(filterPathsType, filterType, filterQueryString));
-  expect(runFilterMock).toBeCalled();
+  expect(runFilterMock).toHaveBeenCalled();
   expect(selectors.selectFilterFetchStatus(store.getState(), filterPathsType, filterType, filterQueryString)).toBe(
     FetchStatus.inProgress
   );
@@ -61,7 +61,7 @@ test('fetch filter failure', async () => {
   const error = Symbol('filter error');
   runFilterMock.mockRejectedValueOnce(error);
   store.dispatch(actions.fetchFilter(filterPathsType, filterType, filterQueryString));
-  expect(runFilter).toBeCalled();
+  expect(runFilter).toHaveBeenCalled();
   expect(selectors.selectFilterFetchStatus(store.getState(), filterPathsType, filterType, filterQueryString)).toBe(
     FetchStatus.inProgress
   );
