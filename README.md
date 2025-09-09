@@ -55,7 +55,7 @@ npm test
 
 ## Running Hybrid Committed Spend UI against a hosted Billing API, using webpack proxy
 
-Note that this approach currently supports the Insights stage-beta, stage-stable, prod-beta, and prod-stable environments.
+Note that this approach currently supports the Insights stage and prod environments.
 
 1. Start development server
 ```
@@ -64,14 +64,14 @@ npm start
 
 Follow the prompts that follow.
 
-* Do you want to use local api? `no`
 * Which platform environment you want to use `stage`
-* Which Chrome environment you want to use? `beta`
 
 2. Open the following URL
 ```
-https://stage.foo.redhat.com:1337/beta/business-services/hybrid-committed-spend
+https://stage.foo.redhat.com:1337/subscriptions/hybrid-committed-spend
 ```
+
+Note: Must log in with a user that has HCS viewer permissions
 
 ### Running Hybrid Committed Spend UI with local Cloud Services Backend
 
