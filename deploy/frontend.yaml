@@ -11,6 +11,14 @@ objects:
       name: hybrid-committed-spend
     spec:
       feoConfigEnabled: true
+      serviceTiles:
+        - id: 'hybrid-committed-spend'
+          section: 'subscriptions'
+          group: 'subscriptions'
+          title: 'Hybrid Committed Spend'
+          href: '/subscriptions/hybrid-committed-spend'
+          description: 'Gain perspective on your Hybrid Committed Spend profile with contract information, drawdown, and balance, as well as spend trends and breakdowns.'
+          icon: OpenShiftIcon
       searchEntries:
         - id: 'hybrid-committed-spend'
           title: 'Hybrid Committed Spend'
