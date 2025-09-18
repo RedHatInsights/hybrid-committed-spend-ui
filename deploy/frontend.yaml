@@ -19,13 +19,21 @@ objects:
           href: '/subscriptions/hybrid-committed-spend'
           description: 'Gain perspective on your hybrid committed spend profile with contract information, drawdown, and balance, as well as spend trends and breakdowns.'
           icon: OpenShiftIcon
+          permissions:
+            - method: 'hasPermissions'
+              args:
+                - - "hybrid-committed-spend:reports:read"
       searchEntries:
         - id: 'hybrid-committed-spend'
           title: 'Hybrid Committed Spend'
           href: '/subscriptions/hybrid-committed-spend'
           description: 'Gain perspective on your hybrid committed spend profile with contract information, drawdown, and balance, as well as spend trends and breakdowns.'
           alt_title:
-            - 'Hybrid Committed Spend'
+            - 'hybrid committed spend'
+          permissions:
+            - method: 'hasPermissions'
+              args:
+                - - "hybrid-committed-spend:reports:read"
       bundleSegments:
         - segmentId: 'hybrid-committed-spend'
           bundleId: 'subscriptions'
