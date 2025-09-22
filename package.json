@@ -57,7 +57,7 @@
     "@patternfly/react-tokens": "6.3.0",
     "@redhat-cloud-services/frontend-components": "^7.0.5",
     "@redhat-cloud-services/frontend-components-notifications": "^6.1.7",
-    "@redhat-cloud-services/frontend-components-translations": "^4.0.13",
+    "@redhat-cloud-services/frontend-components-translations": "^4.0.15",
     "@redhat-cloud-services/frontend-components-utilities": "^7.0.5",
     "@reduxjs/toolkit": "^2.9.0",
     "@unleash/proxy-client-react": "^5.0.1",
