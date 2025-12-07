@@ -29,6 +29,7 @@
     "patch:hosts": "fec patch-etc-hosts",
     "postinstall": "ts-patch install && rm -rf .cache",
     "release:prod": "sh scripts/release-branch.sh -p",
+    "release:app-interface:prod": "sh scripts/release-app-interface.sh -p",
     "start": "HMR=true fec dev",
     "start:csb": "CLOUD_SERVICES_BACKEND_PORT=8000 npm start",
     "start:hmr": "HMR=true npm start",
