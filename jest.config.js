@@ -23,26 +23,6 @@ module.exports = {
   transformIgnorePatterns,
   transform: {
     '^.+\\.svg$': 'jest-transform-stub',
-    '^.+\\.(ts|js)x?$': [
-      '@swc/jest',
-      {
-        $schema: 'http://json.schemastore.org/swcrc',
-        jsc: {
-          experimental: {
-            plugins: [['swc_mut_cjs_exports', {}]],
-          },
-          parser: {
-            jsx: true,
-            syntax: 'typescript',
-            tsx: true,
-          },
-          transform: {
-            react: {
-              runtime: 'automatic',
-            },
-          },
-        },
-      },
-    ],
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
 };

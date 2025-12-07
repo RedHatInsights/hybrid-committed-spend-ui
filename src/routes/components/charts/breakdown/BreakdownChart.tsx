@@ -64,6 +64,7 @@ const BreakdownChart: React.FC<BreakdownChartProps> = ({
   top5thData,
   top6thData,
 }) => {
+  // eslint-disable-next-line react-hooks/refs
   const [containerRef] = useState(React.createRef<HTMLDivElement>());
   const [cursorVoronoiContainer, setCursorVoronoiContainer] = useState<any>();
   const [extraHeight, setExtraHeight] = useState(0);
