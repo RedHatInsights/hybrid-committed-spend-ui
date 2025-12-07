@@ -59,6 +59,7 @@ const TrendChart: React.FC<TrendChartProps> = ({
   thresholdData,
   title,
 }) => {
+  // eslint-disable-next-line react-hooks/refs
   const [containerRef] = useState(React.createRef<HTMLDivElement>());
   const [cursorVoronoiContainer, setCursorVoronoiContainer] = useState<any>();
   const [extraHeight, setExtraHeight] = useState(0);
