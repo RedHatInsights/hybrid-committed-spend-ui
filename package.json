@@ -19,6 +19,7 @@
     "clean": "rimraf dist .cache .swc",
     "codemods": "npx @patternfly/pf-codemods@latest src",
     "deploy": "npm-run-all build lint test",
+    "deploy:prod": "sh scripts/deploy-branch.sh -p",
     "install:pkgs": "npm install",
     "install:pkgs:force": "npm install --force",
     "install:pkgs:links": "npm run install:pkgs && npm install --install-links",
@@ -26,10 +27,9 @@
     "lint:ts": "eslint src",
     "lint:ts:fix": "eslint src --fix",
     "lint:sass": "stylelint 'src/**/*.scss' --config .stylelintrc.json",
+    "merge:prod": "sh scripts/merge-branch.sh -p",
     "patch:hosts": "fec patch-etc-hosts",
     "postinstall": "ts-patch install && rm -rf .cache",
-    "release:prod": "sh scripts/release-branch.sh -p",
-    "release:app-interface:prod": "sh scripts/release-app-interface.sh -p",
     "start": "HMR=true fec dev",
     "start:csb": "CLOUD_SERVICES_BACKEND_PORT=8000 npm start",
     "start:hmr": "HMR=true npm start",
@@ -47,6 +47,15 @@
     "translations:datafile": "node scripts/createDataJson.js",
     "translations:syncTranslations": "node scripts/syncTranslations.js",
     "verify": "npm-run-all build lint test"
+  },
+  "scripts-info": {
+    "deploy:prod": "Creates an MR to deploy app-interface with latest SHA ref from prod-stable branch",
+    "merge:prod": "Creates a PR to merge main to the prod-stable branch",
+    "start": "Run HCS UI",
+    "start:csb": "Run HCS UI with local Cloud Services Backend",
+    "start:hmr": "Run HCS UI with hot module replacement (experimental)",
+    "start:static": "Run HCS UI statically",
+    "translations": "Update localization files with latest messages"
   },
   "dependencies": {
     "@patternfly/patternfly": "6.4.0",

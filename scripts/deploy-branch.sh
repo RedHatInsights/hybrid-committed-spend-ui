@@ -48,7 +48,7 @@ cat <<- EEOOFF
     u       Push to upstream
 
     Note: This script lacks permission to push directly upstream, so commits will be pushed to this fork:
-    $APP_INTERFACE_FORK
+    $APP_INTERFACE_FORK -- override user via the GITLAB_USER env var.
 
 EEOOFF
 }
@@ -75,7 +75,7 @@ cloneUI()
 
 commit()
 {
-  SOURCE_BRANCH="hybrid-committed-spend_release.$$"
+  SOURCE_BRANCH="hybrid-committed-spend_deploy.$$"
   TITLE="Update Hybrid Committed Spend UI deployments"
 
   cd $APP_INTERFACE_DIR
@@ -87,12 +87,12 @@ commit()
   git commit -m "$TITLE" $DEPLOY_CLOWDER_FILE
 }
 
-createDeploymentUpdates()
+createDeploymentDesc()
 {
   mkdir -p $TMP_DIR
 
   {
-    if [ "$UPDATE_HCCM_PROD" = "true" ]; then
+    if [ "$DEPLOY_HCCM_PROD" = "true" ]; then
       echo "${HCS_UI}: Prod deployment"
     fi
   } > "$DEPLOYMENTS_FILE"
@@ -197,7 +197,7 @@ initSHA()
 updateDeploySHA()
 {
   # prod deploy
-  if [ "$UPDATE_HCCM_PROD" = true ]; then
+  if [ "$DEPLOY_HCCM_PROD" = true ]; then
       sed "s|$HCCM_PROD_FRONTENDS_SHA|$HCCM_PROD_SHA|" $DEPLOY_CLOWDER_FILE > ${DEPLOY_CLOWDER_FILE}.tmp
       mv ${DEPLOY_CLOWDER_FILE}.tmp $DEPLOY_CLOWDER_FILE
   fi
@@ -209,20 +209,20 @@ updateDeploySHA()
 
   while getopts hpu c; do
     case $c in
-      p) UPDATE_HCCM_PROD=true;;
+      p) DEPLOY_HCCM_PROD=true;;
       u) PUSH=true;;
       h) usage; exit 0;;
       \?) usage; exit 1;;
     esac
   done
 
-  if [ -z "$UPDATE_HCCM_PROD" ]; then
+  if [ -z "$DEPLOY_HCCM_PROD" ]; then
     usage
     exit 1
   fi
 
-  echo "\n*** Releasing $APP_INTERFACE with SHA updates for...\n"
-  createDeploymentUpdates
+  echo "\n*** Deploying $APP_INTERFACE with SHA updates for...\n"
+  createDeploymentDesc
   cat $DEPLOYMENTS_FILE
   echo
 
