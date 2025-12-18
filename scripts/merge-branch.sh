@@ -69,7 +69,7 @@ merge()
 # Use gh in a non-interactive way -- see https://github.com/cli/cli/issues/1718
 pullRequest()
 {
-  NEW_BRANCH="release_${BRANCH}.$$"
+  NEW_BRANCH="merge_${BRANCH}.$$"
 
   git branch -m $NEW_BRANCH
 
@@ -113,7 +113,7 @@ push()
     exit 1
   fi
 
-  echo "\n*** Releasing $REMOTE_BRANCH to $BRANCH...\n"
+  echo "\n*** Merging $REMOTE_BRANCH to $BRANCH...\n"
 
   clone
   merge
