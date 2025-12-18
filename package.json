@@ -18,7 +18,6 @@
     "check:messages": "sh scripts/unused-messages.sh",
     "clean": "rimraf dist .cache .swc",
     "codemods": "npx @patternfly/pf-codemods@latest src",
-    "deploy": "npm-run-all build lint test",
     "deploy:prod": "sh scripts/deploy-branch.sh -p",
     "install:pkgs": "npm install",
     "install:pkgs:force": "npm install --force",
