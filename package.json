@@ -18,7 +18,6 @@
     "check:messages": "sh scripts/unused-messages.sh",
     "clean": "rimraf dist .cache .swc",
     "codemods": "npx @patternfly/pf-codemods@latest src",
-    "deploy": "npm-run-all build lint test",
     "deploy:prod": "sh scripts/deploy-branch.sh -p",
     "install:pkgs": "npm install",
     "install:pkgs:force": "npm install --force",
@@ -30,6 +29,7 @@
     "merge:prod": "sh scripts/merge-branch.sh -p",
     "patch:hosts": "fec patch-etc-hosts",
     "postinstall": "ts-patch install && rm -rf .cache",
+    "release:all": "node scripts/release-all.js",
     "start": "HMR=true fec dev",
     "start:csb": "CLOUD_SERVICES_BACKEND_PORT=8000 npm start",
     "start:hmr": "HMR=true npm start",
@@ -51,6 +51,7 @@
   "scripts-info": {
     "deploy:prod": "Creates an MR to deploy app-interface with latest SHA ref from prod-stable branch",
     "merge:prod": "Creates a PR to merge main to the prod-stable branch",
+    "release:all": "Used to merge stage/prod branches and deploy app-interface with the latest SHA refs from same branches",
     "start": "Run HCS UI",
     "start:csb": "Run HCS UI with local Cloud Services Backend",
     "start:hmr": "Run HCS UI with hot module replacement (experimental)",

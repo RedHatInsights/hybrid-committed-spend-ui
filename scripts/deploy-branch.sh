@@ -40,12 +40,11 @@ cat <<- EEOOFF
 
     $PROD_BRANCH
 
-    sh [-x] $SCRIPT [-h|-p|-u]
+    sh [-x] $SCRIPT [-h|-p]
 
     OPTIONS:
     h       Display this message
     p       Update SHA refs from $PROD_BRANCH to $TARGET_BRANCH
-    u       Push to upstream
 
     Note: This script lacks permission to push directly upstream, so commits will be pushed to this fork:
     $APP_INTERFACE_FORK -- override user via the GITLAB_USER env var.
@@ -207,7 +206,7 @@ updateDeploySHA()
 {
   default
 
-  while getopts hpu c; do
+  while getopts hp c; do
     case $c in
       p) DEPLOY_HCCM_PROD=true;;
       u) PUSH=true;;
@@ -236,12 +235,8 @@ updateDeploySHA()
   commit
 
   if [ "$?" -eq 0 ]; then
-    if [ -n "$PUSH" ]; then
-      push
-    else
-      createMergeRequestDesc
-      mergeRequest
-    fi
+    createMergeRequestDesc
+    mergeRequest
   else
     echo "\n*** Cannot push. No changes or check for conflicts"
   fi
