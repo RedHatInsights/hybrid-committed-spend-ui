@@ -25,7 +25,7 @@ cat <<- EEOOFF
 
     This script will merge the following branches and create a pull request (default) or push upstream
 
-    sh [-x] $SCRIPT [-h|u] -<b|p|s>
+    sh [-x] $SCRIPT [-h|-p|-u]
 
     OPTIONS:
     h       Display this message
@@ -98,11 +98,10 @@ push()
 {
   default
 
-  while getopts hbpsu c; do
+  while getopts hbps c; do
     case $c in
       p) BRANCH=$PROD_BRANCH
          REMOTE_BRANCH=$MAIN_BRANCH;;
-      u) PUSH=true;;
       h) usage; exit 0;;
       \?) usage; exit 1;;
     esac

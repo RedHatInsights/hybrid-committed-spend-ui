@@ -16,6 +16,17 @@ Note: Pushing to master automatically deploys to the stage env.
 sh scripts/release-branch.sh -p
 ```
 
+### Wrapper for all merges
+
+```
+node ../../scripts/release-all.js
+```
+
+Follow the prompts below.
+
+* Are you deploying to app-interface? `N`
+* Which Chrome environment do you want to release? `stage`
+
 ## Deployments for app-interface
 
 The deploy-branch script will update app-interface with the latest SHA refs from the koku-ui branches above. The script also ensures that SHA refs are always pulled from the correct branches. For example, we always:
@@ -27,6 +38,17 @@ The deploy-branch script will update app-interface with the latest SHA refs from
 ```
 sh ../../scripts/deploy-branch.sh -p
 ```
+
+### Wrapper for all deployments
+
+```
+node ../../scripts/release-all.js
+```
+
+Follow the prompts below.
+
+* Are you deploying to app-interface? `Y`
+* Which Chrome environment do you want to release? `stage`
 
 ## Manual deployment
 
