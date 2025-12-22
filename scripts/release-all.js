@@ -72,7 +72,7 @@ async function run() {
 
   allArgs.push(process.env.APP_INTERFACE === 'true' ? 'deploy-branch.sh' : 'merge-branch.sh');
 
-  const argVars = ['STAGE_ARG', 'PROD_ARG'];
+  const argVars = ['PROD_ARG'];
   const deploymentArgs = argVars.map(v => process.env[v]).filter(Boolean);
   allArgs.push(...deploymentArgs);
 
