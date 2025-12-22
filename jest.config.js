@@ -1,5 +1,5 @@
 const transformIgnorePatterns = [
-  'node_modules/(?!(@patternfly/react-core/src|@patternfly/react-icons/dist/esm|uuid/dist/esm-browser))',
+  'node_modules/(?!(@patternfly/react-core/src|@patternfly/react-icons/dist/esm|uuid/dist/esm-browser|react-intl|@formatjs/.*|intl-messageformat))',
 ];
 
 /** @type {import('ts-jest').JestConfigWithTsJest} */
@@ -23,6 +23,6 @@ module.exports = {
   transformIgnorePatterns,
   transform: {
     '^.+\\.svg$': 'jest-transform-stub',
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.[tj]sx?$': 'ts-jest',
   },
 };
