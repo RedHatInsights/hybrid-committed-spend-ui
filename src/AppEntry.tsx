@@ -2,9 +2,9 @@
 // import '@patternfly/patternfly/patternfly.css';
 import '@patternfly/patternfly/patternfly-addons.css';
 
-import IntlProvider from '@redhat-cloud-services/frontend-components-translations/Provider';
-import { getLocale } from 'components/i18n';
+import { getLocale, ignoreDefaultMessageError } from 'components/i18n';
 import React from 'react';
+import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 
 // eslint-disable-next-line no-restricted-imports
@@ -21,9 +21,13 @@ const hcsStore = configureStore({
 const AppEntry = () => {
   const locale = getLocale();
 
-  /* eslint-disable no-console */
   return (
-    <IntlProvider defaultLocale="en" locale={locale} messages={messages[locale]} onError={console.log}>
+    <IntlProvider
+      defaultLocale="en"
+      locale={locale}
+      messages={messages[locale] || messages.en}
+      onError={ignoreDefaultMessageError}
+    >
       <Provider store={hcsStore as any}>
         <App />
       </Provider>
