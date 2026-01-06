@@ -8,15 +8,23 @@ export const getLocale = () => {
   return locale;
 };
 
+export const ignoreDefaultMessageError = error => {
+  if (error?.code === 'MISSING_TRANSLATION') {
+    return;
+  }
+  throw error;
+};
+
 const cache = createIntlCache();
 
-export const intl = createIntl(
+const intl = createIntl(
   {
     defaultLocale: 'en',
     locale,
-    // eslint-disable-next-line no-console
-    onError: console.log,
-    messages: messages[locale],
+    onError: ignoreDefaultMessageError,
+    messages: messages[locale] || messages.en,
   },
   cache
 );
+
+export default intl;
