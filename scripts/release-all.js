@@ -70,7 +70,7 @@ async function run() {
     allArgs.push('-x');
   }
 
-  allArgs.push(process.env.APP_INTERFACE === 'true' ? 'branch-deploy.sh' : 'branch-merge.sh');
+  allArgs.push(process.env.APP_INTERFACE === 'true' ? 'release-app-interface.sh' : 'release-branch.sh');
 
   const argVars = ['PROD_ARG'];
   const deploymentArgs = argVars.map(v => process.env[v]).filter(Boolean);

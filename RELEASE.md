@@ -2,9 +2,9 @@
 
 This doc describes how to release Hybrid Committed Spend UI to each staging environment. Note that this should be done in order for testing purposes; stage-stable, prod-beta, and finally prod-stable
 
-## Merge branches script
+## Merge branches
 
-The merge-branch script creates a PR with a unique SHA, used for a namespace \`ref\` in the app-interface repo. The script also ensures that code is always pulled from the correct branches. For example, we always:
+The release-branch.sh script creates a PR with a unique SHA, used for a namespace \`ref\` in the app-interface repo. The script also ensures that code is always pulled from the correct branches. For example, we always:
 
 1. Pull from master when pushing to prod-stable
 
@@ -27,16 +27,16 @@ Follow the prompts below.
 * Are you deploying to app-interface? `N`
 * Which Chrome environment do you want to release? `stage`
 
-## Deployments for app-interface
+## Deploy to app-interface
 
-The deploy-branch script will update app-interface with the latest SHA refs from the koku-ui branches above. The script also ensures that SHA refs are always pulled from the correct branches. For example, we always:
+The release-app-interface.sh script will update app-interface with the latest SHA refs from the koku-ui branches above. The script also ensures that SHA refs are always pulled from the correct branches. For example, we always:
 
 1. Pull from prod-stable when updating the stage deployment in app-interface
 
 ### Deploy prod-hccm to app-interface
 
 ```
-sh ../../scripts/deploy-branch.sh -p
+sh ../../scripts/release-app-interface.sh -p
 ```
 
 ### Wrapper for all deployments
