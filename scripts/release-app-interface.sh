@@ -52,6 +52,12 @@ cat <<- EEOOFF
 EEOOFF
 }
 
+cleanup()
+{
+  echo "\n*** Cleaning temp directory..."
+  rm -rf $TMP_DIR
+}
+
 cloneAppInterface()
 {
   mkdir -p $TMP_DIR
@@ -220,6 +226,8 @@ updateDeploySHA()
     exit 1
   fi
 
+  trap cleanup SIGINT SIGTERM EXIT
+
   echo "\n*** Deploying $APP_INTERFACE with SHA updates for...\n"
   createDeploymentDesc
   cat $DEPLOYMENTS_FILE
@@ -240,6 +248,4 @@ updateDeploySHA()
   else
     echo "\n*** Cannot push. No changes or check for conflicts"
   fi
-
-  rm -rf $TMP_DIR
 }
