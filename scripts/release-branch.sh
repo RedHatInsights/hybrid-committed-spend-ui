@@ -17,6 +17,10 @@ default()
   UI_REPO="git@github.com:RedHatInsights/hybrid-committed-spend-ui.git"
 
   BODY_FILE="$UI_DIR/body"
+
+  GIT_USER="hcs-ui-bot"
+  GIT_USER_EMAIL="$GIT_USER@redhat.com"
+  GIT_USER_NAME="HCS UI bot"
 }
 
 usage()
@@ -35,12 +39,43 @@ cat <<- EEOOFF
 EEOOFF
 }
 
+cleanup()
+{
+  echo "\n*** Cleaning temp directory..."
+  rm -rf $TMP_DIR
+
+  if [ -n "$ACTIVE_GH_USER" ]; then
+    echo "\n*** Switching GitHub user: $ACTIVE_GH_USER"
+    gh auth switch --user $ACTIVE_GH_USER
+  fi
+}
+
 clone()
 {
   mkdir $TMP_DIR
   cd $TMP_DIR
 
   git clone $UI_REPO
+}
+
+config()
+{
+  cd $KOKU_UI_DIR
+
+  echo "\n*** Switching GitHub user: $GIT_USER"
+
+  if ! gh auth status | grep -q "$GIT_USER"; then
+    echo "*** Cannot switch GitHub user: $GIT_USER"
+    echo "*** You may need to create an SSH key and run 'gh auth login'"
+    return
+  fi
+
+  ACTIVE_GH_USER=`gh api user --jq .login`
+  gh auth switch --user $GIT_USER
+
+  echo "\n*** Configuring GIT user: $GIT_USER_EMAIL"
+  git config --local user.email "$GIT_USER_EMAIL"
+  git config --local user.name "$GIT_USER_NAME"
 }
 
 createPullRequestBody()
@@ -112,9 +147,12 @@ push()
     exit 1
   fi
 
+  trap cleanup SIGINT SIGTERM EXIT
+
   echo "\n*** Merging $REMOTE_BRANCH to $BRANCH...\n"
 
   clone
+  config
   merge
 
   if [ "$?" -eq 0 ]; then
