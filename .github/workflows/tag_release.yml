@@ -29,8 +29,8 @@ jobs:
               ;;
           esac
           TAG="r.$DATE.$MINOR_VERSION"
-          git config --local user.email "cost-mgmt@redhat.com"
-          git config --local user.name "Hybrid Committed Spend Release Action"
+          git config --local user.email "hcs-ui-bot@redhat.com"
+          git config --local user.name "HCS UI Bot"
           git log $(git tag --list | tail -1)..prod-stable | git tag -a $TAG -F -
           git push origin $TAG
         shell: bash
