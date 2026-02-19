@@ -147,6 +147,8 @@ push()
     exit 1
   fi
 
+  trap cleanup SIGINT SIGTERM EXIT
+
   echo "\n*** Merging $REMOTE_BRANCH to $BRANCH...\n"
 
   clone
