@@ -60,7 +60,7 @@ clone()
 
 config()
 {
-  cd $KOKU_UI_DIR
+  cd $UI_DIR
 
   echo "\n*** Set local GIT config: $GIT_USER_EMAIL"
   git config --local user.email "$GIT_USER_EMAIL"
