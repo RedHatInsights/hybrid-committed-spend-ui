@@ -66,9 +66,9 @@
     "@patternfly/react-icons": "6.4.0",
     "@patternfly/react-table": "6.4.1",
     "@patternfly/react-tokens": "6.4.0",
-    "@redhat-cloud-services/frontend-components": "^7.2.0",
-    "@redhat-cloud-services/frontend-components-notifications": "^6.4.0",
-    "@redhat-cloud-services/frontend-components-utilities": "^7.1.1",
+    "@redhat-cloud-services/frontend-components": "^7.3.0",
+    "@redhat-cloud-services/frontend-components-notifications": "^6.5.0",
+    "@redhat-cloud-services/frontend-components-utilities": "^7.2.0",
     "@reduxjs/toolkit": "^2.11.2",
     "@unleash/proxy-client-react": "^5.0.1",
     "axios": "^1.14.0",
@@ -98,7 +98,7 @@
     "@formatjs/intl-localematcher": "^0.8.2",
     "@redhat-cloud-services/frontend-components-config": "^6.8.3",
     "@redhat-cloud-services/tsc-transform-imports": "^1.0.57",
-    "@swc/core": "^1.15.21",
+    "@swc/core": "^1.15.24",
     "@swc/jest": "^0.2.39",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -110,9 +110,9 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.13",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
-    "@typescript-eslint/parser": "^8.57.2",
+    "@typescript-eslint/parser": "^8.58.0",
     "copy-webpack-plugin": "^14.0.0",
-    "eslint": "^10.1.0",
+    "eslint": "^10.2.0",
     "eslint-plugin-formatjs": "^6.4.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-jest-dom": "^5.5.0",
@@ -120,7 +120,7 @@
     "eslint-plugin-markdown": "^5.1.0",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-testing-library": "^7.16.2",
     "git-revision-webpack-plugin": "^5.0.0",
@@ -141,7 +141,7 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
-    "eslint": "^10.1.0"
+    "eslint": "^10.2.0"
   },
   "insights": {
     "appname": "hybrid-committed-spend"
