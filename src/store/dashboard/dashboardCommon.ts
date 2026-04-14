@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from '@formatjs/intl/src/types';
+import type { MessageDescriptor } from '@formatjs/intl';
 import type { BillingFilters, BillingQuery } from 'api/queries';
 import { getBillingQuery } from 'api/queries';
 import type { ReportPathsType, ReportType } from 'api/reports/report';
