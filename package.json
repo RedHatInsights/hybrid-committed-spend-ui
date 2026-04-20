@@ -114,7 +114,7 @@
     "copy-webpack-plugin": "^14.0.0",
     "eslint": "^10.2.0",
     "eslint-plugin-formatjs": "^6.4.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-markdown": "^5.1.0",
