@@ -18,9 +18,9 @@ default()
 
   BODY_FILE="$UI_DIR/body"
 
-  GIT_USER="hcs-ui-bot"
+  GIT_USER="koku-ui-bot"
   GIT_USER_EMAIL="$GIT_USER@redhat.com"
-  GIT_USER_NAME="HCS UI bot"
+  GIT_USER_NAME="Koku UI bot"
 }
 
 usage()
