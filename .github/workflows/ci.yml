@@ -19,16 +19,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODEJS_VERSION }}
 
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           cache-name: cache-node-modules
         with:
@@ -55,16 +55,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODEJS_VERSION }}
 
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         env:
           cache-name: cache-node-modules
         with:
@@ -98,7 +98,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Download coverage report
         uses: actions/download-artifact@v4
@@ -108,7 +108,7 @@ jobs:
 
       - name: Upload coverage report
         if: ${{ success() }}
-        uses: codecov/codecov-action@v4.2.0
+        uses: codecov/codecov-action@v7.0.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
