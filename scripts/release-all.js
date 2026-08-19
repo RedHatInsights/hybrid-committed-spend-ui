@@ -13,7 +13,7 @@ function usage() {
     [
       'Use this script to create a PR, merging stage and prod branches first.',
       'Run again to create an MR, deploying app-interface with the latest SHA refs from the same branches.',
-      'Branch PRs are created in the koku-ui repo and MRs will be created in your app-interface fork.\n',
+      'Branch PRs are created in the hcs-ui repo and MRs will be created in your app-interface fork.\n',
     ].join('\n')
   );
 }
