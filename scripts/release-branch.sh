@@ -88,7 +88,7 @@ After merge, use the latest commit SHA on \`$BRANCH\` to update the namespace \`
 EEOOFF
 }
 
-resolveConflictsWithTheirs()
+resolveConflicts()
 {
   echo ""
   echo "*** Merge conflicts detected:"
@@ -113,7 +113,7 @@ resolveConflictsWithTheirs()
       ;;
     * )
       echo "Please answer yes or no."
-      resolveConflictsWithTheirs
+      resolveConflicts
       ;;
   esac
 }
@@ -134,7 +134,7 @@ merge()
   fi
 
   if [ -n "$(git diff --name-only --diff-filter=U 2>/dev/null)" ]; then
-    resolveConflictsWithTheirs
+    resolveConflicts
     return $?
   fi
 
@@ -183,10 +183,11 @@ push()
 {
   default
 
-  while getopts hbps c; do
+  while getopts hpu c; do
     case $c in
       p) BRANCH=$PROD_BRANCH
          REMOTE_BRANCH=$MAIN_BRANCH;;
+      u) PUSH=true;;
       h) usage; exit 0;;
       \?) usage; exit 1;;
     esac
