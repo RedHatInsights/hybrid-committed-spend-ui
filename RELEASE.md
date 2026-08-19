@@ -19,7 +19,7 @@ sh scripts/release-branch.sh -p
 ### Wrapper for all merges
 
 ```
-node ../../scripts/release-all.js
+node scripts/release-all.js
 ```
 
 Follow the prompts below.
@@ -33,16 +33,16 @@ The release-app-interface.sh script will update app-interface with the latest SH
 
 1. Pull from prod-stable when updating the stage deployment in app-interface
 
-### Deploy prod-hccm to app-interface
+### Deploy prod-stable to app-interface
 
 ```
-sh ../../scripts/release-app-interface.sh -p
+sh scripts/release-app-interface.sh -p
 ```
 
 ### Wrapper for all deployments
 
 ```
-node ../../scripts/release-all.js
+node scripts/release-all.js
 ```
 
 Follow the prompts below.
@@ -62,12 +62,12 @@ Use the latest commit of each branch to update namespaces \`ref\` in the app-int
     # Stage Deployment
   - namespace:
       $ref: /services/insights/frontend-operator/namespaces/stage-frontends.yml
-    ref: 68ce48592f5222029f27f6fb708698013d2f0a58 // Replace with latest SHA for stage-hccm branch
+    ref: 68ce48592f5222029f27f6fb708698013d2f0a58 // Replace with latest SHA or use "main" for auto-deploying to stage
     ...
     # Prod Deployment
   - namespace:
       $ref: /services/insights/frontend-operator/namespaces/prod-frontends.yml
-    ref: c7f6c75fd1e895afbc05a2a6d26835fa16a0edfa // Replace with latest SHA for prod-hccm branch
+    ref: c7f6c75fd1e895afbc05a2a6d26835fa16a0edfa // Replace with latest SHA for prod-stable branch
     ...
 ```
 
@@ -78,11 +78,11 @@ After releasing to each staging environment, open an incognito window and view o
 Please ensure expected changes have been updated before releasing to the next staging environment.
 
 1. For stage, view https://console.stage.redhat.com/business-services/hybrid-committed-spend/
-2. For prod-stable, view https://console.redhat.com/business-services/hybrid-committed-spend/
+2. For prod, view https://console.redhat.com/business-services/hybrid-committed-spend/
 
 ## Release notes
 
-After releasing to prod-hccm, a new tag will be created here https://github.com/RedHatInsights/hybrid-committed-spend-ui/tags. Create a new GitHub release based on this tag -- use the tag label as the "release title".
+After releasing to prod-stable, a new tag will be created here https://github.com/RedHatInsights/hybrid-committed-spend-ui/tags. Create a new GitHub release based on this tag -- use the tag label as the "release title".
 
 Note that you may  "Draft a new release", before the latest tag is available, and mark it as a "pre-release" -- don't click "publish release" yet, use "save draft".
 

@@ -11,6 +11,7 @@ default()
   TMP_DIR="/tmp/$SCRIPT.$$"
 
   GITLAB_USER=${GITLAB_USER:-`whoami`}
+  MAIN_BRANCH="main"
   PROD_BRANCH="prod-stable"
   TARGET_BRANCH="master"
   TARGET_PROJECT="service/app-interface"
@@ -25,6 +26,7 @@ default()
   HCS_UI=hybrid-committed-spend-frontend
 
   PROD_FRONTENDS=/services/insights/frontend-operator/namespaces/prod-frontends.yml
+  PROD_MULTICLUSTER_FRONTENDS=/services/insights/frontend-operator/namespaces/prod-multicluster-frontends.yml
 
   DESC_FILE="$TMP_DIR/desc"
   DEPLOY_CLOWDER_FILE="$APP_INTERFACE_DIR/data/services/insights/hybrid-committed-spend/deploy.yml"
@@ -44,9 +46,11 @@ cat <<- EEOOFF
 
     OPTIONS:
     h       Display this message
-    p       Update SHA refs from $PROD_BRANCH to $TARGET_BRANCH
+    p       Update SHA refs from $PROD_BRANCH to app-interface
 
-    Note: This script lacks permission to push directly upstream, so commits will be pushed to this fork:
+    Note: Stage is updated automatically when merging to main, so this script is prod only.
+
+    This script lacks permission to push directly upstream, so commits will be pushed to this fork:
     $APP_INTERFACE_FORK -- override user via the GITLAB_USER env var.
 
 EEOOFF
@@ -64,6 +68,7 @@ cloneAppInterface()
   cd $TMP_DIR
 
   if [ ! -d "$APP_INTERFACE_DIR" ]; then
+    echo ""
     git clone $APP_INTERFACE_REPO
   fi
 }
@@ -74,6 +79,7 @@ cloneUI()
   cd $TMP_DIR
 
   if [ ! -d "$HCS_UI_DIR" ]; then
+    echo ""
     git clone $HCS_UI_REPO
   fi
 }
@@ -97,7 +103,7 @@ createDeploymentDesc()
   mkdir -p $TMP_DIR
 
   {
-    if [ "$DEPLOY_HCCM_PROD" = "true" ]; then
+    if [ "$DEPLOY_PROD" = "true" ]; then
       echo "${HCS_UI}: Prod deployment"
     fi
   } > "$DEPLOYMENTS_FILE"
@@ -125,9 +131,60 @@ QE has verified all queued issues
 EEOOFF
 }
 
+# Get SHA for given namespace ref
+#
+# Note that the deploy.yml file may contain multiple namespace refs.
+#
+# $1: Which SHA to return (e.g., hybrid-committed-spend-frontend)
+# $2: The namespace ref
+#
+getAppInterfaceSHA()
+{
+  RESULT=
+  SHA=
+  NAMESPACE_REFS=`grep -n "\$ref: $2" $DEPLOY_CLOWDER_FILE | sed 's| ||g'`
+
+  for NAMESPACE_REF in `echo "$NAMESPACE_REFS"`
+  do
+    NAMESPACE_LINE=`echo $NAMESPACE_REF | awk -F: '{print $1}'`
+    COMMIT_LINE=`echo "$NAMESPACE_LINE + 1" | bc`
+    COMMIT_REF=`head -n $COMMIT_LINE $DEPLOY_CLOWDER_FILE | tail -n 1 | sed 's| ||g'`
+    SHA="$SHA `echo $COMMIT_REF | awk -F: '{print $2}'`"
+  done
+
+  if [ $1 = $HCS_UI ]; then
+    RESULT=`echo "$SHA" | awk -F' ' '{print $1}' | sed 's| ||g'`
+  fi
+}
+
+initAppInterfaceSHA()
+{
+  getAppInterfaceSHA $HCS_UI $PROD_FRONTENDS
+  PROD_FRONTENDS_SHA="$RESULT"
+
+  getAppInterfaceSHA $HCS_UI $PROD_MULTICLUSTER_FRONTENDS
+  PROD_MULTICLUSTER_FRONTENDS_SHA="$RESULT"
+
+  echo "\nExisting SHA refs..."
+  echo "$HCS_UI prod: $PROD_FRONTENDS_SHA"
+  echo "$HCS_UI prod multicluster: $PROD_MULTICLUSTER_FRONTENDS_SHA"
+}
+
+initSHA()
+{
+  cd $HCS_UI_DIR
+
+  SHA=`git rev-parse origin/$PROD_BRANCH`
+
+  echo "\nLatest SHA refs..."
+  echo "$HCS_UI ($PROD_BRANCH): $SHA"
+}
+
 # Use gh in a non-interactive way -- see https://github.com/cli/cli/issues/1718
 mergeRequest()
 {
+  createMergeRequestDesc
+
   DESC=`sed -e ':a' -e 'N' -e '$!ba' -e 's|\n|<br/>|g' $DESC_FILE`
 
   echo "\n*** Pushing $SOURCE_BRANCH..."
@@ -152,59 +209,52 @@ push()
   esac
 }
 
-# Get SHA for given namespace ref
+# Replace the commit SHA only on the target whose namespace $ref matches.
+# Do not gsub across the whole resource block — stage uses auto-deploy from
+# main, and other resources in deploy.yml must keep their own refs.
 #
-# Note that the deply.yml file may contain multiple namespace refs.
-#
-# $1: Which SHA to return (e.g., hybrid-committed-spend-frontend)
-# $2: The namespace ref
-#
-getAppInterfaceSHA()
+# $1: resource name (hybrid-committed-spend-frontend)
+# $2: namespace $ref path
+# $3: new SHA
+replaceSHA()
 {
-  RESULT=
-  SHA=
-  NAMESPACE_REFS=`grep -n "\$ref: $2" $DEPLOY_CLOWDER_FILE | sed 's| ||g'`
+  RESOURCE="$1"
+  NAMESPACE="$2"
+  NEW_SHA="$3"
 
-  for NAMESPACE_REF in `echo "$NAMESPACE_REFS"`
-  do
-    NAMESPACE_LINE=`echo $NAMESPACE_REF | awk -F: '{print $1}'`
-    COMMIT_LINE=`echo "$NAMESPACE_LINE + 1" | bc`
-    COMMIT_REF=`head -n $COMMIT_LINE $DEPLOY_CLOWDER_FILE | tail -n 1 | sed 's| ||g'`
-    SHA="$SHA `echo $COMMIT_REF | awk -F: '{print $2}'`"
-  done
-
-  if [ $1 = $HCS_UI ]; then
-    RESULT=`echo "$SHA" | awk -F' ' '{print $1}' | sed 's| ||g'`
-  elif [ $1 = $HCS_UI_ROS ]; then
-    RESULT=`echo "$SHA" | awk -F' ' '{print $2}' | sed 's| ||g'`
+  if [ -z "$NEW_SHA" ] || [ "$NEW_SHA" = "$MAIN_BRANCH" ]; then
+    return
   fi
-}
 
-initAppInterfaceSHA()
-{
-  getAppInterfaceSHA $HCS_UI $PROD_FRONTENDS
-  HCCM_PROD_FRONTENDS_SHA="$RESULT"
-
-  echo "Existing SHA refs..."
-  echo "$HCS_UI prod: $HCCM_PROD_FRONTENDS_SHA"
-}
-
-initSHA()
-{
-  cd $HCS_UI_DIR
-
-  HCCM_PROD_SHA=`git rev-parse origin/$PROD_BRANCH`
-
-  echo "Latest SHA refs..."
-  echo "$HCS_UI-hccm prod: $HCCM_PROD_SHA"
+  awk -v resource="$RESOURCE" -v ns="$NAMESPACE" -v new="$NEW_SHA" '
+    /^[[:space:]]*- name:[[:space:]]+/ {
+      in_block = ($0 ~ ("name:[[:space:]]*" resource "([[:space:]]|$)"))
+      match_ns = 0
+      print
+      next
+    }
+    in_block && index($0, "$ref: " ns) {
+      match_ns = 1
+      print
+      next
+    }
+    in_block && match_ns && $0 ~ /^[[:space:]]*ref:[[:space:]]/ {
+      sub(/ref:[[:space:]].*/, "ref: " new)
+      match_ns = 0
+      print
+      next
+    }
+    { print }
+  ' "$DEPLOY_CLOWDER_FILE" > "${DEPLOY_CLOWDER_FILE}.tmp"
+  mv "${DEPLOY_CLOWDER_FILE}.tmp" "$DEPLOY_CLOWDER_FILE"
 }
 
 updateDeploySHA()
 {
-  # prod deploy
-  if [ "$DEPLOY_HCCM_PROD" = true ]; then
-      sed "s|$HCCM_PROD_FRONTENDS_SHA|$HCCM_PROD_SHA|" $DEPLOY_CLOWDER_FILE > ${DEPLOY_CLOWDER_FILE}.tmp
-      mv ${DEPLOY_CLOWDER_FILE}.tmp $DEPLOY_CLOWDER_FILE
+  # hybrid-committed-spend-frontend prod deploy
+  if [ "$DEPLOY_PROD" = true ]; then
+    replaceSHA "$HCS_UI" "$PROD_FRONTENDS" "$SHA"
+    replaceSHA "$HCS_UI" "$PROD_MULTICLUSTER_FRONTENDS" "$SHA"
   fi
 }
 
@@ -214,14 +264,13 @@ updateDeploySHA()
 
   while getopts hp c; do
     case $c in
-      p) DEPLOY_HCCM_PROD=true;;
-      u) PUSH=true;;
+      p) DEPLOY_PROD=true;;
       h) usage; exit 0;;
       \?) usage; exit 1;;
     esac
   done
 
-  if [ -z "$DEPLOY_HCCM_PROD" ]; then
+  if [ -z "$DEPLOY_PROD" ]; then
     usage
     exit 1
   fi
@@ -231,7 +280,6 @@ updateDeploySHA()
   echo "\n*** Deploying $APP_INTERFACE with SHA updates for...\n"
   createDeploymentDesc
   cat $DEPLOYMENTS_FILE
-  echo
 
   cloneAppInterface
   cloneUI
@@ -243,7 +291,6 @@ updateDeploySHA()
   commit
 
   if [ "$?" -eq 0 ]; then
-    createMergeRequestDesc
     mergeRequest
   else
     echo "\n*** Cannot push. No changes or check for conflicts"
