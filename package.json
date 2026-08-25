@@ -68,9 +68,9 @@
     "@patternfly/react-icons": "6.6.1",
     "@patternfly/react-table": "6.6.1",
     "@patternfly/react-tokens": "6.6.1",
-    "@redhat-cloud-services/frontend-components": "^7.10.5",
-    "@redhat-cloud-services/frontend-components-notifications": "^6.11.5",
-    "@redhat-cloud-services/frontend-components-utilities": "^7.5.3",
+    "@redhat-cloud-services/frontend-components": "^7.10.6",
+    "@redhat-cloud-services/frontend-components-notifications": "^6.11.6",
+    "@redhat-cloud-services/frontend-components-utilities": "^7.5.4",
     "@reduxjs/toolkit": "^2.12.0",
     "@unleash/proxy-client-react": "^6.0.1",
     "axios": "^1.19.0",
@@ -98,8 +98,8 @@
     "@formatjs/icu-messageformat-parser": "^3.5.17",
     "@formatjs/intl": "^4.1.19",
     "@formatjs/intl-localematcher": "^0.8.13",
-    "@redhat-cloud-services/frontend-components-config": "^6.14.4",
-    "@redhat-cloud-services/tsc-transform-imports": "^1.3.3",
+    "@redhat-cloud-services/frontend-components-config": "^6.14.5",
+    "@redhat-cloud-services/tsc-transform-imports": "^1.3.4",
     "@swc/core": "^1.16.1",
     "@swc/jest": "^0.2.39",
     "@testing-library/jest-dom": "^7.0.1",
@@ -111,10 +111,10 @@
     "@types/react-redux": "^7.1.34",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.13",
-    "@typescript-eslint/eslint-plugin": "^8.67.0",
-    "@typescript-eslint/parser": "^8.67.0",
+    "@typescript-eslint/eslint-plugin": "^8.68.0",
+    "@typescript-eslint/parser": "^8.68.0",
     "copy-webpack-plugin": "^14.0.0",
-    "eslint": "^10.9.0",
+    "eslint": "^10.9.1",
     "eslint-plugin-formatjs": "^6.6.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-jest-dom": "^5.10.1",
@@ -144,7 +144,8 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
-    "eslint": "^10.9.0"
+    "eslint": "^10.9.1",
+    "nanoid": "^6.0.1"
   },
   "insights": {
     "appname": "hybrid-committed-spend"
