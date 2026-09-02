@@ -14,6 +14,9 @@ module.exports = {
   moduleDirectories: ['node_modules', '<rootDir>/src'],
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
+    // Jest 30.5+ cannot distinguish src/Routes.tsx from src/routes/ on
+    // case-insensitive filesystems when resolving the bare specifier 'Routes'.
+    '^Routes$': '<rootDir>/src/Routes.tsx',
   },
   preset: 'ts-jest',
   roots: ['<rootDir>/src/'],
