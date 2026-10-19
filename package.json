@@ -104,7 +104,7 @@
     "@swc/jest": "^0.2.39",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.7",
+    "@testing-library/user-event": "^14.6.8",
     "@types/jest": "^30.0.0",
     "@types/react": "^18.3.31",
     "@types/react-dom": "^18.3.7",
@@ -139,7 +139,7 @@
     "stylelint": "^17.16.0",
     "stylelint-config-recommended-scss": "^17.0.1",
     "swc_mut_cjs_exports": "^10.7.0",
-    "ts-jest": "^29.4.14",
+    "ts-jest": "^29.4.15",
     "ts-patch": "^3.3.0",
     "typescript": "^5.9.3"
   },
