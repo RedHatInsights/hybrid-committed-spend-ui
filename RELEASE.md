@@ -1,60 +1,36 @@
 # Releasing Hybrid Committed Spend UI
 
-This doc describes how to release Hybrid Committed Spend UI to each staging environment. Note that this should be done in order for testing purposes; stage-stable, prod-beta, and finally prod-stable
+Pushing to `main` builds the image and updates stage. Prod is pinned in app-interface to the latest SHA on `main`.
 
-## Merge branches
+## Stage
 
-The release-branch.sh script creates a PR with a unique SHA, used for a namespace \`ref\` in the app-interface repo. The script also ensures that code is always pulled from the correct branches. For example, we always:
+No branch merge and no app-interface MR. After a commit reaches `main`, Konflux builds the image and stage follows that branch.
 
-1. Pull from master when pushing to prod-stable
+## Deploy prod to app-interface
 
-Note: Pushing to master automatically deploys to the stage env.
+`release-app-interface.sh` updates prod namespace refs from the latest SHA on `main`.
 
-### Merge main to prod-stable
-
-```
-sh scripts/release-branch.sh -p
-```
-
-### Wrapper for all merges
+### Deploy main to app-interface prod
 
 ```
-node scripts/release-all.js
+sh scripts/release/release-app-interface.sh -p
 ```
 
-Follow the prompts below.
-
-* Are you deploying to app-interface? `N`
-* Which Chrome environment do you want to release? `stage`
-
-## Deploy to app-interface
-
-The release-app-interface.sh script will update app-interface with the latest SHA refs from the koku-ui branches above. The script also ensures that SHA refs are always pulled from the correct branches. For example, we always:
-
-1. Pull from prod-stable when updating the stage deployment in app-interface
-
-### Deploy prod-stable to app-interface
+### Wrapper
 
 ```
-sh scripts/release-app-interface.sh -p
-```
-
-### Wrapper for all deployments
-
-```
-node scripts/release-all.js
+node scripts/release/release-all.js
 ```
 
 Follow the prompts below.
 
-* Are you deploying to app-interface? `Y`
-* Which Chrome environment do you want to release? `stage`
+* Do you want to update your app-interface fork's master? `Y` (recommended)
 
-## Manual deployment
+### Manual deployment
 
-After all PRs have been merged, update the \`hybrid-committed-spend-frontend\` resource in https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/data/services/insights/hybrid-committed-spend/deploy.yml
+Update the \`hybrid-committed-spend-frontend\` resource in https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/data/services/insights/hybrid-committed-spend/deploy.yml
 
-Use the latest commit of each branch to update namespaces \`ref\` in the app-interface repo. Don't use a merge commit, SHAs must be unique when images are created for each branch.
+Use `main` for stage so it keeps auto-deploying. Use the latest SHA on `main` for prod.
 
 ```
 - name: hybrid-committed-spend-frontend
@@ -62,31 +38,33 @@ Use the latest commit of each branch to update namespaces \`ref\` in the app-int
     # Stage Deployment
   - namespace:
       $ref: /services/insights/frontend-operator/namespaces/stage-frontends.yml
-    ref: 68ce48592f5222029f27f6fb708698013d2f0a58 // Replace with latest SHA or use "main" for auto-deploying to stage
+    ref: main // auto-deploy from main
     ...
     # Prod Deployment
   - namespace:
       $ref: /services/insights/frontend-operator/namespaces/prod-frontends.yml
-    ref: c7f6c75fd1e895afbc05a2a6d26835fa16a0edfa // Replace with latest SHA for prod-stable branch
+    ref: c7f6c75fd1e895afbc05a2a6d26835fa16a0edfa // latest SHA on main
     ...
 ```
 
 ## Testing
 
-After releasing to each staging environment, open an incognito window and view one of the staging environments below.
+After releasing to each environment, open an incognito window and view one of the environments below.
 
-Please ensure expected changes have been updated before releasing to the next staging environment.
+Please ensure expected changes have been updated before releasing to the next environment.
 
 1. For stage, view https://console.stage.redhat.com/business-services/hybrid-committed-spend/
 2. For prod, view https://console.redhat.com/business-services/hybrid-committed-spend/
 
 ## Release notes
 
-After releasing to prod-stable, a new tag will be created here https://github.com/RedHatInsights/hybrid-committed-spend-ui/tags. Create a new GitHub release based on this tag -- use the tag label as the "release title".
+After releasing to prod, `release-app-interface.sh` triggers the Tag Release workflow for the SHA deployed to prod. A new tag will be created here https://github.com/RedHatInsights/hybrid-committed-spend-ui/tags. Create a new GitHub release based on this tag -- use the tag label as the "release title".
+
+You can also run the [Tag Release](https://github.com/RedHatInsights/hybrid-committed-spend-ui/actions/workflows/tag_release.yml) workflow manually and enter the prod commit SHA.
 
 Note that you may  "Draft a new release", before the latest tag is available, and mark it as a "pre-release" -- don't click "publish release" yet, use "save draft".
 
-Please document any new features and bug fixes available in production and other staging environments. For example, note any features that are only available in stage.
+Please document any new features and bug fixes available in production and other environments. For example, note any features that are only available in stage.
 
 For release examples, please see existing releases here https://github.com/RedHatInsights/hybrid-committed-spend-ui/releases
 
