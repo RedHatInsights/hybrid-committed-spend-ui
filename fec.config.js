@@ -1,9 +1,11 @@
 // Based on https://github.com/RedHatInsights/frontend-components/blob/master/packages/config/src/scripts/dev.webpack.config.js
 
+const { execSync } = require('child_process');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { GitRevisionPlugin } = require('git-revision-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const { dependencies, insights } = require('./package.json');
+const { dependencies, insights, name } = require('./package.json');
 
 const moduleName = insights.appname.replace(/-(\w)/g, (_, match) => match.toUpperCase());
 const srcDir = path.resolve(__dirname, './src');
@@ -14,6 +16,22 @@ const stats = {
   colors: true,
   modules: false,
 };
+const hasGitRepository = (() => {
+  try {
+    execSync('git rev-parse HEAD', { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+})();
+
+const gitRevisionPlugin = hasGitRepository ? new GitRevisionPlugin() : null;
+
+const commitHash =
+  process.env.HCS_UI_COMMITHASH ||
+  process.env.SENTRY_RELEASE ||
+  process.env.COMMIT_SHA ||
+  (gitRevisionPlugin ? gitRevisionPlugin.commithash() : 'unknown-commithash');
 
 // Show what files changed since last compilation
 class WatchRunPlugin {
@@ -80,6 +98,11 @@ module.exports = {
           to: path.join(distDir, 'locales'),
         },
       ],
+    }),
+    ...(gitRevisionPlugin ? [gitRevisionPlugin] : []),
+    new webpack.DefinePlugin({
+      'process.env.HCS_UI_COMMITHASH': JSON.stringify(commitHash),
+      'process.env.HCS_UI_PKGNAME': JSON.stringify(name),
     }),
   ],
   resolve: {
