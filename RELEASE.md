@@ -1,6 +1,6 @@
 # Releasing Hybrid Committed Spend UI
 
-Pushing to `main` builds the image and updates stage. Prod is pinned in app-interface to the latest SHA on `main`.
+Pushing to `main` builds the image and updates stage. Prod is pinned in app-interface to the full git SHA from the Quay `latest` image (OCI labels), which guarantees a deployable image exists when Quay resolution succeeds.
 
 ## Stage
 
@@ -8,9 +8,18 @@ No branch merge and no app-interface MR. After a commit reaches `main`, Konflux 
 
 ## Deploy prod to app-interface
 
-`release-app-interface.sh` updates prod namespace refs from the latest SHA on `main`.
+`release-app-interface.sh` updates prod namespace refs from the Quay `latest` image for `hcs-frontend`:
 
-### Deploy main to app-interface prod
+1. Resolve `latest` → manifest digest on [Quay][quay-hcs]
+2. Read `org.opencontainers.image.revision` (or `vcs-ref`) from the image config
+3. Confirm the matching short SHA tag exists on that digest
+4. Write that full SHA as the prod `ref`
+
+If Quay resolution fails for any reason (labels, manifest, auth, or short-tag digest mismatch), the script warns and asks whether to fall back to tip of `main` (default: abort). Tip of `main` may not have an image yet.
+
+If Quay `latest` differs from tip of `main` (image still building) or matches a current app-interface prod SHA (no change), the script asks whether to **continue**, **wait**, or **abort** (default: abort). Wait polls Quay every 30s for up to 20 minutes until a newer image matches tip of `main`. On timeout, it asks whether to continue with the current Quay SHA or abort.
+
+### Deploy Quay latest to app-interface prod
 
 ```
 sh scripts/release/release-app-interface.sh -p
@@ -30,7 +39,7 @@ Follow the prompts below.
 
 Update the \`hybrid-committed-spend-frontend\` resource in https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/data/services/insights/hybrid-committed-spend/deploy.yml
 
-Use `main` for stage so it keeps auto-deploying. Use the latest SHA on `main` for prod.
+Use `main` for stage so it keeps auto-deploying. For prod, use the full git SHA from Quay `latest` (image config labels), not tip of `main` unless you have confirmed that image exists.
 
 ```
 - name: hybrid-committed-spend-frontend
@@ -43,7 +52,7 @@ Use `main` for stage so it keeps auto-deploying. Use the latest SHA on `main` fo
     # Prod Deployment
   - namespace:
       $ref: /services/insights/frontend-operator/namespaces/prod-frontends.yml
-    ref: c7f6c75fd1e895afbc05a2a6d26835fa16a0edfa // latest SHA on main
+    ref: <full SHA from Quay latest>
     ...
 ```
 
@@ -73,3 +82,5 @@ For release examples, please see existing releases here https://github.com/RedHa
 If a staging environment has not updated as expected, it's best to ask questions in the forum-consoledot-ui or proj-fecontainer-migration channels of http://coreos.slack.com.
 
 Alternatively, open a Jira issue under the "ConsoleDot Platform (console.redhat.com) (RHCLOUD)" project category. For an example, see https://issues.redhat.com/browse/RHCLOUD-18259
+
+[quay-hcs]: https://quay.io/repository/redhat-services-prod/rh-hcs-tenant/hcs-frontend?tab=tags&tag=latest
