@@ -35,8 +35,8 @@ jobs:
           echo "PREV_RELEASE=$PREV_RELEASE"
           echo "PREV_SAME_DAY=$PREV_SAME_DAY"
           echo "TAG=$TAG"
-          git config --local user.email "hcs-ui-bot@redhat.com"
-          git config --local user.name "HCS UI Bot"
+          git config --local user.email "koku-ui-bot@redhat.com"
+          git config --local user.name "Koku UI Bot"
           if [ -n "$PREV_RELEASE" ]; then
             BODY=$(git log "$PREV_RELEASE".."$RELEASE_COMMIT")
             if [ -n "$BODY" ]; then
