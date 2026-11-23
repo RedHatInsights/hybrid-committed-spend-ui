@@ -53,7 +53,10 @@ git checkout -B dependencies upstream/main
 
 ## Step 1: Preview
 
+On a clean checkout, `ncu` is only available via `node_modules/.bin`, so install locked deps first:
+
 ```bash
+npm ci
 npm run check:dependencies:minor:skip-held
 ```
 
@@ -63,6 +66,13 @@ Record what would change. If nothing is outdated, stop and say so in the summary
 
 ```bash
 npm run check:dependencies:update:minor:skip-held
+```
+
+**Sync `overrides` before install.** `ncu` may bump a direct dependency (e.g. `eslint`) while leaving `package.json` `overrides` unchanged, which causes `EOVERRIDE` on `npm install`. After ncu and before install, for every key in `overrides` that is also a direct dependency/devDependency, set the override to the same version string as the direct dependency (or use npm’s dependency-reference form, e.g. `"eslint": "$eslint"`). At minimum keep `overrides.eslint` aligned with the root `eslint` entry.
+
+Then:
+
+```bash
 npm install
 ```
 
@@ -143,7 +153,9 @@ Equivalent: `npx fec dev --clouddotEnv=stage` (keep `HMR=true` if matching the p
 
 Watch the terminal for compile/start failures. Updates to `@redhat-cloud-services/frontend-components-config` (and related `@redhat-cloud-services` packages) have broken webpack start before — treat start failures as high priority; pin or revert the offending package if needed and note it.
 
-Leave the server running. Stop and wait for the user — do not proceed until they confirm or explicitly skip. Stop the server after they reply (or leave it running if they want).
+**Re-verify after late pins.** If you change any dependency after Step 4 (including a pin/revert during start), re-run the affected checks from that point forward: lint, test, build, and smoke. The summary and PR test plan must reflect only the **final** dependency set.
+
+Leave the server running. Stop and wait for the user to confirm or explicitly skip **this** smoke check before Step 9. Stop the server after they reply (or leave it running if they want).
 
 When asking for the smoke check, include a clickable markdown link to the running UI:
 
@@ -159,18 +171,24 @@ After smoke is confirmed or skipped:
 
 1. Stop any running `fec` / chrome container left from smoke.
 2. Present the dependency summary (including any pins/fixes and whether smoke was OK or skipped).
-3. **Ask the user whether to create the PR** — do not commit, push, or open a PR until they explicitly say yes. If the UI looked wrong or they say no, stop after the summary (leave the `dependencies` branch and local changes as-is unless they ask to discard).
-4. If they say yes and there are no dependency-related changes to commit, skip the PR and say so.
-5. If they say yes: commit only dependency update artifacts and fixes from this run (e.g. `package.json`, lockfile, code fixes). Do **not** include unrelated files. Follow the repo commit-message style; focus on why.
+3. **Ask the user whether to create the PR** — do not commit, push, or open a PR until they explicitly answer **Y**. Treat **N** / no as stop after the summary (leave the `dependencies` branch and local changes as-is unless they ask to discard).
+
+   **End that message with this exact last line (bold, nothing after it):**
+
+   **Do you want me to create the PR as koku-ui-bot? (Y/N)**
+4. If they answer **Y** and there are no dependency-related changes to commit, skip the PR and say so.
+5. If they answer **Y**: commit only dependency update artifacts and fixes from this run (e.g. `package.json`, lockfile, code fixes). Do **not** include unrelated files. Follow the repo commit-message style; focus on why.
 6. Push and open the PR **as `koku-ui-bot`**, then restore the previous GitHub CLI user:
 
 ```bash
 PREV_GH_USER="<active user recorded in Step 0>"
 gh auth switch --user koku-ui-bot
 
-git push -u origin dependencies
+# Push to upstream (same-repo PR). Do NOT use origin/fork head — koku-ui-bot
+# cannot open a PR from another user's fork ("Fork collab ... without permission").
+git push -u upstream dependencies
 
-gh pr create --repo RedHatInsights/hybrid-committed-spend-ui --base main --head dlabrecq:dependencies --title "<title>" --body "$(cat <<'EOF'
+gh pr create --repo RedHatInsights/hybrid-committed-spend-ui --base main --head dependencies --title "<title>" --body "$(cat <<'EOF'
 ## Summary
 <bullets from the dependency summary>
 
@@ -185,7 +203,7 @@ EOF
 gh auth switch --user "$PREV_GH_USER"
 ```
 
-Adjust `--head` if the fork/owner differs. Always switch back to `$PREV_GH_USER` even if push or `gh pr create` fails (use a `trap` or an explicit final switch). Return the PR URL in the summary.
+Always switch back to `$PREV_GH_USER` even if push or `gh pr create` fails (use a `trap` or an explicit final switch). Return the PR URL in the summary.
 
 ## Failure and pinning policy
 
@@ -196,6 +214,8 @@ Pinning is allowed when an upgraded package breaks install, lint, test, build, o
 - attempted version
 - pinned version
 - which step failed
+
+If the pin happens after Step 4, re-run lint/test/build/smoke as needed so verification matches the pinned set.
 
 ## Summary (required)
 
